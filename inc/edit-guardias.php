@@ -15,8 +15,10 @@ if(isset($_GET['profesor']))
             $ERR_MSG = $class->ERR_ASYSTECO;
        }
        var_dump($siguiente);
+       echo "SELECT ID FROM Profesores WHERE ID > '$fila[ID]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC LIMIT 1";
        echo "</br>";
        var_dump($anterior);
+       echo "SELECT ID FROM Profesores WHERE ID < '$fila[ID]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID DESC LIMIT 1";
 
            if($response = $class->query("SELECT $class->horarios.*, Diasemana.Diasemana 
                                        FROM ($class->horarios INNER JOIN $class->profesores ON $class->horarios.ID_PROFESOR=$class->profesores.ID) 
