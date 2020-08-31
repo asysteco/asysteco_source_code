@@ -1,7 +1,7 @@
 <?php
 if(isset($_GET['profesor']))
 {
-    if ($response = $class->query("SELECT MAX($class->profesores.ID) AS Ultimo, MIN($class->profesores.ID) AS Primero, $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC"))
+    if ($response = $class->query("SELECT MAX($class->profesores.ID) AS Ultimo, MIN($class->profesores.ID) AS Primero, $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE ID='$_GET[profesor]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC"))
     {
       if ($response->num_rows > 0)
       {
@@ -26,8 +26,18 @@ if(isset($_GET['profesor']))
                        $ERR_MSG = $class->ERR_ASYSTECO;
                    }
                    echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
-                   echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
-                   echo "<a id='siguiente-profesor' class='btn btn-success'> Siguiente</a>";
+                   if($fila['Primero'] != $_GET['profesor'])
+                   {
+                        echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
+                   }
+                   if($fila['Ultimo'] != $_GET['profesor'])
+                   {
+                        echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
+                   }
+                   var_dump($primero);
+                   var_dump($ultimo);
+                   var_dump($_GET['profesor']);
+                   
                    echo "<div id='response'></div>";
                    echo "</br><table class='table'>";
                        echo "<thead>";
@@ -208,6 +218,14 @@ else
       {
        $fila = $response->fetch_assoc();
        $_GET['profesor'] = $fila['ID'];
+       if(! $siguiente = $class->query("SELECT ID FROM Profesores WHERE ID > '$fila[ID]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC LIMIT 1")->fetch_assoc())
+       {
+            $ERR_MSG = $class->ERR_ASYSTECO;
+       }
+       if(! $anterior = $class->query("SELECT ID FROM Profesores WHERE ID < '$fila[ID]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID DESC LIMIT 1")->fetch_assoc())
+       {
+            $ERR_MSG = $class->ERR_ASYSTECO;
+       }
            if($response = $class->query("SELECT $class->horarios.*, Diasemana.Diasemana 
                                        FROM ($class->horarios INNER JOIN $class->profesores ON $class->horarios.ID_PROFESOR=$class->profesores.ID) 
                                        INNER JOIN Diasemana ON Diasemana.ID=$class->horarios.Dia WHERE $class->profesores.ID='$_GET[profesor]' 
@@ -220,8 +238,7 @@ else
                        $ERR_MSG = $class->ERR_ASYSTECO;
                    }
                    echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
-                   echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
-                   echo "<a id='siguiente-profesor' class='btn btn-success' style='margin-left:250px;'> Siguiente</a>";
+                   echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
                    echo "<div id='response'></div>";
                    echo "</br><table class='table'>";
                        echo "<thead>";
