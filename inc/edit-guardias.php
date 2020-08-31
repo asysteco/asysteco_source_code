@@ -388,11 +388,11 @@ else
 }
 echo "<script>
     $('#anterior-profesor').click(function(){
-        $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=$_GET[ID]')
+        $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=5')
     })
 </script>";
 echo "<script>
     $('#siguiente-profesor').click(function(){
-        $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=5')
+        $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=1')
     })
 </script>";
