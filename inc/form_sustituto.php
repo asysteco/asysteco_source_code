@@ -8,7 +8,7 @@ echo '<div class="container" style="margin-top:75px">';
             echo "<input class='hidden' name='OPT' value='sustituto'>";
             if($response = $class->query("SELECT DISTINCT $class->profesores.Nombre, $class->profesores.ID
             FROM $class->profesores WHERE NOT EXISTS 
-            (SELECT $class->horarios.ID_PROFESOR FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID)"))
+            (SELECT $class->horarios.ID_PROFESOR FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO <> 1"))
             {
                 echo "<select id='select_sustituto' name='ID_SUSTITUTO'>";
                     while($fila = $response->fetch_assoc())
