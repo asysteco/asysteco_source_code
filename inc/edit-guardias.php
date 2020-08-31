@@ -34,7 +34,7 @@ if(isset($_GET['profesor']))
                    {
                         echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
                    }
-                   if($fila['Ultimo'] != $_GET['profesor'] && $fila['Primero'] != $siguiente$fila['Primero'] != $anterior['ID']['ID'])
+                   if($fila['Ultimo'] != $_GET['profesor'] && $fila['Primero'] != $siguiente['ID'])
                    {
                         echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
                    }
