@@ -464,7 +464,6 @@ echo "<script>
 echo "<script>
 $('#select-edit-guardias').on('change', function(){
     profesor = $(this).val(),
-    alert(profesor),
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+profesor)
 })
 </script>";
