@@ -10,9 +10,3 @@ $(document).ready(function(){
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias')
 })
 </script>
-<script>
-$('#select-edit-guardias').on('change', function(){
-    profesor = $(this).val(),
-    $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+profesor)
-})
-</script>
