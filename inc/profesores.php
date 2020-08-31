@@ -70,7 +70,7 @@ if($_SESSION['Perfil'] === 'Admin')
               echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$activo</td>";
               echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$sustituido</td>";
               echo "<td><a title='Editar a $fila[Nombre]' href='index.php?ACTION=editar_profesor&ID=$fila[ID]'><span class='glyphicon glyphicon-pencil edit_icon'></span></a></td>";
-              echo "<td><a title='Mostrar asistencias de $fila[Nombre]' href='index.php?ACTION=faltas_profesor&ID=$fila[ID]'><span class='glyphicon glyphicon-list list_icon'></span></a></td>";
+              echo "<td><a title='Mostrar asistencias de $fila[Nombre]' href='index.php?ACTION=asistencias&ID=$fila[ID]'><span class='glyphicon glyphicon-list list_icon'></span></a></td>";
               if($fila['Activo'] == 1)
               {
                 echo "<td>
