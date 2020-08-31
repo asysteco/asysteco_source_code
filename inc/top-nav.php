@@ -190,7 +190,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
                 echo '<a href="index.php?ACTION=qrcoder"><span class="glyphicon glyphicon-qrcode"></span> Mi código QR</a>';
               echo '</li>';
               echo '<li>';
-                echo'<a id="message" href="index.php?ACTION=form_mensajes"><span id="message-icon" class="glyphicon glyphicon-comment"></span> Mensajes ';
+                echo'<a id="message" href="index.php?ACTION=mensajes"><span id="message-icon" class="glyphicon glyphicon-comment"></span> Mensajes ';
                   echo $notificacion;
                 echo '</a>';
               echo '</li>';
