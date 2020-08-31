@@ -1,11 +1,11 @@
 <?php
 if($_SESSION['Perfil'] === 'Admin')
 { 
- if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE Activo=1 ORDER BY ID ASC"))
+ if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC"))
  {
    if ($response->num_rows > 0)
    {
-    echo "<div id='guardias'></div>";
+    echo "<div id='profesores'></div>";
     echo "<h2>Edición de Guardias</h2>";
     echo "</br><table id='tabla_profesores' class='table table-hover'>";
     echo "<thead>";
@@ -17,12 +17,9 @@ if($_SESSION['Perfil'] === 'Admin')
     echo "<tbody>";
     while ($fila = $response->fetch_assoc())
     {
-        echo "<tr id='profesor_$fila[ID]' class='row_prof'>";
-        if($fila['Tipo'] == 'Admin')
-            {
+        echo "<tr id='profesores_$fila[ID]' class='row_prof'>";
               echo "<td>$fila[ID]</td>";
               echo "<td>$fila[Nombre]</td>";
-            }
     }
    }
    else
