@@ -14,10 +14,13 @@
   <script src="js/jquery-ui/jquery-ui.min.js"></script>
   <script src="js/datepicker_common.js"></script>
   <script src="js/flecha.js"></script>
+  
+  <?php if(isset($scripts)){ echo $scripts;} ?>
+
   <script>
     <?php if(isset($extras)){ echo $extras;} ?>
   </script>
-  
+
   <style>
     <?php if(isset($style)){ echo $style;} ?>
   </style>

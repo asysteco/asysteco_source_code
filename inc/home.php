@@ -1,10 +1,6 @@
 <?php
 
-$extras = '
-<style>
-    canvas {box-shadow: 4px 6px 15px grey; padding: 2px; border-radius: 10px;}
-    .respuesta span {display: block; box-shadow: 4px 6px 15px grey; padding: 50px; border-radius: 10px; margin-top: 30px;}
-</style>
+$scripts = '
 <script type="text/javascript" src="js/jsqrcode/grid.js"></script>
 <script type="text/javascript" src="js/jsqrcode/version.js"></script>
 <script type="text/javascript" src="js/jsqrcode/detector.js"></script>
@@ -24,6 +20,9 @@ $extras = '
 <script type="text/javascript" src="js/jsqrcode/databr.js"></script>
 ';
 $style = '
+    canvas {box-shadow: 4px 6px 15px grey; padding: 2px; border-radius: 10px;}
+    .respuesta span {display: block; box-shadow: 4px 6px 15px grey; padding: 50px; border-radius: 10px; margin-top: 30px;}
+
     .filtro_edificio {
         margin-top: 50px;
     }
