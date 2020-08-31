@@ -14,6 +14,7 @@ echo '<div class="container-fluid" style="margin-top:50px">';
     echo "</div>";
     echo "</div>";
 echo "</div>";
+include_once($dirs['public'] . 'js/qr-reader.js');
 }
 else
 {
