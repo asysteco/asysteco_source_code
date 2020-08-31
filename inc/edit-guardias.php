@@ -34,8 +34,8 @@ if(isset($_GET['profesor']))
                    {
                         echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
                    }
-                   var_dump($fila['primero']);
-                   var_dump($fila['ultimo']);
+                   var_dump($fila['Primero']);
+                   var_dump($fila['Ultimo']);
                    var_dump($_GET['profesor']);
 
                    echo "<div id='response'></div>";
