@@ -1,3 +1,4 @@
+<div class="container" style="margin-top:50px">
 <?php
 if($response = $class->query("SELECT $class->horarios.*, Diasemana.Diasemana 
                                     FROM ($class->horarios INNER JOIN $class->profesores ON $class->horarios.ID_PROFESOR=$class->profesores.ID) 
@@ -175,3 +176,4 @@ else
     $ERR_MSG = $class->ERR_ASYSTECO;
 }
 ?>
+</div>

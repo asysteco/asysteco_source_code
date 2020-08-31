@@ -104,7 +104,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
           echo "<li class='dropdown $act_profesores '><a class='dropdown-toggle' data-toggle='dropdown' href='#'><span class='glyphicon glyphicon-education'></span> Profesores <span class='caret'></a>";
             echo "<ul class='dropdown-menu'>";
               echo "<li><a href='$_SERVER[PHP_SELF]?ACTION=profesores'><span class='glyphicon glyphicon-education'></span> Mostrar profesores</a></li>";
-              echo "<li><a href='$_SERVER[PHP_SELF]?ACTION=import-profesorado'><span class='glyphicon glyphicon-plus'></span> Importar profesores</a></li>";
+              echo "<li><a href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=import'><span class='glyphicon glyphicon-plus'></span> Importar profesores</a></li>";
             echo "</ul>";
           echo "</li>";
 
