@@ -1,7 +1,7 @@
 <?php
 if($_SESSION['Perfil'] === 'Admin')
 { 
- if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre, $class->profesores.Iniciales, $class->perfiles.Tipo, $class->profesores.Activo, $class->profesores.Sustituido FROM $class->profesores INNER JOIN $class->perfiles ON $class->profesores.TIPO=$class->perfiles.ID"))
+ if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre, $class->profesores.Iniciales, $class->profesores.Activo FROM $class->profesores WHERE $class->profesores[ID]='$_GET[ID]'")
  {
    if ($response->num_rows > 0)
    {
@@ -17,6 +17,17 @@ if($_SESSION['Perfil'] === 'Admin')
         echo "</tr>";
     echo "</thead>";
     echo "<tbody>";
+    while ($fila = $response->fetch_assoc())
+    {
+        echo "<tr id='profesor_$fila[ID]' class='row_prof'>";
+        if($fila['Tipo'] == 'Admin')
+            {
+              echo "<td>$fila[ID]</td>";
+              echo "<td>$fila[Nombre]</td>";
+              echo "<td>$fila[Iniciales]</td>";
+              echo "<td>$activo</td>";
+            }
+    }
    }
    else
    {
