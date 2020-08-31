@@ -14,6 +14,10 @@ if(isset($_GET['profesor']))
        {
             $ERR_MSG = $class->ERR_ASYSTECO;
        }
+       var_dump($siguiente);
+       echo "</br>";
+       var_dump($anterior);
+
            if($response = $class->query("SELECT $class->horarios.*, Diasemana.Diasemana 
                                        FROM ($class->horarios INNER JOIN $class->profesores ON $class->horarios.ID_PROFESOR=$class->profesores.ID) 
                                        INNER JOIN Diasemana ON Diasemana.ID=$class->horarios.Dia WHERE $class->profesores.ID='$_GET[profesor]' 
