@@ -1,7 +1,7 @@
 <?php
 if($_SESSION['Perfil'] === 'Admin')
 { 
- if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre, $class->profesores.Iniciales, $class->profesores.Activo FROM $class->profesores WHERE $class->profesores[ID]='$_GET[ID]'")
+ if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE Activo=1 ORDER BY ID ASC"))
  {
    if ($response->num_rows > 0)
    {
@@ -12,8 +12,6 @@ if($_SESSION['Perfil'] === 'Admin')
         echo "<tr>";
             echo "<th>ID</th>";
             echo "<th>Nombre</th>";
-            echo "<th>Iniciales</th>";
-            echo "<th>Activo</th>";
         echo "</tr>";
     echo "</thead>";
     echo "<tbody>";
@@ -24,8 +22,6 @@ if($_SESSION['Perfil'] === 'Admin')
             {
               echo "<td>$fila[ID]</td>";
               echo "<td>$fila[Nombre]</td>";
-              echo "<td>$fila[Iniciales]</td>";
-              echo "<td>$activo</td>";
             }
     }
    }
