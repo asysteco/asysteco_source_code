@@ -1,6 +1,7 @@
 <?php
 if(isset($_GET['profesor']))
 {
+    echo "SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC";
     if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC"))
     {
       if ($response->num_rows > 0)
@@ -388,7 +389,7 @@ else
 }
 echo "<script>
     $('#anterior-profesor').click(function(){
-        $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=5')
+        $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=')
     })
 </script>";
 echo "<script>
