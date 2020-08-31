@@ -131,7 +131,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
             echo '</a>';
             echo '<ul class="dropdown-menu">';
               echo '<li>';
-                echo'<a id="message" href="index.php?ACTION=form_mensajes"><span id="message-icon" class="glyphicon glyphicon-comment"></span> Mensajes ';
+                echo'<a id="message" href="index.php?ACTION=mensajes"><span id="message-icon" class="glyphicon glyphicon-comment"></span> Mensajes ';
                   echo $notificacion;
                 echo '</a>';
               echo '</li>';
