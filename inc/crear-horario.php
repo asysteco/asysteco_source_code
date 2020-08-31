@@ -97,7 +97,7 @@ echo "<div id='tabla_t_horario'>";
                                 $dia['weekday'] === $filahora[$k][9] ? $dia['color'] = "success" : $dia['color'] = '';
                                 echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;' class='$dia[color]'>";
                                 isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
-                                echo "<a style='color: red;' class='act' enlace='index.php?ACTION=edit-crear-horario&act=del_hora&ID_PROFESOR=" . $filahora[$k][1] . "&Dia=$j&Hora=" . $horavar . "'>";
+                                echo "<a style='color: red;' class='act' enlace='index.php?ACTION=horarios&OPT=edit-crear&act=del_hora&ID_PROFESOR=" . $filahora[$k][1] . "&Dia=$j&Hora=" . $horavar . "'>";
                                     echo "<span class='glyphicon glyphicon-remove-circle btn-react-del'></span>";
                                 echo "</a><br>";
                                 echo "<b>Aula: </b>";
@@ -158,7 +158,7 @@ echo "<div id='tabla_t_horario'>";
                                     {
                                         echo "<span style='color:red;'>$class->ERR_ASYSTECO</span>";
                                     }
-                                    echo "<a style='color: red;' class='act' enlace='index.php?ACTION=edit-crear-horario&act=del&ID=" . $filahora[$k][0] . "'>";
+                                    echo "<a style='color: red;' class='act' enlace='index.php?ACTION=horarios&OPT=edit-crear&act=del&ID=" . $filahora[$k][0] . "'>";
                                         echo "<span class='glyphicon glyphicon-minus btn-react-del-group'></span>";
                                     echo "</a>";
                                     $k++;
@@ -167,7 +167,7 @@ echo "<div id='tabla_t_horario'>";
                                     if($mismoaula != 'Selec.' && $mismoaula != '')
                                     {
                                         echo "<br>";
-                                        echo "<a class='act' enlace='index.php?ACTION=edit-crear-horario&act=add_more&Aula=" . $mismoaula . "&ID=$n[ID]&Dia=$j&Hora=" . $horavar . "'>";
+                                        echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-crear&act=add_more&Aula=" . $mismoaula . "&ID=$n[ID]&Dia=$j&Hora=" . $horavar . "'>";
                                             echo "<span class='glyphicon glyphicon-plus btn-react-add-more'></span>";
                                         echo "</a>";
                                     }
@@ -177,7 +177,7 @@ echo "<div id='tabla_t_horario'>";
                             {
                                 echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;'>";
                                 isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
-                                    echo "<a class='act' enlace='index.php?ACTION=edit-crear-horario&act=add&ID=$n[ID]&Dia=$j&Hora=" . $horavar . "'>";
+                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-crear&act=add&ID=$n[ID]&Dia=$j&Hora=" . $horavar . "'>";
                                         echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
                                     echo "</a>";
                                 echo "</td>";

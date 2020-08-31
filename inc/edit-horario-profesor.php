@@ -146,7 +146,7 @@ if($response = $class->query($consulta))
                                         $dia['weekday'] === $filahora[$k][9] ? $dia['color'] = "success" : $dia['color'] = '';
                                         echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;' class='$dia[color]'>";
                                         isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
-                                        echo "<a style='color: red;' class='act' enlace='index.php?ACTION=horarios&OPT=edit-t-horario&act=del_hora&ID_PROFESOR=" . $filahora[$k][1] . "&Dia=$j&Hora=" . $horavar . "&Fecha=" . $_GET['fecha'] . "'>";
+                                        echo "<a style='color: red;' class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=del_hora&ID_PROFESOR=" . $filahora[$k][1] . "&Dia=$j&Hora=" . $horavar . "&Fecha=" . $_GET['fecha'] . "'>";
                                             echo "<span class='glyphicon glyphicon-remove-circle btn-react-del'></span>";
                                         echo "</a><br>";
                                         echo "<b>Aula: </b>";
@@ -207,7 +207,7 @@ if($response = $class->query($consulta))
                                             {
                                                 echo "<span style='color:red;'>$class->ERR_ASYSTECO</span>";
                                             }
-                                            echo "<a style='color: red;' class='act' enlace='index.php?ACTION=horarios&OPT=edit-t-horario&act=del&ID=" . $filahora[$k][0] . "'>";
+                                            echo "<a style='color: red;' class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=del&ID=" . $filahora[$k][0] . "'>";
                                                 echo "<span class='glyphicon glyphicon-minus btn-react-del-group'></span>";
                                             echo "</a>";
                                             $k++;
@@ -216,7 +216,7 @@ if($response = $class->query($consulta))
                                             if($mismoaula != 'Selec.' && $mismoaula != '')
                                             {
                                                 echo "<br>";
-                                                echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t-horario&act=add_more&Aula=" . $mismoaula . "&ID=$n[ID]&Dia=$j&Hora=" . $horavar . "&Fecha=$_GET[fecha]'>";
+                                                echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add_more&Aula=" . $mismoaula . "&ID=$n[ID]&Dia=$j&Hora=" . $horavar . "&Fecha=$_GET[fecha]'>";
                                                     echo "<span class='glyphicon glyphicon-plus btn-react-add-more'></span>";
                                                 echo "</a>";
                                             }
@@ -226,7 +226,7 @@ if($response = $class->query($consulta))
                                     {
                                         echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;'>";
                                         isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
-                                            echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t-horario&act=add&ID=$n[ID]&Dia=$j&Hora=" . $horavar . "&Fecha=$_GET[fecha]'>";
+                                            echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add&ID=$n[ID]&Dia=$j&Hora=" . $horavar . "&Fecha=$_GET[fecha]'>";
                                                 echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
                                             echo "</a>";
                                         echo "</td>";

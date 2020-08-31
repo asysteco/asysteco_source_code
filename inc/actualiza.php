@@ -1,9 +1,9 @@
 <?php
-if($_GET['ACTION'] == 'update-horario')
+if($_GET['SUBOPT'] == 'horario')
 {
   $tabla = $class->horarios;
 }
-elseif($_GET['ACTION'] == 'update-t-horario')
+elseif($_GET['SUBOPT'] == 't-horario')
 {
   $tabla = 'T_horarios';
 }
