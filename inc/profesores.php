@@ -74,7 +74,7 @@ if($_SESSION['Perfil'] === 'Admin')
               if($fila['Activo'] == 1)
               {
                 echo "<td>
-                  <a href='index.php?ACTION=desactivar-activar-profesor&ID=$fila[ID]'
+                  <a href='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
                       title='Desctivar a $fila[Nombre]'
                       onclick=\"return confirm('¿Seguro que desea realizar este cambio? Utilice solo esta opción si el profesor deja el centro por motivos de jubilación, fin de una sustitución o similares.')\">
                       <span class='glyphicon glyphicon-remove remove_icon'></span>
@@ -84,7 +84,7 @@ if($_SESSION['Perfil'] === 'Admin')
               else
               {
                 echo "<td>
-                  <a href='index.php?ACTION=desactivar-activar-profesor&ID=$fila[ID]'
+                  <a href='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
                       title='Activar a $fila[Nombre]'
                       onclick=\"return confirm('¡Cuidado! Si realiza este cambio ahora, se considerará que el profesor vuelve a trabajar en el centro.')\">
                       <span class='glyphicon glyphicon-ok add_icon'></span>
@@ -93,7 +93,7 @@ if($_SESSION['Perfil'] === 'Admin')
               }
               echo "<td><a class='reset_icon'
                       title='Restablecer contraseña de $fila[Nombre]'
-                      href='index.php?ACTION=reset_pass&ID=$fila[ID]'
+                      href='index.php?ACTION=profesores&OPT=reset-pass&ID=$fila[ID]'
                       onclick=\"return confirm('Va a restablecer la contraseña de $fila[Nombre]  ¿Desea continuar?.')\"><span class='glyphicon glyphicon-refresh reset_icon'></span></a></td>";
             }
         }

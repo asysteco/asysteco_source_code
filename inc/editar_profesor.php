@@ -68,7 +68,7 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
                         } 
                         else
                         {
-                            echo "<a href='index.php?ACTION=retirar-sustitucion&ID=$datos[ID]' class='btn btn-info'>Retirar Sustituto</a><br><br>";
+                            echo "<a href='index.php?ACTION=profesores&OPT=remove-sustituto&ID=$datos[ID]' class='btn btn-info'>Retirar Sustituto</a><br><br>";
                         }
                     }
                     echo "<button class='btn btn-info' name='ACTION' value='editar_profesor'>Actualizar Profesor</button></br></br>";
