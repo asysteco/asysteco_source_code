@@ -78,7 +78,7 @@
                         <td>$datos_rec[Asunto]</td>
                         <td>$datos_rec[Mensaje]</td>
                         <td>$dia/$m/$Y $h</td>
-                        <td><a onclick=\"return confirm('¿Estas seguro de borrar el mensaje?')\" href='index.php?ACTION=eliminar_mensaje&ID=$datos_rec[ID]'><span class='glyphicon glyphicon-trash'></span></a></td>
+                        <td><a onclick=\"return confirm('¿Estas seguro de borrar el mensaje?')\" href='index.php?ACTION=mensajes&OPT=remove&ID=$datos_rec[ID]'><span class='glyphicon glyphicon-trash'></span></a></td>
                     </tr> 
                 ";
             }
@@ -173,7 +173,7 @@
                         <td>$datos_env[Asunto]</td>
                         <td>$datos_env[Mensaje]</td>
                         <td>$dia/$m/$Y $h</td>
-                        <td><a onclick=\"return confirm('¿Estas seguro de borrar el mensaje?')\" href='index.php?ACTION=eliminar_mensaje&ID=$datos_env[ID]'><span class='glyphicon glyphicon-trash'></span></a></td>
+                        <td><a onclick=\"return confirm('¿Estas seguro de borrar el mensaje?')\" href='index.php?ACTION=mensajes&OPT=remove&ID=$datos_env[ID]'><span class='glyphicon glyphicon-trash'></span></a></td>
                     </tr> 
                 ";
             }
