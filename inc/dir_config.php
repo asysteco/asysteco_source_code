@@ -12,3 +12,9 @@ $dirs = [
     'inc' => $basedir . $subdir . '/inc/',
     'class' => $basedir . $subdir . '/class/',
 ];
+
+$act_home = '';
+$act_horario = '';
+$act_profesores = '';
+$act_cal_escolar = '';
+$act_usuario = '';
