@@ -1,7 +1,7 @@
 <?php
 if($_SESSION['Perfil'] === 'Admin')
 { 
- if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC"))
+ if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE $class->id_profesor=$class->profesores.ID) ORDER BY ID ASC"))
  {
    if ($response->num_rows > 0)
    {
@@ -18,7 +18,7 @@ if($_SESSION['Perfil'] === 'Admin')
     while ($fila = $response->fetch_assoc())
     {
         echo "<tr id='guardias_$fila[ID]' class='row_prof'>";
-        if($fila['Tipo'] == 'Admin')
+        //if($fila['Tipo'] == 'Admin')
             {
               echo "<td>$fila[ID]</td>";
               echo "<td>$fila[Nombre]</td>";
