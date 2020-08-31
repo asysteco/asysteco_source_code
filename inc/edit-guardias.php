@@ -413,7 +413,7 @@ echo "<script>
     })
 </script>";
 
-$totalreg = $anterior->fetch_assoc();
+/*$totalreg = $anterior->fetch_assoc();
 if($anterior['ID'] < $totalreg)
 {
     function ocultar(){
@@ -425,4 +425,4 @@ else
     function mostrar(){
         document.getElementById('anterior-profesor').style.display = 'block';
         }
-}
+}*/
