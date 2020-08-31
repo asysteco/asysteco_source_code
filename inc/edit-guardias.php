@@ -221,7 +221,7 @@ else
                    }
                    echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
                    echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
-                   echo "<a id='siguiente-profesor' class='btn btn-success' style='margin-rigth:150px;'> Siguiente</a>";
+                   echo "<a id='siguiente-profesor' class='btn btn-success' style='margin-left:250px;'> Siguiente</a>";
                    echo "<div id='response'></div>";
                    echo "</br><table class='table'>";
                        echo "<thead>";
