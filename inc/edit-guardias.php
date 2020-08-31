@@ -29,23 +29,27 @@ if(isset($_GET['profesor']))
                    {
                        $ERR_MSG = $class->ERR_ASYSTECO;
                    }
+                 
+                   echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: ";
                    
-                    if($select = $class->query("SELECT DISTINCT $class->profesores.Nombre, $class->profesores.ID
-                    FROM $class->profesores WHERE EXISTS 
-                    (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1"))
-                    {
-                        echo "<select id='select-edit-guardias'>";
-                            while($selection = $select->fetch_assoc())
-                            {
-                                echo "<option value='$selection[ID]'>$selection[Nombre]</option>";
-                            }
-                        echo "</select>";
-                    }
-                    else
-                    {
-                        $ERR_MSG = $class->ERR_ASYSTECO;
-                    }
-                   echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
+                   if($select = $class->query("SELECT DISTINCT $class->profesores.Nombre, $class->profesores.ID
+                   FROM $class->profesores WHERE EXISTS 
+                   (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1"))
+                   {
+                       echo "<select id='select-edit-guardias'>";
+                           while($selection = $select->fetch_assoc())
+                           {
+							   $n['ID'] == $selection['ID'] ? $selection['ID'] = "'$selection[ID]' selected" : $selection['ID'] = "$selection[ID]";
+                               echo "<option value=$selection[ID] >$selection[Nombre]</option>";
+                           }
+                       echo "</select>";
+                   }
+                   else
+                   {
+                       $ERR_MSG = $class->ERR_ASYSTECO;
+                   }
+                   echo "</h2>";
+
                    if($fila['Primero'] != $_GET['profesor'] && $fila['Primero'] != $anterior['ID'])
                    {
                         echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
@@ -253,7 +257,27 @@ else
                    {
                        $ERR_MSG = $class->ERR_ASYSTECO;
                    }
-                   echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
+                 
+                   echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: ";
+                   
+                   if($select = $class->query("SELECT DISTINCT $class->profesores.Nombre, $class->profesores.ID
+                   FROM $class->profesores WHERE EXISTS 
+                   (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1"))
+                   {
+                       echo "<select id='select-edit-guardias'>";
+                           while($selection = $select->fetch_assoc())
+                           {
+							   $n['ID'] == $selection['ID'] ? $selection['ID'] = "'$selection[ID]' selected" : $selection['ID'] = "$selection[ID]";
+                               echo "<option value=$selection[ID] >$selection[Nombre]</option>";
+                           }
+                       echo "</select>";
+                   }
+                   else
+                   {
+                       $ERR_MSG = $class->ERR_ASYSTECO;
+                   }
+                   echo "</h2>";
+                   
                    echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
                    echo "<div id='response'></div>";
                    echo "</br><table class='table'>";
