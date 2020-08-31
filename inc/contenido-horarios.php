@@ -1,7 +1,6 @@
 <div class="container" style="margin-top:50px">
 <?php
 
-
 if(isset($_GET['ACTION']) && $_GET['OPT'] == 'modificar-horario')
 {
     include_once($dirs['inc'] . 'horarios-edit.php');
