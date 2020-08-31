@@ -14,7 +14,7 @@ if($response = $class->query("SELECT $class->horarios.*, Diasemana.Diasemana
         echo "<h2>Horario: $n[Nombre]</h2>";
         echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=edit-horario-profesor&profesor=$n[ID]' class='btn btn-success'>Editar horario</a>";
         echo "<input id='fecha-edit' style='width: 25%; display: inline-block; margin-left: 25px;' type='text' class='form-control' placeholder='Seleccione una fecha...'>";
-        echo "<a id='eliminar-horario' style='margin-left: 50%;' href='index.php?ACTION=delete-horario-profesor&profesor=$n[ID]' class='btn btn-danger' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
+        echo "<a id='eliminar-horario' style='margin-left: 50%;' href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
         echo "<div id='response'></div>";
         echo "</br><table class='table'>";
             echo "<thead>";
