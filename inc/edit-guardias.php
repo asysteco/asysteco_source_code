@@ -33,7 +33,7 @@ if(isset($_GET['profesor']))
                    }
                    echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
                    echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
-                   echo "<a id='siguiente-profesor' class='btn btn-success'> Siguiente</a>";
+                   echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
                    echo "<div id='response'></div>";
                    echo "</br><table class='table'>";
                        echo "<thead>";
@@ -235,7 +235,7 @@ else
                    }
                    echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
                    echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
-                   echo "<a id='siguiente-profesor' class='btn btn-success' style='margin-left:700px;'> Siguiente</a>";
+                   echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
                    echo "<div id='response'></div>";
                    echo "</br><table class='table'>";
                        echo "<thead>";
