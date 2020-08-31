@@ -214,6 +214,14 @@ else
       {
        $fila = $response->fetch_assoc();
        $_GET['profesor'] = $fila['ID'];
+       if(! $siguiente = $class->query("SELECT ID FROM Profesores WHERE ID > '$fila[ID]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC LIMIT 1")->fetch_assoc())
+       {
+            $ERR_MSG = $class->ERR_ASYSTECO;
+       }
+       if(! $anterior = $class->query("SELECT ID FROM Profesores WHERE ID < '$fila[ID]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID DESC LIMIT 1")->fetch_assoc())
+       {
+            $ERR_MSG = $class->ERR_ASYSTECO;
+       }
            if($response = $class->query("SELECT $class->horarios.*, Diasemana.Diasemana 
                                        FROM ($class->horarios INNER JOIN $class->profesores ON $class->horarios.ID_PROFESOR=$class->profesores.ID) 
                                        INNER JOIN Diasemana ON Diasemana.ID=$class->horarios.Dia WHERE $class->profesores.ID='$_GET[profesor]' 
