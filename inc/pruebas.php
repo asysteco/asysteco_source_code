@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top:75px;">
     <div class="row">
         <div class="col-xs-12">
             <div id="guardias-response"></div>
