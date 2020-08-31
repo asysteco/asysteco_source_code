@@ -9,12 +9,11 @@ if($_POST['ID'] != '')
     if($class->query($sql))
     {
         $MSG = "Datos actualizados correctamente.";
-        header('Refresh:1;index.php?ACTION=profesores');
+        header("Location: $_SERVER[HTTP_REFERER]");
     }
     else
     {
         $ERR_MSG = $class->ERR_ASYSTECO;
-        $ERR_MSG .= var_dump($_POST);
     }
 }
 

@@ -46,6 +46,3 @@ if(isset($_POST['ID']) && $_POST['ID'] != '')
         $ERR_MSG = $class->ERR_ASYSTECO;
     }
 }
-
-
-?>
