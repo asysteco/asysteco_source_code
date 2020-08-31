@@ -6,7 +6,7 @@ if($_POST['ID'] != '')
     VALUES ('$_POST[ID]', '$_POST[Profesor]', '$_POST[Asunto]', '$_POST[Mensaje]')"))
     {
         $MSG = "Mensaje enviado correctamente.";
-        header('Location:index.php?ACTION=form_mensajes');
+        header('Location:index.php?ACTION=mensajes');
     }
     else
     {
