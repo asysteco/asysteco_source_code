@@ -29,6 +29,22 @@ if(isset($_GET['profesor']))
                    {
                        $ERR_MSG = $class->ERR_ASYSTECO;
                    }
+                   
+                    if($select = $class->query("SELECT DISTINCT $class->profesores.Nombre, $class->profesores.ID
+                    FROM $class->profesores WHERE EXISTS 
+                    (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1"))
+                    {
+                        echo "<select id='select-edit-guardias'>";
+                            while($selection = $select->fetch_assoc())
+                            {
+                                echo "<option value='$selection[ID]'>$selection[Nombre]</option>";
+                            }
+                        echo "</select>";
+                    }
+                    else
+                    {
+                        $ERR_MSG = $class->ERR_ASYSTECO;
+                    }
                    echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
                    if($fila['Primero'] != $_GET['profesor'] && $fila['Primero'] != $anterior['ID'])
                    {
