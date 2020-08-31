@@ -5,6 +5,7 @@ if($_SESSION['Perfil'] === 'Admin')
  {
    if ($response->num_rows > 0)
    {
+    echo '<div class="container" style="margin-top:50px">';
     echo "<div id='horario'></div>";
     echo "<h2>Profesores</h2>";
     include_once($dirs['inc'] . 'registrar-profesor.php');
@@ -99,6 +100,7 @@ if($_SESSION['Perfil'] === 'Admin')
         }
     echo "</tbody>";
     echo "</table>";
+    echo '</div>';
     include_once($dirs['public'] . 'js/profesores.js');
    }
    else

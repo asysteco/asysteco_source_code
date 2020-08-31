@@ -18,6 +18,14 @@ if($response4 = $class->query("SELECT $class->lectivos.Fecha FROM $class->lectiv
                     }
                 }
                 $MSG = "<span style='color: green;'>Marcajes por horas actualizados correctamente</span>";
+                if(isset($ERR_MSG)  && $ERR_MSG != '')
+                {
+                    header("Location: $_SERVER[HTTP_REFERER]&ERR_MSG=" . $ERR_MSG);
+                }
+                else
+                {
+                    header("Location: $_SERVER[HTTP_REFERER]&MSG=" . $MSG);
+                }
             }
             else
             {
@@ -39,6 +47,14 @@ if($response4 = $class->query("SELECT $class->lectivos.Fecha FROM $class->lectiv
                     }
                 }
                 $MSG .= "<br><span style='color: green;'>Marcajes por horas actualizados correctamente</span>";
+                if(isset($ERR_MSG)  && $ERR_MSG != '')
+                {
+                    header("Location: $_SERVER[HTTP_REFERER]&ERR_MSG=" . $ERR_MSG);
+                }
+                else
+                {
+                    header("Location: $_SERVER[HTTP_REFERER]&MSG=" . $MSG);
+                }
             }
             else
             {
@@ -59,6 +75,14 @@ if($response4 = $class->query("SELECT $class->lectivos.Fecha FROM $class->lectiv
                     }
                 }
                 $MSG = "<span style='color: green;'>Marcajes por horas actualizados correctamente</span>";
+                if(isset($ERR_MSG)  && $ERR_MSG != '')
+                {
+                    header("Location: $_SERVER[HTTP_REFERER]&ERR_MSG=" . $ERR_MSG);
+                }
+                else
+                {
+                    header("Location: $_SERVER[HTTP_REFERER]&MSG=" . $MSG);
+                }
             }
             else
             {

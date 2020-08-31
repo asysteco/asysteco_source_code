@@ -19,7 +19,7 @@
                 
 
                 <!-- Login Form -->
-                <form class="login-form" action="index.php?ACTION=enviar_mensaje" method="post">
+                <form class="login-form" action="index.php?ACTION=mensajes&OPT=add" method="post">
                     <input type="text" name="ID" class="hidden" value="<?php echo $_SESSION['ID']; ?>">
                     <?php
                         include_once($dirs['inc'] . 'select_profesores.php');
