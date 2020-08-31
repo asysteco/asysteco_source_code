@@ -5,7 +5,7 @@ if($_SESSION['Perfil'] === 'Admin')
  {
    if ($response->num_rows > 0)
    {
-    echo "<div id='profesores'></div>";
+    /*echo "<div id='guardias'></div>";
     echo "<h2>Edición de Guardias</h2>";
     echo "</br><table id='tabla_profesores' class='table table-hover'>";
     echo "<thead>";
@@ -17,10 +17,12 @@ if($_SESSION['Perfil'] === 'Admin')
     echo "<tbody>";
     while ($fila = $response->fetch_assoc())
     {
-        echo "<tr id='profesores_$fila[ID]' class='row_prof'>";
+        echo "<tr id='guardias_$fila[ID]' class='row_prof'>";
               echo "<td>$fila[ID]</td>";
               echo "<td>$fila[Nombre]</td>";
-    }
+    }*/
+    $fila = $response->fetch_assoc();
+    var_dump($fila);
    }
    else
    {
