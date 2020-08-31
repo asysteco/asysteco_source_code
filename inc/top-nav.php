@@ -166,7 +166,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
           echo "</li>";
           
           echo "<li class='$act_asistencia'>";
-            echo "<a href='$_SERVER[PHP_SELF]?ACTION=asistencias&sesion&d=$d&m=$m&Y=$Y'><span class='glyphicon glyphicon-check'></span> Mis asistencias</a>";
+            echo "<a href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=sesion&d=$d&m=$m&Y=$Y'><span class='glyphicon glyphicon-check'></span> Mis asistencias</a>";
           echo "</li>";
         echo '</ul>';
 
