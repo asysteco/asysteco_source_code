@@ -1,11 +1,15 @@
 <?php
 if(isset($_GET['profesor']))
 {
-    if ($response = $class->query("SELECT MAX($class->profesores.ID) AS Ultimo, MIN($class->profesores.ID) AS Primero, $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE ID='$_GET[profesor]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC"))
+    if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE ID='$_GET[profesor]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC"))
     {
       if ($response->num_rows > 0)
       {
        $fila = $response->fetch_assoc();
+       if(! $maxmin = $class->query("SELECT MAX(Profesores.ID) AS Ultimo, MIN(Profesores.ID) AS Primero FROM Profesores WHERE Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM Horarios WHERE ID_PROFESOR=Profesores.ID) ORDER BY ID ASC")->fetch_assoc())
+       {
+            $ERR_MSG = $class->ERR_ASYSTECO;
+       }
        if(! $siguiente = $class->query("SELECT ID FROM Profesores WHERE ID > '$fila[ID]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC LIMIT 1")->fetch_assoc())
        {
             $ERR_MSG = $class->ERR_ASYSTECO;
@@ -34,10 +38,16 @@ if(isset($_GET['profesor']))
                    {
                         echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
                    }
-                   var_dump($primero);
-                   var_dump($ultimo);
+                   var_dump($fila['Primero']);
+                   echo "</br>";
+                   echo "SELECT MAX($class->profesores.ID) AS Ultimo, MIN($class->profesores.ID) AS Primero, $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE ID='$_GET[profesor]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC";
+                   echo "</br>";
+                   var_dump($fila['Ultimo']);
+                   echo "</br>";
                    var_dump($_GET['profesor']);
-                   
+                   echo "</br>";
+
+
                    echo "<div id='response'></div>";
                    echo "</br><table class='table'>";
                        echo "<thead>";
