@@ -14,12 +14,6 @@ if(isset($_GET['profesor']))
        {
             $ERR_MSG = $class->ERR_ASYSTECO;
        }
-       var_dump($siguiente);
-       echo "SELECT ID FROM Profesores WHERE ID > '$fila[ID]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC LIMIT 1";
-       echo "</br>";
-       var_dump($anterior);
-       echo "SELECT ID FROM Profesores WHERE ID < '$fila[ID]' AND Activo=1 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID DESC LIMIT 1";
-
            if($response = $class->query("SELECT $class->horarios.*, Diasemana.Diasemana 
                                        FROM ($class->horarios INNER JOIN $class->profesores ON $class->horarios.ID_PROFESOR=$class->profesores.ID) 
                                        INNER JOIN Diasemana ON Diasemana.ID=$class->horarios.Dia WHERE $class->profesores.ID='$_GET[profesor]' 
@@ -418,3 +412,17 @@ echo "<script>
         $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=$siguiente[ID]')
     })
 </script>";
+
+$totalreg = $anterior->fetch_assoc();
+if($anterior['ID'] < $totalreg)
+{
+    function ocultar(){
+        document.getElementById('anterior-profesor').style.display = 'none';
+        }
+}
+else
+{
+    function mostrar(){
+        document.getElementById('anterior-profesor').style.display = 'block';
+        }
+}
