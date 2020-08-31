@@ -30,11 +30,11 @@ if(isset($_GET['profesor']))
                        $ERR_MSG = $class->ERR_ASYSTECO;
                    }
                    echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
-                   if($fila['Primero'] != $_GET['profesor'])
+                   if($fila['Primero'] != $_GET['profesor'] && $fila['Primero'] != $anterior['ID'])
                    {
                         echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
                    }
-                   if($fila['Ultimo'] != $_GET['profesor'])
+                   if($fila['Ultimo'] != $_GET['profesor'] && $fila['Primero'] != $siguiente$fila['Primero'] != $anterior['ID']['ID'])
                    {
                         echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
                    }
