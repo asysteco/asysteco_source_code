@@ -13,7 +13,7 @@ echo '<div class="container-fluid" style="margin-top:50px">';
         include($dirs['inc'] . 'contenido-guardias.php');
     echo "</div>";
     echo "</div>";
-echo "</div>";
+echo "</div>"; 
 include_once($dirs['public'] . 'js/qr-reader.js');
 }
 else
