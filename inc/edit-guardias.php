@@ -26,8 +26,14 @@ if(isset($_GET['profesor']))
                        $ERR_MSG = $class->ERR_ASYSTECO;
                    }
                    echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
-                   echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
-                   echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
+                   if($fila['Primero'] != $fila['ID'])
+                   {
+                        echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
+                   }
+                   if($fila['Ultimo'] != $fila['ID'])
+                   {
+                        echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
+                   }
                    echo "<div id='response'></div>";
                    echo "</br><table class='table'>";
                        echo "<thead>";
@@ -228,7 +234,6 @@ else
                        $ERR_MSG = $class->ERR_ASYSTECO;
                    }
                    echo "<h2 id='profesor_act' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
-                   echo "<a id='anterior-profesor' class='btn btn-success'> Anterior</a>";
                    echo "<a id='siguiente-profesor' class='btn btn-success pull-right'> Siguiente</a>";
                    echo "<div id='response'></div>";
                    echo "</br><table class='table'>";
@@ -412,17 +417,3 @@ echo "<script>
         $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=$siguiente[ID]')
     })
 </script>";
-
-/*$totalreg = $anterior->fetch_assoc();
-if($anterior['ID'] < $totalreg)
-{
-    function ocultar(){
-        document.getElementById('anterior-profesor').style.display = 'none';
-        }
-}
-else
-{
-    function mostrar(){
-        document.getElementById('anterior-profesor').style.display = 'block';
-        }
-}*/
