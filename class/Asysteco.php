@@ -165,6 +165,21 @@ class Asysteco
         }
     }
 
+    function validFormSQLDate($date)
+    {
+        if(preg_match('/^(19[0-9]{2}|20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[01])$/', $date))
+        {
+            return true;
+        }
+        else
+        {
+            $this->ERR_ASYSTECO = "Formato de fecha no válido. 
+            <br>
+            Formato válido: AAAA-mm-dd";
+            return false;
+        }
+    }
+
     function validFormIni($registerini)
     {
         $registerini = strtoupper($registerini);
