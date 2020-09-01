@@ -419,14 +419,21 @@ else
                                            {
                                                 echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;'>";
                                                 isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
+                                                if($resp = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edificio<>0"))
+                                                {
+                                                    echo "<select class='entrada'>";
+                                                    while($row = $resp->fetch_assoc())
+                                                    {
+                                                        echo "<option value='$row[Edificio]'>Edificio $row[Edificio]</option>";
+                                                    }
+                                                    echo "</select>";
+
+                                                    echo '<br>';
+
                                                     echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&h=$horavar' title='Asignar Guardia'>";
                                                         echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
-                                                        echo "<select class='entrada'>";
-                                                        echo "<option value='1'>Edificio 1</option>";
-                                                        echo "<option value='2'>Edificio 2</option>";
-                                                        echo "<option value='3'>Edificio 3</option>";
-                                                        echo "</select>";
                                                     echo "</a>";
+                                                }
                                                 echo "</td>";
                                            }
                                        }
@@ -486,9 +493,7 @@ $('#select-edit-guardias').on('change', function(){
 echo "<script>
 $('.act').on('click', function(){
     $(this).hide(),
-    $(this).children('select').show(),
     enlace = $(this).attr('enlace'),
-    profesor = $('#select-edit-guardias').val(),
     $('#act-response').load(enlace), 
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$n[ID])
 })
