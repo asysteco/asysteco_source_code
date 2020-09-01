@@ -421,6 +421,11 @@ else
                                                 isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
                                                     echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&h=$horavar' title='Asignar Guardia'>";
                                                         echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
+                                                        echo "<select class='entrada'>";
+                                                        echo "<option value='1'>Edificio 1</option>";
+                                                        echo "<option value='2'>Edificio 2</option>";
+                                                        echo "<option value='3'>Edificio 3</option>";
+                                                        echo "</select>";
                                                     echo "</a>";
                                                 echo "</td>";
                                            }
@@ -480,6 +485,8 @@ $('#select-edit-guardias').on('change', function(){
 </script>";
 echo "<script>
 $('.act').on('click', function(){
+    $(this).hide(),
+    $(this).children('select').show(),
     enlace = $(this).attr('enlace'),
     profesor = $('#select-edit-guardias').val(),
     $('#act-response').load(enlace), 
