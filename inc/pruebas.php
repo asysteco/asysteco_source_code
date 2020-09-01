@@ -1,6 +1,33 @@
 <html>
 
 <header>
+<style>  
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        min-height: 100vh;
+        flex-wrap: wrap;
+    }       
+    .pie {
+        align-self: flex-end;
+        background-color: #222;
+        line-heigth: 3;
+        text-align:center;
+        width: 100%;
+        /*background-color: #222;
+        position: fixed;
+        display: inline-block;
+        align-self: flex-end;
+        bottom: 0;
+        width: 100%;
+        height: 50px;*/
+        }
+    .copyright {
+        text-align: center;
+        color: #9d9d9d;
+        }
+</style>
 </header>
 <body>
 <div style="margin-top:100px">
@@ -15,21 +42,7 @@
 
 </div>
 <footer>
-        <style>         
-            .pie {
-                background-color: #222;
-                position: fixed;
-                display: inline-block;
-                align-self: flex-end;
-                bottom: 0;
-                width: 100%;
-                height: 50px;
-                }
-            .copyright {
-                 text-align: center;
-                color: #9d9d9d;
-                }
-        </style>
+        
 
             <div class="pie">
                 <a href="#" title="Asysteco" alt="Asysteco" aria-label="Asysteco">
