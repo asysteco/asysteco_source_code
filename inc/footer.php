@@ -3,8 +3,8 @@
                 <style>            
                 .pie {
                     background-color: #222;
-                    /*position: fixed;
-                    display: inline-block;*/
+                    /*position: fixed;*/
+                    display: inline-block;
                     align-self: flex-end;
                     bottom: 0;
                     width: 100%;
