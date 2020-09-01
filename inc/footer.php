@@ -1,9 +1,12 @@
         </div>
             <footer>
-                <style>            
+                <style> 
+                body {
+                    flex-wrap: wrap;
+                }           
                 .pie {
                     background-color: #222;
-                    /*position: fixed;*/
+                    position: fixed;
                     display: inline-block;
                     align-self: flex-end;
                     bottom: 0;
