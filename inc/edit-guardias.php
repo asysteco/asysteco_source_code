@@ -15,6 +15,6 @@
 <script>
 $(document).ready(function(){
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias'),
-    $('#loading').delay().fadeOut()
+    $('#loading').hide()
 })
 </script>

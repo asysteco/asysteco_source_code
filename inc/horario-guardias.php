@@ -264,7 +264,8 @@ enlace = $(this).attr('enlace'),
 $('#act-response').load(enlace),
 setTimeout(function(){
 $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$profesor)
-},200)
+},200),
+$('#loading').delay().fadeOut()
 });
 
 $('.remove-guardia').on('click', function(){
@@ -275,7 +276,8 @@ enlace = $(this).attr('enlace'),
 $('#act-response').load(enlace),
 setTimeout(function(){
 $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$profesor)
-},200)
+},200),
+$('#loading').delay().fadeOut()
 });
 
 $('.edificio').on('change', function() {
