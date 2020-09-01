@@ -503,7 +503,6 @@ $('.act').on('click', function(){
 echo "<script>
 $('.edificio').on('change', function() {
     edificio = $(this).val(),
-	alert(edificio),
     id = $(this).attr('id').split('-'),
     plus = 'plus-'+id[1]+'-'+id[2];
     if(edificio == '')
