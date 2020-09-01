@@ -5,7 +5,7 @@
         </div>
     </div>
 </div>
-<div class="act-response" hidden></div>
+<div id="act-response" hidden></div>
 <script>
 $(document).ready(function(){
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias')
