@@ -1,7 +1,7 @@
 <footer>
 <style>            
 .pie {
-      background-color: black;
+      background-color: #222;
       position: absolute;
       display: inline-block;
       bottom: 0;
