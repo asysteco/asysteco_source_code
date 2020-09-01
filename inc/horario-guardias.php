@@ -191,7 +191,12 @@ if(isset($_GET['profesor']))
                                            }
                                            else
                                            {
-                                               echo "<td style='vertical-align: middle; text-align: center;'></td>";
+                                                echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;'>";
+                                                isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
+                                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&Hora=$horavar'>";
+                                                        echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
+                                                    echo "</a>";
+                                                echo "</td>";
                                            }
                                        }
                                        echo "</tr>";
@@ -412,7 +417,12 @@ else
                                            }
                                            else
                                            {
-                                               echo "<td style='vertical-align: middle; text-align: center;'></td>";
+                                                echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;'>";
+                                                isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
+                                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&Hora=$horavar'>";
+                                                        echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
+                                                    echo "</a>";
+                                                echo "</td>";
                                            }
                                        }
                                        echo "</tr>";
