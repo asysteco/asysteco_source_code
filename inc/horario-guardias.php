@@ -203,7 +203,7 @@ if($response = $class->query($sql))
                             }
                             else
                             {
-                                echo "<td style='vertical-align: middle; text-align: center;'>";
+                                echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;'>";
                                 isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
                                 if($resp = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edificio<>0 ORDER BY Edificio ASC"))
                                 {
