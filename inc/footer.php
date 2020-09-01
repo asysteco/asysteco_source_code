@@ -1,5 +1,5 @@
         </div>
-        <footer>
+        <footer class="d-flex flex-colum min-vh-100">
 <style>            
 .pie {
     background-color: #222;
@@ -8,7 +8,6 @@
     bottom: 0;
     width: 100%;
     height: 50px;
-    overflow: hidden;
     }
 .copyright {
     text-align: center;
@@ -22,6 +21,11 @@
     </a>
     <p class="copyright"> Copyright ® Asysteco</p>
 </div> 
+<script>
+    $("button").click(function() {
+        $(".pie").toggleClass("hidden");
+    });
+</script>
 </footer>
     </body>
 </html>
