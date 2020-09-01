@@ -193,7 +193,7 @@ if(isset($_GET['profesor']))
                                            {
                                                 echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;'>";
                                                 isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
-                                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&Hora=$horavar'>";
+                                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&Hora=$horavar' title='Asignar Guardia'>";
                                                         echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
                                                     echo "</a>";
                                                 echo "</td>";
@@ -419,7 +419,7 @@ else
                                            {
                                                 echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;'>";
                                                 isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
-                                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&Hora=$horavar'>";
+                                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&Hora=$horavar' title='Asignar Guardia'>";
                                                         echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
                                                     echo "</a>";
                                                 echo "</td>";
