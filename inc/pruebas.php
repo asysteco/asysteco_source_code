@@ -1,12 +1,12 @@
 <footer>
-<div class="pie">
+<div class="pie" margin-top="50px">
     <a href="#" title="Asysteco" alt="Asysteco" aria-label="Asysteco">
         <div class="logo"></div>
     </a>
     <p class="copyright"> Copyright ® Asysteco</p>
 </div> 
             <nav>
-                <h3>Generales</h3>
+                <h4>Generales</h4>
                 <ul>
                     <li><a href="Aviso-Legal.html">Aviso legal</a></li>
                     <li><a href="Privacidad.html">Privacidad</a></li>
