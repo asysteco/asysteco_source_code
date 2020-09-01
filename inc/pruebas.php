@@ -8,6 +8,15 @@ list-style: none;
 display: inline;
 padding-right: 10px;
 }
+.pie {
+      background-color: #292C44;
+      position: absolute;
+      display: inline-block;
+      bottom: 0;
+      width: 100%;
+      height: 40px;
+      color: white;
+    }
 </style>
 
 <div class="pie" margin-top="50px">
