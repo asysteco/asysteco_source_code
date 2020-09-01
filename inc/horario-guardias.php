@@ -421,7 +421,7 @@ else
                                                 isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
                                                 if($resp = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edificio<>0 ORDER BY Edificio ASC"))
                                                 {
-                                                    echo "<select class='edificio' title='Selecciona un edificio para la guardia'>";
+                                                    echo "<select id='edificio-$j-$hora' class='edificio' title='Selecciona un edificio para la guardia'>";
                                                     echo "<option value=''>Edificio...</option>";
                                                     while($row = $resp->fetch_assoc())
                                                     {
@@ -431,7 +431,7 @@ else
 
                                                     echo '<br>';
 
-                                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&h=$horavar' title='Asignar Guardia'>";
+                                                    echo "<a id='plus-$j-$hora' class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&h=$horavar' title='Asignar Guardia'>";
                                                         echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
                                                     echo "</a>";
                                                 }
@@ -492,10 +492,24 @@ $('#select-edit-guardias').on('change', function(){
 })
 </script>";
 echo "<script>
+$('.act').hide();
 $('.act').on('click', function(){
-    $(this).hide(),
     enlace = $(this).attr('enlace'),
     $('#act-response').load(enlace), 
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$n[ID])
-})
+});
+$('.edificio').on('change', function() {
+    edificio = $(this).val(),
+    id = $(this).attr('id').split('-'),
+    plus = 'plus-'+id[1]+'-'+id[2],
+    if(edificio == '')
+    {
+        return
+    }
+    else
+    {
+        enlace = $('#'+plus).attr('enlace'),
+        $('#'+plus).attr('enlace', enlace+'&e='+edificio)
+    }
+});
 </script>";
