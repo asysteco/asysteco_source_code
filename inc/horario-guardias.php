@@ -421,7 +421,7 @@ else
                                                 isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
                                                 if($resp = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edificio<>0"))
                                                 {
-                                                    echo "<select class='entrada'>";
+                                                    echo "<select class='edificio'>";
                                                     while($row = $resp->fetch_assoc())
                                                     {
                                                         echo "<option value='$row[Edificio]'>Edificio $row[Edificio]</option>";
