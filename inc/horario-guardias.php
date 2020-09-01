@@ -498,16 +498,22 @@ $('.act').on('click', function(){
     $('#act-response').load(enlace), 
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$n[ID])
 });
+</script>";
+
+echo "<script>
 $('.edificio').on('change', function() {
     edificio = $(this).val(),
+	alert(edificio),
     id = $(this).attr('id').split('-'),
-    plus = 'plus-'+id[1]+'-'+id[2],
+    plus = 'plus-'+id[1]+'-'+id[2];
     if(edificio == '')
     {
+        $('#'+plus).hide();
         return
     }
     else
     {
+        $('#'+plus).show(),
         enlace = $('#'+plus).attr('enlace'),
         $('#'+plus).attr('enlace', enlace+'&e='+edificio)
     }

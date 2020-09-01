@@ -3,14 +3,14 @@
 $profesor = $_GET['profesor'];
 $dia = $_GET['d'];
 $hora = $_GET['h'];
-$edificio = "1";
+$edificio = $_GET['e'];
 
 if($_GET['SUBOPT'] == 'add')
 {
-    $sql = "INSERT INTO $class->horarios (ID_PROFESOR, Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida) VALUES ('$profesor', '$dia', '$hora', '$edificio', 'GU100', 'Guardia', '00:00:00', '00:00:00')";
+    $sql = "INSERT INTO $class->horarios (ID_PROFESOR, Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida) VALUES ('$profesor', '$dia', '$hora', '$edificio', 'GU". $edificio ."00', 'Guardia', '00:00:00', '00:00:00')";
     if($response = $class->query($sql))
     {
-        
+
     }
     else
     {
