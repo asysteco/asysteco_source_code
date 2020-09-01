@@ -21,11 +21,12 @@
     </a>
     <p class="copyright"> Copyright ® Asysteco</p>
 </div> 
-<script>
-    $("button").click(function() {
-        $(".pie").toggleClass("hidden");
-    });
-</script>
 </footer>
     </body>
 </html>
+
+<script>
+    $("button").click(function() {
+        $("section div").toggleClass("pie");
+    });
+</script>
