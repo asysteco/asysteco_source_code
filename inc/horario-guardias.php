@@ -76,13 +76,11 @@ if(isset($_GET['profesor']))
                            {
                                if($response2->num_rows > 0)
                                {
-                                   vardump($response2->fetch_assoc());
                                    $l = 6;
                                }
                                else
                                {
                                    $l = 5;
-                                   $tipo = "T";
                                }
                            }
                            else
@@ -195,22 +193,9 @@ if(isset($_GET['profesor']))
                                            {
                                                 echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;'>";
                                                 isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
-                                                if($resp = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edificio<>0 ORDER BY Edificio ASC"))
-                                                {
-                                                    echo "<select id='edificio-$j-$hora' class='edificio' title='Selecciona un edificio para la guardia'>";
-                                                    echo "<option value=''>Edificio...</option>";
-                                                    while($row = $resp->fetch_assoc())
-                                                    {
-                                                        echo "<option value='$row[Edificio]'>Edificio $row[Edificio]</option>";
-                                                    }
-                                                    echo "</select>";
-
-                                                    echo '<br>';
-
-                                                    echo "<a id='plus-$j-$hora' class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&h=$horavar' title='Asignar Guardia'>";
+                                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=add&profesor=$n[ID]&d=$j&h=$horavar' title='Asignar Guardia'>";
                                                         echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
                                                     echo "</a>";
-                                                }
                                                 echo "</td>";
                                            }
                                        }
@@ -317,7 +302,10 @@ else
                            {
                                if($response2->num_rows > 0)
                                {
+                                   $type = $response2->fetch_assoc();
+                                   $tipo = preg_split('//', $type['HORA_TIPO'], -1, PREG_SPLIT_NO_EMPTY);
                                    $l = 6;
+								   $tipo = $tipo[1];
                                }
                                else
                                {
@@ -510,11 +498,11 @@ echo "<script>
 $('.act').hide();
 $('.act').on('click', function(){
     enlace = $(this).attr('enlace'),
-    $('#act-response').load(enlace)
-},
+    $('#act-response').load(enlace),
 setTimeout(function(){
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$n[ID])
-},200));
+},200)
+});
 </script>";
 
 echo "<script>
