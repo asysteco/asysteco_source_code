@@ -1,12 +1,11 @@
-<div class="container" style="margin-top:75px;">
-    <div class="row">
-        <div class="col-xs-12">
-            <div id="guardias-response"></div>
-        </div>
-    </div>
-</div>
-<script>
-$(document).ready(function(){
-    $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias')
-})
-</script>
+<div class="pie">
+    <a href="#" title="Asysteco" alt="Asysteco" aria-label="Asysteco">
+        <div class="logo"></div>
+    </a>
+    <p class="copyright"> Copyright ® Asysteco</p>
+</div> 
+                <ul>
+                    <li><a href="aviso-legal.html">Aviso legal</a></li>
+                    <li><a href="privacidad.html">Privacidad</a></li>
+                    <li><a href="contactar.html">Contactar</a></li>
+	            </ul>
