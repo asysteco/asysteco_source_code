@@ -1,9 +1,9 @@
         </div>
             <footer>
                 <style>            
-                .hidden {
+                .pie {
                     background-color: #222;
-                    position: absolute;
+                    position: fixed;
                     display: inline-block;
                     bottom: 0;
                     width: 100%;
@@ -15,7 +15,7 @@
                 }
                 </style>
 
-                <div class="hidden">
+                <div class="pie">
                     <a href="#" title="Asysteco" alt="Asysteco" aria-label="Asysteco">
                         <div class="logo"></div>
                     </a>
@@ -24,9 +24,3 @@
             </footer>
     </body>
 </html>
-
-<script>
-$("button").click(function() {
-	$("seccion div").toggleClass("hidden");
-});
-</script>
