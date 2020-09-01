@@ -265,7 +265,7 @@ $('#act-response').load(enlace),
 setTimeout(function(){
 $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$profesor)
 },200),
-$('#loading').delay().fadeOut()
+$('#loading').delay('1200').fadeOut()
 });
 
 $('.remove-guardia').on('click', function(){
