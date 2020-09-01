@@ -11,7 +11,7 @@
     .pie {
         align-self: flex-end;
         background-color: #222;
-        line-heigth: 3;
+        line-height: 3;
         text-align:center;
         width: 100%;
         /*background-color: #222;
