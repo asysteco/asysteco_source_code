@@ -419,7 +419,7 @@ else
                                            {
                                                 echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;'>";
                                                 isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
-                                                if($resp = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edificio<>0"))
+                                                if($resp = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edificio<>0 ORDER BY Edificio ASC"))
                                                 {
                                                     echo "<select class='edificio'>";
                                                     while($row = $resp->fetch_assoc())
