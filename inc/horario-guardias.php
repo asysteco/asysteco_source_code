@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 <?php
 if(isset($_GET['profesor']))
 {
@@ -35,7 +34,7 @@ if(isset($_GET['profesor']))
                    
                    if($select = $class->query("SELECT DISTINCT $class->profesores.Nombre, $class->profesores.ID
                    FROM $class->profesores WHERE EXISTS 
-                   (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1 ORDER BY Nombre ASC"))
+                   (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1"))
                    {
                        echo "<select id='select-edit-guardias'>";
                            while($selection = $select->fetch_assoc())
@@ -263,7 +262,7 @@ else
                    
                    if($select = $class->query("SELECT DISTINCT $class->profesores.Nombre, $class->profesores.ID
                    FROM $class->profesores WHERE EXISTS 
-                   (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1 ORDER BY Nombre ASC"))
+                   (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1"))
                    {
                        echo "<select id='select-edit-guardias'>";
                            while($selection = $select->fetch_assoc())
@@ -466,17 +465,5 @@ echo "<script>
 $('#select-edit-guardias').on('change', function(){
     profesor = $(this).val(),
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+profesor)
-=======
-<div class="container" style="margin-top:75px;">
-    <div class="row">
-        <div class="col-xs-12">
-            <div id="guardias-response"></div>
-        </div>
-    </div>
-</div>
-<script>
-$(document).ready(function(){
-    $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias')
->>>>>>> Stashed changes
 })
-</script>
+</script>";
