@@ -172,6 +172,7 @@ if($response = $class->query($sql))
                                     echo "<span><b>Guardia</b></span>";
                                     echo "<br>";
                                     echo "<span><b>Edificio " . $filahora[$k][4] . "</b></span>";
+                                    $k++;
                                 }
                                 else
                                 {
@@ -256,6 +257,9 @@ $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+
 
 $('.act').hide();
 $('.act').on('click', function(){
+$('#loading-msg').html('Cargando...'),
+$('#loading').show(),
+$('#guardias-response').html(''),
 enlace = $(this).attr('enlace'),
 $('#act-response').load(enlace),
 setTimeout(function(){
@@ -264,6 +268,9 @@ $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+
 });
 
 $('.remove-guardia').on('click', function(){
+$('#loading-msg').html('Cargando...'),
+$('#loading').show(),
+$('#guardias-response').html(''),
 enlace = $(this).attr('enlace'),
 $('#act-response').load(enlace),
 setTimeout(function(){
