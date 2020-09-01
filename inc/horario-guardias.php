@@ -481,7 +481,7 @@ $('#select-edit-guardias').on('change', function(){
 echo "<script>
 $('.act').on('click', function(){
     enlace = $(this).attr('enlace'),
-    profesor = $(#select-edit-guardias).val(),
+    profesor = $('#select-edit-guardias').val(),
     $('#act-response').load(enlace), 
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+profesor)
 })
