@@ -495,9 +495,11 @@ echo "<script>
 $('.act').hide();
 $('.act').on('click', function(){
     enlace = $(this).attr('enlace'),
-    $('#act-response').load(enlace), 
+    $('#act-response').load(enlace)
+},
+setTimeout(function(){
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$n[ID])
-});
+},500));
 </script>";
 
 echo "<script>
@@ -512,9 +514,9 @@ $('.edificio').on('change', function() {
     }
     else
     {
-        $('#'+plus).show(),
         enlace = $('#'+plus).attr('enlace'),
-        $('#'+plus).attr('enlace', enlace+'&e='+edificio)
+        $('#'+plus).attr('enlace', enlace+'&e='+edificio),
+        $('#'+plus).show()
     }
 });
 </script>";
