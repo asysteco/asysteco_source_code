@@ -9,28 +9,6 @@
 
 
 <footer>
-        <div class="footer-container">
-			<div class="footer-main">
-				<div class="footer-columna">
-					<h3>Suscríbete</h3>
-					<input type="email" placeholder="Escriba su Correo">
-					<input type="submit" value=" Suscribirse">
-				</div>
-
-				<div class="footer-columna">
-					<h3>Dirección</h3>
-					<span class="fa fa-map-marker"><p>Avda. Al Infinito, 1000</p></span>
-					<span class="fa fa-phone"><p>+ 34 952 952 952</p></span>
-					<span class="fa fa-envelope"><p>info@asysteco.com</p></span>
-				</div>
-
-				<div class="footer-columna">
-					<h3>Sobre Nosotros</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur repellat autem, error iste odio atque eum assumenda rem aliquam, consequatur excepturi reiciendis corrupti velit aperiam?</p>
-				</div>
-			</div>
-		</div>
-
 		<div class="footer-copy-redes">
 			<div class="main-copy-redes">
 				<div class="footer-copy">
