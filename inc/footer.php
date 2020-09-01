@@ -3,7 +3,7 @@
 <style>            
 .pie {
     background-color: #222;
-    position: absolute;
+    position: fixed;
     display: inline-block;
     bottom: 0;
     width: 100%;
