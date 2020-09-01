@@ -1,6 +1,5 @@
 <html>
 
-<header>
 <style>  
     body {
         margin: 0;
@@ -28,6 +27,9 @@
         color: #9d9d9d;
         }
 </style>
+
+<header>
+
 </header>
 <body>
 <div style="margin-top:100px">
