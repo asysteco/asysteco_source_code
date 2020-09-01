@@ -1,8 +1,8 @@
 <?php
 
 $profesor = $_GET['profesor'];
-$dia = $_GET['dia'];
-$hora = $_GET['hora'];
+$dia = $_GET['d'];
+$hora = $_GET['h'];
 $edificio = "1";
 
 if($_GET['SUBOPT'] == 'add')
