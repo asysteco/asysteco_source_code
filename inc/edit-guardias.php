@@ -34,7 +34,7 @@ if(isset($_GET['profesor']))
                    
                    if($select = $class->query("SELECT DISTINCT $class->profesores.Nombre, $class->profesores.ID
                    FROM $class->profesores WHERE EXISTS 
-                   (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1"))
+                   (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1 ORDER BY Nombre ASC"))
                    {
                        echo "<select id='select-edit-guardias'>";
                            while($selection = $select->fetch_assoc())
@@ -262,7 +262,7 @@ else
                    
                    if($select = $class->query("SELECT DISTINCT $class->profesores.Nombre, $class->profesores.ID
                    FROM $class->profesores WHERE EXISTS 
-                   (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1"))
+                   (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) AND TIPO=2 AND Activo=1 ORDER BY Nombre ASC"))
                    {
                        echo "<select id='select-edit-guardias'>";
                            while($selection = $select->fetch_assoc())
