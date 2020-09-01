@@ -1,11 +1,7 @@
-<div class="info-container">
-		<div class="info-main">
-			<h3>Contactenos</h3>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit assumenda quibusdam enim minima nostrum, hic, vitae dolore commodi modi cum iste porro doloremque ullam eligendi soluta aspernatur voluptates distinctio quasi.</p>
-			<a href="#">Mas Informacion</a>
-		</div>
 
-</div>
+<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod explicabo laudantium dolorem tempora ipsam cupiditate earum exercitationem aliquam veniam reprehenderit deserunt vero maiores, quos quam atque totam! Sunt eveniet tenetur sapiente quasi atque, mollitia magnam eaque neque soluta beatae quisquam possimus sequi incidunt quis rerum culpa quibusdam omnis explicabo consequuntur optio facere repellendus laudantium. Velit, saepe nihil. Dolor nisi eaque culpa enim corporis vitae voluptates reprehenderit inventore perferendis quibusdam, ab pariatur debitis incidunt odio dolorum fugiat delectus doloribus est tempore! Magni voluptatem laboriosam necessitatibus hic nostrum error provident recusandae facilis laborum, odit eveniet magnam nisi. Dignissimos, ex ipsum adipisci tempore magni repellat explicabo laborum perferendis ad ea quo fugit iusto unde similique est? Quisquam obcaecati quos blanditiis quis, illum possimus placeat, cumque repellat doloribus facere maxime impedit amet consequatur perspiciatis pariatur. Itaque quos ad velit similique hic, aliquid est eius eveniet totam tempora ea quis iste quasi nemo recusandae nobis rerum sit dignissimos. Voluptate tempore nemo fugiat adipisci amet magni similique maiores nostrum, tempora illum ducimus voluptas dignissimos perferendis recusandae rerum quos suscipit deleniti quae minus corrupti aperiam enim eligendi vitae. Temporibus molestiae dolorem, dolorum voluptates beatae ducimus consectetur atque labore facilis perferendis earum, inventore, nostrum ullam perspiciatis error sequi.</p>
+
+
 <footer>
         <div class="footer-container">
 			<div class="footer-main">
