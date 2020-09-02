@@ -649,7 +649,7 @@ class Asysteco
                         $this->query($ejec);
                     }
                 }
-                elseif(func_num_args() == 3)
+                elseif(func_num_args() == 4)
                 {
                     $args = func_get_args();
                     $profesor = $args[0];
@@ -666,7 +666,7 @@ class Asysteco
                         {
                             $ejec = "INSERT INTO Marcajes SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, HORA_TIPO, Dia, 0
                             FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-                            WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND Hora='$hora'";
+                            WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND $dia=WEEKDAY('$lectivo[Fecha]')+1 AND HORA_TIPO='$hora'";
                             $this->query($ejec);
                         }
                     }
@@ -678,8 +678,6 @@ class Asysteco
                         $lectivo = $resp->fetch_assoc();
     
                         $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND Hora='$hora' AND Fecha>'$lectivo[Fecha]'";
-                        echo $ejec;
-                        return true;
                         $this->query($ejec);
                     }
                     else
