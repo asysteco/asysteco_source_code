@@ -629,9 +629,6 @@ class Asysteco
 
     function updateHoras()
     {
-        echo func_num_args();
-        return true;
-        $args = func_get_args();
         if(func_num_args() == 0)
         {
             if($response = $this->query("SELECT DISTINCT ID_PROFESOR FROM $this->horarios"))
@@ -687,7 +684,6 @@ class Asysteco
                         {
                             return false;
                         }
-            
                         // Modificamos Hora_entrada y Hora_salida de cada Horario
                         if(! $this->query("UPDATE $this->horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$profe' AND Dia='$i'"))
                         {
@@ -729,7 +725,6 @@ class Asysteco
                                         {
                                             return false;
                                         }
-                                        echo $p['Inicio'];
                                     }
                                     else
                                     {
@@ -751,7 +746,6 @@ class Asysteco
                                         {
                                             return false;
                                         }
-                                        echo $u['Fin'];
                                     }
                                     else
                                     {
