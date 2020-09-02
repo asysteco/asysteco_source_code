@@ -214,8 +214,3 @@ else
         $ERR_MSG = $class->ERR_ASYSTECO;
     }
 }
-if(! isset($ERR_MSG))
-{
-    $MSG .= "<br>Horarios actualizados correctamente.";
-    header("Refresh: 0; url=$_SERVER[HTTP_REFERER]");
-}
