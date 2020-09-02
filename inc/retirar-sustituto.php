@@ -5,7 +5,7 @@ if($response = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE ID
     {
         if($class->query("UPDATE Profesores SET Sustituido=0 WHERE ID='$_GET[ID]'"))
         {
-            header('Location: $_SERVER[HTTP_REFERER]');
+            header("Location: $_SERVER[HTTP_REFERER]");
         }
         else
         {
