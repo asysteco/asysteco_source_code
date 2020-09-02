@@ -27,11 +27,3 @@ echo '<div class="container-fluid" style="margin-top:50px">';
     echo "</div>";
 echo "</div>";
 }
-
-echo '<div class="container-fluid" style="margin-top:50px">';
-        echo "<div class='row'>";
-        echo "<div class='col-xs-12' style='text-align: center;'>";
-            $class->marcajes();
-        echo "</div>";
-    echo "</div>";
-echo "</div>";

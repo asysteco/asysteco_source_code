@@ -119,7 +119,6 @@ if(isset($_POST['fecha']))
         {
             $ERR_MSG = "El fichero está vacío.";
         }
-        include_once($dirs['inc'] . 'marcajes.php');
     }
 }
 else
@@ -236,6 +235,6 @@ else
     {
         $ERR_MSG = "El fichero está vacío.";
     }
-    include_once($dirs['inc'] . 'marcajes.php');
+    $class->marcajes();
 }
 ?>

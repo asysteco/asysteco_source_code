@@ -14,7 +14,7 @@ if($response = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE $c
                 $MSG = "Cambios realizados correctamente.";
             }
             $_GET['ID_PROFESOR'] = $_GET['ID_SUSTITUTO'];
-            include_once($dirs['inc'] . 'marcajes.php');
+            $class->marcajes($_GET['ID_PROFESOR']);
         }
         else
         {

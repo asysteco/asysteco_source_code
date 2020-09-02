@@ -432,7 +432,7 @@ class Asysteco
                                     return false;
                                 }
                                 
-                                include_once($dirs['inc'] . 'marcajes.php');
+                                $this->marcajes();
                             }
                             return $_SESSION['fecha'] = $fechaactual;
                         }
