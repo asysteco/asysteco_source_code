@@ -9,8 +9,8 @@
 
 
 <footer>
-		<div class="footer-copy-redes">
-			<div class="main-copy-redes">
+		<!---div class="footer-copy-redes">
+			<div class="main-copy-redes"--->
 				<div class="footer-copy">
 					&copy; 2020, Todos los derechos reservados - | Asysteco |.
 				</div>
@@ -20,6 +20,6 @@
 					<a href="#" class="fa fa-youtube-play"></a>
 					<a href="#" class="fa fa-github"></a>
 				</div>
-			</div>
-		</div>
+			<!---/div>
+		</div--->
 </footer>
