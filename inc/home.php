@@ -20,10 +20,18 @@ else
 {
 echo '<div class="container-fluid" style="margin-top:50px">';
     echo "<div class='row'>";
-    echo "<div class='col-xs-12' style='text-align: center;'>";
-        include($dirs['inc'] . 'filtro-edif-guardias.php');
-        include($dirs['inc'] . 'contenido-guardias.php');
-    echo "</div>";
+        echo "<div class='col-xs-12' style='text-align: center;'>";
+            include($dirs['inc'] . 'filtro-edif-guardias.php');
+            include($dirs['inc'] . 'contenido-guardias.php');
+        echo "</div>";
     echo "</div>";
 echo "</div>";
 }
+
+echo '<div class="container-fluid" style="margin-top:50px">';
+        echo "<div class='row'>";
+        echo "<div class='col-xs-12' style='text-align: center;'>";
+            $class->marcajes();
+        echo "</div>";
+    echo "</div>";
+echo "</div>";
