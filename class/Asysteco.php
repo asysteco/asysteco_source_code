@@ -627,6 +627,238 @@ class Asysteco
         }
     }
 
+    function updateHoras()
+    {
+        echo func_num_args();
+        return true;
+        $args = func_get_args();
+        if(func_num_args() == 0)
+        {
+            if($response = $this->query("SELECT DISTINCT ID_PROFESOR FROM $this->horarios"))
+            {
+                $id = [];
+                while($row = $response->fetch_assoc())
+                {
+                    $id[] = $row['ID_PROFESOR'];
+                }
+                foreach($id as $profe)
+                {
+                    // Por cada Día, comprobamos y actualizamos sus Hora_entrada y Hora_salida
+                    for($i=1;$i<=5;$i++)
+                    {
+                        // Obtenemos su primera Hora
+                        if($res = $this->query("SELECT HORA_TIPO FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO ASC LIMIT 1"))
+                        {
+                            if($res->num_rows > 0)
+                            {
+                                $primera = $res->fetch_assoc();
+                                if(! $p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[HORA_TIPO]'")->fetch_assoc())
+                                {
+                                    return false;
+                                }
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+            
+                        // Obtenemos su ultima Hora
+                        if($res = $this->query("SELECT HORA_TIPO FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO DESC LIMIT 1"))
+                        {
+                            if($res->num_rows > 0)
+                            {
+                                $ultima = $res->fetch_assoc();
+                                if(! $u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[HORA_TIPO]'")->fetch_assoc())
+                                {
+                                    return false;
+                                }
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+            
+                        // Modificamos Hora_entrada y Hora_salida de cada Horario
+                        if(! $this->query("UPDATE $this->horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$profe' AND Dia='$i'"))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        elseif(func_num_args() == 1)
+        {
+            foreach(func_get_args() as $arg)
+            {
+                if($this->validFormDate($arg))
+                {
+                    if($response = $this->query("SELECT DISTINCT ID_PROFESOR FROM T_horarios"))
+                    {
+                        $id = [];
+                        while($row = $response->fetch_assoc())
+                        {
+                            $id[] = $row['ID_PROFESOR'];
+                        }
+                        foreach($id as $profe)
+                        {
+                            // Por cada Día, comprobamos y actualizamos sus Hora_entrada y Hora_salida
+                            for($i=1;$i<=5;$i++)
+                            {
+                                // Conseguimos su primera Hora
+                                if($res = $this->query("SELECT HORA_TIPO FROM T_horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO ASC LIMIT 1"))
+                                {
+                                    if($res->num_rows > 0)
+                                    {
+                                        $primera = $res->fetch_assoc();
+                                        if(! $p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[HORA_TIPO]'")->fetch_assoc())
+                                        {
+                                            return false;
+                                        }
+                                        echo $p['Inicio'];
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                    
+                                // Conseguimos su ultima Hora
+                                if($res = $this->query("SELECT HORA_TIPO FROM T_horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO DESC LIMIT 1"))
+                                {
+                                    if($res->num_rows > 0)
+                                    {
+                                        $ultima = $res->fetch_assoc();
+                                        if(! $u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[HORA_TIPO]'")->fetch_assoc())
+                                        {
+                                            return false;
+                                        }
+                                        echo $u['Fin'];
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                                return true;
+                                // Modificamos Hora_entrada y Hora_salida de cada Horario
+                                if(! $this->query("UPDATE T_horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$profe' AND Dia='$i'"))
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                elseif(preg_match('/^[0-9]+$/', $arg))
+                {
+                    if($response = $this->query("SELECT DISTINCT ID_PROFESOR FROM $this->horarios WHERE ID_PROFESOR='$arg'"))
+                    {
+                        $id = [];
+                        while($row = $response->fetch_assoc())
+                        {
+                            $id[] = $row['ID_PROFESOR'];
+                        }
+                        foreach($id as $profe)
+                        {
+                            // Por cada Día, comprobamos y actualizamos sus Hora_entrada y Hora_salida
+                            for($i=1;$i<=5;$i++)
+                            {
+                                // Conseguimos su primera Hora
+                                if($res = $this->query("SELECT HORA_TIPO FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO ASC LIMIT 1"))
+                                {
+                                    if($res->num_rows > 0)
+                                    {
+                                        $primera = $res->fetch_assoc();
+                                        if(! $p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[HORA_TIPO]'")->fetch_assoc())
+                                        {
+                                            return false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                    
+                                // Conseguimos su ultima Hora
+                                if($res = $this->query("SELECT HORA_TIPO FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO DESC LIMIT 1"))
+                                {
+                                    if($res->num_rows > 0)
+                                    {
+                                        $ultima = $res->fetch_assoc();
+                                        if(! $u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[HORA_TIPO]'")->fetch_assoc())
+                                        {
+                                            return false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                    
+                                // Modificamos Hora_entrada y Hora_salida de cada Horario
+                                if(! $this->query("UPDATE $this->horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$profe' AND Dia='$i'"))
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    $this->ERR_ASYSTECO = "Argumento no válido.";
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            $this->ERR_ASYSTECO = "Número de argumentos incorrecto.";
+            return false;
+        }
+    }
+
     function getHoraEntrada()
     {
         $dia = $this->getDate();
