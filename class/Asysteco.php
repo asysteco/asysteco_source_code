@@ -379,6 +379,9 @@ class Asysteco
         $time="07:45:00"; // Hora límite para comprobar horarios
         $horaactual = date("H:i:s"); // Hora actual a comparar
         $fechaactual = date("Y-m-d");
+        
+        $horaactual = "07:40:00"; 
+        $fechaactual = "2020-09-04";
         if(isset($_SESSION['fecha']) && $_SESSION['fecha'] == $fechaactual)
         {
             return true;
@@ -408,11 +411,12 @@ class Asysteco
                                 {
                                     while($row = $response2->fetch_assoc())
                                     {
-                                        if(! $this->query("INSERT INTO Horarios (ID_PROFESOR, Dia, HORA_TIPO, Aula, Grupo, Hora_entrada, Hora_salida)
+                                        if(! $this->query("INSERT INTO Horarios (ID_PROFESOR, Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida)
                                         values (
                                             '$row[ID_PROFESOR]',
                                             '$row[Dia]',
                                             '$row[HORA_TIPO]',
+                                            '$row[Edificio]',
                                             '$row[Aula]',
                                             '$row[Grupo]',
                                             '$row[Hora_entrada]',
@@ -427,6 +431,7 @@ class Asysteco
                                     }
                                 }
 
+                                $class->updateHoras($id);
                                 $this->marcajes($id, 'remove');
                                 $this->marcajes($id, 'add');
                             }
@@ -481,6 +486,10 @@ class Asysteco
         if(isset($_GET['Numero']))
         {
             $extra = "AND ($this->horarios.Aula LIKE 'AU$_GET[Numero]%' OR $this->horarios.Aula REGEXP '^[A-Z]?[0-9]+$' OR $this->horarios.Aula REGEXP '^[A-Za-z]+$')";
+        }
+        else
+        {
+            $extra = '';
         }
         
         $sql = "SELECT DISTINCT
@@ -660,7 +669,7 @@ class Asysteco
                         {
                             $ejec = "INSERT INTO Marcajes SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, HORA_TIPO, Dia, 0
                             FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-                            WHERE ID_PROFESOR='$profesor' AND Dia = WEEKDAY('$lectivo[Fecha]')+1";
+                            WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
                             $this->query($ejec);
                         }
                     }
@@ -668,12 +677,10 @@ class Asysteco
                     {
                         $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>='$fechaactual'";
                         $resp = $this->query($lectivos);
-    
-                        while($lectivo = $resp->fetch_assoc())
-                        {
-                            $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Fecha>='$fechaactual'";
-                            $this->query($ejec);
-                        }
+                        $lectivo = $resp->fetch_assoc();
+
+                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Fecha>='$fechaactual'";
+                        $this->query($ejec);
                     }
                     else
                     {
