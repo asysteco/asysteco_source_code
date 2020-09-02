@@ -11,7 +11,7 @@ if($_GET['SUBOPT'] == 'add')
     if($class->query($sql))
     {
         $class->updateHoras($profesor);
-        include_once($dirs['inc'] . 'marcajes.php');
+        $class->marcajes($profesor);
     }
     else
     {
@@ -24,7 +24,7 @@ elseif($_GET['SUBOPT'] == 'remove')
     if($class->query($sql))
     {
         $class->updateHoras($profesor);
-        include_once($dirs['inc'] . 'marcajes.php');
+        $class->marcajes($profesor, $dia, $hora);
     }
     else
     {
