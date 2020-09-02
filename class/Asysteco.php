@@ -680,7 +680,7 @@ class Asysteco
                     $n = 1;
                     while($lectivo = $resp->fetch_assoc())
                     {
-                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND Hora=$hora AND Fecha='$lectivo[Fecha]'";
+                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND Hora='$hora' AND Fecha='$lectivo[Fecha]'";
                         echo $ejec;
                         $this->query($ejec);
                         echo $n;
