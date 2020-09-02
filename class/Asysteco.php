@@ -649,9 +649,15 @@ class Asysteco
                         $this->query($ejec);
                     }
                 }
-                elseif(func_num_args() == 1)
+                elseif(func_num_args() == 3)
                 {
-                    foreach(func_get_args() as $arg)
+                    $args = func_get_args();
+                    $profesor = $args[0];
+                    $dia = $args[1];
+                    $hora = $args[2];
+                    $subopt = $args[3];
+                    
+                    if($subopt == 'add')
                     {
                         $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>='$fechaactual'";
                         $resp = $this->query($lectivos);
@@ -660,31 +666,26 @@ class Asysteco
                         {
                             $ejec = "INSERT INTO Marcajes SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, HORA_TIPO, Dia, 0
                             FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-                            WHERE Dia = WEEKDAY('$lectivo[Fecha]')+1 AND ID_PROFESOR='$arg'";
+                            WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND Hora='$hora'";
                             $this->query($ejec);
                         }
                     }
-                }
-                elseif(func_num_args() == 3)
-                {
-                    $args = func_get_args();
-                    $profesor = $args[0];
-                    $dia = $args[1];
-                    $hora = $args[2];
-                    echo $profesor;
-                    echo $dia;
-                    echo $hora;
-                    $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>=DATE_ADD('$fechaactual', INTERVAL +1 DAY)";
-                    $resp = $this->query($lectivos);
-                    echo $lectivos;
-                    $n = 1;
-                    while($lectivo = $resp->fetch_assoc())
+                    elseif($subopt == 'remove')
                     {
-                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND Hora='$hora' AND Fecha='$lectivo[Fecha]'";
+
+                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha >= DATE_ADD('$fechaactual', INTERVAL +1 DAY)";
+                        $resp = $this->query($lectivos);
+                        $lectivo = $resp->fetch_assoc();
+    
+                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND Hora='$hora' AND Fecha>'$lectivo[Fecha]'";
                         echo $ejec;
+                        return true;
                         $this->query($ejec);
-                        echo $n;
-                        $n++;
+                    }
+                    else
+                    {
+                        $this->ERR_ASYSTECO = "No se puede realizar esta acción.";
+                        return false;
                     }
                 }
                 else
