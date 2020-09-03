@@ -17,7 +17,7 @@
 
           <!-- Icon -->
           <div class="fadeIn first">
-            <img src="resources/img/<?php echo "$Titulo-logo.jpg"; ?>" id="icon" alt="Icono del centro" /> <h1>Iniciar Sesión</h1>
+            <img src="resources/img/<?php echo "$Titulo-logo.jpg"; ?>" width='125' id="icon" alt="Icono del centro" /> <h1>Iniciar Sesión</h1>
           </div>
 
           <!-- Login Form -->
