@@ -168,7 +168,7 @@ if($response = $class->query("SELECT $class->horarios.*, Diasemana.Diasemana
         {
             $ERR_MSG = $class->ERR_ASYSTECO;
         }
-        echo "<a id='crear-horario' href='index.php?ACTION=horario&OPT=crear&profesor=$n[ID]&Tipo=M' class='btn btn-success'>Crear horario para $n[Nombre]</a>";
+        echo "<a id='crear-horario' href='index.php?ACTION=horarios&OPT=crear&profesor=$n[ID]&Tipo=M' class='btn btn-success'>Crear horario para $n[Nombre]</a>";
     }
 }
 else
