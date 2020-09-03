@@ -8,7 +8,7 @@ if($response = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edifi
     {
       echo "<a href='index.php?ACTION=home&OPT=Edificio&Numero=$edificio'; ?>'><button type='button' class='btn btn-success'><span></span> Edificio 1</button></a>";
     }
-    echo "<a href='index.php'><button type='button' class='btn btn-success'><span></span> Todos</button></a>";
   }
 }
+echo "<a href='index.php'><button type='button' class='btn btn-success'><span></span> Todos</button></a>";
 echo '</div>';
