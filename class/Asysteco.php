@@ -73,7 +73,7 @@ class Asysteco
     {
 		$subrootsplit = preg_split('/\//', $_SERVER['REQUEST_URI']);
 		$subroot = '/' . $subrootsplit[1];
-		preg_match('/^\/[A-Z]+$/i', $subroot) ? $subroot = $subroot : $subroot = '' ;
+		preg_match('/^\/[A-Z-]+$/i', $subroot) ? $subroot = $subroot : $subroot = '' ;
 
 		$Titulo = preg_split('/\//', $subroot);
 		$Titulo = $Titulo[1];
@@ -216,7 +216,7 @@ class Asysteco
                     {
 						$subrootsplit = preg_split('/\//', $_SERVER['REQUEST_URI']);
 						$subroot = '/' . $subrootsplit[1];
-						preg_match('/^\/[A-Z]+$/i', $subroot) ? $subroot = $subroot : $subroot = '' ;
+						preg_match('/^\/[A-Z-]+$/i', $subroot) ? $subroot = $subroot : $subroot = '' ;
 
 						$Titulo = preg_split('/\//', $subroot);
 						$Titulo = $Titulo[1];
@@ -431,7 +431,7 @@ class Asysteco
                                     }
                                 }
 
-                                $class->updateHoras($id);
+                                $this->updateHoras($id);
                                 $this->marcajes($id, 'remove');
                                 $this->marcajes($id, 'add');
                             }
@@ -679,7 +679,7 @@ class Asysteco
                         $resp = $this->query($lectivos);
                         $lectivo = $resp->fetch_assoc();
 
-                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Fecha>='$fechaactual'";
+                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Fecha>='$lectivo[Fecha]'";
                         $this->query($ejec);
                     }
                     else
