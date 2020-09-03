@@ -1,6 +1,6 @@
 <?php
 echo '<div class="filtro_edificio">';
-if($response = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edificio<>0"))
+if($response = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edificio<>0 ORDER BY Edificio"))
 {
   if($response->num_rows > 0)
   {
