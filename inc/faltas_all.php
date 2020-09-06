@@ -6,7 +6,7 @@ $fecha = $f['year'] . "-" . $f['mon'] . "-" . $f['mday'];
 // La siguiente línea la utilizaremos para realizar pruebas
 
 //$fecha = '2020-10-22';
-if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID) INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID WHERE Fecha <= '$fecha' ORDER BY ID_PROFESOR DESC"))
+if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID) INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID WHERE NOT EXISTS (SELECT * FROM Fichar WHERE Fichar.ID_PROFESOR=Profesores.ID) AND Fecha <= '$fecha' ORDER BY Fecha DESC"))
 {
         echo "<h1>Faltas</h1>";
         echo "<input id='busca_asiste' class='fadeIn' type='text' placeholder='Seleccionar fecha ...' autocomplete='off'>";
