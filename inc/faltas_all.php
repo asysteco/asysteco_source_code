@@ -22,17 +22,24 @@ if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Mar
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
-                    while($datos = $response->fetch_assoc())
+                    if($response->num_rows > 0)
                     {
-                        $sep = preg_split('/-/', $datos['Fecha']);
-                        $dia = $sep[2];
-                        $m = $sep[1];
-                        $Y = $sep[0];
-                        echo "<tr>";
-                        echo "<td>$datos[Nombre]</td>";
-                        echo "<td>$datos[Diasemana]</td>";
-                        echo "<td>$dia/$m/$Y</td>";
-                        echo "</tr>";
+                        while($datos = $response->fetch_assoc())
+                        {
+                            $sep = preg_split('/-/', $datos['Fecha']);
+                            $dia = $sep[2];
+                            $m = $sep[1];
+                            $Y = $sep[0];
+                            echo "<tr>";
+                            echo "<td>$datos[Nombre]</td>";
+                            echo "<td>$datos[Diasemana]</td>";
+                            echo "<td>$dia/$m/$Y</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<td colspan='100%'>No existen registros de faltas.</td>";
                     }
                     echo "</tbody>";
                 echo "</table>";
