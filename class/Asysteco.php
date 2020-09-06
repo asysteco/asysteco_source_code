@@ -390,62 +390,28 @@ class Asysteco
         {
             if(strtotime($horaactual) <= strtotime($time))
             {
-                if($response = $this->query("SELECT * FROM T_horarios WHERE Fecha_incorpora = '$fechaactual'"))
+                if($response = $this->query("SELECT DISTINCT ID_PROFESOR FROM T_horarios WHERE Fecha_incorpora = '$fechaactual'"))
                 {
-                    if($response->num_rows > 0)
+                    while($fila = $response->fetch_assoc())
                     {
-                        if($response1 = $this->query("SELECT DISTINCT ID_PROFESOR FROM T_horarios WHERE Fecha_incorpora = '$fechaactual'"))
-                        {
-                            while($fila = $response1->fetch_assoc())
-                            {
-                                $todos[] = $fila['ID_PROFESOR'];
-                            }
-                            foreach($todos as $id)
-                            {
-                                if(! $this->query("DELETE FROM Horarios WHERE ID_PROFESOR = '$id'"))
-                                {
-                                    return false;
-                                }
-
-                                if($response2 = $this->query("SELECT * FROM T_horarios WHERE ID_PROFESOR = '$id' AND Fecha_incorpora = '$fechaactual'"))
-                                {
-                                    while($row = $response2->fetch_assoc())
-                                    {
-                                        if(! $this->query("INSERT INTO Horarios (ID_PROFESOR, Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida)
-                                        values (
-                                            '$row[ID_PROFESOR]',
-                                            '$row[Dia]',
-                                            '$row[HORA_TIPO]',
-                                            '$row[Edificio]',
-                                            '$row[Aula]',
-                                            '$row[Grupo]',
-                                            '$row[Hora_entrada]',
-                                            '$row[Hora_salida]')"))
-                                        {
-                                            return false;
-                                        }
-                                    }
-                                    if(! $this->query("DELETE FROM T_horarios WHERE ID_PROFESOR = '$id' AND Fecha_incorpora = '$fechaactual'"))
-                                    {
-                                        return false;
-                                    }
-                                }
-
-                                $this->updateHoras($id);
-                                $this->marcajes($id, 'remove');
-                                $this->marcajes($id, 'add');
-                            }
-                            return $_SESSION['fecha'] = $fechaactual;
-                        }
-                        else
+                        $id = $fila['ID_PROFESOR'];
+                        if(! $this->query("DELETE FROM Horarios WHERE ID_PROFESOR = '$id'"))
                         {
                             return false;
                         }
+                        $this->marcajes($id, 'remove');
+                        $insertHorario = "INSERT INTO Horarios SELECT ID_PROFESOR, Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida)
+                        FROM T_horarios WHERE ID_PROFESOR='$id' AND Fecha_incorpora='$fechaactual'";
+                        
+                        if(! $this->query($insertHorario))
+                        {
+                            return false;
+                        }
+                        $this->updateHoras($id);
+                        $this->marcajes($id, 'add');
+
                     }
-                    else
-                    {
-                        return $_SESSION['fecha'] = $fechaactual;
-                    }
+                    return $_SESSION['fecha'] = $fechaactual;
                 }
                 else
                 {
@@ -658,8 +624,8 @@ class Asysteco
                 {
                     $args = func_get_args();
                     $profesor = $args[0];
-                    $subopt = $args[3];
-
+                    $subopt = $args[1];
+                    
                     if($subopt == 'add')
                     {
                         $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>='$fechaactual'";
