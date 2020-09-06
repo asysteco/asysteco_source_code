@@ -27,9 +27,3 @@ echo '<div class="container-fluid" style="margin-top:50px">';
     echo "</div>";
 echo "</div>";
 }
-
-echo '
-    <script>
-    $("nav").hide();
-    </script>
-';
