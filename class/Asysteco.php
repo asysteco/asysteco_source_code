@@ -374,14 +374,22 @@ class Asysteco
         }
     }
 
-    function tempToValid()
+    function tempToValid($date = null)
     {
         $time="07:45:00"; // Hora límite para comprobar horarios
         $horaactual = date("H:i:s"); // Hora actual a comparar
-        $fechaactual = date("Y-m-d");
+        if(isset($date) && $date != null)
+        {
+            $fechaactual = $date;
+            unset($_SESSION['fecha']);
+        }
+        else
+        {
+            $fechaactual = date("Y-m-d");
+        }
         
-        $horaactual = "07:40:00"; 
-        $fechaactual = "2020-09-04";
+        //$horaactual = "07:40:00"; 
+        //$fechaactual = "2020-09-07";
         if(isset($_SESSION['fecha']) && $_SESSION['fecha'] == $fechaactual)
         {
             return true;
@@ -400,7 +408,7 @@ class Asysteco
                             return false;
                         }
                         $this->marcajes($id, 'remove');
-                        $insertHorario = "INSERT INTO Horarios SELECT ID_PROFESOR, Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida)
+                        $insertHorario = "INSERT INTO Horarios (ID_PROFESOR, Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida) SELECT ID_PROFESOR, Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida
                         FROM T_horarios WHERE ID_PROFESOR='$id' AND Fecha_incorpora='$fechaactual'";
                         
                         if(! $this->query($insertHorario))
@@ -625,7 +633,7 @@ class Asysteco
                     $args = func_get_args();
                     $profesor = $args[0];
                     $subopt = $args[1];
-                    
+
                     if($subopt == 'add')
                     {
                         $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>='$fechaactual'";
@@ -858,6 +866,7 @@ class Asysteco
                 }
                 elseif(preg_match('/^[0-9]+$/', $arg))
                 {
+                    unset($this->ERR_ASYSTECO);
                     if($response = $this->query("SELECT DISTINCT ID_PROFESOR FROM $this->horarios WHERE ID_PROFESOR='$arg'"))
                     {
                         $id = [];
