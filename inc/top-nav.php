@@ -116,6 +116,16 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
             echo "</ul>";
           echo "</li>";
 
+          echo "<li class=' $act_asistencias '>";
+            echo "<a href='$_SERVER[PHP_SELF]?ACTION=fichajes'><span class='glyphicon glyphicon-calendar'></span> Calendario escolar</a>";
+          echo "</li>";
+        echo "</ul>";
+
+          echo "<li class=' $act_guardias '>";
+            echo "<a href='$_SERVER[PHP_SELF]?ACTION=guardias'><span class='glyphicon glyphicon-calendar'></span> Calendario escolar</a>";
+          echo "</li>";
+        echo "</ul>";
+
           echo "<li class=' $act_cal_escolar '>";
             echo "<a href='$_SERVER[PHP_SELF]?ACTION=lectivos'><span class='glyphicon glyphicon-calendar'></span> Calendario escolar</a>";
           echo "</li>";
