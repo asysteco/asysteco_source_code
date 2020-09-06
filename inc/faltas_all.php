@@ -1,10 +1,5 @@
 <?php
 
-if(! $_SESSION['Perfil'] === 'Admin')
-{
-   die("<h1>Insuficientes permisos <a href='$_SERVER[HTTP_REFERER]'>Volver!</a></h1>"); 
-}
-
 $f = $class->getDate();
 $fecha = $f['year'] . "-" . $f['mon'] . "-" . $f['mday'];
 // La variable Fecha la utilizará como día límite desde que existen marcajes para mostrar los registros

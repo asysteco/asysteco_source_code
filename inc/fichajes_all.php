@@ -1,8 +1,5 @@
 <?php
-if(! $_SESSION['Perfil'] === 'Admin')
-{
-   die("<h1>Insuficientes permisos <a href='$_SERVER[HTTP_REFERER]'>Volver!</a></h1>"); 
-}
+
 $sql = "SELECT DISTINCT $class->fichar.* 
         FROM ($class->fichar 
             INNER JOIN $class->horarios ON $class->fichar.ID_PROFESOR=$class->horarios.ID_PROFESOR) 
