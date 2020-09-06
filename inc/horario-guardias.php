@@ -1,11 +1,11 @@
 <?php
 if(isset($_GET['profesor']))
 {
-    $sql = "SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE ID='$_GET[profesor]' AND Activo=1 AND Sustituido=0 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC";
+    $sql = "SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE ID='$_GET[profesor]' AND Activo=1 AND Sustituido=0 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC";
 }
 else
 {
-    $sql = "SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE Activo=1 AND Sustituido=0 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC";
+    $sql = "SELECT $class->profesores.ID, $class->profesores.Nombre FROM $class->profesores WHERE Activo=1 AND Sustituido=0 AND TIPO=2 AND EXISTS (SELECT * FROM $class->horarios WHERE $class->horarios.ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC";
 }
 
 if($response = $class->query($sql))
