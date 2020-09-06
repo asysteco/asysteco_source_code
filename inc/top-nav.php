@@ -117,7 +117,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
           echo "</li>";
 
           echo "<li class=' $act_asistencias '>";
-            echo "<a href='$_SERVER[PHP_SELF]?ACTION=fichajes'><span class='glyphicon glyphicon-calendar'></span> Asistencias</a>";
+            echo "<a href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=all'><span class='glyphicon glyphicon-calendar'></span> Asistencias</a>";
           echo "</li>";
 
           echo "<li class=' $act_guardias '>";
