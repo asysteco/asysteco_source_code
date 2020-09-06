@@ -14,7 +14,7 @@ if($resp = $class->query($sql))
     if($response = $class->query("SELECT Marcajes.*, Diasemana FROM Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID WHERE ID_PROFESOR=" . mysqli_real_escape_string($class->conex, $_GET['ID']) . " AND Fecha <= '$fecha' ORDER BY Fecha DESC, Dia, Hora"))
     {
             echo "<h1>Asistencias lectivas de <b>$n</b></h1>";
-            echo "<input id='busca_asiste' class='fadeIn' type='text' placeholder='Buscar registro...' autocomplete='off'>";
+            echo "<input id='busca_asiste' class='fadeIn' type='text' placeholder='Seleccionar fecha ...' autocomplete='off'>";
             echo "<div id='marcaje-response'></div>";
             echo "<div id='table-container'>";
                 echo "<div id='full-table'>";
