@@ -45,7 +45,7 @@ if($response = $class->query($sql))
     }
     else
     {
-        echo "No existen registros de fichajes.";
+        echo "<td colspan='100%'>No existen registros de fichajes.</td>";
     }
         echo "</tbody>";
     echo "</table>";
