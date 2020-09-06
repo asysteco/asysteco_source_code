@@ -1,4 +1,4 @@
-<div class="container-fluid" style="margin-top:50px">
+<div class="container" style="margin-top:50px">
     <div class='row' style='text-align: center;'>
         <div class='col-xs-12 col-md-6'>
 <?php
