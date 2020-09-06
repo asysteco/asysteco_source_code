@@ -9,7 +9,7 @@ $sql = "SELECT DISTINCT $class->fichar.*
             INNER JOIN $class->profesores ON $class->profesores.ID=$class->horarios.ID_PROFESOR 
         ORDER BY $class->fichar.ID DESC 
         ";
-echo "<h1>Fichajes diarios</h1>";
+echo "<h1>Fichajes</h1>";
 if($response = $class->query($sql))
 {
     echo "</br><table class='table table-striped'>";
