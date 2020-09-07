@@ -9,6 +9,7 @@ echo '<div class="container" style="margin-top:75px">';
             echo "</br>";
             echo "<input type='text' name='Nombre' value='$_POST[Nombre]' class='form-control' placeholder='Nombre Profesor (Completo)'>";
             echo "</form>";
+            echo "</br>";
             echo "</div>";
             if($response = $class->query("INSER INTO Profesores VALUES (Iniciales, Nombre)"))
             {
