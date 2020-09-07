@@ -5,8 +5,8 @@ echo '<div class="container" style="margin-top:75px">';
             echo "<h2>Registrar Profesor</h2>";
             echo "<div>";
             echo "<form action='index.php?ACTION=profesores&OPT=add-profesor' method='post'>";
-            echo "<input type='text' id='iniciales' placeholder='Iniciales Profesor'";
-            echo "<input type='text' id='nombre' placeholder='Nombre Profesor (Completo)'";
+            echo "<input type='text' name='Iniciales' value='$_POST[Iniciales]' placeholder='Iniciales Profesor'>";
+            echo "<input type='text' name='Nombre' value='$_POST[Nombre]' placeholder='Nombre Profesor (Completo)'>";
             echo "</form>";
             echo "</div>";
             if($response = $class->query("INSER INTO Profesores VALUES (Iniciales, Nombre)"))
