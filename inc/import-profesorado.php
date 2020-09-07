@@ -7,7 +7,11 @@
     <div class="outer-scontainer">
 <?php
 
-    if($class->query("SELECT ID FROM $class->profesores")->num_rows <= 1)
+    if($class->query("SELECT ID FROM $class->profesores")->num_rows > 1)
+    {
+        echo "<h3>No se pueden importar más ficheros de profesores, puede dar de alta nuevos profesores en profesores -> Registrar profesor...</h3>";
+    }
+    else
     {
         echo '<form class="form-horizontal" action="index.php?ACTION=profesores&OPT=import-csv" method="post"
             name="frmCSVImport" id="frmCSVImport"
