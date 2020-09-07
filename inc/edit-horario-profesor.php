@@ -70,6 +70,8 @@ if($response = $class->query($consulta))
             $n = $nombre->fetch_assoc();
         }
         echo "<h2>Horario: $n[Nombre]</h2>";
+        echo "<a href='index.php?ACTION=horarios&OPT=apply-now' class='btn btn-success pull-right'> Aplicar cambios ahora</a>";
+        echo "</br>";
         echo "<h4 style='color: grey;'><i>* Este horario entrará en vigor el día $fechaget</i></h4>";
         echo "<div id='response'></div>";
         echo "<div id='tabla_t_horario'>";
