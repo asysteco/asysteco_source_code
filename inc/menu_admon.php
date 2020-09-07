@@ -100,6 +100,13 @@
             <input id='fechainifichaje' class='form-control' type='text' placeholder='Fecha Inicio'> <input id='fechafinfichaje' class='form-control' type='text' placeholder='Fecha Fin'>
         </div>
         </br>
+        <div>
+        <h2>Borrado de Datos (Atención esta Acción es IRREVERSIBLE)</h2>
+        <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Borrar Profesores</a><br><br>
+        <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios</a><br><br>
+        <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Borrar Mensajes</a><br><br>
+        </div>
+        </br>
         <div class="col-xs-12">
             <div id="loading" style='text-align: center; position: absolute; width: 100%; height: 100%;'>
                 <img style="text-align: center; background-color: transparent;" src="resources/img/loading.gif" alt="Cargando...">
