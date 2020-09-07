@@ -5,7 +5,11 @@
         <?php if(!empty($message)) { echo $message; } ?>
     </div>
     <div class="outer-scontainer">
-        <form class="form-horizontal" action="index.php?ACTION=profesores&OPT=import-import" method="post"
+<?php
+
+    if($class->query("SELECT ID FROM $class->profesores")->num_rows < 1)
+    {
+        echo '<form class="form-horizontal" action="index.php?ACTION=profesores&OPT=import-csv" method="post"
             name="frmCSVImport" id="frmCSVImport"
             enctype="multipart/form-data">
             <div class="input-row">
@@ -14,8 +18,9 @@
                 <button type="submit" id="submit" name="import" class="btn btn-success">Importar</button>
                 <br />
             </div>
-        </form>
-<?php
+        </form>';
+    }
+
         if($num_profesores_act = $class->query("SELECT count(DISTINCT ID) as activos FROM $class->profesores WHERE Activo=1"))
         {
             $num_act = $num_profesores_act->fetch_assoc();
