@@ -5,7 +5,7 @@
         <?php if(!empty($message)) { echo $message; } ?>
     </div>
     <div class="outer-container">
-        <form class="form-horizontal" action="" method="post"
+        <form class="form-horizontal" action="index.php?ACTION=horarios&OPT=import-csv" method="post"
             name="frmCSVImport" id="frmCSVImport"
             enctype="multipart/form-data">
             <div class="input-row">
