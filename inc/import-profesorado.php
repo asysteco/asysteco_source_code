@@ -9,7 +9,7 @@
 
     if($class->query("SELECT ID FROM $class->profesores")->num_rows > 1)
     {
-        echo "<h3>No se pueden importar más ficheros de profesores, puede dar de alta nuevos profesores en: <br /> profesores -> Registrar profesor...</h3>";
+        echo "<h3>No se pueden importar más ficheros de profesores, puede dar de alta nuevos profesores en: <br /> profesores -> Mostrar profesores -> Registrar profesor...</h3>";
     }
     else
     {
