@@ -7,7 +7,7 @@
     <div class="outer-scontainer">
 <?php
 
-    if($class->query("SELECT ID FROM $class->profesores")->num_rows < 1)
+    if($class->query("SELECT ID FROM $class->profesores")->num_rows <= 1)
     {
         echo '<form class="form-horizontal" action="index.php?ACTION=profesores&OPT=import-csv" method="post"
             name="frmCSVImport" id="frmCSVImport"
