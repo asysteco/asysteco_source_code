@@ -101,10 +101,11 @@
         </div>
         </br>
         <h2>Borrado de Datos (Atención esta Acción es IRREVERSIBLE)</h2>
-        <div>
-        <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-user"></span> Borrar Profesores</a><br><br>
-        <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios</a><br><br>
-        <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-list-alt"></span> Borrar Mensajes</a><br><br>
+        </br>
+        <div style="display: inline">
+        <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-user"></span> Borrar Profesores</a>&nbsp; &nbsp;
+        <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios</a>&nbsp; &nbsp;
+        <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-envelope"></span> Borrar Mensajes</a>
         </div>
         </br>
         <div class="col-xs-12">
