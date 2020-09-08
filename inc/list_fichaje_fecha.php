@@ -1,7 +1,32 @@
 <?php
-if(! $response = $class->query("SELECT ID_PROFESOR FROM Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID"))
+
+$offset_var = $_GET['pag'];
+if(isset($_GET['fechainicio']) && isset($_GET['fechafin']))
 {
-    die($class->ERR_ASYSTECO);
+    $fi = preg_split('/\//', $_GET['fechainicio']);
+            $dia = $fi[0];
+            $m = $fi[1];
+            $Y = $fi[2];
+    $fini = $Y .'-'. $m .'-'. $dia;
+    $ff = preg_split('/\//', $_GET['fechafin']);
+            $dia = $ff[0];
+            $m = $ff[1];
+            $Y = $ff[2];
+    $ffin = $Y .'-'. $m .'-'. $dia;
+    if($class->validFormSQLDate($fini) && $class->validFormSQLDate($ffin))
+    {
+        if(! $response = $class->query("SELECT ID_PROFESOR FROM Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID AND Fecha BETWEEN '$fini' AND '$ffin'"))
+        {
+            die($class->ERR_ASYSTECO);
+        }
+    }
+}
+else
+{
+    if(! $response = $class->query("SELECT ID_PROFESOR FROM Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID"))
+    {
+        die($class->ERR_ASYSTECO);
+    }
 }
 
 $page_size = 200;
@@ -23,27 +48,26 @@ if(isset($_GET['pag']))
                 {
                     $selected = '';
                 }
-                echo '<option value="index.php?ACTION=admon&OPT=select&select=fichadi&pag=' . $j*$page_size . '" class="btn-select" ' . $selected . '><span class="glyphicon glyphicon-calendar"></span> ' . $pag = ($j+1) . '</option> ';
+                echo '<option value="index.php?ACTION=admon&OPT=select&select=fichafe&pag=' . $j*$page_size . '&fechainicio=' . $_GET['fechainicio'] . '&fechafin=' . $_GET['fechafin'] . '" class="btn-select" ' . $selected . '><span class="glyphicon glyphicon-eye-open"></span> ' . $pag = ($j+1) . '</option> ';
             }
         echo "</select>";
         echo "</h3>";
     echo "<div>";
-    $offset_var = $_GET['pag'];
-    $fi = preg_split('/\//', $_GET['fechainifichaje']);
-            $dia = $fi[0];
-            $m = $fi[1];
-            $Y = $fi[2];
-    $fini = $Y .'-'. $m .'-'. $dia;
-    $ff = preg_split('/\//', $_GET['fechafinfichaje']);
-            $dia = $ff[0];
-            $m = $ff[1];
-            $Y = $ff[2];
-    $ffin = $Y .'-'. $m .'-'. $dia;
-    $query = "SELECT ID_PROFESOR, Nombre, F_entrada, HORA_CLASE, DIA_SEMANA, Fecha
-    FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID)
-    WHERE Fecha BETWEEN '$fini' AND '$ffin'
-    ORDER BY Profesores.Nombre ASC
-    LIMIT $page_size OFFSET $offset_var";
+    if(isset($_GET['fechainicio']) && isset($_GET['fechafin']) && $_GET['fechainicio'] !='' && $_GET['fechafin'] !='')
+    {
+        $query = "SELECT ID_PROFESOR, Nombre, F_entrada, HORA_CLASE, DIA_SEMANA, Fecha
+        FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID)
+        WHERE Fecha BETWEEN '$fini' AND '$ffin'
+        ORDER BY Profesores.Nombre ASC
+        LIMIT $page_size OFFSET $offset_var";
+    }
+    else
+    {
+        $query = "SELECT ID_PROFESOR, Nombre, F_entrada, HORA_CLASE, DIA_SEMANA, Fecha
+        FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID)
+        ORDER BY Profesores.Nombre ASC
+        LIMIT $page_size OFFSET $offset_var";
+    }
     # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
     $result =  $class->query($query);
     echo "<table class='table table-striped'>";
