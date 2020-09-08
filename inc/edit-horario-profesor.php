@@ -70,13 +70,14 @@ if($response = $class->query($sql))
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
                     $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
-                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo, ID FROM Horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' AND Dia='$dialoop' ORDER BY Hora "))
+                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo, ID, Tipo FROM T_horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' AND Dia='$dialoop' ORDER BY Hora "))
                     {
                         if($response->num_rows > 0)
                         {
                             $fila = $response->fetch_all();
                             $aula = $fila[0][2];
                             $grupo = $fila[0][3];
+                            $Tipo = $fila[0][5];
                             $m=2;
 
                             echo "<td style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
@@ -132,7 +133,7 @@ if($response = $class->query($sql))
                                 if($aula != 'Selec.' && $aula != '' && $grupo != 'Selec.' && $grupo != '')
                                 {
                                     echo "<br>";
-                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add_more&Aula=$aula&ID=$n[ID]&Dia=$j&Hora=$Hora&Fecha=$_GET[fecha]'>";
+                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add_more&Aula=$aula&ID=$n[ID]&Dia=$dialoop&Hora=$Hora&Fecha=$_GET[fecha]'>";
                                         echo "<span class='glyphicon glyphicon-plus btn-react-add-more'></span>";
                                     echo "</a>";
                                 }
@@ -142,8 +143,7 @@ if($response = $class->query($sql))
                         else
                         {
                             echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
-                            isset($filahora[$k][3]) ? $horavar = $filahora[$k][3] : $horavar = $hora . $tipo;
-                                echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add&ID=$n[ID]&Dia=$j&Hora=" . $horavar . "&Fecha=$_GET[fecha]'>";
+                                echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add&ID=$n[ID]&Dia=$dialoop&Hora=$Hora&Tipo=$franja&Fecha=$_GET[fecha]'>";
                                     echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
                                 echo "</a>";
                             echo "</td>";
