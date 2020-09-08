@@ -9,7 +9,7 @@ if($_POST['ID'] != '')
     if($class->query($sql))
     {
         $MSG = "Datos actualizados correctamente.";
-        header("Location: $_SERVER[HTTP_REFERER]");
+        header("Location:index.php?ACTION=profesores");
     }
     else
     {
