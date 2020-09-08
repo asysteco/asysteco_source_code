@@ -6,7 +6,7 @@ if($response = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edifi
   {
     while($edificio = $response->fetch_assoc())
     {
-      echo "<a href='index.php?ACTION=home&OPT=Edificio&Numero=$edificio[Edificio]'><button type='button' class='btn btn-success'><span></span> Edificio $edificio[Edificio]</button></a> ";
+      echo "<a href='index.php?ACTION=guardias&OPT=Edificio&Numero=$edificio[Edificio]'><button type='button' class='btn btn-success'><span></span> Edificio $edificio[Edificio]</button></a> ";
     }
   }
 }

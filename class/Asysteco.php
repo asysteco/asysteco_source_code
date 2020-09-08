@@ -490,7 +490,7 @@ class Asysteco
             AND $this->horarios.Tipo = $this->marcajes.Tipo
             $extra 
         ORDER BY $this->horarios.Hora, $this->horarios.Aula, $this->profesores.Nombre";
-        echo $sql;
+        // echo $sql;
         if($exec = $this->query($sql))
         {
             if($exec->num_rows > 0)
