@@ -36,10 +36,9 @@
             <a enlace="index.php?ACTION=admon&OPT=select&select=fichafe&pag=0" id='filtrofichajes' class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Fichaje Por Fechas</a>
             </br>
             <h2>Borrado de Datos (Atención esta Acción es IRREVERSIBLE)</h2>
-            </br>
-            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-user"></span> Borrar Profesores</a>&nbsp; &nbsp;
-            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios</a>&nbsp; &nbsp;
-            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-success btn-select"><span class="glyphicon glyphicon-envelope"></span> Borrar Mensajes</a>
+            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger btn-select"><span class="glyphicon glyphicon-user"></span> Borrar Profesores</a>&nbsp; &nbsp;
+            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger btn-select"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios</a>&nbsp; &nbsp;
+            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger btn-select"><span class="glyphicon glyphicon-envelope"></span> Borrar Mensajes</a>
             </br>
         <div class="col-xs-12">
             <div id="loading" style='text-align: center; position: absolute; width: 100%; height: 100%;'>
