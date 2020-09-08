@@ -70,7 +70,7 @@ if($response = $class->query($sql))
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
                     $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
-                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo, ID, Tipo FROM T_horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' AND Dia='$dialoop' AND Fecha_incorpora='$_GET[fecha]' ORDER BY Hora "))
+                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo, ID, Tipo, Edificio FROM T_horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' AND Dia='$dialoop' AND Fecha_incorpora='$_GET[fecha]' ORDER BY Hora "))
                     {
                         if($response->num_rows > 0)
                         {
@@ -81,6 +81,15 @@ if($response = $class->query($sql))
                             $m=2;
 
                             echo "<td style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
+                            
+                            if($fila[0][3] == 'Guardia')
+                            {
+                                echo "<span><b>Guardia</b></span>";
+                                echo "<br>";
+                                echo "<span><b>Edificio " . $fila[0][6] . "</b></span>";
+                            }
+                            else
+                            {
                                 echo "<a style='color: red;' class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=del_hora&ID_PROFESOR=$_GET[profesor]&Dia=$dialoop&Hora=$Hora&Fecha=" . $_GET['fecha'] . "'>";
                                     echo "<span class='glyphicon glyphicon-remove-circle btn-react-del'></span>";
                                 echo "</a><br>";
@@ -137,16 +146,26 @@ if($response = $class->query($sql))
                                         echo "<span class='glyphicon glyphicon-plus btn-react-add-more'></span>";
                                     echo "</a>";
                                 }
+                            }
 
                             echo "</td>";
                         }
                         else
                         {
-                            echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
-                                echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add&ID=$n[ID]&Dia=$dialoop&Hora=$Hora&Tipo=$franja&Fecha=$_GET[fecha]'>";
-                                    echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
-                                echo "</a>";
-                            echo "</td>";
+                            if($Hora === 'R')
+                            {
+                                echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
+									echo 'RECREO';
+                                echo "</td>";
+                            }
+                            else
+                            {
+                                echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
+                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add&ID=$n[ID]&Dia=$dialoop&Hora=$Hora&Tipo=$franja&Fecha=$_GET[fecha]'>";
+                                        echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
+                                    echo "</a>";
+                                echo "</td>";
+                            }
                         }
                     }
                 }

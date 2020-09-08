@@ -672,21 +672,30 @@ class Asysteco
                     
                     if($subopt == 'add')
                     {
-                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>='$fechaactual'";
+                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha >= '$fechaactual'";
                         $resp = $this->query($lectivos);
                         
                         while($lectivo = $resp->fetch_assoc())
                         {
-                            $ejec = "INSERT INTO Marcajes SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
-                            FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-                            WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND $dia=WEEKDAY('$lectivo[Fecha]')+1 AND Hora='$hora'";
+                            if($this->asistidoHoy($profesor) && $fechaactual == $lectivo['Fecha'])
+                            {
+                                $ejec = "INSERT INTO Marcajes SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 1
+                                FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
+                                WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND $dia=WEEKDAY('$lectivo[Fecha]')+1 AND Hora='$hora'";
+                            }
+                            else
+                            {
+                                $ejec = "INSERT INTO Marcajes SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
+                                FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
+                                WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND $dia=WEEKDAY('$lectivo[Fecha]')+1 AND Hora='$hora'";
+                            }
                             $this->query($ejec);
                         }
                     }
                     elseif($subopt == 'remove')
                     {
 
-                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha >= DATE_ADD('$fechaactual', INTERVAL +1 DAY)";
+                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha >= '$fechaactual'";
                         $resp = $this->query($lectivos);
                         $lectivo = $resp->fetch_assoc();
     
@@ -721,6 +730,37 @@ class Asysteco
         }
     }
 
+    function asistidoHoy($idprofesor, $fecha = null)
+    {
+        if($fecha == null)
+        {
+            $fecha = date();
+        }
+        else
+        {
+            if(! $this->validFormSQLDate($fecha))
+            {
+                return false;
+            }
+        }
+
+        if($response = $this->query("SELECT ID FROM $this->fichar WHERE ID_PROFESOR='$idprofesor' AND Fecha='$fecha'"))
+        {
+            if($response->num_rows == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     function updateHoras()
     {
         if(func_num_args() == 0)
@@ -738,12 +778,12 @@ class Asysteco
                     for($i=1;$i<=5;$i++)
                     {
                         // Obtenemos su primera Hora
-                        if($res = $this->query("SELECT HORA_TIPO FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO ASC LIMIT 1"))
+                        if($res = $this->query("SELECT Hora, Tipo FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora ASC LIMIT 1"))
                         {
                             if($res->num_rows > 0)
                             {
                                 $primera = $res->fetch_assoc();
-                                if(! $p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[HORA_TIPO]'")->fetch_assoc())
+                                if(! $p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[Hora]' AND Tipo='$primera[Tipo]'")->fetch_assoc())
                                 {
                                     return false;
                                 }
@@ -759,12 +799,12 @@ class Asysteco
                         }
             
                         // Obtenemos su ultima Hora
-                        if($res = $this->query("SELECT HORA_TIPO FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO DESC LIMIT 1"))
+                        if($res = $this->query("SELECT Hora, Tipo FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora DESC LIMIT 1"))
                         {
                             if($res->num_rows > 0)
                             {
                                 $ultima = $res->fetch_assoc();
-                                if(! $u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[HORA_TIPO]'")->fetch_assoc())
+                                if(! $u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[Hora]' AND Tipo='$ultima[Tipo]'")->fetch_assoc())
                                 {
                                     return false;
                                 }
@@ -810,12 +850,12 @@ class Asysteco
                             for($i=1;$i<=5;$i++)
                             {
                                 // Conseguimos su primera Hora
-                                if($res = $this->query("SELECT HORA_TIPO FROM T_horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO ASC LIMIT 1"))
+                                if($res = $this->query("SELECT Hora, Tipo FROM T_horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora ASC LIMIT 1"))
                                 {
                                     if($res->num_rows > 0)
                                     {
                                         $primera = $res->fetch_assoc();
-                                        if(! $p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[HORA_TIPO]'")->fetch_assoc())
+                                        if(! $p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[Hora]' AND Tipo='$primera[Tipo]'")->fetch_assoc())
                                         {
                                             return false;
                                         }
@@ -831,12 +871,12 @@ class Asysteco
                                 }
                     
                                 // Conseguimos su ultima Hora
-                                if($res = $this->query("SELECT HORA_TIPO FROM T_horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO DESC LIMIT 1"))
+                                if($res = $this->query("SELECT Hora, Tipo FROM T_horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora DESC LIMIT 1"))
                                 {
                                     if($res->num_rows > 0)
                                     {
                                         $ultima = $res->fetch_assoc();
-                                        if(! $u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[HORA_TIPO]'")->fetch_assoc())
+                                        if(! $u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[Hora]' AND Tipo='$ultima[Tipo]'")->fetch_assoc())
                                         {
                                             return false;
                                         }
@@ -880,12 +920,12 @@ class Asysteco
                             for($i=1;$i<=5;$i++)
                             {
                                 // Conseguimos su primera Hora
-                                if($res = $this->query("SELECT HORA_TIPO FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO ASC LIMIT 1"))
+                                if($res = $this->query("SELECT Hora, Tipo FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora ASC LIMIT 1"))
                                 {
                                     if($res->num_rows > 0)
                                     {
                                         $primera = $res->fetch_assoc();
-                                        if(! $p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[HORA_TIPO]'")->fetch_assoc())
+                                        if(! $p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[Hora]' AND Tipo='$primera[Tipo]'")->fetch_assoc())
                                         {
                                             return false;
                                         }
@@ -901,12 +941,12 @@ class Asysteco
                                 }
                     
                                 // Conseguimos su ultima Hora
-                                if($res = $this->query("SELECT HORA_TIPO FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY HORA_TIPO DESC LIMIT 1"))
+                                if($res = $this->query("SELECT Hora, Tipo FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora DESC LIMIT 1"))
                                 {
                                     if($res->num_rows > 0)
                                     {
                                         $ultima = $res->fetch_assoc();
-                                        if(! $u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[HORA_TIPO]'")->fetch_assoc())
+                                        if(! $u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[Hora]' AND Tipo='$ultima[Tipo]'")->fetch_assoc())
                                         {
                                             return false;
                                         }

@@ -44,13 +44,22 @@ if($response = $class->query($sql))
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
                     $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
-                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo FROM Horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' AND Dia='$dialoop' ORDER BY Hora "))
+                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo, Edificio FROM Horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' AND Dia='$dialoop' ORDER BY Hora "))
                     {
                         if($response->num_rows > 0)
                         {
                             $fila = $response->fetch_all();
                             $m=2;
                             echo "<td style='text-align: center; vertical-align: middle;' class=' $dia[color]'>";
+                            
+                            if($fila[0][3] == 'Guardia')
+                            {
+                                echo "<span><b>Guardia</b></span>";
+                                echo "<br>";
+                                echo "<span><b>Edificio " . $fila[0][4] . "</b></span>";
+                            }
+                            else
+                            {
                                 echo "<b>Aula: </b>" . $fila[0][2];
                                 echo "<br><b>Grupo: </b>";
                                 for($i=0;$i<count($fila);$i++)
@@ -59,6 +68,7 @@ if($response = $class->query($sql))
                                     echo $espacio . $fila[$i][3];
                                     $m++;
                                 }
+                            }
                             echo "</td>";
                         }
                         else
