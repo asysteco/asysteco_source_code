@@ -7,8 +7,7 @@ if(isset($_GET['act']))
         $Tipo = preg_split('//', $_GET['Tipo'], -1, PREG_SPLIT_NO_EMPTY);
         $Tipo = $Tipo[0];
         $Horatipo= $_GET['Hora'] . $Tipo;
-        echo "INSERT INTO T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora) 
-        VALUES ('$_GET[ID]', '$_GET[Dia]', '$Horatipo', '$_GET[Hora]', '$_GET[Tipo]', '$Edificio', 'Selec.', 'Selec.', '00:00:00', '00:00:00', '$_GET[Fecha]')";
+        
         if($class->query("INSERT
             INTO T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora) 
             VALUES ('$_GET[ID]', '$_GET[Dia]', '$Horatipo', '$_GET[Hora]', '$_GET[Tipo]', '$Edificio', 'Selec.', 'Selec.', '00:00:00', '00:00:00', '$_GET[Fecha]')"))
