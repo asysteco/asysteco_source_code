@@ -24,18 +24,89 @@ $titulo = [
 
 // Escribimos los títulos para los campos
 fputcsv($fp, $titulo, $delimitador);
-if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes WHERE Asiste=0"))
+
+if(isset($_GET['profesor']) && $_GET['profesor'] != '')
 {
-    die($class->ERR_ASYSTECO);
+    $profesor = "ID_PROFESOR = '$_GET[profesor]'";
+    $sql = "SELECT ID_PROFESOR FROM Marcajes WHERE ID_PROFESOR = '$_GET[profesor]' AND Asiste=0";
 }
+else
+{
+    $profesor = "";
+    $sql = "SELECT ID_PROFESOR FROM Marcajes";
+}
+
+if(isset($_GET['fechainicio']) && isset($_GET['fechafin']))
+{
+    $fi = preg_split('/\//', $_GET['fechainicio']);
+            $dia = $fi[0];
+            $m = $fi[1];
+            $Y = $fi[2];
+    $fini = $Y .'-'. $m .'-'. $dia;
+    $ff = preg_split('/\//', $_GET['fechafin']);
+            $dia = $ff[0];
+            $m = $ff[1];
+            $Y = $ff[2];
+    $ffin = $Y .'-'. $m .'-'. $dia;
+    if($class->validFormSQLDate($fini) && $class->validFormSQLDate($ffin))
+    {
+        if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes WHERE Asiste=0 AND Fecha BETWEEN '$fini' AND '$ffin'"))
+        {
+            die($class->ERR_ASYSTECO);
+        }
+    }
+}
+else
+{
+    if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes WHERE Asiste=0"))
+    {
+        die($class->ERR_ASYSTECO);
+    }
+}
+
+if(isset($_GET['fechainicio']) && isset($_GET['fechafin']) && $_GET['fechainicio'] !='' && $_GET['fechafin'] !='')
+{
+    if(isset($_GET['profesor']) && $_GET['profesor'] != '')
+    {
+        $and= "AND";
+    }
+    else
+    {
+        $and = "";
+    }
+    $fechas="Fecha BETWEEN '$fini' AND '$ffin'";
+}
+else
+{
+    $fechas="";
+}
+
 $page_size = 15000;
 $total_records = $response->num_rows;
 $count=ceil($total_records/$page_size);
 
-for($i=0; $i<=$count; $i++) {
-$offset_var = $i * $page_size;
-$query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana  FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID) INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID WHERE Asiste=0 ORDER BY Profesores.Nombre ASC LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
-$result =  $class->query($query);
+for($i=0; $i<=$count; $i++)
+{
+    $offset_var = $i * $page_size;
+    if(isset($profesor) || isset($fechas))
+    {
+        $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana  
+        FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID) 
+        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
+        WHERE Asiste=0 AND $profesor $and $fechas 
+        ORDER BY Profesores.Nombre ASC 
+        LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
+    }
+    else
+    {
+        $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana  
+        FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID) 
+        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
+        WHERE Asiste=0 
+        ORDER BY Profesores.Nombre ASC 
+        LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
+    }
+    $result =  $class->query($query);
 
     while ($datos = $result->fetch_assoc())
     {
@@ -57,7 +128,6 @@ $result =  $class->query($query);
 
         // Escibimos una línea por cada $datos
         fputcsv($fp, $campos, $delimitador);
-
     }
 }
 
