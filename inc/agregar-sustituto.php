@@ -7,11 +7,19 @@ if($response = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE $c
     }
     else
     {
+        if(! $profesor = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE $class->profesores.ID='$_GET[ID_PROFESOR]'")->fetch_assoc())
+        {
+            echo $class->ERR_ASYSTECO;
+        }
+        if(! $sustituto = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE $class->profesores.ID='$_GET[ID_SUSTITUTO]'")->fetch_assoc())
+        {
+            echo $class->ERR_ASYSTECO;
+        }
         if($class->query("UPDATE Profesores SET Sustituido=1 WHERE ID='$_GET[ID_PROFESOR]'"))
         {
-            if($class->query("INSERT INTO $class->horarios (ID_PROFESOR, Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida) SELECT $_GET[ID_SUSTITUTO], Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida FROM $class->horarios WHERE ID_PROFESOR='$_GET[ID_PROFESOR]'"))
+            if($class->query("INSERT INTO $class->horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida) SELECT $_GET[ID_SUSTITUTO], Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida FROM $class->horarios WHERE ID_PROFESOR='$_GET[ID_PROFESOR]'"))
             {
-                $MSG = "Cambios realizados correctamente.";
+                $MSG = "$profesor[Nombre] ha sido sustituido/a correctamente por $sustituto[Nombre]";
             }
             $_GET['ID_PROFESOR'] = $_GET['ID_SUSTITUTO'];
             $class->marcajes($_GET['ID_PROFESOR']);
@@ -22,4 +30,9 @@ if($response = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE $c
             return false;
         }
     }
+}
+else
+{
+    echo $class->ERR_ASYSTECO;
+    return false;
 }

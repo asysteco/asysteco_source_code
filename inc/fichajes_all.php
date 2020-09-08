@@ -1,6 +1,6 @@
 <?php
 
-$sql = "SELECT DISTINCT $class->fichar.* 
+$sql = "SELECT DISTINCT $class->fichar.*, $class->profesores.Nombre 
         FROM ($class->fichar 
             INNER JOIN $class->horarios ON $class->fichar.ID_PROFESOR=$class->horarios.ID_PROFESOR) 
             INNER JOIN $class->profesores ON $class->profesores.ID=$class->horarios.ID_PROFESOR 
@@ -13,6 +13,7 @@ if($response = $class->query($sql))
         echo "<thead>";
             echo "<tr>";
                 echo "<th>Nº</th>";
+                echo "<th>Profesor</th>";
                 echo "<th>Hora Fichaje</th>";
                 echo "<th>Día semana</th>";
                 echo "<th>Fecha</th>";
@@ -29,6 +30,7 @@ if($response = $class->query($sql))
             $Y = $sep[0];
             echo "<tr>";
                 echo "<td>$fila[ID]</td>";
+                echo "<td>$fila[Nombre]</td>";
                 echo "<td>$fila[F_entrada]</td>";
                 echo "<td>$fila[DIA_SEMANA]</td>";
                 echo "<td>$dia/$m/$Y</td>";

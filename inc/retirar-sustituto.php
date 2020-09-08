@@ -3,14 +3,18 @@ if($response = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE ID
 {
     if($response->num_rows > 0)
     {
-        if($class->query("UPDATE Profesores SET Sustituido=0 WHERE ID='$_GET[ID]'"))
+        if($fila = $response->fetch_assoc())
         {
-            header("Location: $_SERVER[HTTP_REFERER]");
-        }
-        else
-        {
-            $class->ERR_ASYSTECO;
-            return false;
+            if($class->query("UPDATE Profesores SET Sustituido=0 WHERE ID='$_GET[ID]'"))
+            {
+                $MSG = "La sustitución de $fila[Nombre] ha terminado correctamente.";
+                header("Location: index.php?ACTION=profesores");
+            }
+            else
+            {
+                $class->ERR_ASYSTECO;
+                return false;
+            }
         }
     }
 }
