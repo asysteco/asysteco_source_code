@@ -5,7 +5,7 @@
         <?php if(!empty($message)) { echo $message; } ?>
     </div>
     <div class="outer-container">
-        <form class="form-horizontal" action="index.php?ACTION=horarios&OPT=import-csv" method="post"
+        <form class="form-inline" action="index.php?ACTION=horarios&OPT=import-csv" method="post"
             name="frmCSVImport" id="frmCSVImport"
             enctype="multipart/form-data">
             <div class="input-row">
@@ -16,26 +16,26 @@
                 {
                     $fecha = date('Y-m-d');
                     echo '
-                    <label id="import-manual-trigger">Subir documento CSV:</label><br />
-                    <input type="file" name="file" id="file" accept=".csv" class="btn btn-link" style="display: inline-block;" required>';
-                    echo "<select name='Franja'>";
+                    <label id="import-manual-trigger" for="file">Subir documento CSV:</label><br />
+                    <input type="file" name="file" id="file" accept=".csv" class="form-control" style="display: inline-block;" required>';
+                    echo " <select name='Franja' class='form-control' title='Tipo de horario a importar'>";
                     foreach ($franjasHorarias as $franja => $dato) {
-                        echo "<option value='$franja'>Horario $franja</option>";
+                        echo "<option value='$franja'>Horarios $franja</option>";
                     }
                     echo "</select>";
-                    echo '<input id="fecha_incorpora" style="display: inline-block; width: 25%;" type="text" class="form-control" name="fecha" placeholder="Fecha de incorporación de horarios" autocomplete="off" required>';
+                    echo ' <input id="fecha_incorpora" style="display: inline-block; width: 25%;" type="text" class="form-control" name="fecha" placeholder="Fecha de incorporación de horarios" autocomplete="off" required>';
                 }
                 else
                 {
                     echo '
-                    <label id="import-manual-trigger">Subir documento CSV:</label><br />
-                    <input type="file" name="file" id="file" accept=".csv" class="btn btn-link" required>
+                    <label id="import-manual-trigger" for="file">Subir documento CSV:</label><br />
+                    <input type="file" name="file" id="file" accept=".csv" class="form-control" required>
                     ';
-                    echo "<select name='Franja'>";
+                    echo " <select name='Franja' class='form-control' title='Tipo de horario a importar'>";
                     foreach ($franjasHorarias as $franja => $dato) {
-                        echo "<option value='$franja'>Horario $franja</option>";
+                        echo "<option value='$franja'>Horarios $franja</option>";
                     }
-                    echo "</select>";
+                    echo "</select> ";
                 }
             }
             else

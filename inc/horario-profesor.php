@@ -80,7 +80,12 @@ if($response = $class->query($sql))
     }
     else
     {
-        echo "<a id='crear-horario' href='index.php?ACTION=horarios&OPT=crear&profesor=$n[ID]&Tipo=Mañana' class='btn btn-success'>Crear horario para $n[Nombre]</a>";
+        echo "<h1 style='display: block; text-align: center;'>";
+        echo "$n[Nombre] no tiene horario";
+        echo "</h1>";
+        echo "<div style='text-align: center;'>";
+            echo "<a id='crear-horario' href='index.php?ACTION=horarios&OPT=crear&profesor=$n[ID]&Tipo=Mañana' class='btn btn-success'>Crear horario para $n[Nombre]</a>";
+        echo "</div>";
     }
 }
 else
