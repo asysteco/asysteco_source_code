@@ -1,8 +1,60 @@
 <?php
 
-if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes WHERE Asiste=0"))
+if(isset($_GET['profesor']) && $_GET['profesor'] != '')
 {
-    die($class->ERR_ASYSTECO);
+    $profesor = "ID_PROFESOR = '$_GET[profesor]'";
+    $sql = "SELECT ID_PROFESOR FROM Marcajes WHERE ID_PROFESOR = '$_GET[profesor]' AND Asiste=0";
+}
+else
+{
+    $profesor = "";
+    $sql = "SELECT ID_PROFESOR FROM Marcajes";
+}
+
+$offset_var = $_GET['pag'];
+if(isset($_GET['fechainicio']) && isset($_GET['fechafin']))
+{
+    $fi = preg_split('/\//', $_GET['fechainicio']);
+            $dia = $fi[0];
+            $m = $fi[1];
+            $Y = $fi[2];
+    $fini = $Y .'-'. $m .'-'. $dia;
+    $ff = preg_split('/\//', $_GET['fechafin']);
+            $dia = $ff[0];
+            $m = $ff[1];
+            $Y = $ff[2];
+    $ffin = $Y .'-'. $m .'-'. $dia;
+    if($class->validFormSQLDate($fini) && $class->validFormSQLDate($ffin))
+    {
+        if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes WHERE Asiste=0 AND Fecha BETWEEN '$fini' AND '$ffin'"))
+        {
+            die($class->ERR_ASYSTECO);
+        }
+    }
+}
+else
+{
+    if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes WHERE Asiste=0"))
+    {
+        die($class->ERR_ASYSTECO);
+    }
+}
+
+if(isset($_GET['fechainicio']) && isset($_GET['fechafin']) && $_GET['fechainicio'] !='' && $_GET['fechafin'] !='')
+{
+    if(isset($_GET['profesor']) && $_GET['profesor'] != '')
+    {
+        $and= "AND";
+    }
+    else
+    {
+        $and = "";
+    }
+    $fechas="Fecha BETWEEN '$fini' AND '$ffin'";
+}
+else
+{
+    $fechas="";
 }
 
 $page_size = 200;
@@ -24,28 +76,17 @@ if(isset($_GET['pag']))
                 {
                     $selected = '';
                 }
-                echo '<option value="index.php?ACTION=admon&OPT=select&select=faltas&pag=' . $j*$page_size . '" class="btn-select" ' . $selected . '><span class="glyphicon glyphicon-eye-open"></span> ' . $pag = ($j+1) . '</option> ';
+                echo '<option value="index.php?ACTION=admon&OPT=select&select=faltas&pag=' . $j*$page_size . '&fechainicio=' . $_GET['fechainicio'] . '&fechafin=' . $_GET['fechafin'] . '" class="btn-select" ' . $selected . '><span class="glyphicon glyphicon-eye-open"></span> ' . $pag = ($j+1) . '</option> ';
             }
         echo "</select>";
         echo "</h3>";
     echo "<div>";
-    $offset_var = $_GET['pag'];
-    $fi = preg_split('/\//', $_GET['fechainifaltas']);
-            $dia = $fi[0];
-            $m = $fi[1];
-            $Y = $fi[2];
-    $fini = $Y .'-'. $m .'-'. $dia;
-    $ff = preg_split('/\//', $_GET['fechafinfaltas']);
-            $dia = $ff[0];
-            $m = $ff[1];
-            $Y = $ff[2];
-    $ffin = $Y .'-'. $m .'-'. $dia;
-    if(isset($_GET['fechainifaltas']) && isset($_GET['fechafinfaltas']) && $_GET['fechainifaltas'] !='' && $_GET['fechafinfaltas'] !='')
+    if(isset($profesor) || isset($fechas))
     {
         $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
         FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
             INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-        WHERE Asiste=0 AND Fecha BETWEEN '$fini' AND '$ffin'
+        WHERE Asiste=0 AND $profesor $and $fechas
         ORDER BY Profesores.Nombre ASC
         LIMIT $page_size OFFSET $offset_var";
     }
@@ -89,15 +130,8 @@ if(isset($_GET['pag']))
             echo "<td>$datos[Hora]</td>";
             echo "<td>$datos[Dia]</td>";
             echo "<td>$datos[Diasemana]</td>";
-            echo "<td>SI</td>";
-            if($datos['Asiste'] == 2)
-            {
-                echo "<td>SI</td>";
-            }
-            else
-            {
-                echo "<td>NO</td>";
-            }
+            echo "<td>NO</td>";
+            echo "<td>NO</td>";
         echo "</tr>";
     }
 
