@@ -10,5 +10,5 @@ if($response = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edifi
     }
   }
 }
-echo "<a href='index.php'><button type='button' class='btn btn-success'><span></span> Todos</button></a>";
+echo "<a href='index.php?ACTION=guardias'><button type='button' class='btn btn-success'><span></span> Todos</button></a>";
 echo '</div>';
