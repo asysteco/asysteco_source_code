@@ -1,15 +1,17 @@
 <div class="container">
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12" style='margin-top: 75px;'>
 <?php
-if($response = $class->query("SELECT $class->horarios.*, Diasemana.Diasemana as Dia 
-                                    FROM ($class->horarios INNER JOIN $class->profesores ON $class->horarios.ID_PROFESOR=$class->profesores.ID)
-                                    INNER JOIN Diasemana ON Diasemana.ID=$class->horarios.Dia
-                                    WHERE $class->profesores.ID='$_SESSION[ID]'
-                                    ORDER BY $class->horarios.HORA_TIPO"))
+$sql = "SELECT DISTINCT Tipo
+FROM $class->horarios
+WHERE $class->horarios.ID_PROFESOR='$_SESSION[ID]'";
+if($response = $class->query($sql))
 {
-    if ($response->num_rows > 0)
+    if ($response->num_rows == 1)
     {
+        $dia = $class->getDate();
+        $datosprof = $response->fetch_assoc();
+        $franja = $datosprof['Tipo'];
         echo "<h2>Horario</h2>";
         echo "</br>";
         echo "<table class='table'>";
@@ -24,95 +26,51 @@ if($response = $class->query("SELECT $class->horarios.*, Diasemana.Diasemana as 
                 echo "</tr>";
         echo "</thead>";
         echo "<tbody>";
-
-        /* 
-        * Comienza bucle por filas horarias 
-        * Hasta completar las 6 de cada horario
-        */
         
-        for ($i = 0; $i < 6; $i++)
+        foreach ($franjasHorarias[$franja] as $valor => $datos)
         {
-            $dia = $class->getDate();
-            $hora = $i+1;
-
-            /*
-            * Recogemos valores de cada HORA_TIPO del Profesor en $response
-            * Valores ordenados por HORA_TIPO y Día
-            */
-
-            if($response = $class->query("SELECT $class->horarios.*, Diasemana.Diasemana, Diasemana.ID, $class->horas.Inicio, $class->horas.Fin 
-            FROM (($class->horarios INNER JOIN $class->profesores ON $class->horarios.ID_PROFESOR=$class->profesores.ID) 
-            INNER JOIN Diasemana ON Diasemana.ID=$class->horarios.Dia)
-            INNER JOIN $class->horas ON $class->horas.Hora=$class->horarios.HORA_TIPO
-            WHERE $class->profesores.ID='$_SESSION[ID]' AND $class->horarios.HORA_TIPO=" . "'" . $hora ."M'
-            ORDER BY $class->horarios.HORA_TIPO, $class->horarios.Dia"))
-            {
-                // $k -> Contador de índice del array
-                $k = 0;
-                $filahora = $response->fetch_all();
-                echo "<tr>";
-                echo "<td style='vertical-align: middle; text-align: center;'><b>$hora</b></td>";
-
-                /*
-                * Bucle que recorre el campo Dia
-                * Este campo determinará su posición en la tabla (Horizontalmente)
-                */
+            $Hora = $valor;
+            echo "<tr>";
+                echo "<td>$Hora</td>";
                 
-                for($j = 1; $j <= 5; $j++)
+                for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
-
-                    /*
-                    * Comprobamos si $filahora[$k][10] coincide con el Dia de la Semana exacto
-                    */
-
-                    if($filahora[$k][10] == $j)
+                    $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
+                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo FROM Horarios WHERE ID_PROFESOR='$_SESSION[ID]' AND Hora='$Hora' AND Dia='$dialoop' ORDER BY Hora "))
                     {
-                        $dia['weekday'] === $filahora[$k][9] ? $dia['color'] = "success" : $dia['color'] = '';
-                        echo "<td style='vertical-align: middle; text-align: center;' class='$dia[color]'><b>Aula:</b> " . $filahora[$k][5] . "<br><b>Grupo:</b> " . $filahora[$k][6];
-                        $k++;
-                        // $m -> Contador de pares para saltar línea o añadir espacio
-                        $m = 2;
-
-                        /*
-                        * Comprobamos si el siguiente objeto coincide con el mismo Dia de la Semana
-                        * Esta comprobación se realizará hasta que ya no coincida
-                        * Ya que pertenecerá al siguiente Dia
-                        */
-
-                        while($filahora[$k][10] == $j)
+                        if($response->num_rows > 0)
                         {
-                            if($m % 2 == 0)
+                            $fila = $response->fetch_all();
+                            $m=2;
+                            echo "<td style='text-align: center; vertical-align: middle;' class=' $dia[color]'>";
+                            echo "<b>Aula: </b>" . $fila[0][2];
+                            echo "<br><b>Grupo: </b>";
+                            for($i=0;$i<count($fila);$i++)
                             {
-                                echo "<br>";
+                                $m % 2 == 0 ? $espacio = " " : $espacio = "<br>";
+                                echo $espacio . $fila[$i][3];
+                                $m++;
                             }
-                            else
-                            {
-                                echo " ";
-                            }
-                            echo $filahora[$k][6];
-                            $m++;
-                            $k++;
+                            echo "</td>";
                         }
-                        echo "</td>";
-                    }
-                    else
-                    {
-                        echo "<td></td>";
+                        else
+                        {
+                            echo "<td style='text-align: center; vertical-align: middle;' class=' $dia[color]'></td>";
+                        }
                     }
                 }
-                echo "</tr>";
-            }
-            else
-            {
-                $ERR_MSG = $class->ERR_ASYSTECO;
-            }
+            echo "</tr>";
         }
         echo "</tbody>";
         echo "</table>";
     }
+    elseif($response->num_row > 1)
+    {
+        echo "<h1 style='vertical-align: middle; text-align: center;'>Formato no válido, revise su horario...</h1>";
+    }
     else
     {
-        $ERR_MSG = $class->ERR_ASYSTECO;
+        echo "<h1 style='vertical-align: middle; text-align: center;'>Todavía no dispone de horario...</h1>";
     }
 }
 else

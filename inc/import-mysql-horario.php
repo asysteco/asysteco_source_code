@@ -1,5 +1,5 @@
 <?php
-
+$tipo = $_POST['Franja'];
 if(isset($_POST['fecha']))
 {
     if($class->validFormDate($_POST['fecha']))
@@ -37,47 +37,44 @@ if(isset($_POST['fecha']))
                     $horarioID = "";
                     if (isset($column[0])) {
                         $column[0] = preg_replace('/(\")|(\s)/', '', $column[0]);
-                        $horarioID = mysqli_real_escape_string($class->conex, utf8_encode($column[0]));
+                        $horarioID = mysqli_real_escape_string($class->conex, $column[0]);
                     }
                     $Grupo = "";
                     if (isset($column[1])) {
                         $column[1] = preg_replace('/(\")|(\s)/', '', $column[1]);
-                        $Grupo = mysqli_real_escape_string($class->conex, utf8_encode($column[1]));
+                        $Grupo = mysqli_real_escape_string($class->conex, $column[1]);
                     }
                     $Iniciales = "";
                     if (isset($column[2])) {
                         $column[2] = preg_replace('/(\")|(\s)/', '', $column[2]);
-                        $Iniciales = mysqli_real_escape_string($class->conex, utf8_encode($column[2]));
+                        $Iniciales = mysqli_real_escape_string($class->conex, $column[2]);
                     }
                     $Aula = "";
                     if (isset($column[4])) {
                         $column[4] = preg_replace('/(\")|(\s)/', '', $column[4]);
-                        $Aula = mysqli_real_escape_string($class->conex, utf8_encode($column[4]));
+                        $Aula = mysqli_real_escape_string($class->conex, $column[4]);
                     }
                     $Diasemana = "";
                     if (isset($column[5])) {
                         $column[5] = preg_replace('/(\")|(\s)/', '', $column[5]);
-                        $Diasemana = mysqli_real_escape_string($class->conex, utf8_encode($column[5]));
+                        $Diasemana = mysqli_real_escape_string($class->conex, $column[5]);
                     }
                     $Hora_tipo = "";
+                    $Hora = "";
                     if (isset($column[6])) {
                         $column[6] = preg_replace('/(\")|(\s)/', '', $column[6]);
-                        $Hora_tipo = mysqli_real_escape_string($class->conex, utf8_encode($column[6]));
+                        $Hora_tipo = mysqli_real_escape_string($class->conex, $column[6]);
+                        $Hora = mysqli_real_escape_string($class->conex, $column[6]);
+                        $tipocorto = preg_split('//', $tipo, -1, PREG_SPLIT_NO_EMPTY);
+                        $Hora_tipo = $Hora_tipo . $tipocorto[0];
                     }
                     $Edificio = "";
                     if (isset($Aula)) {
                         $sed = preg_split('//', $Aula, -1, PREG_SPLIT_NO_EMPTY);
-                        $Edificio = mysqli_real_escape_string($class->conex, utf8_encode($sed[2]));
+                        $Edificio = mysqli_real_escape_string($class->conex, $sed[2]);
                         preg_match('/^[0-9]$/', $Edificio) ? $Edificio = $Edificio : $Edificio=0;
                     }
-                    if($Edificio == 1)
-                    {
-                        $Hora_tipo .= 'C';
-                    }
-                    else
-                    {
-                        $Hora_tipo .= 'M';
-                    }
+
                     $response = $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'");
                     $IDPROFESOR = $response->fetch_assoc();
                     $IDPROFESOR = $IDPROFESOR['ID'];
@@ -88,11 +85,13 @@ if(isset($_POST['fecha']))
                     $m = $sep[1];
                     $Y = $sep[2];
                     $Hora_incorpora = "$Y-$m-$dia";
-                    if($class->query("INSERT into T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora)
+                    if($class->query("INSERT into T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora)
                     values (
                         '$IDPROFESOR',
                         '$Diasemana',
                         '$Hora_tipo',
+                        '$Hora',
+                        '$tipo',
                         '$Edificio',
                         '$Aula',
                         '$Grupo',
@@ -156,47 +155,44 @@ else
                 $horarioID = "";
                 if (isset($column[0])) {
                     $column[0] = preg_replace('/(\")|(\s)/', '', $column[0]);
-                    $horarioID = mysqli_real_escape_string($class->conex, utf8_encode($column[0]));
+                    $horarioID = mysqli_real_escape_string($class->conex, $column[0]);
                 }
                 $Grupo = "";
                 if (isset($column[1])) {
                     $column[1] = preg_replace('/(\")|(\s)/', '', $column[1]);
-                    $Grupo = mysqli_real_escape_string($class->conex, utf8_encode($column[1]));
+                    $Grupo = mysqli_real_escape_string($class->conex, $column[1]);
                 }
                 $Iniciales = "";
                 if (isset($column[2])) {
                     $column[2] = preg_replace('/(\")|(\s)/', '', $column[2]);
-                    $Iniciales = mysqli_real_escape_string($class->conex, utf8_encode($column[2]));
+                    $Iniciales = mysqli_real_escape_string($class->conex, $column[2]);
                 }
                 $Aula = "";
                 if (isset($column[4])) {
                     $column[4] = preg_replace('/(\")|(\s)/', '', $column[4]);
-                    $Aula = mysqli_real_escape_string($class->conex, utf8_encode($column[4]));
+                    $Aula = mysqli_real_escape_string($class->conex, $column[4]);
                 }
                 $Diasemana = "";
                 if (isset($column[5])) {
                     $column[5] = preg_replace('/(\")|(\s)/', '', $column[5]);
-                    $Diasemana = mysqli_real_escape_string($class->conex, utf8_encode($column[5]));
+                    $Diasemana = mysqli_real_escape_string($class->conex, $column[5]);
                 }
                 $Hora_tipo = "";
+                $Hora = "";
                 if (isset($column[6])) {
                     $column[6] = preg_replace('/(\")|(\s)/', '', $column[6]);
-                    $Hora_tipo = mysqli_real_escape_string($class->conex, utf8_encode($column[6]));
+                    $Hora_tipo = mysqli_real_escape_string($class->conex, $column[6]);
+                    $Hora = mysqli_real_escape_string($class->conex, $column[6]);
+                    $tipocorto = preg_split('//', $tipo, -1, PREG_SPLIT_NO_EMPTY);
+                    $Hora_tipo = $Hora_tipo . $tipocorto[0];
                 }
                 $Edificio = "";
                 if (isset($Aula)) {
                     $sed = preg_split('//', $Aula, -1, PREG_SPLIT_NO_EMPTY);
-                    $Edificio = mysqli_real_escape_string($class->conex, utf8_encode($sed[2]));
+                    $Edificio = mysqli_real_escape_string($class->conex, $sed[2]);
                     preg_match('/^[0-9]$/', $Edificio) ? $Edificio = $Edificio : $Edificio=0;
                 }
-                if($Edificio == 1)
-                {
-                    $Hora_tipo .= 'C';
-                }
-                else
-                {
-                    $Hora_tipo .= 'M';
-                }
+                
                 $response = $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'");
                 $IDPROFESOR = $response->fetch_assoc();
                 $IDPROFESOR = $IDPROFESOR['ID'];
@@ -205,11 +201,13 @@ else
                 $response = $class->query("SELECT ID FROM Horarios WHERE ID_PROFESOR='$IDPROFESOR' AND Dia='$Diasemana' AND HORA_TIPO='$Hora_tipo' AND Grupo='$Grupo'");
                 if($response->num_rows == 0)
                 {
-                    if(! $class->query("INSERT into $class->horarios (ID_PROFESOR, Dia, HORA_TIPO, Edificio, Aula, Grupo, Hora_entrada, Hora_salida)
+                    if(! $class->query("INSERT into $class->horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida)
                     values (
                         '$IDPROFESOR',
                         '$Diasemana',
                         '$Hora_tipo',
+                        '$Hora',
+                        '$tipo',
                         '$Edificio',
                         '$Aula',
                         '$Grupo',
