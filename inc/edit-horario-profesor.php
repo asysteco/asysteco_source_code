@@ -70,7 +70,7 @@ if($response = $class->query($sql))
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
                     $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
-                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo, ID, Tipo FROM T_horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' AND Dia='$dialoop' ORDER BY Hora "))
+                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo, ID, Tipo FROM T_horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' AND Dia='$dialoop' AND Fecha_incorpora='$_GET[fecha]' ORDER BY Hora "))
                     {
                         if($response->num_rows > 0)
                         {
@@ -133,7 +133,7 @@ if($response = $class->query($sql))
                                 if($aula != 'Selec.' && $aula != '' && $grupo != 'Selec.' && $grupo != '')
                                 {
                                     echo "<br>";
-                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add_more&Aula=$aula&ID=$n[ID]&Dia=$dialoop&Hora=$Hora&Fecha=$_GET[fecha]'>";
+                                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add_more&ID=$n[ID]&Dia=$dialoop&Hora=$Hora&Fecha=$_GET[fecha]'>";
                                         echo "<span class='glyphicon glyphicon-plus btn-react-add-more'></span>";
                                     echo "</a>";
                                 }
