@@ -636,7 +636,7 @@ class Asysteco
 
                     if($subopt == 'add')
                     {
-                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>='$fechaactual'";
+                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>='$fechaactual' ORDER BY Fecha";
                         $resp = $this->query($lectivos);
     
                         while($lectivo = $resp->fetch_assoc())
@@ -649,7 +649,7 @@ class Asysteco
                     }
                     elseif($subopt == 'remove')
                     {
-                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>='$fechaactual'";
+                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>='$fechaactual' ORDER BY Fecha";
                         $resp = $this->query($lectivos);
                         $lectivo = $resp->fetch_assoc();
 
@@ -672,7 +672,7 @@ class Asysteco
                     
                     if($subopt == 'add')
                     {
-                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha >= '$fechaactual'";
+                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha >= '$fechaactual' ORDER BY Fecha";
                         $resp = $this->query($lectivos);
                         
                         while($lectivo = $resp->fetch_assoc())
@@ -695,7 +695,7 @@ class Asysteco
                     elseif($subopt == 'remove')
                     {
 
-                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha >= '$fechaactual'";
+                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha >= '$fechaactual' ORDER BY Fecha";
                         $resp = $this->query($lectivos);
                         $lectivo = $resp->fetch_assoc();
     
