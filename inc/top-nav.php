@@ -201,7 +201,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
         echo '<ul class="nav navbar-nav navbar-right">';
         echo '<li>';
           /*echo "<li class='dropdown $act_usuario'>";*/
-            echo "<a class='dropdown-toggle' data-toggle='dropdown' href='#'><span class='glyphicon glyphicon-user'></span> ";
+            echo "<a class='dropdown-toggle' data-toggle='dropdown' href=''><span class='glyphicon glyphicon-user'></span> ";
               echo $_SESSION['Nombre'];
               /*echo $notificacion;*/
               /*echo '<span class="caret"></span>';*/
