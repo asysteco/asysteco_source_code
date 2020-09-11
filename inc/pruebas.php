@@ -8,41 +8,18 @@
 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt, aliquid? Velit quos dolorum repellendus recusandae nemo necessitatibus, consequatur tempore odit. Tempora velit quos dolorem voluptatum cumque porro incidunt recusandae, natus laborum esse id repellat, excepturi quidem aliquid totam, deleniti laudantium omnis non! Voluptates, facere? Iusto molestiae commodi at autem distinctio dolore explicabo cupiditate fugiat? Similique in iure officiis itaque explicabo debitis aliquid laborum nesciunt nulla eius! Maiores aliquid sapiente alias suscipit non harum qui fuga praesentium architecto ex? Accusantium possimus ratione magnam, ad fuga est exercitationem eaque consequatur expedita voluptatum unde nemo, laborum, enim numquam ex minus aut repellendus dignissimos deleniti iure ipsum laboriosam! Numquam doloribus distinctio odit nostrum aut, ipsam ex commodi qui ipsa itaque tenetur unde quibusdam officia quod asperiores illum blanditiis nobis repellendus repellat omnis reiciendis a ducimus? Adipisci, itaque! Fugiat, a dolorem. Recusandae, expedita corrupti? Accusantium aperiam voluptates molestias aliquam odio facere ea deserunt! Inventore distinctio nostrum architecto aliquam, quod nemo ex natus provident tempore accusantium nisi nulla sint quisquam consequuntur magni. Hic laborum tempora incidunt vitae ipsa, velit doloremque minima nemo, sapiente deserunt vel laudantium qui consequatur non minus! Dolore necessitatibus quibusdam doloremque error vel! Nulla maiores ex corporis et deleniti explicabo quis quia obcaecati consequatur doloribus minus, eum sed ratione. Ratione ex deserunt adipisci. Ducimus praesentium dignissimos voluptatem saepe dolores blanditiis, quia corrupti ex atque? Velit dolor quos cupiditate cum? Aut beatae cum repellat cumque qui pariatur numquam corporis, adipisci distinctio temporibus quisquam id iste magni autem vero voluptatum fuga, est deserunt! Molestias, suscipit? Voluptatum praesentium tempore error! Quo maiores esse cumque culpa iusto eius quis tempore nihil dicta dolore. Autem accusamus fugit enim quaerat, veniam in sapiente similique ex sed corporis, deserunt quia beatae eveniet modi repellendus. Iusto voluptatibus expedita cumque quaerat iure esse suscipit quam! Dolorem odit alias, ab sunt laborum soluta laboriosam ipsa temporibus, provident adipisci illo suscipit id possimus fuga praesentium voluptatibus optio inventore rerum cum! Quidem eligendi libero tempore illum perferendis neque atque, enim corporis numquam, cumque possimus fugit voluptate incidunt, quam cum ullam fuga placeat aperiam aliquam culpa! Laudantium ab necessitatibus doloremque qui accusantium deserunt nemo reiciendis maxime, suscipit perspiciatis commodi perferendis itaque beatae earum sit culpa eos. Tenetur alias aspernatur, ad beatae quos ullam! Veritatis, eos repellat iste consequuntur ea possimus, cupiditate nobis fugit porro tempore laudantium repudiandae ipsa veniam consequatur facere molestiae omnis fugiat rem eligendi sunt delectus. Fuga earum sequi nisi nemo obcaecati commodi cupiditate libero porro doloribus eveniet sapiente perferendis quasi, distinctio, fugiat non facilis amet sed? Odio excepturi omnis, exercitationem optio nobis at sequi quibusdam dicta quam, quisquam magnam dolorem totam iusto explicabo in laboriosam veniam! Quae harum voluptates placeat voluptatem est pariatur libero necessitatibus, magnam, reprehenderit animi modi sequi veritatis commodi illo neque numquam! Architecto praesentium ad minus pariatur harum dolorem nihil soluta dolor officia, dignissimos atque corporis inventore sapiente reiciendis vero fugit autem consectetur. Quae, in accusamus impedit suscipit aperiam accusantium, velit consequatur a repellendus eveniet obcaecati optio dolores id, voluptates sapiente fugiat est mollitia. Quisquam eligendi sequi ipsum, a natus minima quo! Libero numquam officiis neque excepturi rem ut consectetur asperiores officia, tempore nulla omnis dicta distinctio quod nemo, eveniet aperiam, laboriosam nesciunt. Obcaecati doloribus porro quidem incidunt, praesentium placeat et voluptates, atque a, dolor in quam. Quo dolor amet veritatis accusantium optio similique voluptatibus cumque, ex vel exercitationem minima dignissimos corrupti tenetur dolorem quaerat, ab illo vitae vero id quis, iure officiis deleniti ea. Quaerat consequuntur nihil quos adipisci quibusdam? Illum error voluptatum impedit! Numquam blanditiis voluptatum delectus. Ex nobis dignissimos commodi atque labore recusandae qui provident laboriosam at sed eum error, veniam soluta libero vero molestiae voluptatem quo! Modi cupiditate autem quidem, veniam ea voluptatem aut beatae dolores atque corporis soluta consequuntur quaerat, exercitationem ipsa nesciunt quis non necessitatibus totam hic? Esse quod pariatur fugiat voluptatem adipisci explicabo id nemo tenetur sed veritatis suscipit, nihil optio. Ex sint illum inventore, nemo asperiores modi unde soluta accusantium commodi quod, consectetur iure quia distinctio quisquam cum amet, quam sapiente at rem esse iste? Enim eaque nostrum officiis iure quae architecto labore, obcaecati nihil culpa pariatur adipisci aliquid incidunt ratione amet doloremque saepe similique totam et recusandae quasi ducimus. Laborum beatae libero magnam illum incidunt, velit culpa quod animi voluptates non voluptate laboriosam, aspernatur doloribus blanditiis autem nisi repellat quas rerum iusto sint earum. Sint nesciunt architecto autem quis a dolore quam rerum aspernatur incidunt. Fuga, ducimus molestiae impedit fugit nostrum magnam illum sit laudantium distinctio alias autem, nemo voluptatum optio veniam, molestias eius. Fugit, itaque quae? Commodi voluptate facere debitis ut dignissimos? Necessitatibus vitae qui culpa sapiente maxime consectetur aliquam tenetur voluptate ea! Obcaecati repellat dolores voluptatem recusandae molestias voluptas aut iure voluptates! Velit corporis nobis suscipit vero ratione possimus impedit animi nesciunt in aliquam ipsum minus provident quisquam, voluptatem perferendis quod ab error soluta culpa officiis doloremque! Deleniti repellat modi earum eaque. At totam molestiae animi asperiores, dicta deserunt maxime alias facilis fugiat ad officia dignissimos quae omnis vero laudantium consequuntur porro possimus neque delectus exercitationem veritatis ut doloremque dolorum error. Voluptas deleniti, aut blanditiis quod autem odit officia cumque nemo, repellendus dignissimos dolorem facere! Soluta iusto commodi fugiat neque nobis a cupiditate magni quasi voluptatum nihil! Dolorem commodi, recusandae harum soluta ipsum aspernatur accusamus. Perspiciatis, qui eos maiores magni quae, atque facere aliquid possimus ipsam eligendi dicta quas sit reiciendis dignissimos vitae. Modi consequuntur consectetur, facilis iste tempore illo dolore animi, dignissimos perspiciatis magnam numquam quisquam iusto fuga culpa architecto corporis provident officiis quasi, velit quos autem doloremque inventore. Accusantium unde, esse, commodi, ipsam rerum quaerat aliquam fugiat ducimus impedit labore numquam veritatis. Nisi consequuntur distinctio est libero et non, aut sapiente eaque! Aliquid quidem minima in neque doloremque impedit soluta et rem non eos sunt illum aut autem veritatis quasi, exercitationem ullam accusamus est tenetur voluptate voluptates dolores! Nulla, consequatur itaque adipisci voluptate earum inventore mollitia! Dolorem pariatur alias assumenda architecto incidunt molestiae nam, ut numquam adipisci quibusdam libero explicabo magni doloribus autem eveniet debitis veniam nihil itaque facilis. Deleniti quasi tempore tempora. Tempore laboriosam accusamus atque?</p>
 
 
-<footer class="page-footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 mb-5">
-                        <h5>
-                            © 2020 Asysteco.com
-                        </h5>
-                        <br>
-                        <p>
-                            <a href="https://www.asysteco.com/" target="_blank">
-                                <img src="img/DO_Powered_by_Badge_white.png" class="powered-by">
-                            </a>
-                        </p>
-                    </div>
-                    <div class="col-md-4 mb-5">
-                        <h5>Links</h5>
-                        <ul>
-                            <li><a href="" target="_blank">Team</a></li>
-                            
-                            <li><a href="" target="_blank">Blog</a></li>
-                            <li><a href="" target="_blank">Forum</a></li>
-                            <li><a href="attributions">Attributions</a></li>
-                            <li><a href="privacy">Privacy Policy</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4 mb-5">
-                        <h5>Channels</h5>
-                        <ul>
-                            <li><a href="" target="_blank">Documentation</a></li>
-                            <li><a href="" target="_blank">Docker Hub</a></li>
-                            <li><a href="https://github.com/r" target="_blank">GitHub</a></li>
-                            <li><a href="https://twitter.com/asysteco" target="_blank">Twitter</a></li>
-                            <li><a href="https://www.facebook.com/asysteco.com/">Facebook</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
+<footer>
+		<div class="footer-copy-redes">
+			<div class="main-copy-redes">
+				<div class="footer-copy">
+					&copy; 2020, Todos los derechos reservados - | Asysteco |.
+				</div>
+				<div class="footer-redes">
+					<a href="#" class="fa fa-facebook"></a>
+					<a href="#" class="fa fa-twitter"></a>
+					<a href="#" class="fa fa-youtube-play"></a>
+					<a href="#" class="fa fa-github"></a>
+				</div>
+			</div>
+		</div>
+</footer>
