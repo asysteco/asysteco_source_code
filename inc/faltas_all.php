@@ -6,7 +6,7 @@ $fecha = $f['year'] . "-" . $f['mon'] . "-" . $f['mday'];
 // La siguiente línea la utilizaremos para realizar pruebas
 
 $fecha = '2020-10-22';
-if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID) INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID WHERE NOT EXISTS (SELECT * FROM Fichar WHERE Fichar.ID_PROFESOR=Profesores.ID) AND Fecha <= '$fecha' ORDER BY Fecha DESC"))
+if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha, Justificada FROM (Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID) INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID WHERE NOT EXISTS (SELECT * FROM Fichar WHERE Fichar.ID_PROFESOR=Profesores.ID) AND Fecha <= '$fecha' ORDER BY Fecha DESC"))
 {
         echo "<h1>Faltas</h1>";
         echo "<input id='busca_asiste' class='fadeIn' type='text' placeholder='Seleccionar fecha ...' autocomplete='off'>";
@@ -19,6 +19,7 @@ if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Mar
                             echo "<th>Profesor</th>";
                             echo "<th>Día</th>";
                             echo "<th>Fecha</th>";
+                            echo "<th>Justificada</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
@@ -34,6 +35,7 @@ if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Mar
                             echo "<td>$datos[Nombre]</td>";
                             echo "<td>$datos[Diasemana]</td>";
                             echo "<td>$dia/$m/$Y</td>";
+                            echo "<td>$$datos[Justificada]</td>";
                             echo "</tr>";
                         }
                     }
