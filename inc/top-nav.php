@@ -145,7 +145,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
             echo '</a>';
             echo '<ul class="dropdown-menu">';
               echo '<li>';
-                echo'<a id="message" href="index.php?ACTION=mensajes"><span id="message-icon" class="glyphicon glyphicon-comment"></span> Mensajes ';
+                /*echo'<a id="message" href="index.php?ACTION=mensajes"><span id="message-icon" class="glyphicon glyphicon-comment"></span> Mensajes ';*/
                   echo $notificacion;
                 echo '</a>';
               echo '</li>';
@@ -190,6 +190,12 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
           echo "<li class='$act_asistencia'>";
             echo "<a href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=sesion&d=$d&m=$m&Y=$Y'><span class='glyphicon glyphicon-check'></span> Mis asistencias</a>";
           echo "</li>";
+          echo '<li>';
+            echo '<a href="index.php?ACTION=qrcoder"><span class="glyphicon glyphicon-qrcode"></span> Mi código QR</a>';
+          echo '</li>';
+          echo '<li>';
+            echo '<a id="cambio-pass" href="index.php?ACTION=cambio_pass"><span id="cambio-pass-icon" class="glyphicon glyphicon-refresh"></span> Cambio de contraseña</a>';
+          echo '</li>'; 
         echo '</ul>';
 
         echo '<ul class="nav navbar-nav navbar-right">';
@@ -199,19 +205,13 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
               echo $notificacion;
               echo '<span class="caret"></span>';
             echo '</a>';
-            echo '<ul class="dropdown-menu">';
-              echo '<li>';
-                echo '<a href="index.php?ACTION=qrcoder"><span class="glyphicon glyphicon-qrcode"></span> Mi código QR</a>';
-              echo '</li>';
+            /*echo '<ul class="dropdown-menu">';
               echo '<li>';
                 echo'<a id="message" href="index.php?ACTION=mensajes"><span id="message-icon" class="glyphicon glyphicon-comment"></span> Mensajes ';
                   echo $notificacion;
                 echo '</a>';
-              echo '</li>';
-              echo '<li>';
-                echo '<a id="cambio-pass" href="index.php?ACTION=cambio_pass"><span id="cambio-pass-icon" class="glyphicon glyphicon-refresh"></span> Cambio de contraseña</a>';
-              echo '</li>';  
-            echo '</ul>';
+              echo '</li>'; 
+            echo '</ul>';*/
           echo '</li>';
 
           echo "<li>";
