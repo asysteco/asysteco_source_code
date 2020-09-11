@@ -199,11 +199,12 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
         echo '</ul>';
 
         echo '<ul class="nav navbar-nav navbar-right">';
-          echo "<li class='dropdown $act_usuario'>";
-            echo "<a class='dropdown-toggle' data-toggle='dropdown' href='#'><span class='glyphicon glyphicon-user'></span> ";
+        echo '<li>';
+          /*echo "<li class='dropdown $act_usuario'>";*/
+            /*echo "<a class='dropdown-toggle' data-toggle='dropdown' href='#'><span class='glyphicon glyphicon-user'></span> ";*/
               echo $_SESSION['Nombre'];
-              echo $notificacion;
-              echo '<span class="caret"></span>';
+              /*echo $notificacion;*/
+              /*echo '<span class="caret"></span>';*/
             echo '</a>';
             /*echo '<ul class="dropdown-menu">';
               echo '<li>';
