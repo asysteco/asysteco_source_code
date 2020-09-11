@@ -19,7 +19,6 @@ if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha, Justific
                             echo "<th>Profesor</th>";
                             echo "<th>Día</th>";
                             echo "<th>Fecha</th>";
-                            echo "<th>Justificada</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
@@ -35,7 +34,6 @@ if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha, Justific
                             echo "<td>$datos[Nombre]</td>";
                             echo "<td>$datos[Diasemana]</td>";
                             echo "<td>$dia/$m/$Y</td>";
-                            echo "<td>$$datos[Justificada]</td>";
                             echo "</tr>";
                         }
                     }
