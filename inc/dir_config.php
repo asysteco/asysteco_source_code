@@ -18,3 +18,5 @@ $act_horario = '';
 $act_profesores = '';
 $act_cal_escolar = '';
 $act_usuario = '';
+$act_guardias = '';
+$act_qr = '';

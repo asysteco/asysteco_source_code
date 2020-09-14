@@ -8,14 +8,7 @@ if($_POST['Iniciales'] != '' && $_POST['pass'] != '')
     {
         if($class->Login($_POST['Iniciales'], $_POST['pass']))
         {
-            if($_SESSION['Perfil'] === 'Admin')
-            {
                 header("Location: index.php");
-            }
-            else
-            {
-                header("Location: index.php?ACTION=horarios");
-            }
         }
         else
         {

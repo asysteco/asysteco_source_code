@@ -183,14 +183,14 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
           echo "<a href='$_SERVER[PHP_SELF]?ACTION=horarios'><span class='glyphicon glyphicon-home'></span> Inicio</a>";
         echo "</li>";
 
-          echo "<li class='$act_home'>";
-            echo "<a href='index.php'><span class='glyphicon glyphicon-eye-open'></span> Guardias</a>";
+          echo "<li class='$act_guardias'>";
+            echo "<a href='index.php?ACTION=guardias'><span class='glyphicon glyphicon-eye-open'></span> Guardias</a>";
           echo "</li>";
           
           echo "<li class='$act_asistencia'>";
             echo "<a href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=sesion&d=$d&m=$m&Y=$Y'><span class='glyphicon glyphicon-check'></span> Mis asistencias</a>";
           echo "</li>";
-          echo '<li>';
+          echo "<li class='$act_qr'>";
             echo '<a href="index.php?ACTION=qrcoder"><span class="glyphicon glyphicon-qrcode"></span> Mi código QR</a>';
           echo '</li>';
           echo '<li>';
