@@ -26,12 +26,12 @@ if($resp = $class->query($sql))
                                 echo "<th style='vertical-align: middle; text-align: center;'>Fecha</th>";
                                 echo "<th style='vertical-align: middle; text-align: center;'>Dia</th>";
                                 echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Faltado</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Asistido</th>";
+                                echo "<th style='vertical-align: middle; text-align: center;'>Asistencia</th>";
                                 echo "<th style='vertical-align: middle; text-align: center;'>Act. Extra.</th>";
                             echo "</tr>";
                         echo "</thead>";
                         echo "<tbody>";
+                        $fechaanterior = '';
                         while($datos = $response->fetch_assoc())
                         {
                             if($datos['Asiste'] == 1)
@@ -46,23 +46,29 @@ if($resp = $class->query($sql))
                             {
                                 $asisteColor = 'style="background-color: #ff8c8c;"';
                             }
+
                             $sep = preg_split('/-/', $datos['Fecha']);
                             $dia = $sep[2];
                             $m = $sep[1];
                             $Y = $sep[0];
+                            if($datos['Fecha'] != $fechaanterior)
+                            {
+                                echo "<tr style='background-color: #333;'>";
+                                echo "<td colspan='100%' style='vertical-align: middle; text-align: center; font-weight: bolder; color: white;'>$dia/$m/$Y</td>";
+                                echo "</tr>";
+                            }
+
                             echo "<tr $asisteColor>";
                             echo "<td>$dia/$m/$Y</td>";
                             echo "<td>$datos[Diasemana]</td>";
                             echo "<td>$datos[Hora]</td>";
                             if($datos['Asiste'] == 1)
                             {
-                                echo "<td></td>";
                                 echo "<td><a title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],0' class='actualiza' ><span class='glyphicon glyphicon-ok'></span></a></td>";
                                 echo "<td><a title='Has clic aqui si tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],2' class='actualiza' ><span class='glyphicon glyphicon-unchecked'></span></a></td>";
                             }
                             elseif($datos['Asiste'] == 2)
                             {
-                                echo "<td></td>";
                                 echo "<td><a title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],0' class='actualiza' ><span class='glyphicon glyphicon-ok'></span></a></td>";
                                 echo "<td><a title='Has clic aqui si no tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],1' class='actualiza' ><span class='glyphicon glyphicon-check'></span></a></td>";
                             }
@@ -70,9 +76,9 @@ if($resp = $class->query($sql))
                             {
                                 echo "<td><a title='Haz clic aquí si ha asistido esta hora.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],1' class='actualiza'><span class='glyphicon glyphicon-remove'></span></a></td>";
                                 echo "<td></td>";
-                                echo "<td></td>";
                             }
                             echo "</tr>";
+                            $fechaanterior = $datos['Fecha'];
                         }
                         echo "</tbody>";
                     echo "</table>";
@@ -92,8 +98,7 @@ if($resp = $class->query($sql))
                                 echo "<th style='vertical-align: middle; text-align: center;'>Fecha</th>";
                                 echo "<th style='vertical-align: middle; text-align: center;'>Dia</th>";
                                 echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Faltado</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Asistido</th>";
+                                echo "<th style='vertical-align: middle; text-align: center;'>Asistencia</th>";
                                 echo "<th style='vertical-align: middle; text-align: center;'>Act. Extra.</th>";
                             echo "</tr>";
                         echo "</thead>";
@@ -112,23 +117,29 @@ if($resp = $class->query($sql))
                             {
                                 $asisteColor = 'style="background-color: #ff8c8c;"';
                             }
+
                             $sep = preg_split('/-/', $datos['Fecha']);
                             $dia = $sep[2];
                             $m = $sep[1];
                             $Y = $sep[0];
+                            if($datos['Fecha'] != $fechaanterior)
+                            {
+                                echo "<tr style='background-color: #333;'>";
+                                echo "<td colspan='100%' style='vertical-align: middle; text-align: center; font-weight: bolder; color: white;'>$dia/$m/$Y</td>";
+                                echo "</tr>";
+                            }
+                            
                             echo "<tr $asisteColor>";
                             echo "<td>$dia/$m/$Y</td>";
                             echo "<td>$datos[Diasemana]</td>";
                             echo "<td>$datos[Hora]</td>";
                             if($datos['Asiste'] == 1)
                             {
-                                echo "<td></td>";
                                 echo "<td><a title='Haz clic aquí para marcar esta hora como faltada.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],0' class='actualiza' ><span class='glyphicon glyphicon-ok'></span></a></td>";
                                 echo "<td><a title='Has clic aqui si tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],2' class='actualiza' ><span class='glyphicon glyphicon-unchecked'></span></a></td>";
                             }
                             elseif($datos['Asiste'] == 2)
                             {
-                                echo "<td></td>";
                                 echo "<td><a title='Haz clic aquí para marcar esta hora como faltada.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],0' class='actualiza' ><span class='glyphicon glyphicon-ok'></span></a></td>";
                                 echo "<td><a title='Has clic aqui si no tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],1' class='actualiza' ><span class='glyphicon glyphicon-check'></span></a></td>";
                             }
@@ -136,9 +147,9 @@ if($resp = $class->query($sql))
                             {
                                 echo "<td><a title='Para marcar esta hora como asistida, contacte con Jefatura.'><span class='glyphicon glyphicon-remove'></span></a></td>";
                                 echo "<td></td>";
-                                echo "<td></td>";
                             }
                             echo "</tr>";
+                            $fechaanterior = $datos['Fecha'];
                         }
                         echo "</tbody>";
                     echo "</table>";
