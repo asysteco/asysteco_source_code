@@ -35,7 +35,7 @@ if($response = $class->query($sql))
             $dia = $sep[2];
             $m = $sep[1];
             $Y = $sep[0];
-            if($datos['Fecha'] != $fechaanterior)
+            if($fila['Fecha'] != $fechaanterior)
             {
                 echo "<tr style='background-color: #333;'>";
                 echo "<td colspan='100%' style='vertical-align: middle; text-align: center; font-weight: bolder; color: white;'>$dia/$m/$Y</td>";
@@ -46,7 +46,7 @@ if($response = $class->query($sql))
                 echo "<td>$fila[DIA_SEMANA]</td>";
                 echo "<td>$dia/$m/$Y</td>";
             echo "</tr>";
-            $fechaanterior = $datos['Fecha'];
+            $fechaanterior = $fila['Fecha'];
         }
     }
     else
