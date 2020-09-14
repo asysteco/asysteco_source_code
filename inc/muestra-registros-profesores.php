@@ -9,7 +9,6 @@ if (! empty($result))
     echo "<table id='userTable' class='table'>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Iniciales</th>
                 <th>Nombre</th>
                 <th>Tutor</th>
@@ -42,7 +41,6 @@ if (! empty($result))
     echo "
         <tbody>
             <tr>
-                <td>$row[ID]</td>
                 <td>$row[Iniciales]</td>
                 <td>$row[Nombre]</td>
                 <td>$row[Tutor]</td>
