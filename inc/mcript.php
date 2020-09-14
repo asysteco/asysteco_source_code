@@ -4,17 +4,19 @@
 
 //Debes cambiar esta cadena, debe ser larga y unica
 //nadie mas debe conocerla
-$clave  = "Asysteco_QR-generator?2020&C4R10S&P3DR0&4IvaR4S";
+$clave  = $options['criptKey'];
 
 //Metodo de encriptación
 $method = 'aes-256-cbc';
-/*
-Genera un valor para IV
-*/
-$getIV = function () use ($method) {
-    return base64_decode(base64_encode(openssl_cipher_iv_length($method)));
-};
-$iv = date('YYmmdd');
+
+if($options['autoQR'] == 1)
+{
+    $iv = date('YYmmdd');
+}
+else
+{
+    $iv = 2020202120202021;
+}
 
 /*
 Encripta el contenido de la variable, enviada como parametro.
