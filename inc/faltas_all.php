@@ -16,9 +16,9 @@ if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Mar
                 echo "<table class='table'>";
                     echo "<thead>";
                         echo "<tr>";
-                            echo "<th>Profesor</th>";
-                            echo "<th>Día</th>";
-                            echo "<th>Fecha</th>";
+                            echo "<th style='vertical-align: middle; text-align: center;'>Profesor</th>";
+                            echo "<th style='vertical-align: middle; text-align: center;'>Día</th>";
+                            echo "<th style='vertical-align: middle; text-align: center;'>Fecha</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
