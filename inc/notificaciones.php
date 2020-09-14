@@ -41,11 +41,11 @@ echo '<div class="container" id="botonera" style="margin-top:75px">';
                     echo "
                         <tbody>
                             <tr $ultimos>
-                                <td>$datos[ID_PROFESOR]</td>
-                                <td>$datos[Iniciales]</td>
-                                <td>$datos[Nombre]</td>
-                                <td>$datos[Modificacion]</td>
-                                <td>$dia/$m/$Y $h</td>
+                                <td style='vertical-align: middle;'>$datos[ID_PROFESOR]</td>
+                                <td style='vertical-align: middle;'>$datos[Iniciales]</td>
+                                <td style='vertical-align: middle;'>$datos[Nombre]</td>
+                                <td style='vertical-align: middle;'>$datos[Modificacion]</td>
+                                <td style='vertical-align: middle;'>$dia/$m/$Y $h</td>
                             </tr>
                         ";
                         }

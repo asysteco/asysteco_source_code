@@ -7,7 +7,7 @@ if($class->query("UPDATE Marcajes SET Asiste=$_GET[Valor] WHERE ID_PROFESOR='$_G
     }
     elseif($_GET['Valor'] == 0)
     {
-        $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Hora: $_GET[Hora] como Ausente.";
+        $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Hora: $_GET[Hora] como Falta.";
     }
     elseif($_GET['Valor'] == 2)
     {
