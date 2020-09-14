@@ -556,7 +556,8 @@ class Asysteco
 						WHERE Fecha='$fecha'
 						AND ID_PROFESOR='$id'";
                     
-					$this->query($marcajes);
+                    $this->query($marcajes);
+                    return true;
                 }
                 else
                 {
