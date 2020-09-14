@@ -3,23 +3,22 @@ if($class->query("UPDATE Marcajes SET Asiste=$_GET[Valor] WHERE ID_PROFESOR='$_G
 {
     if($_GET['Valor'] == 1)
     {
-        $msg = "Ha modificado el registro del Día: $_GET[Fecha] Hora: $_GET[Hora] como Asistido.";
+        $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Hora: $_GET[Hora] como Asistido.";
     }
-    elseif($_GET['Valor'] == 0)
+    elseif($_GET['Valor'] == 0 && $_SESSION['Perfil'] == 'Admin')
     {
-        $msg = "Ha modificado el registro del Día: $_GET[Fecha] Hora: $_GET[Hora] como Ausente.";
+        $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Hora: $_GET[Hora] como Ausente.";
     }
     elseif($_GET['Valor'] == 2)
     {
-        $msg = "Ha modificado el registro del Día: $_GET[Fecha] Hora: $_GET[Hora] como Actividad Extraescolar.";
+        $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Hora: $_GET[Hora] como Actividad Extraescolar.";
     }
     else
     {
         $msg = "";
     }
 
-    $notificacion = "INSERT INTO Notificaciones (ID_PROFESOR, Modificacion) VALUES ('$_GET[Profesor]', '$msg')";
-    if(! $class->query($notificacion))
+    if(! $class->notificar($_GET['Profesor'], $msg))
     {
         echo $class->ERR_ASYSTECO;
         return false;
