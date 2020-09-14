@@ -456,40 +456,23 @@ class Asysteco
         }
         if(isset($_GET['Numero']))
         {
-            $extra = "AND ($this->horarios.Aula LIKE 'AU$_GET[Numero]%' OR $this->horarios.Aula REGEXP '^[A-Z]?[0-9]+$' OR $this->horarios.Aula REGEXP '^[A-Za-z]+$')";
+            $extra = "AND ($this->horarios.Edificio = '$_GET[Numero]')";
         }
         else
         {
             $extra = '';
         }
         
-        $sql = "SELECT DISTINCT
-            $this->profesores.Nombre,
-            $this->horarios.Aula,
-            $this->horarios.Grupo,
-            $this->horarios.Edificio,
-            $this->horarios.Hora,
-            $this->horarios.Tipo,
-            $this->profesores.ID 
-        FROM
-            ((($this->horarios INNER JOIN $this->profesores ON $this->horarios.ID_PROFESOR=$this->profesores.ID) 
-            INNER JOIN $this->horas ON $this->horas.Hora=$this->horarios.Hora AND $this->horas.Tipo=$this->horarios.Tipo) 
-            INNER JOIN $this->diasemana ON $this->diasemana.ID=$this->horarios.Dia)
-            INNER JOIN $this->marcajes ON $this->marcajes.ID_PROFESOR=$this->profesores.ID
-        WHERE $this->marcajes.Dia = '$diasemananum'
-            AND $this->marcajes.Fecha = '$dia'
-            AND $this->profesores.Sustituido = 0
-            AND $this->profesores.Activo = 1
-            AND $this->diasemana.Diasemana='$diasemana' 
-            AND ($this->marcajes.Asiste = 0
-                OR $this->marcajes.Asiste = 2)
-            AND $this->horarios.Aula IS NOT NULL
-            AND $this->horarios.Grupo IS NOT NULL
-            AND $this->horas.Fin >= '$horasistema'
-            AND $this->horarios.Hora = $this->marcajes.Hora
-            AND $this->horarios.Tipo = $this->marcajes.Tipo
-            $extra 
-        ORDER BY $this->horarios.Hora, $this->horarios.Aula, $this->profesores.Nombre";
+        $sql = "SELECT $this->profesores.Nombre, $this->horarios.Aula, $this->horarios.Grupo, $this->horarios.Edificio, $this->horarios.Hora
+        FROM ($this->marcajes INNER JOIN $this->horarios ON $this->marcajes.ID_PROFESOR=$this->horarios.ID_PROFESOR AND $this->marcajes.Dia=$this->horarios.Dia AND $this->marcajes.Hora=$this->horarios.Hora)
+        INNER JOIN $this->profesores ON $this->horarios.ID_PROFESOR=$this->profesores.ID
+        WHERE NOT EXISTS(SELECT * FROM $this->fichar WHERE $this->fichar.ID_PROFESOR=$this->profesores.ID AND $this->fichar.Fecha='$dia') 
+        AND $this->marcajes.Fecha='$dia'
+        AND ($this->marcajes.Asiste=0 OR $this->marcajes.Asiste=2)
+        AND $this->profesores.Activo=1
+        AND $this->profesores.Sustituido=0
+        $extra
+        ORDER BY $this->marcajes.Hora, $this->profesores.Nombre";
         // echo $sql;
         if($exec = $this->query($sql))
         {

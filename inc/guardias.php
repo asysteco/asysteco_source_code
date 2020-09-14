@@ -8,33 +8,23 @@ if($response = $class->getGuardias())
     echo "</br><table class='table table-hover'>";
         echo "<thead>";
             echo "<tr>";
-                echo "<th>Hora</th>";
-                echo "<th>Profesor</th>";
-                echo "<th>Edificio</th>";
-                echo "<th>Aula</th>";
-                echo "<th>Grupo</th>";
+                echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
+                echo "<th style='vertical-align: middle; text-align: center;'>Profesor</th>";
+                echo "<th style='vertical-align: middle; text-align: center;'>Edificio</th>";
+                echo "<th style='vertical-align: middle; text-align: center;'>Aula</th>";
+                echo "<th style='vertical-align: middle; text-align: center;'>Grupo</th>";
             echo "</tr>";
         echo "</thead>";
         echo "<tbody>";
         $datos = $response->fetch_all();
-        //var_dump($datos);
         for($i = 0; $i < $j; $i++)
         {
             echo "<tr>";
-                echo "<td>" . $datos[$i][4] . "</td>";
-                echo "<td>" . $datos[$i][0] . "</td>";
-                if(preg_match('/^[A-Z][A-Z][1-9][0-9]{2}$/i', $datos[$i][1]))
-                {
-                    $e = preg_split('//', $datos[$i][1], -1, PREG_SPLIT_NO_EMPTY);
-                    $edificio = $e[2];
-                    echo "<td>" . $edificio . "</td>";
-                }
-                else
-                {
-                    echo "<td></td>";
-                }
-                echo "<td><b>" . $datos[$i][1] . "</b></td>";
-                echo "<td><b>";
+                echo "<td style='vertical-align: middle; text-align: center;'>" . $datos[$i][4] . "</td>";
+                echo "<td style='vertical-align: middle; text-align: center;'>" . $datos[$i][0] . "</td>";
+                echo "<td style='vertical-align: middle; text-align: center;'>" . $datos[$i][3] . "</td>";
+                echo "<td style='vertical-align: middle; text-align: center;'><b>" . $datos[$i][1] . "</b></td>";
+                echo "<td style='vertical-align: middle; text-align: center;'><b>";
                     echo $datos[$i][2];
                     $aula = $datos[$i][1];
                     $grupo = $datos[$i][2];
