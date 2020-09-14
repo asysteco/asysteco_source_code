@@ -12,7 +12,7 @@ $sql = "SELECT DISTINCT $class->fichar.*
             INNER JOIN $class->horarios ON $class->fichar.ID_PROFESOR=$class->horarios.ID_PROFESOR) 
             INNER JOIN $class->profesores ON $class->profesores.ID=$class->horarios.ID_PROFESOR 
         WHERE $class->profesores.ID='$profesor' 
-        ORDER BY $class->fichar.ID DESC 
+        ORDER BY $class->fichar.Fecha, $class->fichar.ID DESC 
         ";
 echo "<h1>Fichajes diarios</h1>";
 if($response = $class->query($sql))
