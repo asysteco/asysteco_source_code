@@ -1,7 +1,7 @@
 <?php
 if($_SESSION['Perfil'] === 'Admin')
 { 
- if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre, $class->profesores.Iniciales, $class->perfiles.Tipo, $class->profesores.Activo, $class->profesores.Sustituido FROM $class->profesores INNER JOIN $class->perfiles ON $class->profesores.TIPO=$class->perfiles.ID"))
+ if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre, $class->profesores.Iniciales, $class->perfiles.Tipo, $class->profesores.Activo, $class->profesores.Sustituido FROM $class->profesores INNER JOIN $class->perfiles ON $class->profesores.TIPO=$class->perfiles.ID WHERE $class->profesores.TIPO<>1 ORDER BY Nombre ASC"))
  {
    if ($response->num_rows > 0)
    {
@@ -15,7 +15,6 @@ if($_SESSION['Perfil'] === 'Admin')
     echo "</br><table id='tabla_profesores' class='table table-hover'>";
     echo "<thead>";
         echo "<tr>";
-            echo "<th>ID</th>";
             echo "<th>Nombre</th>";
             echo "<th>Iniciales</th>";
             echo "<th>Tipo</th>";
@@ -51,7 +50,6 @@ if($_SESSION['Perfil'] === 'Admin')
             echo "<tr id='profesor_$fila[ID]' class='row_prof'>";
             if($fila['Tipo'] == 'Admin')
             {
-              echo "<td>$fila[ID]</td>";
               echo "<td>$fila[Nombre]</td>";
               echo "<td>$fila[Iniciales]</td>";
               echo "<td>$fila[Tipo]</td>";
@@ -64,7 +62,6 @@ if($_SESSION['Perfil'] === 'Admin')
             }
             else
             {
-              echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[ID]</td>";
               echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Nombre]</td>";
               echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Iniciales]</td>";
               echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Tipo]</td>";
@@ -92,10 +89,15 @@ if($_SESSION['Perfil'] === 'Admin')
                   </a>
                 </td>";
               }
-              echo "<td><a class='reset_icon'
+              echo "<td>
+                  <a class='reset_icon'
                       title='Restablecer contraseña de $fila[Nombre]'
                       href='index.php?ACTION=profesores&OPT=reset-pass&ID=$fila[ID]'
-                      onclick=\"return confirm('Va a restablecer la contraseña de $fila[Nombre]  ¿Desea continuar?.')\"><span class='glyphicon glyphicon-refresh reset_icon'></span></a></td>";
+                      onclick=\"return confirm('Va a restablecer la contraseña de $fila[Nombre]  ¿Desea continuar?.')\">
+                      <span class='glyphicon glyphicon-refresh reset_icon'></span>
+                  </a>
+              </td>";
+            echo '</tr>';
             }
         }
     echo "</tbody>";
