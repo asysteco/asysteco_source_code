@@ -555,39 +555,25 @@ class Asysteco
             $sql = "SELECT DISTINCT
                     $this->fichar.ID,
                     $this->horarios.Hora_salida 
-                    FROM $this->fichar INNER JOIN $this->horarios 
+                    FROM $this->fichar INNER JOIN $this->horarios ON $this->fichar.ID_PROFESOR=$this->horarios.ID_PROFESOR
                     WHERE $this->fichar.Fecha='$fecha'
                     AND $this->fichar.ID_PROFESOR='$id'";
-
+			
             if($response = $this->query($sql))
             {
                 if($response->num_rows == 0)
                 {
                     $fichar = "INSERT INTO $this->fichar (ID_PROFESOR, F_entrada, HORA_CLASE, DIA_SEMANA, Fecha) 
                                 VALUES ($id, '$hora', '$horaclase', '$dia[weekday]', '$fecha')";
-
-                    if($response = $this->query($fichar))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+					
+                    $this->query($fichar);
 
                     $marcajes = "UPDATE $this->marcajes
-                    SET Asiste='1'
-                    WHERE Fecha='$fecha'
-                    AND ID_PROFESOR='$id'";
-
-                    if($marcado = $this->query($marcajes))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+						SET Asiste='1'
+						WHERE Fecha='$fecha'
+						AND ID_PROFESOR='$id'";
+                    
+					$this->query($marcajes);
                 }
                 else
                 {
