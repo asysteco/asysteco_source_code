@@ -20,9 +20,9 @@ if($response = $class->query($sql))
     echo "</br><table class='table table-striped'>";
         echo "<thead>";
             echo "<tr>";
-                echo "<th>Hora Fichaje</th>";
-                echo "<th>Día semana</th>";
-                echo "<th>Fecha</th>";
+                echo "<th style='vertical-align: middle; text-align: center;'>Hora Fichaje</th>";
+                echo "<th style='vertical-align: middle; text-align: center;'>Día semana</th>";
+                echo "<th style='vertical-align: middle; text-align: center;'>Fecha</th>";
             echo "</tr>";
         echo "</thead>";
         echo "<tbody>";
