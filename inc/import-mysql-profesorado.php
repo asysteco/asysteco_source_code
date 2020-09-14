@@ -1,11 +1,5 @@
 <?php
 
-// Establecemos UTF8 como cotejamiento de caracteres
-if (!$class->conex->set_charset("latin1")) {
-    printf("Error cargando el conjunto de caracteres utf8: %s\n", $class->conex->error);
-    exit();
-}
-
 if (isset($_POST["import"])) {
     
     $fileName = $_FILES["file"]["tmp_name"];

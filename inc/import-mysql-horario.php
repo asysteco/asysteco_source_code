@@ -1,4 +1,5 @@
 <?php
+
 $tipo = $_POST['Franja'];
 if(isset($_POST['fecha']))
 {

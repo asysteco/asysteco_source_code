@@ -36,15 +36,15 @@ if($resp = $class->query($sql))
                         {
                             if($datos['Asiste'] == 1)
                             {
-                                $asisteColor = 'style="background-color: #84c584;"';
+                                $asisteColor = 'style="background-color: #E2F0CB;"';
                             }
                             elseif($datos['Asiste'] == 2)
                             {
-                                $asisteColor = 'style="background-color: #b5d9f5;"';
+                                $asisteColor = 'style="background-color: #B5EAD7;"';
                             }
                             else
                             {
-                                $asisteColor = 'style="background-color: #ff8c8c;"';
+                                $asisteColor = 'style="background-color: #FF9AA2;"';
                             }
 
                             $sep = preg_split('/-/', $datos['Fecha']);
@@ -107,15 +107,15 @@ if($resp = $class->query($sql))
                         {
                             if($datos['Asiste'] == 1)
                             {
-                                $asisteColor = 'style="background-color: #84c584;"';
+                                $asisteColor = 'style="background-color: #E2F0CB;"';
                             }
                             elseif($datos['Asiste'] == 2)
                             {
-                                $asisteColor = 'style="background-color: #b5d9f5;"';
+                                $asisteColor = 'style="background-color: #B5EAD7;"';
                             }
                             else
                             {
-                                $asisteColor = 'style="background-color: #ff8c8c;"';
+                                $asisteColor = 'style="background-color: #FF9AA2;"';
                             }
 
                             $sep = preg_split('/-/', $datos['Fecha']);
