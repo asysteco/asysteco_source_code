@@ -20,7 +20,6 @@ if($response = $class->query($sql))
     echo "</br><table class='table table-striped'>";
         echo "<thead>";
             echo "<tr>";
-                echo "<th>Nº</th>";
                 echo "<th>Hora Fichaje</th>";
                 echo "<th>Día semana</th>";
                 echo "<th>Fecha</th>";
@@ -29,18 +28,25 @@ if($response = $class->query($sql))
         echo "<tbody>";
     if ($response->num_rows > 0)
     {
+        $fechaanterior = '';
         while ($fila = $response->fetch_assoc())
         {
             $sep = preg_split('/-/', $fila['Fecha']);
             $dia = $sep[2];
             $m = $sep[1];
             $Y = $sep[0];
+            if($datos['Fecha'] != $fechaanterior)
+            {
+                echo "<tr style='background-color: #333;'>";
+                echo "<td colspan='100%' style='vertical-align: middle; text-align: center; font-weight: bolder; color: white;'>$dia/$m/$Y</td>";
+                echo "</tr>";
+            }
             echo "<tr>";
-                echo "<td>$fila[ID]</td>";
                 echo "<td>$fila[F_entrada]</td>";
                 echo "<td>$fila[DIA_SEMANA]</td>";
                 echo "<td>$dia/$m/$Y</td>";
             echo "</tr>";
+            $fechaanterior = $datos['Fecha'];
         }
     }
     else
