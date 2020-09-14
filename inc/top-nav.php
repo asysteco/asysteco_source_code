@@ -116,7 +116,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
             echo "</ul>";
           echo "</li>";
 
-          echo "<li class=' $act_asistencias '>";
+          echo "<li class='$act_asistencia'>";
             echo "<a href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=all'><span class='glyphicon glyphicon-calendar'></span> Asistencias actuales</a>";
           echo "</li>";
 
