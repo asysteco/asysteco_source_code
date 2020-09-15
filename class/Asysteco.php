@@ -252,6 +252,56 @@ class Asysteco
         }
     }
 
+    function LoginAdminQR($username, $password)
+    {
+        if($this->conex)
+        {
+            if($response = $this->query("SELECT ID FROM $this->profesores WHERE Iniciales='$username' AND Password='$password' AND Activo='1'"))
+            {
+                if($response->num_rows == 1)
+                {
+                    if($response = $this->query("SELECT $this->profesores.ID, $this->profesores.Nombre, $this->profesores.Iniciales, $this->perfiles.Tipo 
+                                                    FROM $this->profesores INNER JOIN $this->perfiles ON $this->profesores.TIPO=$this->perfiles.ID 
+                                                    WHERE Iniciales='$username' AND Password='$password'"))
+                    {
+						$subrootsplit = preg_split('/\//', $_SERVER['REQUEST_URI']);
+						$subroot = '/' . $subrootsplit[1];
+						preg_match('/^\/[A-Z-]+$/i', $subroot) ? $subroot = $subroot : $subroot = '' ;
+
+						$Titulo = preg_split('/\//', $subroot);
+						$Titulo = $Titulo[1];
+                        $fila = $response->fetch_assoc();
+						
+                        $_SESSION['logged'] = true;
+                        $_SESSION['LID'] = $Titulo;
+                        $_SESSION['Iniciales'] = $fila['Iniciales'];
+                        $_SESSION['ID'] = $fila['ID'];
+                        $_SESSION['Nombre'] = $fila['Nombre'];
+                        $_SESSION['Perfil'] = $fila['Tipo'];
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    $this->ERR_ASYSTECO = "Usuario o contraseña no válidos.";
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     function getDate()
     {
         date_default_timezone_set('Europe/Madrid');
