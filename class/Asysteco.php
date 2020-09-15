@@ -553,10 +553,18 @@ class Asysteco
     {
         if($this->conex)
         {
-            if($response = $this->query("SELECT ID FROM $this->profesores WHERE Iniciales='$_GET[abrev]' AND Password='$_GET[enp]'"))
+            if($response = $this->query("SELECT ID FROM $this->profesores WHERE Iniciales='$_GET[abrev]' AND Password='$_GET[enp]' AND TIPO<>1"))
             {
-                $idprof = $response->fetch_assoc();
-                $id = $idprof['ID'];
+                if($response->num_rows > 0)
+                {
+                    $idprof = $response->fetch_assoc();
+                    $id = $idprof['ID'];
+                }
+                else
+                {
+                    $this->ERR_ASYSTECO = "<span id='noqr' style='color: white; font-weight: bolder; background-color: red;'><h3>Código QR incorrecto.</h3></span>";
+                    return false;
+                }
             }
             else
             {

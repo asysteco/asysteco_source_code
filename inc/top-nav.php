@@ -144,6 +144,9 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
               echo '<span class="caret"></span>';
             echo '</a>';
             echo '<ul class="dropdown-menu">';
+              echo "<li class='$act_qr'>";
+                echo '<a href="index.php?ACTION=qrcoder"><span class="glyphicon glyphicon-qrcode"></span> Activador de lector</a>';
+              echo '</li>';
               echo '<li>';
                 /*echo'<a id="message" href="index.php?ACTION=mensajes"><span id="message-icon" class="glyphicon glyphicon-comment"></span> Mensajes ';*/
                   echo $notificacion;
