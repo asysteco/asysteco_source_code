@@ -26,6 +26,7 @@ if($response = $class->getGuardias())
                 echo "<td style='vertical-align: middle; text-align: center;'><b>" . $datos[$i][1] . "</b></td>";
                 echo "<td style='vertical-align: middle; text-align: center;'><b>";
                     echo $datos[$i][2];
+                    $profesor = $datos[$i][0];
                     $aula = $datos[$i][1];
                     $grupo = $datos[$i][2];
                     $ultimahora = $datos[$i][4];
@@ -38,7 +39,7 @@ if($response = $class->getGuardias())
                     * Esta comprobación se realizará hasta que ya no coincida
                     * Ya que pertenecerá al siguiente registro
                     */
-                    while($datos[$i][1] == $aula && $datos[$i][4] == $ultimahora)
+                    while($datos[$i][1] == $aula && $datos[$i][4] == $ultimahora && $datos[$i][0] == $profesor)
                     {
                         if($m % 2 == 0)
                         {

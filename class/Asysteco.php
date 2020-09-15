@@ -536,9 +536,8 @@ class Asysteco
                 return false;
             }
             $sql = "SELECT DISTINCT
-                    $this->fichar.ID,
-                    $this->horarios.Hora_salida 
-                    FROM $this->fichar INNER JOIN $this->horarios ON $this->fichar.ID_PROFESOR=$this->horarios.ID_PROFESOR
+                    $this->fichar.ID 
+                    FROM $this->fichar
                     WHERE $this->fichar.Fecha='$fecha'
                     AND $this->fichar.ID_PROFESOR='$id'";
 			
