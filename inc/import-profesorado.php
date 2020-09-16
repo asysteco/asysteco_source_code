@@ -7,24 +7,8 @@
     <div class="outer-scontainer">
 <?php
 
-    if($class->query("SELECT ID FROM $class->profesores")->num_rows > 1)
-    {
-        echo '<h3>No se pueden importar más ficheros de profesores, puede dar de alta nuevos profesores con el siguiente botón: <br /><br />';
-        echo '<a href="index.php?ACTION=profesores&amp;OPT=add-profesor" class="btn btn-info">Registrar Profesor</a>';
-        // echo '<span class="glyphicon glyphicon-education"></span> 
-        // Profesores 
-        // <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        // <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-        // </svg>
-        // <span class="glyphicon glyphicon-education"></span> 
-        // Mostrar profesores 
-        // <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        // <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-        // </svg>
-        // Registrar profesor...</h3>';
-    }
-    else
-    {
+ 
+    
         echo '<form class="form-horizontal" action="index.php?ACTION=profesores&OPT=import-csv" method="post"
             name="frmCSVImport" id="frmCSVImport"
             enctype="multipart/form-data" required>
@@ -35,7 +19,7 @@
                 <br />
             </div>
         </form>';
-    }
+    
 
         if($num_profesores_act = $class->query("SELECT count(DISTINCT ID) as activos FROM $class->profesores WHERE Activo=1"))
         {
