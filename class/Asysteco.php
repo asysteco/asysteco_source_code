@@ -649,7 +649,7 @@ class Asysteco
 
                     while($lectivo = $resp->fetch_assoc())
                     {
-                        $ejec = "INSERT INTO Marcajes SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
+                        $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
                         FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
                         WHERE Dia = WEEKDAY('$lectivo[Fecha]')+1";
                         $this->query($ejec);
@@ -668,9 +668,18 @@ class Asysteco
     
                         while($lectivo = $resp->fetch_assoc())
                         {
-                            $ejec = "INSERT INTO Marcajes SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
-                            FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-                            WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
+                            if($this->asistidoHoy($profesor) && $fechaactual == $lectivo['Fecha'])
+                            {
+                                $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 1
+                                FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
+                                WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
+                            }
+                            else
+                            {
+                                $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
+                                FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
+                                WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
+                            }
                             $this->query($ejec);
                         }
                     }
@@ -706,13 +715,13 @@ class Asysteco
                         {
                             if($this->asistidoHoy($profesor) && $fechaactual == $lectivo['Fecha'])
                             {
-                                $ejec = "INSERT INTO Marcajes SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 1
+                                $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 1
                                 FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
                                 WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND $dia=WEEKDAY('$lectivo[Fecha]')+1 AND Hora='$hora'";
                             }
                             else
                             {
-                                $ejec = "INSERT INTO Marcajes SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
+                                $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
                                 FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
                                 WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND $dia=WEEKDAY('$lectivo[Fecha]')+1 AND Hora='$hora'";
                             }
