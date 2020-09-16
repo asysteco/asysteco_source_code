@@ -27,7 +27,7 @@
     {
         echo '<form class="form-horizontal" action="index.php?ACTION=profesores&OPT=import-csv" method="post"
             name="frmCSVImport" id="frmCSVImport"
-            enctype="multipart/form-data">
+            enctype="multipart/form-data" required>
             <div class="input-row">
                 <label id="import-manual-trigger">Subir documento CSV:</label><br />
                 <input type="file" name="file" id="file" accept=".csv" class="btn btn-link">
