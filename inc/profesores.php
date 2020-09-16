@@ -108,7 +108,7 @@ if($_SESSION['Perfil'] === 'Admin')
    else
    {
     $ERR_MSG = "No existen profesores, debe importarlos.<br>";
-    $ERR_MSG .= "<a href='$_SERVER[PHP_SELF]?ACTION=profesore&OPT=import-form' class='btn btn-success'>Aceptar</a>";
+    $ERR_MSG .= "<a href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=import-form' class='btn btn-success'>Aceptar</a>";
    }
  }
  else
