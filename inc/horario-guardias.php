@@ -223,7 +223,7 @@ $('#loading-msg').html('Cargando...'),
 $('#loading').show(),
 $('#guardias-response').html(''),
 enlace = $(this).attr('enlace'),
-$('#act-response').load(enlace),
+$('#act-response').load(enlace);
 setTimeout(function(){
 $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$n[ID])
 },200),

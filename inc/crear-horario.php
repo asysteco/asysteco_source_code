@@ -51,11 +51,20 @@ foreach ($franjasHorarias[$franja] as $valor => $datos)
         
         for($dialoop = 1; $dialoop <= 5; $dialoop++)
         {
-            echo "<td id='$dialoop-$hora' style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
-                echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add&ID=$n[ID]&Dia=$dialoop&Hora=$Hora&Tipo=$_GET[Tipo]&Fecha=$_GET[fecha]'>";
-                    echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
-                echo "</a>";
-            echo "</td>";
+            if($Hora === 'R')
+            {
+                echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
+                    echo 'RECREO';
+                echo "</td>";
+            }
+            else
+            {
+                echo "<td id='$dialoop-$hora' style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
+                    echo "<a class='act' enlace='index.php?ACTION=horarios&OPT=edit-t&act=add&ID=$n[ID]&Dia=$dialoop&Hora=$Hora&Tipo=$_GET[Tipo]&Fecha=$_GET[fecha]'>";
+                        echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
+                    echo "</a>";
+                echo "</td>";
+            }
         }
     echo "</tr>";
 }

@@ -20,7 +20,7 @@ if($subopt == 'add')
     }
     else
     {
-        echo $ERR_MSG = $class->ERR_ASYSTECO;
+        $ERR_MSG = $class->ERR_ASYSTECO;
     }
 }
 elseif($subopt == 'remove')
@@ -33,10 +33,81 @@ elseif($subopt == 'remove')
     }
     else
     {
-        echo $ERR_MSG = $class->ERR_ASYSTECO;
+        $ERR_MSG = $class->ERR_ASYSTECO;
+    }
+}
+elseif($subopt == 'addt')
+{
+    $fecha = date('Y-m-d');
+    $sql = "INSERT INTO T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora)
+    VALUES ('$profesor', '$dia', '$Horatipo', '$hora', '$_GET[Tipo]', '$edificio', 'GU". $edificio ."00', 'Guardia', '00:00:00', '00:00:00', '$fecha')";
+    if(! $class->query($sql))
+    {
+        $ERR_MSG = $class->ERR_ASYSTECO;
+    }
+}
+elseif($subopt == 'removet')
+{
+    $sql = "DELETE FROM T_horarios WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND Hora='$hora'";
+    if(! $class->query($sql))
+    {
+        $ERR_MSG = $class->ERR_ASYSTECO;
     }
 }
 else
 {
     echo $ERR_MSG = "No SUBOPT has given.";
+}
+
+if(isset($ERR_MSG) && $ERR_MSG != '')
+{echo "
+    <script>
+      $('#ERR_MSG_MODAL').modal('show')
+    </script>
+    ";
+    echo '
+    <!-- Modal -->
+    <div class="modal fade" id="ERR_MSG_MODAL" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p style="color: red;">
+              ' . $ERR_MSG . '
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    ';
+}
+else
+{echo "
+    <script>
+      $('#ERR_MSG_MODAL').modal('show')
+    </script>
+    ";
+    echo '
+    <!-- Modal -->
+    <div class="modal fade" id="ERR_MSG_MODAL" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p style="color: green;">
+              Actualizado correctamente.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    ';
 }

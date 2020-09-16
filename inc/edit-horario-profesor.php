@@ -43,7 +43,7 @@ if($response = $class->query($sql))
         $dia = $class->getDate();
         $datosprof = $response->fetch_assoc();
         $franja = $datosprof['Tipo'];
-        echo "<h2>Horario: $n[Nombre]</h2>";
+        echo "<h2 id='profesor' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
         echo "<a href='index.php?ACTION=horarios&OPT=apply-now' class='btn btn-success pull-right'> Aplicar cambios ahora</a>";
         echo "<h4 style='color: grey;'><i>* Este horario entrará en vigor el día $fechaget</i></h4>";
         echo "<div id='response'></div>";
@@ -84,6 +84,9 @@ if($response = $class->query($sql))
                             
                             if($fila[0][3] == 'Guardia')
                             {
+                                echo "<a class='remove-guardia' style='color: red;' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=removet&profesor=$n[ID]&Dia=$dialoop&Hora=$Hora' title='Quitar Guardia'>";
+                                    echo "<span class='glyphicon glyphicon-remove-circle btn-react-del'></span>";
+                                echo "</a><br>";
                                 echo "<span><b>Guardia</b></span>";
                                 echo "<br>";
                                 echo "<span><b>Edificio " . $fila[0][6] . "</b></span>";
@@ -154,8 +157,24 @@ if($response = $class->query($sql))
                         {
                             if($Hora === 'R')
                             {
-                                echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
-									echo 'RECREO';
+                                // echo "<td id='$j-$hora' style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
+								// 	echo 'RECREO';
+                                // echo "</td>";
+                                echo "<td id='$dialoop-$Hora' style='vertical-align: middle; text-align: center;' class=' $dia[color]'>";
+                                if($resp = $class->query("SELECT DISTINCT Edificio FROM Horarios WHERE Edificio<>0 ORDER BY Edificio ASC"))
+                                {
+                                    echo "<select id='edificio-$dialoop-$Hora' class='edificio' title='Selecciona un edificio para la guardia'>";
+                                    echo "<option value=''>Edificio...</option>";
+                                    while($row = $resp->fetch_assoc())
+                                    {
+                                        echo "<option value='$row[Edificio]'>Edificio $row[Edificio]</option>";
+                                    }
+                                    echo "</select>";
+                                }
+                                echo '<br>';
+                                    echo "<a id='plus-$dialoop-$Hora' class='guardia' enlace='index.php?ACTION=horarios&OPT=edit-guardias&SUBOPT=addt&profesor=$n[ID]&Dia=$dialoop&Hora=$Hora&Tipo=$franja' title='Asignar Guardia'>";
+                                        echo "<span class='glyphicon glyphicon-plus btn-react-add'></span>";
+                                    echo "</a>";
                                 echo "</td>";
                             }
                             else
