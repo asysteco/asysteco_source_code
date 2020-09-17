@@ -43,6 +43,6 @@ $_POST['new_pass_c'] = $class->encryptPassword($_POST['new_pass_c']);
 if(isset($cambiada))
 {
     include_once($dirs['inc'] . 'top-nav.php');
-    die(include_once($dirs['inc'] . 'errors.php'));
+    include_once($dirs['inc'] . 'errors.php');
 }
 ?>
