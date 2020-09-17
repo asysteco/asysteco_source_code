@@ -6,7 +6,7 @@ if($_POST['Iniciales'] != '' && $_POST['pass'] != '')
 {
     if($class->validFormIni($_POST['Iniciales']))
     {
-        if($class->Login($_POST['Iniciales'], $_POST['pass']))
+        if($class->Login($_POST['Iniciales'], $_POST['pass'], $Titulo))
         {
                 header("Location: index.php");
         }

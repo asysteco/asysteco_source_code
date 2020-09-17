@@ -69,14 +69,8 @@ class Asysteco
         }
     }
 
-    function isLogged()
+    function isLogged($Titulo)
     {
-		$subrootsplit = preg_split('/\//', $_SERVER['REQUEST_URI']);
-		$subroot = '/' . $subrootsplit[1];
-		preg_match('/^\/[A-Z-]+$/i', $subroot) ? $subroot = $subroot : $subroot = '' ;
-
-		$Titulo = preg_split('/\//', $subroot);
-		$Titulo = $Titulo[1];
         if($_SESSION['logged'] === true && $_SESSION['LID'] === "$Titulo" && isset($_SESSION['Nombre']) && isset($_SESSION['Iniciales']) && $_SESSION['Nombre'] != '')
         {
             return true;
@@ -201,7 +195,7 @@ class Asysteco
         return $pass;
     }
 
-    function Login($username, $password)
+    function Login($username, $password, $Titulo)
     {
         if($this->conex)
         {
@@ -214,12 +208,6 @@ class Asysteco
                                                     FROM $this->profesores INNER JOIN $this->perfiles ON $this->profesores.TIPO=$this->perfiles.ID 
                                                     WHERE Iniciales='$username' AND Password='$password'"))
                     {
-						$subrootsplit = preg_split('/\//', $_SERVER['REQUEST_URI']);
-						$subroot = '/' . $subrootsplit[1];
-						preg_match('/^\/[A-Z-]+$/i', $subroot) ? $subroot = $subroot : $subroot = '' ;
-
-						$Titulo = preg_split('/\//', $subroot);
-						$Titulo = $Titulo[1];
                         $fila = $response->fetch_assoc();
 						
                         $_SESSION['logged'] = true;
@@ -668,18 +656,9 @@ class Asysteco
     
                         while($lectivo = $resp->fetch_assoc())
                         {
-                            if($this->asistidoHoy($profesor) && $fechaactual == $lectivo['Fecha'])
-                            {
-                                $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 1
-                                FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-                                WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
-                            }
-                            else
-                            {
-                                $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
-                                FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-                                WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
-                            }
+                            $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
+                            FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
+                            WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
                             $this->query($ejec);
                         }
                     }
