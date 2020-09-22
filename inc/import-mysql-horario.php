@@ -60,22 +60,20 @@ if(isset($_POST['fecha']))
                         $column[5] = preg_replace('/(\")|(\s)/', '', $column[5]);
                         $Diasemana = mysqli_real_escape_string($class->conex, $column[5]);
                     }
-                    $Hora_tipo = "";
-                    $Hora = "";
-                    if (isset($column[6])) {
-                        $column[6] = preg_replace('/(\")|(\s)/', '', $column[6]);
-                        $Hora_tipo = mysqli_real_escape_string($class->conex, $column[6]);
-                        $Hora = mysqli_real_escape_string($class->conex, $column[6]);
-                        $tipocorto = preg_split('//', $tipo, -1, PREG_SPLIT_NO_EMPTY);
-                        $Hora_tipo = $Hora_tipo . $tipocorto[0];
-                    }
-                    $Edificio = "";
-                    if (isset($Aula)) {
-                        $sed = preg_split('//', $Aula, -1, PREG_SPLIT_NO_EMPTY);
-                        $Edificio = mysqli_real_escape_string($class->conex, $sed[2]);
-                        preg_match('/^[0-9]$/', $Edificio) ? $Edificio = $Edificio : $Edificio=0;
-                    }
-
+					$Hora = "";
+					if (isset($column[6])) {
+						$column[6] = preg_replace('/(\")|(\s)/', '', $column[6]);
+						$Hora = mysqli_real_escape_string($class->conex, $column[6]);
+						$Hora = $column[6];
+					}
+					$Hora_tipo = $franjasHorarias["$tipo"]["$Hora"]['Hora'];
+					$Edificio = "";
+					if (isset($Aula)) {
+						$sed = preg_split('//', $Aula, -1, PREG_SPLIT_NO_EMPTY);
+						$Edificio = mysqli_real_escape_string($class->conex, $sed[2]);
+						preg_match('/^[0-9]$/', $Edificio) ? $Edificio = $Edificio : $Edificio=1;
+					}
+					
                     $response = $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'");
                     $IDPROFESOR = $response->fetch_assoc();
                     $IDPROFESOR = $IDPROFESOR['ID'];
@@ -85,7 +83,7 @@ if(isset($_POST['fecha']))
                     $dia = $sep[0];
                     $m = $sep[1];
                     $Y = $sep[2];
-                    $Hora_incorpora = "$Y-$m-$dia";
+                    $Fecha_incorpora = "$Y-$m-$dia";
                     if($class->query("INSERT into T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora)
                     values (
                         '$IDPROFESOR',
@@ -98,7 +96,7 @@ if(isset($_POST['fecha']))
                         '$Grupo',
                         '$Hora_entrada',
                         '$Hora_salida',
-                        '$Hora_incorpora')"))
+                        '$Fecha_incorpora')"))
                     {
                         $MSG = "Horarios importados correctamente.<br>";
                         $MSG .= "Entrarán en vigor el día $_POST[fecha]";
@@ -178,20 +176,18 @@ else
                     $column[5] = preg_replace('/(\")|(\s)/', '', $column[5]);
                     $Diasemana = mysqli_real_escape_string($class->conex, $column[5]);
                 }
-                $Hora_tipo = "";
                 $Hora = "";
                 if (isset($column[6])) {
                     $column[6] = preg_replace('/(\")|(\s)/', '', $column[6]);
-                    $Hora_tipo = mysqli_real_escape_string($class->conex, $column[6]);
                     $Hora = mysqli_real_escape_string($class->conex, $column[6]);
-                    $tipocorto = preg_split('//', $tipo, -1, PREG_SPLIT_NO_EMPTY);
-                    $Hora_tipo = $Hora_tipo . $tipocorto[0];
+                    $Hora = $column[6];
                 }
+                $Hora_tipo = $franjasHorarias["$tipo"]["$Hora"]['Hora'];
                 $Edificio = "";
                 if (isset($Aula)) {
                     $sed = preg_split('//', $Aula, -1, PREG_SPLIT_NO_EMPTY);
                     $Edificio = mysqli_real_escape_string($class->conex, $sed[2]);
-                    preg_match('/^[0-9]$/', $Edificio) ? $Edificio = $Edificio : $Edificio=0;
+                    preg_match('/^[0-9]$/', $Edificio) ? $Edificio = $Edificio : $Edificio=1;
                 }
                 
                 $response = $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'");
@@ -199,40 +195,47 @@ else
                 $IDPROFESOR = $IDPROFESOR['ID'];
                 $Hora_entrada = "00:00:00";
                 $Hora_salida = "00:00:00";
-                $response = $class->query("SELECT ID FROM Horarios WHERE ID_PROFESOR='$IDPROFESOR' AND Dia='$Diasemana' AND HORA_TIPO='$Hora_tipo' AND Grupo='$Grupo'");
-                if($response->num_rows == 0)
+                if($response = $class->query("SELECT ID FROM Horarios WHERE ID_PROFESOR='$IDPROFESOR' AND Dia='$Diasemana' AND HORA_TIPO='$Hora_tipo' AND Grupo='$Grupo'"))
                 {
-                    if(! $class->query("INSERT into $class->horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida)
-                    values (
-                        '$IDPROFESOR',
-                        '$Diasemana',
-                        '$Hora_tipo',
-                        '$Hora',
-                        '$tipo',
-                        '$Edificio',
-                        '$Aula',
-                        '$Grupo',
-                        '$Hora_entrada',
-                        '$Hora_salida')"))
+                    if($response->num_rows == 0)
                     {
-                        $ERR_MSG = "<br>Error al importar datos desde CSV.<br>";
-                        $ERR_MSG .= $class->ERR_ASYSTECO;
+                        if(! $class->query("INSERT into $class->horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida)
+                        values (
+                            '$IDPROFESOR',
+                            '$Diasemana',
+                            '$Hora_tipo',
+                            '$Hora',
+                            '$tipo',
+                            '$Edificio',
+                            '$Aula',
+                            '$Grupo',
+                            '$Hora_entrada',
+                            '$Hora_salida')"))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            $MSG = "Horarios importados correctamente.<br>";
+                        }
                     }
-                    else
-                    {
-                        $MSG = "Horarios importados correctamente.<br>";
-                    }
+                }
+                else
+                {
+                    return false;
                 }
             }
             else
             {
                 $ERR_MSG = "<br>Error en Fichero, no es el CSV esperado.<br>";
+                return false;
             }
         }
     }
     else
     {
         $ERR_MSG = "El fichero está vacío.";
+        return false;
     }
     $class->marcajes();
 }

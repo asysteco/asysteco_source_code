@@ -240,7 +240,7 @@ class Asysteco
         }
     }
 
-    function LoginAdminQR($username, $password)
+    function LoginAdminQR($username, $password, $Titulo)
     {
         if($this->conex)
         {
@@ -252,12 +252,6 @@ class Asysteco
                                                     FROM $this->profesores INNER JOIN $this->perfiles ON $this->profesores.TIPO=$this->perfiles.ID 
                                                     WHERE Iniciales='$username' AND Password='$password'"))
                     {
-						$subrootsplit = preg_split('/\//', $_SERVER['REQUEST_URI']);
-						$subroot = '/' . $subrootsplit[1];
-						preg_match('/^\/[A-Z-]+$/i', $subroot) ? $subroot = $subroot : $subroot = '' ;
-
-						$Titulo = preg_split('/\//', $subroot);
-						$Titulo = $Titulo[1];
                         $fila = $response->fetch_assoc();
 						
                         $_SESSION['logged'] = true;

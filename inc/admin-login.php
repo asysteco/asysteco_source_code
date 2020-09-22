@@ -13,7 +13,7 @@ if(isset($_GET['criptedval']) && $_GET['criptedval'] != 'undefined')
       {
         if($response->num_rows == 1)
         {
-            if($class->LoginAdminQR($_GET['abrev'], $_GET['enp']))
+            if($class->LoginAdminQR($_GET['abrev'], $_GET['enp'], $Titulo))
             {
                 echo "<span id='okqr' style='color: white; font-weight: bolder; background-color: green;'><h3>Fichaje de asistencia correcto.<br> $nombre[Nombre]</h3></span>";
                 echo '

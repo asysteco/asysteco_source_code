@@ -11,10 +11,10 @@
     
         echo '<form class="form-horizontal" action="index.php?ACTION=profesores&OPT=import-csv" method="post"
             name="frmCSVImport" id="frmCSVImport"
-            enctype="multipart/form-data" required>
+            enctype="multipart/form-data">
             <div class="input-row">
                 <label id="import-manual-trigger">Subir documento CSV:</label><br />
-                <input type="file" name="file" id="file" accept=".csv" class="btn btn-link">
+                <input type="file" name="file" id="file" accept=".csv" class="btn btn-link" required>
                 <button type="submit" id="submit" name="import" class="btn btn-success">Importar</button>
                 <br />
             </div>

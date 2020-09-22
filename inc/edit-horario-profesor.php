@@ -65,7 +65,7 @@ if($response = $class->query($sql))
         {
             $Hora = $valor;
             echo "<tr>";
-                echo "<td>$Hora</td>";
+            echo "<td style='text-align: center; vertical-align: middle;'>$datos[Inicio] <br>$datos[Fin]</td>";
                 
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {

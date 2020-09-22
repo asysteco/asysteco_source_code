@@ -7,5 +7,6 @@
 	<button id="stopCameraButton">Stop Camera</button>
 </div>
 <canvas id="qr-canvas" width=400 height=400></canvas>
+<h2 style='color: red;'>Avisar a jefatura para activar el lector</h2>
 <h2>Respuesta de escaner:</h2>
 <div id="output" class="respuesta"></div>
