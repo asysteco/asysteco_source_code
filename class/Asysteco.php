@@ -411,14 +411,12 @@ class Asysteco
     {
         $time = "07:45:00"; // Hora límite para comprobar horarios
         $horaactual = date("H:i:s"); // Hora actual a comparar
-        $this->notificar($_SESSION['ID'], 'entra al método');
         if(isset($date) && $date != null && $this->validFormSQLDate($date))
         {
             $fechaactual = $date;
             $time = "23:55:00";
             $_SESSION['fecha'] = '';
             unset($_SESSION['fecha']);
-            $this->notificar($_SESSION['ID'], 'unset fecha sesion');
         }
         else
         {
@@ -435,8 +433,6 @@ class Asysteco
         {
             if(strtotime($horaactual) <= strtotime($time))
             {
-                
-            $this->notificar($_SESSION['ID'], 'Entra al bucle de profesores');
                 if($response = $this->query("SELECT DISTINCT ID_PROFESOR FROM T_horarios WHERE Fecha_incorpora = '$fechaactual'"))
                 {
                     while($fila = $response->fetch_assoc())
@@ -616,11 +612,11 @@ class Asysteco
     }
 
     /**
-     * @param int $profesor
+     * @param $profesor
      * @param $fecha
      * @return bool
      */
-    function delHorarioTemporal(int $profesor, $fecha)
+    function delHorarioTemporal($profesor, $fecha)
     {
         if(isset($profesor) && isset($fecha) && $profesor != '' && $this->validFormSQLDate($fecha))
         {
