@@ -1,7 +1,7 @@
 <?php
 if($_SESSION['Perfil'] === 'Admin')
 { 
- if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre, $class->profesores.Iniciales, $class->perfiles.Tipo, $class->profesores.Activo, $class->profesores.Sustituido FROM $class->profesores INNER JOIN $class->perfiles ON $class->profesores.TIPO=$class->perfiles.ID WHERE $class->profesores.TIPO<>1 ORDER BY Nombre ASC"))
+ if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre, $class->profesores.Iniciales, $class->profesores.Activo, $class->profesores.Sustituido FROM $class->profesores INNER JOIN $class->perfiles ON $class->profesores.TIPO=$class->perfiles.ID WHERE $class->profesores.TIPO<>1 ORDER BY Nombre ASC"))
  {
    if ($response->num_rows > 0)
    {
@@ -17,7 +17,6 @@ if($_SESSION['Perfil'] === 'Admin')
         echo "<tr>";
             echo "<th>Nombre</th>";
             echo "<th>Iniciales</th>";
-            echo "<th>Tipo</th>";
             echo "<th>Activo</th>";
             echo "<th>Sustituido</th>";
             echo "<th>Editar</th>";
@@ -48,23 +47,8 @@ if($_SESSION['Perfil'] === 'Admin')
             }
             
             echo "<tr id='profesor_$fila[ID]' class='row_prof'>";
-            if($fila['Tipo'] == 'Admin')
-            {
-              echo "<td>$fila[Nombre]</td>";
-              echo "<td>$fila[Iniciales]</td>";
-              echo "<td>$fila[Tipo]</td>";
-              echo "<td>$activo</td>";
-              echo "<td></td>";
-              echo "<td></td>";
-              echo "<td></td>";
-              echo "<td></td>";
-              echo "<td></td>";
-            }
-            else
-            {
               echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Nombre]</td>";
               echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Iniciales]</td>";
-              echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Tipo]</td>";
               echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$activo</td>";
               echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$sustituido</td>";
               echo "<td><a title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><span class='glyphicon glyphicon-pencil edit_icon'></span></a></td>";
@@ -98,7 +82,6 @@ if($_SESSION['Perfil'] === 'Admin')
                   </a>
               </td>";
             echo '</tr>';
-            }
         }
     echo "</tbody>";
     echo "</table>";
