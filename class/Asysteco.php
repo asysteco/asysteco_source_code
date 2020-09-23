@@ -15,6 +15,7 @@ class Asysteco
  
     public $conex;
     public $ERR_ASYSTECO;
+    public $MSG;
 
 
     function bdConex($host, $user, $pass, $db)
@@ -486,14 +487,6 @@ class Asysteco
             // $dia = '2020-9-15';
             // $horasistema = '08:00:00';
         }
-        if(isset($_GET['Numero']))
-        {
-            $extra = "AND ($this->horarios.Edificio = '$_GET[Numero]')";
-        }
-        else
-        {
-            $extra = '';
-        }
         
         $sql = "SELECT $this->profesores.Nombre, $this->horarios.Aula, $this->horarios.Grupo, $this->horarios.Edificio, $this->horarios.Hora
         FROM (($this->marcajes INNER JOIN $this->horarios ON $this->marcajes.ID_PROFESOR=$this->horarios.ID_PROFESOR AND $this->marcajes.Dia=$this->horarios.Dia AND $this->marcajes.Hora=$this->horarios.Hora)
@@ -505,7 +498,6 @@ class Asysteco
         AND $this->profesores.Activo=1
         AND $this->profesores.Sustituido=0
         AND $this->horas.Fin >= '$horasistema'
-        $extra
         ORDER BY $this->marcajes.Hora, $this->profesores.Nombre";
         // echo $sql;
         if($exec = $this->query($sql))
@@ -516,7 +508,7 @@ class Asysteco
             }
             else
             {
-                echo "No existen Aulas sin Profesor.";
+                $this->MSG = "No hay Aulas sin Profesor.";
                 return false;
             }
         }

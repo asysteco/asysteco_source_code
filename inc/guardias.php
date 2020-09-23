@@ -2,20 +2,20 @@
 
 //--------------------------------------------------------
 
+echo "</br><table class='table table-hover'>";
+echo "<thead>";
+    echo "<tr>";
+        echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
+        echo "<th style='vertical-align: middle; text-align: center;'>Profesor</th>";
+        echo "<th style='vertical-align: middle; text-align: center;'>Edificio</th>";
+        echo "<th style='vertical-align: middle; text-align: center;'>Aula</th>";
+        echo "<th style='vertical-align: middle; text-align: center;'>Grupo</th>";
+    echo "</tr>";
+echo "</thead>";
+echo "<tbody>";
 if($response = $class->getGuardias())
 {
     $j = $response->num_rows;
-    echo "</br><table class='table table-hover'>";
-        echo "<thead>";
-            echo "<tr>";
-                echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
-                echo "<th style='vertical-align: middle; text-align: center;'>Profesor</th>";
-                echo "<th style='vertical-align: middle; text-align: center;'>Edificio</th>";
-                echo "<th style='vertical-align: middle; text-align: center;'>Aula</th>";
-                echo "<th style='vertical-align: middle; text-align: center;'>Grupo</th>";
-            echo "</tr>";
-        echo "</thead>";
-        echo "<tbody>";
         $datos = $response->fetch_all();
         for($i = 0; $i < $j; $i++)
         {
@@ -63,5 +63,7 @@ if($response = $class->getGuardias())
 }
 else
 {
-    echo $ERR_MSG = $class->ERR_ASYSTECO;
+    echo "<tr>";
+    echo "<td colspan='100%'><h3><b> $class->MSG </b><h3></td>";
+    echo "</tr>";
 }
