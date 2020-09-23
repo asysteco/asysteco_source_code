@@ -407,7 +407,7 @@ class Asysteco
         }
     }
 
-    function tempToValid($date = null)
+    function horarioTemporalAHorarioReal($date = null)
     {
         $time="07:45:00"; // Hora límite para comprobar horarios
         $horaactual = date("H:i:s"); // Hora actual a comparar
