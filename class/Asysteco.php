@@ -415,7 +415,9 @@ class Asysteco
         {
             $fechaactual = $date;
             $time = "23:55:00";
+            $_SESSION['fecha'] = '';
             unset($_SESSION['fecha']);
+            $this->notificar($_SESSION['ID'], 'unset fecha sesion');
         }
         else
         {
@@ -432,6 +434,8 @@ class Asysteco
         {
             if(strtotime($horaactual) <= strtotime($time))
             {
+                
+            $this->notificar($_SESSION['ID'], 'Entra al bucle de profesores');
                 if($response = $this->query("SELECT DISTINCT ID_PROFESOR FROM T_horarios WHERE Fecha_incorpora = '$fechaactual'"))
                 {
                     while($fila = $response->fetch_assoc())
