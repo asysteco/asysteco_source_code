@@ -411,6 +411,7 @@ class Asysteco
     {
         $time = "07:45:00"; // Hora límite para comprobar horarios
         $horaactual = date("H:i:s"); // Hora actual a comparar
+        $this->notificar($_SESSION['ID'], 'entra al método');
         if(isset($date) && $date != null && $this->validFormSQLDate($date))
         {
             $fechaactual = $date;
