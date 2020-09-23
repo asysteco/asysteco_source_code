@@ -476,16 +476,16 @@ class Asysteco
         {
             $diasemana = $ahora['weekday'];
             $diasemananum = $ahora['wday'];
-            $dia = $ahora['year'] . "-" . $ahora['mon'] . "-" . $ahora['mday'];
-            $horasistema = $ahora['hours'] . ":" . $ahora['minutes'] . ":" . $ahora['seconds'];
+            $dia = date('Y-m-d');
+            $horasistema = date('H:i:s');
 
             // Línea de comprobación para que muestre todas las horas a partir de las 08:00:00 día 1-Lunes Fecha 2020-9-21
             // Quitar en producción getHoraClase() también
 
-            // $diasemananum = 2;
-            // $diasemana = 'Martes';
-            // $dia = '2020-9-15';
-            // $horasistema = '08:00:00';
+            $diasemananum = 3;
+            $diasemana = 'Miercoles';
+            $dia = '2020-9-23';
+            $horasistema = '08:00:00';
         }
         
         $sql = "SELECT $this->profesores.Nombre, $this->horarios.Aula, $this->horarios.Grupo, $this->horarios.Edificio, $this->horarios.Hora
@@ -498,7 +498,7 @@ class Asysteco
         AND $this->profesores.Activo=1
         AND $this->profesores.Sustituido=0
         AND $this->horas.Fin >= '$horasistema'
-        ORDER BY $this->marcajes.Hora, $this->profesores.Nombre";
+        ORDER BY $this->marcajes.Hora, $this->horarios.Edificio";
         // echo $sql;
         if($exec = $this->query($sql))
         {
@@ -607,6 +607,28 @@ class Asysteco
         {
             return false;
         }
+    }
+
+    /**
+     * @param int $profesor
+     * @param $fecha
+     * @return bool
+     */
+    function delHorarioTemporal(int $profesor, $fecha)
+    {
+        if(isset($profesor) && isset($fecha) && $profesor != '' && $this->validFormSQLDate($fecha))
+        {
+            if($this->query("DELETE FROM T_horarios WHERE ID_PROFESOR='$profesor' AND Fecha_incorpora='$fecha'"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return false;
     }
 
     function marcajes()
