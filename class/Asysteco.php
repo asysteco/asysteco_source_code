@@ -409,11 +409,12 @@ class Asysteco
 
     function horarioTemporalAHorarioReal($date = null)
     {
-        $time="07:45:00"; // Hora límite para comprobar horarios
+        $time = "07:45:00"; // Hora límite para comprobar horarios
         $horaactual = date("H:i:s"); // Hora actual a comparar
-        if(isset($date) && $date != null)
+        if(isset($date) && $date != null && $this->validFormSQLDate($date))
         {
             $fechaactual = $date;
+            $time = "23:55:00";
             unset($_SESSION['fecha']);
         }
         else
