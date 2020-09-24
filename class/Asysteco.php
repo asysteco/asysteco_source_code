@@ -415,7 +415,6 @@ class Asysteco
         {
             $fechaactual = $date;
             $time = "23:55:00";
-            $_SESSION['fecha'] = '';
             unset($_SESSION['fecha']);
         }
         else

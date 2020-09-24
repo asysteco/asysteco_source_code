@@ -8,7 +8,6 @@
                 <img style="text-align: center; background-color: transparent;" src="resources/img/loading.gif" alt="Cargando...">
                 <h2 id="loading-msg"></h2>
             </div>
-            <div id="act-response" hidden></div>
         </div>
     </div>
 </div>

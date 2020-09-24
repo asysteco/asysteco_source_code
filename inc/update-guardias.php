@@ -17,6 +17,7 @@ if($subopt == 'add')
     {
         $class->updateHoras($profesor);
         $class->marcajes($profesor, $dia, $hora, $subopt);
+        $MSG = 'Guardia añadida.';
     }
     else
     {
@@ -30,6 +31,7 @@ elseif($subopt == 'remove')
     {
         $class->updateHoras($profesor);
         $class->marcajes($profesor, $dia, $hora, $subopt);
+        $MSG = 'Guardia eliminada.';
     }
     else
     {
@@ -41,7 +43,11 @@ elseif($subopt == 'addt')
     $fecha = date('Y-m-d');
     $sql = "INSERT INTO T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora)
     VALUES ('$profesor', '$dia', '$Horatipo', '$hora', '$_GET[Tipo]', '$edificio', 'GU". $edificio ."00', 'Guardia', '00:00:00', '00:00:00', '$fecha')";
-    if(! $class->query($sql))
+    if($class->query($sql))
+    {
+      $MSG = 'Guardia añadida.';
+    }
+    else
     {
         $ERR_MSG = $class->ERR_ASYSTECO;
     }
@@ -49,7 +55,11 @@ elseif($subopt == 'addt')
 elseif($subopt == 'removet')
 {
     $sql = "DELETE FROM T_horarios WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND Hora='$hora'";
-    if(! $class->query($sql))
+    if($class->query($sql))
+    {
+      $MSG = 'Guardia eliminada.';
+    }
+    else
     {
         $ERR_MSG = $class->ERR_ASYSTECO;
     }
@@ -60,7 +70,8 @@ else
 }
 
 if(isset($ERR_MSG) && $ERR_MSG != '')
-{echo "
+{
+  echo "
     <script>
       $('#ERR_MSG_MODAL').modal('show')
     </script>
@@ -86,7 +97,8 @@ if(isset($ERR_MSG) && $ERR_MSG != '')
     ';
 }
 else
-{echo "
+{
+  echo "
     <script>
       $('#ERR_MSG_MODAL').modal('show')
     </script>
@@ -103,7 +115,7 @@ else
           </div>
           <div class="modal-body">
             <p style="color: green;">
-              Actualizado correctamente.
+            ' . $MSG . '
             </p>
           </div>
         </div>

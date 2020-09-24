@@ -98,7 +98,7 @@ if($response = $class->query($sql))
                         {
                             $Hora = $valor;
                             echo "<tr>";
-                                echo "<td>$Hora</td>";
+                                echo "<td style='text-align: center; vertical-align: middle;'>$datos[Inicio] <br>$datos[Fin]</td>";
                                 
                                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                                 {
@@ -192,6 +192,13 @@ else
 }
 
 echo "<script>
+    $(document).ready(function(){
+        $('.modal-backdrop').remove(),
+        $('#loading').fadeOut()
+    })
+</script>";
+
+echo "<script>
 $('#anterior-profesor').click(function(){
     $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=$anterior[ID]')
 });
@@ -211,11 +218,10 @@ $('#loading-msg').html('Cargando...'),
 $('#loading').show(),
 $('#guardias-response').html(''),
 enlace = $(this).attr('enlace'),
-$('#act-response').load(enlace),
+$('#guardias-response').load(enlace),
 setTimeout(function(){
 $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$n[ID])
-},200),
-$('#loading').delay('1200').fadeOut()
+},200)
 });
 
 $('.remove-guardia').on('click', function(){
@@ -223,11 +229,10 @@ $('#loading-msg').html('Cargando...'),
 $('#loading').show(),
 $('#guardias-response').html(''),
 enlace = $(this).attr('enlace'),
-$('#act-response').load(enlace);
+$('#guardias-response').load(enlace),
 setTimeout(function(){
 $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$n[ID])
-},200),
-$('#loading').delay().fadeOut()
+},200)
 });
 
 $('.edificio').on('change', function() {
