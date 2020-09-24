@@ -8,9 +8,8 @@ else
     $profesor = $_SESSION['ID'];
 }
 $sql = "SELECT DISTINCT $class->fichar.* 
-        FROM ($class->fichar 
-            INNER JOIN $class->horarios ON $class->fichar.ID_PROFESOR=$class->horarios.ID_PROFESOR) 
-            INNER JOIN $class->profesores ON $class->profesores.ID=$class->horarios.ID_PROFESOR 
+        FROM $class->fichar
+            INNER JOIN $class->profesores ON $class->profesores.ID=$class->fichar.ID_PROFESOR 
         WHERE $class->profesores.ID='$profesor' 
         ORDER BY $class->fichar.Fecha DESC, $class->fichar.ID DESC 
         ";
