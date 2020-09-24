@@ -484,10 +484,10 @@ class Asysteco
             // Línea de comprobación para que muestre todas las horas a partir de las 08:00:00 día 1-Lunes Fecha 2020-9-21
             // Quitar en producción getHoraClase() también
 
-            $diasemananum = 3;
-            $diasemana = 'Miercoles';
-            $dia = '2020-9-23';
-            $horasistema = '08:00:00';
+            // $diasemananum = 3;
+            // $diasemana = 'Miercoles';
+            // $dia = '2020-9-23';
+            // $horasistema = '08:00:00';
         }
         
         $sql = "SELECT $this->profesores.Nombre, $this->horarios.Aula, $this->horarios.Grupo, $this->horarios.Edificio, $this->horarios.Hora
