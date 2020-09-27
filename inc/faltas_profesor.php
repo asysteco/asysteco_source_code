@@ -64,7 +64,11 @@ if($resp = $class->query($sql))
                             echo "<tr $asisteColor>";
                             echo "<td>$dia/$m/$Y</td>";
                             echo "<td>$datos[Diasemana]</td>";
+<<<<<<< HEAD
                             echo "<td>{$franjasHorarias[$tipoKey][$horaKey][Hora]}</td>";
+=======
+                            echo "<td>{$franjasHorarias[$tipoKey][$horaKey][Inicio]}</td>";
+>>>>>>> origin/develop
                             if($datos['Asiste'] == 1)
                             {
                                 echo "<td><a title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza'><span class='glyphicon glyphicon-ok'></span></a></td>";
@@ -135,6 +139,8 @@ if($resp = $class->query($sql))
                             $dia = $sep[2];
                             $m = $sep[1];
                             $Y = $sep[0];
+                            $tipoKey = $datos['Tipo'];
+                            $horaKey = $datos['Hora'];
                             if($datos['Fecha'] != $fechaanterior)
                             {
                                 echo "<tr style='background-color: #333;'>";
@@ -145,7 +151,7 @@ if($resp = $class->query($sql))
                             echo "<tr $asisteColor>";
                             echo "<td>$dia/$m/$Y</td>";
                             echo "<td>$datos[Diasemana]</td>";
-                            echo "<td>$datos[Hora]</td>";
+                            echo "<td>{$franjasHorarias[$tipoKey][$horaKey][Inicio]}</td>";
                             if($datos['Asiste'] == 1)
                             {
                                 echo "<td><a title='Haz clic aquí para marcar esta hora como faltada.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza' ><span class='glyphicon glyphicon-ok'></span></a></td>";
