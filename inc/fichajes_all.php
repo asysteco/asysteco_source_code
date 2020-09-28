@@ -1,9 +1,9 @@
 <?php
 
-$sql = "SELECT DISTINCT $class->fichar.*, $class->profesores.Nombre 
-        FROM $class->fichar 
-            INNER JOIN $class->profesores ON $class->profesores.ID=$class->fichar.ID_PROFESOR 
-        ORDER BY $class->fichar.Fecha DESC, $class->fichar.ID DESC 
+$sql = "SELECT DISTINCT $class->fichar.*, $class->profesores.Nombre
+        FROM $class->fichar
+            INNER JOIN $class->profesores ON $class->profesores.ID=$class->fichar.ID_PROFESOR
+        ORDER BY $class->fichar.Fecha DESC, $class->fichar.F_entrada DESC 
         ";
 echo "<h1>Fichajes</h1>";
 if($response = $class->query($sql))

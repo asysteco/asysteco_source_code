@@ -1,4 +1,5 @@
 <?php
+
 if(isset($_GET['ID']))
 {
     $profesor = $_GET['ID'];
@@ -9,9 +10,9 @@ else
 }
 $sql = "SELECT DISTINCT $class->fichar.* 
         FROM $class->fichar
-            INNER JOIN $class->profesores ON $class->profesores.ID=$class->fichar.ID_PROFESOR 
-        WHERE $class->profesores.ID='$profesor' 
-        ORDER BY $class->fichar.Fecha DESC, $class->fichar.ID DESC 
+            INNER JOIN $class->profesores ON $class->profesores.ID=$class->fichar.ID_PROFESOR
+        WHERE $class->profesores.ID='$profesor'
+        ORDER BY $class->fichar.Fecha DESC, $class->fichar.F_entrada DESC
         ";
 echo "<h1>Fichajes diarios</h1>";
 if($response = $class->query($sql))
