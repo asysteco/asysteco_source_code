@@ -64,8 +64,12 @@ if($response = $class->query($sql))
         foreach ($franjasHorarias[$franja] as $valor => $datos)
         {
             $Hora = $valor;
+            $horaInicioSplit = preg_split('/:/', $datos['Inicio']);
+            $horaInicioSinSegundos = $horaInicioSplit[0] . ":" . $horaInicioSplit[1];
+            $horaFinSplit = preg_split('/:/', $datos['Fin']);
+            $horaFinSinSegundos = $horaFinSplit[0] . ":" . $horaFinSplit[1];
             echo "<tr>";
-            echo "<td style='text-align: center; vertical-align: middle;'>$datos[Inicio] <br>$datos[Fin]</td>";
+            echo "<td style='text-align: center; vertical-align: middle;'>$horaInicioSinSegundos <br>$horaFinSinSegundos</td>";
                 
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
