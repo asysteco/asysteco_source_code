@@ -39,15 +39,17 @@ if(isset($_GET['act']) && $_GET['act'] != '')
     }
     elseif($_GET['act'] == 'Justificada')
     {
+        $response = $class->query("SELECT DISTINCT Tipo FROM Horarios WHERE ID_PROFESOR='$_GET[Profesor]'")->fetch_assoc();
+        $franja = $response['Tipo'];
         if($class->query("UPDATE Marcajes SET Justificada=$_GET[Valor] WHERE ID_PROFESOR='$_GET[Profesor]' AND Fecha='$_GET[Fecha]' AND Hora='$_GET[Hora]'"))
         {
             if($_GET['Valor'] == 1)
             {
-                $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Hora: $_GET[Hora] como Falta Justificada.";
+                $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Hora: {$franjasHorarias[$franja][$_GET[Hora]]['Inicio']} - {$franjasHorarias[$franja][$_GET[Hora]]['Fin']} como Falta Justificada.";
             }
             elseif($_GET['Valor'] == 0)
             {
-                $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Hora: $_GET[Hora] retirando la justificación.";
+                $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Hora: {$franjasHorarias[$franja][$_GET[Hora]]['Inicio']} - {$franjasHorarias[$franja][$_GET[Hora]]['Fin']} retirando la justificación.";
             }
             else
             {
