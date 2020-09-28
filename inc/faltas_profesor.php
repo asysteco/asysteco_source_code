@@ -13,28 +13,35 @@ if($resp = $class->query($sql))
     //$fecha = '2020-10-22';
     if($response = $class->query("SELECT Marcajes.*, Diasemana FROM Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID WHERE ID_PROFESOR=" . mysqli_real_escape_string($class->conex, $_GET['ID']) . " AND Fecha <= '$fecha' ORDER BY Fecha DESC, Dia, Hora"))
     {
-        if($_SESSION['Perfil'] == 'Admin')
-        {
-            echo "<h1>Asistencias lectivas de <b>$n</b></h1>";
-            echo "<input id='busca_asiste' class='fadeIn' type='text' placeholder='Seleccionar fecha ...' autocomplete='off'>";
-            echo "<div id='marcaje-response'></div>";
-            echo "<div id='table-container'>";
-                echo "<div id='full-table'>";
-                    echo "<table class='table'>";
-                        echo "<thead>";
-                            echo "<tr>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Fecha</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Dia</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Asistencia</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Act. Extra.</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Justificada</th>";
-                            echo "</tr>";
-                        echo "</thead>";
-                        echo "<tbody>";
+        echo "<h1>Asistencias lectivas de <b>$n</b></h1>";
+        echo "<input id='busca_asiste' class='fadeIn' type='text' placeholder='Seleccionar fecha ...' autocomplete='off'>";
+        echo "<div id='marcaje-response'></div>";
+        echo "<div id='table-container'>";
+            echo "<div id='full-table'>";
+                echo "<table class='table'>";
+                    echo "<thead>";
+                        echo "<tr>";
+                            echo "<th style='vertical-align: middle; text-align: center;'>Fecha</th>";
+                            echo "<th style='vertical-align: middle; text-align: center;'>Dia</th>";
+                            echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
+                            echo "<th style='vertical-align: middle; text-align: center;'>Asistencia</th>";
+                            echo "<th style='vertical-align: middle; text-align: center;'>Act. Extra.</th>";
+                            echo "<th style='vertical-align: middle; text-align: center;'>Justificada</th>";
+                        echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
                         $fechaanterior = '';
                         while($datos = $response->fetch_assoc())
                         {
+                            $sep = preg_split('/-/', $datos['Fecha']);
+                            $dia = $sep[2];
+                            $m = $sep[1];
+                            $Y = $sep[0];
+                            $tipoKey = $datos['Tipo'];
+                            $horaKey = $datos['Hora'];
+                            $horaInicioHorario = $franjasHorarias[$tipoKey][$horaKey]['Inicio'];
+                            $horaSplit = preg_split('/:/', $horaInicioHorario);
+                            $horaSinSegundos = $horaSplit[0] . ":" . $horaSplit[1];
                             if($datos['Asiste'] == 1)
                             {
                                 $asisteColor = 'style="background-color: #E2F0CB;"';
@@ -48,12 +55,6 @@ if($resp = $class->query($sql))
                                 $asisteColor = 'style="background-color: #FF9AA2;"';
                             }
 
-                            $sep = preg_split('/-/', $datos['Fecha']);
-                            $dia = $sep[2];
-                            $m = $sep[1];
-                            $Y = $sep[0];
-                            $tipoKey = $datos['Tipo'];
-                            $horaKey = $datos['Hora'];
                             if($datos['Fecha'] != $fechaanterior)
                             {
                                 echo "<tr style='background-color: #333;'>";
@@ -62,9 +63,10 @@ if($resp = $class->query($sql))
                             }
 
                             echo "<tr $asisteColor>";
-                            echo "<td>$dia/$m/$Y</td>";
-                            echo "<td>$datos[Diasemana]</td>";
-                            echo "<td>{$franjasHorarias[$tipoKey][$horaKey][Inicio]}</td>";
+                                echo "<td>$dia/$m/$Y</td>";
+                                echo "<td>$datos[Diasemana]</td>";
+                                echo "<td>{$horaSinSegundos}</td>";
+
                             if($datos['Asiste'] == 1)
                             {
                                 echo "<td><a title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza'><span class='glyphicon glyphicon-ok'></span></a></td>";
@@ -77,17 +79,38 @@ if($resp = $class->query($sql))
                             }
                             else
                             {
-                                echo "<td><a title='Haz clic aquí si ha asistido esta hora.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,1' class='actualiza'><span class='glyphicon glyphicon-remove'></span></a></td>";
-                                echo "<td></td>";
+                                if($_SESSION['Perfil'] == 'Admin')
+                                {
+                                    echo "<td><a title='Haz clic aquí si ha asistido esta hora.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,1' class='actualiza'><span class='glyphicon glyphicon-remove'></span></a></td>";
+                                    echo "<td></td>";
+                                }
+                                else
+                                {
+                                    echo "<td><a title='Para marcar esta hora como asistida, contacte con Jefatura.'><span class='glyphicon glyphicon-remove'></span></a></td>";
+                                    echo "<td></td>";
+                                }
                             }
-
-                            if($datos['Justificada'] == 1)
+                            if($_SESSION['Perfil'] == 'Admin')
                             {
-                                echo "<td><a title='Haz clic aquí para retirar justificación.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,0' class='actualiza'><span class='glyphicon glyphicon-ok'></span></a></td>";
+                                if($datos['Justificada'] == 1)
+                                {
+                                    echo "<td><a title='Haz clic aquí para retirar justificación.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,0' class='actualiza'><span class='glyphicon glyphicon-ok'></span></a></td>";
+                                }
+                                else
+                                {
+                                    echo "<td><a title='Haz clic aquí para justificar.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,1' class='actualiza'><span class='glyphicon glyphicon-remove'></span></a></td>";
+                                }
                             }
                             else
                             {
-                                echo "<td><a title='Haz clic aquí para justificar.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,1' class='actualiza'><span class='glyphicon glyphicon-remove'></span></a></td>";
+                                if($datos['Justificada'] == 1)
+                                {
+                                    echo "<td><span class='glyphicon glyphicon-ok'></span></td>";
+                                }
+                                else
+                                {
+                                    echo "<td><span class='glyphicon glyphicon-remove'></span></td>";
+                                }
                             }
                             echo "</tr>";
                             $fechaanterior = $datos['Fecha'];
@@ -96,90 +119,6 @@ if($resp = $class->query($sql))
                     echo "</table>";
                 echo "</div>";
             echo "</div>";
-        }
-        else
-        {
-            echo "<h1>Asistencias lectivas de <b>$n</b></h1>";
-            echo "<input id='busca_asiste' class='fadeIn' type='text' placeholder='Seleccionar fecha ...' autocomplete='off'>";
-            echo "<div id='marcaje-response'></div>";
-            echo "<div id='table-container'>";
-                echo "<div id='full-table'>";
-                    echo "<table class='table'>";
-                        echo "<thead>";
-                            echo "<tr>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Fecha</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Dia</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Asistencia</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Act. Extra.</th>";
-                                echo "<th style='vertical-align: middle; text-align: center;'>Justificada.</th>";
-                            echo "</tr>";
-                        echo "</thead>";
-                        echo "<tbody>";
-                        while($datos = $response->fetch_assoc())
-                        {
-                            if($datos['Asiste'] == 1)
-                            {
-                                $asisteColor = 'style="background-color: #E2F0CB;"';
-                            }
-                            elseif($datos['Asiste'] == 2)
-                            {
-                                $asisteColor = 'style="background-color: #B5EAD7;"';
-                            }
-                            else
-                            {
-                                $asisteColor = 'style="background-color: #FF9AA2;"';
-                            }
-
-                            $sep = preg_split('/-/', $datos['Fecha']);
-                            $dia = $sep[2];
-                            $m = $sep[1];
-                            $Y = $sep[0];
-                            $tipoKey = $datos['Tipo'];
-                            $horaKey = $datos['Hora'];
-                            if($datos['Fecha'] != $fechaanterior)
-                            {
-                                echo "<tr style='background-color: #333;'>";
-                                echo "<td colspan='100%' style='vertical-align: middle; text-align: center; font-weight: bolder; color: white;'>$dia/$m/$Y</td>";
-                                echo "</tr>";
-                            }
-                            
-                            echo "<tr $asisteColor>";
-                            echo "<td>$dia/$m/$Y</td>";
-                            echo "<td>$datos[Diasemana]</td>";
-                            echo "<td>{$franjasHorarias[$tipoKey][$horaKey][Inicio]}</td>";
-                            if($datos['Asiste'] == 1)
-                            {
-                                echo "<td><a title='Haz clic aquí para marcar esta hora como faltada.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza' ><span class='glyphicon glyphicon-ok'></span></a></td>";
-                                echo "<td><a title='Has clic aqui si tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,2' class='actualiza' ><span class='glyphicon glyphicon-unchecked'></span></a></td>";
-                            }
-                            elseif($datos['Asiste'] == 2)
-                            {
-                                echo "<td><a title='Haz clic aquí para marcar esta hora como faltada.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza' ><span class='glyphicon glyphicon-ok'></span></a></td>";
-                                echo "<td><a title='Has clic aqui si no tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,1' class='actualiza' ><span class='glyphicon glyphicon-check'></span></a></td>";
-                            }
-                            else
-                            {
-                                echo "<td><a title='Para marcar esta hora como asistida, contacte con Jefatura.'><span class='glyphicon glyphicon-remove'></span></a></td>";
-                                echo "<td></td>";
-                            }
-
-                            if($datos['Justificada'] == 1)
-                            {
-                                echo "<td><span class='glyphicon glyphicon-ok'></span></td>";
-                            }
-                            else
-                            {
-                                echo "<td><span class='glyphicon glyphicon-remove'></span></td>";
-                            }
-                            echo "</tr>";
-                            $fechaanterior = $datos['Fecha'];
-                        }
-                        echo "</tbody>";
-                    echo "</table>";
-                echo "</div>";
-            echo "</div>";
-        }
     }
     else
     {
