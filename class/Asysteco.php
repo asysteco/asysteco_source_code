@@ -486,10 +486,10 @@ class Asysteco
             // $diasemananum = 3;
             // $diasemana = 'Miercoles';
             // $dia = '2020-9-23';
-            // $horasistema = '08:00:00';
+            // $horasistema = '09:00:00';
         }
         
-        $sql = "SELECT $this->profesores.Nombre, $this->horarios.Aula, $this->horarios.Grupo, $this->horarios.Edificio, $this->horarios.Hora
+        $sql = "SELECT DISTINCT $this->profesores.Nombre, $this->horarios.Aula, $this->horarios.Grupo, $this->horarios.Edificio, $this->horarios.Hora, $this->horarios.Tipo
         FROM (($this->marcajes INNER JOIN $this->horarios ON $this->marcajes.ID_PROFESOR=$this->horarios.ID_PROFESOR AND $this->marcajes.Dia=$this->horarios.Dia AND $this->marcajes.Hora=$this->horarios.Hora)
         INNER JOIN $this->profesores ON $this->horarios.ID_PROFESOR=$this->profesores.ID)
         INNER JOIN $this->horas ON $this->horarios.HORA_TIPO=$this->horas.HORA_TIPO
@@ -499,7 +499,7 @@ class Asysteco
         AND $this->profesores.Activo=1
         AND $this->profesores.Sustituido=0
         AND $this->horas.Fin >= '$horasistema'
-        ORDER BY $this->marcajes.Hora, $this->horarios.Edificio";
+        ORDER BY $this->marcajes.Hora ASC, $this->horarios.Edificio ASC, $this->profesores.Nombre ASC";
         // echo $sql;
         if($exec = $this->query($sql))
         {
