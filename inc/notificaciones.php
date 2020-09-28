@@ -2,7 +2,7 @@
 echo '<div class="container" id="botonera" style="margin-top:75px">';
     echo '<div class="row">'; 
         echo '<div class="col-xs-12">';
-                $response = "SELECT Notificaciones.*, Profesores.Nombre, Profesores.Iniciales FROM Notificaciones INNER JOIN Profesores ON Notificaciones.ID_PROFESOR=Profesores.ID ORDER BY Fecha DESC LIMIT 50";
+                $response = "SELECT Notificaciones.*, Profesores.Nombre, Profesores.Iniciales FROM Notificaciones INNER JOIN Profesores ON Notificaciones.ID_PROFESOR=Profesores.ID ORDER BY Fecha DESC LIMIT 100";
 
                 $result = $class->query($response);
                 if (! empty($result)) 
@@ -25,13 +25,6 @@ echo '<div class="container" id="botonera" style="margin-top:75px">';
                             if($datos['Visto'] == 0)
                             {
                                 $ultimos = "style='background-color: #f5d42f;'";
-                                $visto = "UPDATE Notificaciones
-                                SET Visto=1
-                                WHERE ID='$datos[ID]'";
-                                if(! $class->query($visto))
-                                {
-                                    $ERR_MSG = $class->ERR_ASYSTECO;
-                                }
                             }
                         $sep = preg_split('/[ -]/', $datos['Fecha']);
                         $dia = $sep[2];
@@ -48,6 +41,11 @@ echo '<div class="container" id="botonera" style="margin-top:75px">';
                                 <td style='vertical-align: middle;'>$dia/$m/$Y $h</td>
                             </tr>
                         ";
+                        }
+
+                        if(! $class->query("UPDATE Notificaciones SET Visto=1"))
+                        {
+                            $ERR_MSG = $class->ERR_ASYSTECO;
                         }
                 }
                 echo "
