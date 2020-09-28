@@ -179,7 +179,7 @@ class Asysteco
     {
         $registerini = strtoupper($registerini);
 
-        if(preg_match('/^[A-Z]{2,4}$/i', $registerini))
+        if(preg_match('/^[A-Z]{2,5}$/i', $registerini))
         {
             return true;
         }
