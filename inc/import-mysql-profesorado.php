@@ -36,6 +36,7 @@ if (isset($_POST["import"])) {
                 $iniciales = "";
                 if (isset($column[0])) 
                 {
+                    $column[0] = preg_replace('/(\")|(\s)/', '', $column[0]);
                     $iniciales = mysqli_real_escape_string($class->conex, $column[0]);
                 }
                 $nombre = "";
@@ -46,6 +47,7 @@ if (isset($_POST["import"])) {
                 $tutor = "";
                 if (isset($column[2])) 
                 {
+                    $column[0] = preg_replace('/(\")|(\s)/', '', $column[0]);
                     $tutor = mysqli_real_escape_string($class->conex, $column[2]);
                 }
 
