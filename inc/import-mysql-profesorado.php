@@ -47,7 +47,7 @@ if (isset($_POST["import"])) {
                 $tutor = "";
                 if (isset($column[2])) 
                 {
-                    $column[0] = preg_replace('/(\")|(\s)/', '', $column[0]);
+                    $column[2] = preg_replace('/(\")|(\s)/', '', $column[2]);
                     $tutor = mysqli_real_escape_string($class->conex, $column[2]);
                 }
 
