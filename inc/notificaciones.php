@@ -8,16 +8,16 @@ echo '<div class="container" id="botonera" style="margin-top:75px">';
                 if (! empty($result)) 
                 {
                     echo "<h2>Registros de Notificaciones</h2>"; 
-                    echo "<table id='userTable' class='table'>
+                    echo "<table id='userTable' class='table table-striped'>
                         <thead>
                             <tr>
-                                <th>ID PROFESOR</th>
                                 <th>INICIALES</th>
                                 <th>NOMBRE</th>
                                 <th>MODIFICACIÓN</th>
                                 <th>FECHA</th>
                             </tr>
                         </thead>
+                        <tbody>
                     ";
                     while($datos = $result->fetch_assoc()) 
                         {
@@ -32,9 +32,7 @@ echo '<div class="container" id="botonera" style="margin-top:75px">';
                         $Y = $sep[0];
                         $h = $sep[3];
                     echo "
-                        <tbody>
                             <tr $ultimos>
-                                <td style='vertical-align: middle;'>$datos[ID_PROFESOR]</td>
                                 <td style='vertical-align: middle;'>$datos[Iniciales]</td>
                                 <td style='vertical-align: middle;'>$datos[Nombre]</td>
                                 <td style='vertical-align: middle;'>$datos[Modificacion]</td>
