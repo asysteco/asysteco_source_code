@@ -383,7 +383,7 @@ class Asysteco
             $fecha = date('Y-m-d');
             $hora = date('H:i:s');
             $dia = $this->getDate();
-            $horaSalida = $this->getHoraSalida($id);
+            // $horaSalida = $this->getHoraSalida($id);
 
             if ($activo != 1) {
                 $msg = "Ha intentado Fichar estando desactivado.";
@@ -392,11 +392,11 @@ class Asysteco
                 return false;
             }
 
-            $sql = "SELECT DISTINCT ID FROM Fichar WHERE Fecha='$fecha' AND ID_PROFESOR='$id'";
+            $sql = "SELECT DISTINCT ID, F_Salida FROM Fichar WHERE Fecha='$fecha' AND ID_PROFESOR='$id'";
             if ($response = $this->query($sql)) {
                 if ($response->num_rows == 0) {
-                    $fichar = "INSERT INTO Fichar (ID_PROFESOR, F_entrada, HORA_CLASE, DIA_SEMANA, Fecha) 
-                                VALUES ($id, '$hora', '$horaSalida', '$dia[weekday]', '$fecha')";
+                    $fichar = "INSERT INTO Fichar (ID_PROFESOR, F_entrada, DIA_SEMANA, Fecha) 
+                                VALUES ($id, '$hora', '$dia[weekday]', '$fecha')";
 
                     $this->query($fichar);
 
@@ -405,11 +405,20 @@ class Asysteco
                     $this->query($marcajes);
                     return true;
                 } else {
-                    if ($activeFicharSalida) {
-                        
-                    } else {
+                    if ($activeFicharSalida != 1) {
                         $this->ERR_ASYSTECO = "<span id='noqr' style='color: black; font-weight: bolder; background-color: orange;'><h3>Ya has fichado hoy.</h3></span>";
                         return false;
+                    } else {
+                        $datosRegistro = $response->fetch_assoc();
+                        if($datosRegistro == '00:00:00') {
+                            $ficharSalida = "UPDATE Fichar SET F_Salida='$hora' WHERE ID='$datosRegistro[ID]'";
+                            $this->query($ficharSalida);
+                            $this->ERR_ASYSTECO = "<span id='okqr' style='color: white; font-weight: bolder; background-color: green;'><h3>Fichaje de salida correcto.</h3></span>";
+                            return false;
+                        } else {
+                            $this->ERR_ASYSTECO = "<span id='noqr' style='color: black; font-weight: bolder; background-color: orange;'><h3>Ya has fichado salida hoy.</h3></span>";
+                            return false;
+                        }
                     }
                 }
             } else {
@@ -732,12 +741,11 @@ class Asysteco
         ORDER BY Hora_salida DESC
         LIMIT 1";
         $response = $this->query($sql);
-        var_dump($response);
-        // if ($horaSalida = $this->query($sql)->fetch_assoc()) {
-        //     return $horaSalida['Hora_salida'];
-        // } else {
-        //     return false;
-        // }
+        if ($horaSalida = $this->query($sql)->fetch_assoc()) {
+            return $horaSalida['Hora_salida'];
+        } else {
+            return false;
+        }
     }
 
     function searchDuplicateField($data, $field, $table)
