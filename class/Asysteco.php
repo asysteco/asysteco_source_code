@@ -383,7 +383,7 @@ class Asysteco
             $fecha = date('Y-m-d');
             $hora = date('H:i:s');
             $dia = $this->getDate();
-            // $horaSalida = $this->getHoraSalida($id);
+            $horaSalida = $this->getHoraSalida($id);
 
             if ($activo != 1) {
                 $msg = "Ha intentado Fichar estando desactivado.";
@@ -395,8 +395,8 @@ class Asysteco
             $sql = "SELECT DISTINCT ID, F_Salida FROM Fichar WHERE Fecha='$fecha' AND ID_PROFESOR='$id'";
             if ($response = $this->query($sql)) {
                 if ($response->num_rows == 0) {
-                    $fichar = "INSERT INTO Fichar (ID_PROFESOR, F_entrada, DIA_SEMANA, Fecha) 
-                                VALUES ($id, '$hora', '$dia[weekday]', '$fecha')";
+                    $fichar = "INSERT INTO Fichar (ID_PROFESOR, F_entrada, F_Salida, DIA_SEMANA, Fecha) 
+                                VALUES ($id, '$hora', '$horaSalida', '$dia[weekday]', '$fecha')";
 
                     $this->query($fichar);
 
@@ -410,7 +410,7 @@ class Asysteco
                         return false;
                     } else {
                         $datosRegistro = $response->fetch_assoc();
-                        if($datosRegistro == '00:00:00') {
+                        if($datosRegistro == $horaSalida) {
                             $ficharSalida = "UPDATE Fichar SET F_Salida='$hora' WHERE ID='$datosRegistro[ID]'";
                             $this->query($ficharSalida);
                             $this->ERR_ASYSTECO = "<span id='okqr' style='color: white; font-weight: bolder; background-color: green;'><h3>Fichaje de salida correcto.</h3></span>";
