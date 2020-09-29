@@ -363,13 +363,14 @@ class Asysteco
         return true;
     }
 
-    function FicharWeb()
+    function FicharWeb($activeFicharSalida = 0)
     {
         if ($this->conex) {
-            if ($response = $this->query("SELECT ID FROM Profesores WHERE Iniciales='$_GET[abrev]' AND Password='$_GET[enp]' AND TIPO<>1")) {
+            if ($response = $this->query("SELECT ID, Activo FROM Profesores WHERE ID='$_GET[ID]' AND TIPO<>1")) {
                 if ($response->num_rows == 1) {
-                    $idprof = $response->fetch_assoc();
-                    $id = $idprof['ID'];
+                    $datosProfesor = $response->fetch_assoc();
+                    $id = $datosProfesor['ID'];
+                    $activo =  $datosProfesor['Activo'];
                 } else {
                     $this->ERR_ASYSTECO = "<span id='noqr' style='color: white; font-weight: bolder; background-color: red;'><h3>Código QR incorrecto.</h3></span>";
                     return false;
@@ -382,34 +383,34 @@ class Asysteco
             $fecha = date('Y-m-d');
             $hora = date('H:i:s');
             $dia = $this->getDate();
-            $hora_salida = $this->getHoraSalida();
+            $horaSalida = $this->getHoraSalida($id);
 
-            $sql = "SELECT ID FROM Profesores WHERE ID='$id' AND Activo='1'";
-            if (!$this->query($sql)->num_rows == 1) {
+            if ($activo != 1) {
                 $msg = "Ha intentado Fichar estando desactivado.";
                 $this->notificar($id, $msg);
                 $this->ERR_ASYSTECO = "<span id='noqr' style='color: black; font-weight: bolder; background-color: red;'><h3>Su usuario está desactivado su usuario.</h3></span>";
                 return false;
             }
 
-            $sql = "SELECT DISTINCT Fichar.ID FROM Fichar WHERE Fichar.Fecha='$fecha' AND Fichar.ID_PROFESOR='$id'";
+            $sql = "SELECT DISTINCT ID FROM Fichar WHERE Fecha='$fecha' AND ID_PROFESOR='$id'";
             if ($response = $this->query($sql)) {
                 if ($response->num_rows == 0) {
                     $fichar = "INSERT INTO Fichar (ID_PROFESOR, F_entrada, HORA_CLASE, DIA_SEMANA, Fecha) 
-                                VALUES ($id, '$hora', '', '$dia[weekday]', '$fecha')";
+                                VALUES ($id, '$hora', '$horaSalida', '$dia[weekday]', '$fecha')";
 
                     $this->query($fichar);
 
-                    $marcajes = "UPDATE Marcajes
-						SET Asiste='1'
-						WHERE Fecha='$fecha'
-						AND ID_PROFESOR='$id'";
+                    $marcajes = "UPDATE Marcajes SET Asiste='1' WHERE Fecha='$fecha' AND ID_PROFESOR='$id'";
 
                     $this->query($marcajes);
                     return true;
                 } else {
-                    $this->ERR_ASYSTECO = "<span id='noqr' style='color: black; font-weight: bolder; background-color: orange;'><h3>Ya has fichado hoy.</h3></span>";
-                    return false;
+                    if ($activeFicharSalida) {
+                        
+                    } else {
+                        $this->ERR_ASYSTECO = "<span id='noqr' style='color: black; font-weight: bolder; background-color: orange;'><h3>Ya has fichado hoy.</h3></span>";
+                        return false;
+                    }
                 }
             } else {
                 return false;
@@ -721,22 +722,22 @@ class Asysteco
         }
     }
 
-    function getHoraSalida()
+    function getHoraSalida($id)
     {
-        $dia = $this->getDate();
-        // $dia['weekday'] == 'Sabado' || $dia['weekday'] == 'Domingo' ? $this->ERR_ASYSTECO = "No puedes fichar fuera de Horario." : $dia['weekday'];
-        if ($response = $this->query("SELECT Horarios.Hora_salida FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID 
-                                        WHERE Profesores.ID='$_SESSION[ID]' AND Profesores.Nombre='$_SESSION[Nombre]' AND Horarios.Dia='$dia[weekday]' 
-                                        LIMIT 1")) {
-            if ($hora_salida = $response->fetch_assoc()) {
-                return $hora_salida['Hora_salida'];
-            } else {
-                $this->ERR_BD = "ERR_CODE: " . $this->conex->errno . "<br>ERROR: " . $this->conex->error;
-                return false;
-            }
-        } else {
-            return false;
-        }
+        $datosHoy = $this->getDate();
+        $diaSemana = $datosHoy['wday'];
+
+        $sql = "SELECT Horarios.Hora_salida FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID 
+        WHERE Profesores.ID='$id' AND Horarios.Dia='$diaSemana'
+        ORDER BY Hora_salida DESC
+        LIMIT 1";
+        $response = $this->query($sql);
+        var_dump($response);
+        // if ($horaSalida = $this->query($sql)->fetch_assoc()) {
+        //     return $horaSalida['Hora_salida'];
+        // } else {
+        //     return false;
+        // }
     }
 
     function searchDuplicateField($data, $field, $table)
