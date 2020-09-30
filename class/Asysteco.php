@@ -388,7 +388,7 @@ class Asysteco
             if ($activo != 1) {
                 $msg = "Ha intentado Fichar estando desactivado.";
                 $this->notificar($id, $msg);
-                $this->ERR_ASYSTECO = "<span id='noqr' style='color: black; font-weight: bolder; background-color: red;'><h3>Su usuario está desactivado su usuario.</h3></span>";
+                $this->ERR_ASYSTECO = "<span id='noqr' style='color: black; font-weight: bolder; background-color: red;'><h3>Su usuario está desactivado.</h3></span>";
                 return false;
             }
 
@@ -474,9 +474,15 @@ class Asysteco
                         $resp = $this->query($lectivos);
 
                         while ($lectivo = $resp->fetch_assoc()) {
-                            $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
-                            FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-                            WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
+                            if ($this->asistidoHoy($profesor)) {
+                                $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 1
+                                FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
+                                WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
+                            } else {
+                                $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
+                                FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
+                                WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
+                            }
                             $this->query($ejec);
                         }
                     } elseif ($subopt == 'remove') {
