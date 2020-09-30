@@ -44,8 +44,15 @@ if($response = $class->query($sql))
         $datosprof = $response->fetch_assoc();
         $franja = $datosprof['Tipo'];
         echo "<h2 id='profesor' profesor='$n[ID]'>Horario: $n[Nombre]</h2>";
-        echo "<a href='index.php?ACTION=horarios&OPT=apply-now' class='btn btn-success pull-right'> Aplicar cambios ahora</a>";
         echo "<h4 style='color: grey;'><i>* Este horario entrará en vigor el día $fechaget</i></h4>";
+        if($_GET['fecha'] == date('Y-m-d')){
+            echo "<a href='index.php?ACTION=horarios&OPT=apply-now&fecha=$_GET[fecha]' class='btn btn-success pull-right'> Aplicar cambios ahora </a>";
+            echo "<a href='index.php?ACTION=horarios&OPT=cancel-changes&profesor=$_GET[profesor]&fecha=$_GET[fecha]' class='btn btn-danger'> Cancelar cambios</a>";
+        } else {
+            echo "<a href='index.php?ACTION=horarios&OPT=apply-now&fecha=$_GET[fecha]' class='btn btn-success pull-right'> Aplicar cambios ahora </a><br><br>";
+            echo "<a href='index.php?ACTION=horarios&OPT=apply-now&fecha=$_GET[fecha]' class='btn btn-success pull-right'> Aplicar cambios en fecha </a>";
+            echo "<a href='index.php?ACTION=horarios&OPT=cancel-changes&profesor=$_GET[profesor]&fecha=$_GET[fecha]' class='btn btn-danger'> Cancelar cambios</a>";
+        }
         echo "<div id='response'></div>";
         echo "</br>";
         echo "<table class='table'>";
