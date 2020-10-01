@@ -181,14 +181,11 @@ class Asysteco
         }
     }
 
-    function LoginAdminQR($username, $password, $Titulo)
+    function LoginAdminQR($id, $Titulo)
     {
         if ($this->conex) {
-            if ($response = $this->query("SELECT ID FROM $this->profesores WHERE Iniciales='$username' AND Password='$password' AND Activo='1'")) {
+            if ($response = $this->query("SELECT ID, Nombre, Iniciales, Tipo FROM $this->profesores WHERE ID='$id' AND Activo='1'")) {
                 if ($response->num_rows == 1) {
-                    if ($response = $this->query("SELECT $this->profesores.ID, $this->profesores.Nombre, $this->profesores.Iniciales, $this->perfiles.Tipo 
-                                                    FROM $this->profesores INNER JOIN $this->perfiles ON $this->profesores.TIPO=$this->perfiles.ID 
-                                                    WHERE Iniciales='$username' AND Password='$password'")) {
                         $fila = $response->fetch_assoc();
 
                         $_SESSION['logged'] = true;
@@ -198,11 +195,8 @@ class Asysteco
                         $_SESSION['Nombre'] = $fila['Nombre'];
                         $_SESSION['Perfil'] = $fila['Tipo'];
                         return true;
-                    } else {
-                        return false;
-                    }
                 } else {
-                    $this->ERR_ASYSTECO = "Usuario o contraseña no válidos.";
+                    $this->ERR_ASYSTECO = "<span id='noqr' style='color: white; font-weight: bolder; background-color: red;'><h3>Código QR incorrecto.</h3></span>";
                     return false;
                 }
             } else {
