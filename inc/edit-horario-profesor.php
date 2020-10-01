@@ -49,8 +49,8 @@ if($response = $class->query($sql))
             echo "<a href='index.php?ACTION=horarios&OPT=apply-now&fecha=$_GET[fecha]' class='btn btn-success pull-right'> Aplicar cambios ahora </a>";
             echo "<a href='index.php?ACTION=horarios&OPT=cancel-changes&profesor=$_GET[profesor]&fecha=$_GET[fecha]' class='btn btn-danger'> Cancelar cambios</a>";
         } else {
-            echo "<a href='index.php?ACTION=horarios&OPT=apply-now&fecha=$_GET[fecha]' class='btn btn-success pull-right'> Aplicar cambios ahora </a><br><br>";
-            echo "<a href='index.php?ACTION=horarios&OPT=apply-now&fecha=$_GET[fecha]' class='btn btn-success pull-right'> Aplicar cambios en fecha </a>";
+            echo "<a href='index.php?ACTION=horarios&OPT=apply-now&fecha=$_GET[fecha]' class='btn btn-success pull-right' onclick=\"return confirm('¿Desea aplicar los cambios ahora? La fecha programada es $fechaget')\"> Aplicar cambios ahora </a><br><br>";
+            echo "<a href='index.php?ACTION=profesores' class='btn btn-success pull-right'> Aplicar cambios en fecha </a>";
             echo "<a href='index.php?ACTION=horarios&OPT=cancel-changes&profesor=$_GET[profesor]&fecha=$_GET[fecha]' class='btn btn-danger'> Cancelar cambios</a>";
         }
         echo "<div id='response'></div>";
