@@ -184,7 +184,7 @@ class Asysteco
     function LoginAdminQR($id, $Titulo)
     {
         if ($this->conex) {
-            if ($response = $this->query("SELECT ID, Nombre, Iniciales, Tipo FROM $this->profesores WHERE ID='$id' AND Activo='1'")) {
+            if ($response = $this->query("SELECT Profesores.ID, Nombre, Iniciales, Perfiles.Tipo FROM Profesores INNER JOIN Perfiles ON Profesores.Tipo=Perfiles.ID WHERE Profesores.ID='$id' AND Activo = 1 AND Profesores.Tipo = 1")) {
                 if ($response->num_rows == 1) {
                         $fila = $response->fetch_assoc();
 
@@ -196,7 +196,7 @@ class Asysteco
                         $_SESSION['Perfil'] = $fila['Tipo'];
                         return true;
                 } else {
-                    $this->ERR_ASYSTECO = "<span id='noqr' style='color: white; font-weight: bolder; background-color: red;'><h3>Código QR incorrecto.</h3></span>";
+                    $this->ERR_ASYSTECO = "Código QR incorrecto.";
                     return false;
                 }
             } else {

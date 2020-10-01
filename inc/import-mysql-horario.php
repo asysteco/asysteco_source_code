@@ -193,6 +193,11 @@ else
                 $response = $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'");
                 $IDPROFESOR = $response->fetch_assoc();
                 $IDPROFESOR = $IDPROFESOR['ID'];
+                if ($IDPROFESOR = null) {
+                    $msg = "El profesor con las Iniciales $Iniciales no existe, su horario no se importará.";
+                    $class->notificar($_SESSION['ID'], $msg);
+                    continue;
+                }
                 $Hora_entrada = "00:00:00";
                 $Hora_salida = "00:00:00";
                 if($response = $class->query("SELECT ID FROM Horarios WHERE ID_PROFESOR='$IDPROFESOR' AND Dia='$Diasemana' AND HORA_TIPO='$Hora_tipo' AND Grupo='$Grupo'"))
