@@ -196,7 +196,7 @@ class Asysteco
                         $_SESSION['Perfil'] = $fila['Tipo'];
                         return true;
                 } else {
-                    $this->ERR_ASYSTECO = "Código QR incorrecto.";
+                    $this->ERR_ASYSTECO = "Código QR incorrecto, solo un administrador puede activar el lector.";
                     return false;
                 }
             } else {
