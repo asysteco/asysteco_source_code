@@ -31,7 +31,7 @@ if(isset($_GET['pag']))
     echo "<div>";
     $offset_var = $_GET['pag'];
     $fechahoy = date('Y-m-d');
-    $query = "SELECT ID_PROFESOR, Nombre, F_entrada, HORA_CLASE, DIA_SEMANA, Fecha
+    $query = "SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
     FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID)
     WHERE Fecha = '$fechahoy'
     ORDER BY Profesores.Nombre ASC
@@ -45,7 +45,7 @@ if(isset($_GET['pag']))
                 echo "<th>ID PROFESOR</th>";
                 echo "<th>NOMBRE</th>";
                 echo "<th>FICHAJE DE ENTRADA</th>";
-                echo "<th>HORA CLASE</th>";
+                echo "<th>FICHAJE DE SALIDA</th>";
                 echo "<th>DIA SEMANA</th>";
                 echo "<th>FECHA</th>";
             echo "</tr>";
@@ -61,7 +61,7 @@ if(isset($_GET['pag']))
                 echo "<td>$datos[ID_PROFESOR]</td>";
                 echo "<td>$datos[Nombre]</td>";
                 echo "<td>$datos[F_entrada]</td>";
-                echo "<td>$datos[HORA_CLASE]</td>";
+                echo "<td>$datos[F_Salida]</td>";
                 echo "<td>$datos[DIA_SEMANA]</td>";
                 echo "<td>$dia/$m/$Y</td>";
             echo "</tr>";
