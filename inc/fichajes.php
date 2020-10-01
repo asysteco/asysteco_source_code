@@ -22,7 +22,7 @@ if($response = $class->query($sql))
             echo "<tr>";
                 echo "<th style='vertical-align: middle; text-align: center;'>Hora Fichaje</th>";
                 echo "<th style='vertical-align: middle; text-align: center;'>Día semana</th>";
-                echo "<th style='vertical-align: middle; text-align: center;'>Fecha</th>";
+                echo "<th class='hidden'>Fecha</th>";
             echo "</tr>";
         echo "</thead>";
         echo "<tbody>";
@@ -44,7 +44,7 @@ if($response = $class->query($sql))
             echo "<tr>";
                 echo "<td>$fila[F_entrada]</td>";
                 echo "<td>$fila[DIA_SEMANA]</td>";
-                echo "<td>$dia/$m/$Y</td>";
+                echo "<td class='hidden'>$dia/$m/$Y</td>";
             echo "</tr>";
             $fechaanterior = $fila['Fecha'];
         }

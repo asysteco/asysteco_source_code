@@ -18,7 +18,7 @@ if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Mar
                         echo "<tr>";
                             echo "<th style='vertical-align: middle; text-align: center;'>Profesor</th>";
                             echo "<th style='vertical-align: middle; text-align: center;'>Día</th>";
-                            echo "<th style='vertical-align: middle; text-align: center;'>Fecha</th>";
+                            echo "<th class='hidden'>Fecha</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
@@ -40,7 +40,7 @@ if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Mar
                             echo "<tr>";
                             echo "<td>$datos[Nombre]</td>";
                             echo "<td>$datos[Diasemana]</td>";
-                            echo "<td>$dia/$m/$Y</td>";
+                            echo "<td class='hidden'>$dia/$m/$Y</td>";
                             echo "</tr>";
                             $fechaanterior = $datos['Fecha'];
                         }

@@ -21,7 +21,7 @@ if($resp = $class->query($sql))
                 echo "<table class='table'>";
                     echo "<thead>";
                         echo "<tr>";
-                            echo "<th style='vertical-align: middle; text-align: center;'>Fecha</th>";
+                            echo "<th  class='hidden'>Fecha</th>";
                             echo "<th style='vertical-align: middle; text-align: center;'>Dia</th>";
                             echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
                             echo "<th style='vertical-align: middle; text-align: center;'>Asistencia</th>";
@@ -63,7 +63,7 @@ if($resp = $class->query($sql))
                             }
 
                             echo "<tr $asisteColor>";
-                                echo "<td>$dia/$m/$Y</td>";
+                                echo "<td class='hidden'>$dia/$m/$Y</td>";
                                 echo "<td>$datos[Diasemana]</td>";
                                 echo "<td>{$horaSinSegundos}</td>";
 
