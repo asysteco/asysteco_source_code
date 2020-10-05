@@ -324,7 +324,7 @@ class Asysteco
         // Línea de comprobación para que muestre todas las horas a partir de $horasistema el día $dia
 
         // $dia = '2020-9-23';
-        // $horasistema = '09:00:00';
+         $horasistema = '09:00:00';
 
         $sql = "SELECT DISTINCT Profesores.Nombre, Horarios.Aula, Horarios.Grupo, Horarios.Edificio, Horarios.Hora, Horarios.Tipo
         FROM ((Marcajes INNER JOIN Horarios ON Marcajes.ID_PROFESOR=Horarios.ID_PROFESOR AND Marcajes.Dia=Horarios.Dia AND Marcajes.Hora=Horarios.Hora)

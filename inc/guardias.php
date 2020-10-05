@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------
 
-echo "</br><table class='table table-hover'>";
+echo "</br><table id='listado-guardias' class='table table-hover'>";
     echo "<thead>";
         echo "<tr>";
             echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
