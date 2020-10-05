@@ -1,12 +1,5 @@
-<video id="player" controls autoplay hidden></video>
-<div hidden>
-	<button id="captureSnapshotButton">Capture Snapshot</button>
-	<button id="attemptDecodeButton" disabled>Attempt Decode</button>
-	<button id="startAutoCaptureButton">Start Auto-Capture</button>
-	<button id="stopAutoCaptureButton">Stop Auto-Capture</button>
-	<button id="stopCameraButton">Stop Camera</button>
-</div>
-<canvas id="qr-canvas" width=400 height=400></canvas>
-<h2 style='color: red;'>Avisar a jefatura para activar el lector</h2>
-<h2>Respuesta de escaner:</h2>
-<div id="output" class="respuesta"></div>
+<h1 style='color: red;'>Avisar a jefatura para activar el lector</h1>
+<div id="output" class="respuesta"><span id="empty"><h3>Acerque el código QR al lector...</h3></span></div>
+<form id="QR-form">
+    <input type="text" id="QR-lector" style="background-color: white; color: white; opacity: 0; width: 0; overflow: hidden;">
+</form>
