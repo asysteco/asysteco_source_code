@@ -5,6 +5,25 @@ if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes WHERE Asiste=0"
     die($class->ERR_ASYSTECO);
 }
 
+if(isset($_GET['profesor']) && $_GET['profesor'] != '')
+{
+    $profesor = "WHERE ID_PROFESOR = '$_GET[profesor]'";
+    $sql = "SELECT Horarios.*, Nombre, Iniciales, Diasemana.Diasemana
+    FROM (Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID)
+        INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID 
+    WHERE ID_PROFESOR = '$_GET[profesor]'";
+}
+else
+{
+    $profesor = "";
+    $sql = "SELECT Horarios.*, Nombre, Iniciales, Diasemana.Diasemana
+    FROM (Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID)
+        INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID";
+}
+
+
+$offset_var = $_GET['pag'];
+
 $page_size = 200;
 $total_records = $response->num_rows;
 $count=ceil($total_records/$page_size);
@@ -29,12 +48,23 @@ if(isset($_GET['pag']))
         echo "</select>";
         echo "</h3>";
     echo "<div>";
-    $offset_var = $_GET['pag'];
-    $query = "SELECT Horarios.*, Nombre, Iniciales, Diasemana.Diasemana
-    FROM (Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID)
-        INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-    ORDER BY Profesores.Nombre ASC
-    LIMIT $page_size OFFSET $offset_var";
+    if(isset($profesor))
+    {
+        $query = "SELECT Horarios.*, Nombre, Iniciales, Diasemana.Diasemana
+        FROM (Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID)
+            INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
+        $profesor 
+        ORDER BY Profesores.Nombre ASC
+        LIMIT $page_size OFFSET $offset_var";
+    }
+    else
+    {
+        $query = "SELECT Horarios.*, Nombre, Iniciales, Diasemana.Diasemana
+        FROM (Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID)
+            INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
+        ORDER BY Profesores.Nombre ASC
+        LIMIT $page_size OFFSET $offset_var";
+    }
     # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
     
     $result =  $class->query($query);

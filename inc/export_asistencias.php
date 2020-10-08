@@ -27,13 +27,21 @@ fputcsv($fp, $titulo, $delimitador);
 
 if(isset($_GET['profesor']) && $_GET['profesor'] != '')
 {
-    $profesor = "ID_PROFESOR = '$_GET[profesor]'";
-    $sql = "SELECT ID_PROFESOR FROM Marcajes WHERE ID_PROFESOR = '$_GET[profesor]'";
+    $profesor = " AND ID_PROFESOR = '$_GET[profesor]'";
+    $sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
+    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
+        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
+    WHERE Asiste=1 OR Asiste=2 AND ID_PROFESOR = '$_GET[profesor]'
+    ORDER BY Profesores.Nombre ASC";
 }
 else
 {
     $profesor = "";
-    $sql = "SELECT ID_PROFESOR FROM Marcajes";
+    $sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana  
+    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID) 
+    INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
+    WHERE Asiste=1 OR Asiste=2 
+    ORDER BY Profesores.Nombre ASC";
 }
 
 if(isset($_GET['fechainicio']) && isset($_GET['fechafin']))
@@ -58,7 +66,11 @@ if(isset($_GET['fechainicio']) && isset($_GET['fechafin']))
 }
 else
 {
-    if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID WHERE Asiste=1 OR Asiste=2"))
+    if(! $response = $class->query("SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
+    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
+        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
+    WHERE Asiste=1 OR Asiste=2 
+    ORDER BY Profesores.Nombre ASC"))
     {
         die($class->ERR_ASYSTECO);
     }
@@ -93,7 +105,7 @@ for($i=0; $i<=$count; $i++)
         $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana  
         FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID) 
         INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
-        WHERE (Asiste=1 OR Asiste=2) AND $profesor $and $fechas 
+        WHERE (Asiste=1 OR Asiste=2) $profesor $and $fechas 
         ORDER BY Profesores.Nombre ASC 
         LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
     }

@@ -2,13 +2,23 @@
 
 if(isset($_GET['profesor']) && $_GET['profesor'] != '')
 {
-    $profesor = "ID_PROFESOR = '$_GET[profesor]'";
-    $sql = "SELECT ID_PROFESOR FROM Marcajes WHERE ID_PROFESOR = '$_GET[profesor]'";
+    $profesor = " AND ID_PROFESOR = '$_GET[profesor]'";
+    $selectprofesor = "&profesor=$_GET[profesor]";
+    $sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
+    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
+        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
+    WHERE Asiste=1 OR Asiste=2 AND ID_PROFESOR = '$_GET[profesor]'
+    ORDER BY Profesores.Nombre ASC";
 }
 else
 {
     $profesor = "";
-    $sql = "SELECT ID_PROFESOR FROM Marcajes";
+    $selectprofesor = "";
+    $sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
+    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
+        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
+    WHERE Asiste=1 OR Asiste=2 
+    ORDER BY Profesores.Nombre ASC";
 }
 
 $offset_var = $_GET['pag'];
@@ -26,18 +36,28 @@ if(isset($_GET['fechainicio']) && isset($_GET['fechafin']))
     $ffin = $Y .'-'. $m .'-'. $dia;
     if($class->validFormSQLDate($fini) && $class->validFormSQLDate($ffin))
     {
+        $selectfecha = "&fechainicio=$_GET[fechainicio]&fechafin=$_GET[fechafin]";
         if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID WHERE (Asiste=1 OR Asiste=2) AND Fecha BETWEEN '$fini' AND '$ffin'"))
         {
             die($class->ERR_ASYSTECO);
         }
     }
+    else
+    {
+        $selectfecha = "";
+    }
 }
 else
 {
-    if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID WHERE Asiste=1 OR Asiste=2"))
+    if(! $response = $class->query("SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
+    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
+        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
+    WHERE Asiste=1 OR Asiste=2 
+    ORDER BY Profesores.Nombre ASC"))
     {
         die($class->ERR_ASYSTECO);
     }
+    $selectfecha = "";
 }
 
 if(isset($_GET['fechainicio']) && isset($_GET['fechafin']) && $_GET['fechainicio'] !='' && $_GET['fechafin'] !='')
@@ -76,17 +96,17 @@ if(isset($_GET['pag']))
                 {
                     $selected = '';
                 }
-                echo '<option value="index.php?ACTION=admon&OPT=select&select=asistencias&pag=' . $j*$page_size . '&fechainicio=' . $_GET['fechainicio'] . '&fechafin=' . $_GET['fechafin'] . '" class="btn-select" ' . $selected . '><span class="glyphicon glyphicon-eye-open"></span> ' . $pag = ($j+1) . '</option> ';
+                echo '<option value="index.php?ACTION=admon&OPT=select&select=faltas&pag=' . $j*$page_size . $selectprofesor . $selectfecha . '" class="btn-select" ' . $selected . '><span class="glyphicon glyphicon-eye-open"></span> ' . $pag = ($j+1) . '</option> ';
             }
         echo "</select>";
         echo "</h3>";
-    echo "<div>";
+    echo "</div>";
     if(isset($profesor) || isset($fechas))
     {
         $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
         FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
             INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-        WHERE (Asiste=1 OR Asiste=2) AND $profesor $and $fechas
+        WHERE (Asiste=1 OR Asiste=2) $profesor $and $fechas
         ORDER BY Profesores.Nombre ASC
         LIMIT $page_size OFFSET $offset_var";
     }
@@ -94,13 +114,12 @@ if(isset($_GET['pag']))
     {
         $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
         FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-            INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-        WHERE Asiste=1 OR Asiste=2
+            INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
+        WHERE Asiste=1 OR Asiste=2 
         ORDER BY Profesores.Nombre ASC
         LIMIT $page_size OFFSET $offset_var";
     }
-    # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
-
+    
     $result =  $class->query($query);
     echo "<table class='table table-striped'>";
         echo "<thead>";
@@ -131,13 +150,9 @@ if(isset($_GET['pag']))
             echo "<td>$datos[Dia]</td>";
             echo "<td>$datos[Diasemana]</td>";
             echo "<td>SI</td>";
-            if($datos['Asiste'] == 1)
+            if($datos['Asiste'] == 2)
             {
                 echo "<td>SI</td>";
-            }
-            elseif($datos['Asiste'] == 2)
-            {
-                echo "<td>Extraescolar</td>";
             }
             else
             {

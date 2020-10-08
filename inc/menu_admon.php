@@ -31,7 +31,7 @@
             <!--a enlace="index.php?ACTION=admon&OPT=select&select=marcajes&pag=0" id='filtromarcaje' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Marcajes</a-->
             <a enlace="index.php?ACTION=admon&OPT=select&select=asistencias&pag=0"id='filtroasistencias' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Asistencias</a>
             <a enlace="index.php?ACTION=admon&OPT=select&select=faltas&pag=0" id='filtrofaltas' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Faltas</a>
-            <a enlace="index.php?ACTION=admon&OPT=select&select=horarios&pag=0" class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Horarios</a>
+            <a enlace="index.php?ACTION=admon&OPT=select&select=horarios&pag=0" id='filtrohorarios' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Horarios</a>
             <a enlace="index.php?ACTION=admon&OPT=select&select=fichadi&pag=0" class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Fichajes de hoy</a>
             <a enlace="index.php?ACTION=admon&OPT=select&select=fichafe&pag=0" id='filtrofichajes' class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Fichaje Por Fechas</a>
             </br>
