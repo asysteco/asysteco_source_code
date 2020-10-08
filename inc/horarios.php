@@ -34,6 +34,9 @@ if($response = $class->query($sql))
             $horaInicioSinSegundos = $horaInicioSplit[0] . ":" . $horaInicioSplit[1];
             $horaFinSplit = preg_split('/:/', $datos['Fin']);
             $horaFinSinSegundos = $horaFinSplit[0] . ":" . $horaFinSplit[1];
+            if (! $class->query("SELECT * FROM Horarios WHERE ID_PROFESOR='$_SESSION[ID]' AND Hora='$Hora' ORDER BY Hora ")->num_rows > 0) {
+                continue;
+            }
             echo "<tr>";
                 echo "<td style='text-align: center; vertical-align: middle;'>$horaInicioSinSegundos <br>$horaFinSinSegundos</td>";
                 
