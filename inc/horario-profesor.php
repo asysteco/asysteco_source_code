@@ -42,9 +42,11 @@ if($response = $class->query($sql))
             $horaInicioSinSegundos = $horaInicioSplit[0] . ":" . $horaInicioSplit[1];
             $horaFinSplit = preg_split('/:/', $datos['Fin']);
             $horaFinSinSegundos = $horaFinSplit[0] . ":" . $horaFinSplit[1];
-            echo "<tr>";
+            if (! $class->query("SELECT * FROM Horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' ORDER BY Hora ")->num_rows > 0) {
+                continue;
+            }
+            echo "<tr id='Hora_$Hora'>";
             echo "<td style='text-align: center; vertical-align: middle;'>$horaInicioSinSegundos <br>$horaFinSinSegundos</td>";
-                
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
                     $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
