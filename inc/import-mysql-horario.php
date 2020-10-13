@@ -73,9 +73,10 @@ if(isset($_POST['fecha']))
 						$Edificio = mysqli_real_escape_string($class->conex, $sed[2]);
 						preg_match('/^[0-9]$/', $Edificio) ? $Edificio = $Edificio : $Edificio=1;
 					}
-					
-                    if (! $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'")->num_rows > 0) {
-                        continue;
+					if(isset($Iniciales) && $Iniciales != '') {
+                        if (! $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'")->num_rows > 0) {
+                            continue;
+                        }
                     }
 
                     $IDPROFESOR = $response->fetch_assoc();
