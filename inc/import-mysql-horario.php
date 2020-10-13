@@ -74,7 +74,7 @@ if(isset($_POST['fecha']))
 						preg_match('/^[0-9]$/', $Edificio) ? $Edificio = $Edificio : $Edificio=1;
 					}
 					
-                    if (! $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'")) {
+                    if (! $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'")->num_rows > 0) {
                         continue;
                     }
 
