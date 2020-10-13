@@ -3,7 +3,7 @@ if($_SESSION['Perfil'] === 'Admin')
 { 
  if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre, $class->profesores.Iniciales, $class->profesores.Activo, $class->profesores.Sustituido FROM $class->profesores INNER JOIN $class->perfiles ON $class->profesores.TIPO=$class->perfiles.ID WHERE $class->profesores.TIPO<>1 ORDER BY Nombre ASC"))
  {
-   if ($response->num_rows > 0)
+   if ($response->num_rows > 1000)
    {
     echo '<div class="container" style="margin-top:50px">';
     echo "<div id='horario'></div>";
@@ -90,9 +90,9 @@ if($_SESSION['Perfil'] === 'Admin')
    }
    else
    {
-    $ERR_MSG = "No existen profesores, debe importarlos o registrarlos.<br>";
-    $ERR_MSG .= "<a href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=import-form' class='btn btn-success'>Importar</a> ";
-    $ERR_MSG .= "<a href='index.php?ACTION=profesores&OPT=add-profesor' class='btn btn-info'>Registrar</a>";
+    $MSG = "No existen profesores, debe importarlos o registrarlos.<br><br>";
+    $MSG .= "<a href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=import-form' class='btn btn-success'>Importar</a> ";
+    $MSG .= "<a href='index.php?ACTION=profesores&OPT=add-profesor' class='btn btn-info'>Registrar</a>";
    }
  }
  else
