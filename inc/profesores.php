@@ -90,8 +90,9 @@ if($_SESSION['Perfil'] === 'Admin')
    }
    else
    {
-    $ERR_MSG = "No existen profesores, debe importarlos.<br>";
-    $ERR_MSG .= "<a href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=import-form' class='btn btn-success'>Aceptar</a>";
+    $ERR_MSG = "No existen profesores, debe importarlos o registrarlos.<br>";
+    $ERR_MSG .= "<a href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=import-form' class='btn btn-success'>Importar</a> ";
+    $ERR_MSG .= "<a href='index.php?ACTION=profesores&OPT=add-profesor' class='btn btn-info'>Registrar</a>";
    }
  }
  else
