@@ -3,7 +3,7 @@ if($_SESSION['Perfil'] === 'Admin')
 { 
  if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre, $class->profesores.Iniciales, $class->profesores.Activo, $class->profesores.Sustituido FROM $class->profesores INNER JOIN $class->perfiles ON $class->profesores.TIPO=$class->perfiles.ID WHERE $class->profesores.TIPO<>1 ORDER BY Nombre ASC"))
  {
-   if ($response->num_rows > 1000)
+   if ($response->num_rows > 0)
    {
     echo '<div class="container" style="margin-top:50px">';
     echo "<div id='horario'></div>";
