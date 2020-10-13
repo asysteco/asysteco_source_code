@@ -72,14 +72,9 @@ if(isset($_POST['fecha']))
 						$sed = preg_split('//', $Aula, -1, PREG_SPLIT_NO_EMPTY);
 						$Edificio = mysqli_real_escape_string($class->conex, $sed[2]);
 						preg_match('/^[0-9]$/', $Edificio) ? $Edificio = $Edificio : $Edificio=1;
-                    }
-                    
-					if(isset($Iniciales) && $Iniciales == '') {
-                        if (! $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'")->num_rows > 0) {
-                            continue;
-                        }
-                    }
-
+					}
+					
+                    $response = $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'");
                     $IDPROFESOR = $response->fetch_assoc();
                     $IDPROFESOR = $IDPROFESOR['ID'];
                     $Hora_entrada = "00:00:00";
@@ -193,12 +188,6 @@ else
                     $sed = preg_split('//', $Aula, -1, PREG_SPLIT_NO_EMPTY);
                     $Edificio = mysqli_real_escape_string($class->conex, $sed[2]);
                     preg_match('/^[0-9]$/', $Edificio) ? $Edificio = $Edificio : $Edificio=1;
-                }
-                    
-                if(isset($Iniciales) && $Iniciales == '') {
-                    if (! $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'")->num_rows > 0) {
-                        continue;
-                    }
                 }
                 
                 $response = $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'");
