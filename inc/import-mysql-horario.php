@@ -74,7 +74,10 @@ if(isset($_POST['fecha']))
 						preg_match('/^[0-9]$/', $Edificio) ? $Edificio = $Edificio : $Edificio=1;
 					}
 					
-                    $response = $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'");
+                    if (! $class->query("SELECT ID FROM Profesores WHERE Iniciales='$Iniciales'")) {
+                        continue;
+                    }
+
                     $IDPROFESOR = $response->fetch_assoc();
                     $IDPROFESOR = $IDPROFESOR['ID'];
                     $Hora_entrada = "00:00:00";
