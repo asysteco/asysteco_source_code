@@ -2,8 +2,9 @@
 
 //--------------------------------------------------------
 
-echo "</br><table id='listado-guardias' class='table table-hover'>";
-    echo "<thead>";
+echo "<div id='scroller' class='scroller'>";
+echo "</br><table id='listado-guardias' class='table table-hover scroller'>";
+    echo "<thead id='fila_cabecera'>";
         echo "<tr>";
             echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
             echo "<th style='vertical-align: middle; text-align: center;'>Profesor</th>";
@@ -28,7 +29,7 @@ if($response = $class->getGuardias())
         $horaInicioSinSegundos = $horaInicioSplit[0] . ":" . $horaInicioSplit[1];
         $horaFinSplit = preg_split('/:/', $horaFinHorario);
         $horaFinSinSegundos = $horaFinSplit[0] . ":" . $horaFinSplit[1];
-        echo "<tr>";
+        echo "<tr id='fila_$i'>";
             echo "<td style='vertical-align: middle; text-align: center;'>" . $horaInicioSinSegundos . " - " . $horaFinSinSegundos . "</td>";
             echo "<td style='vertical-align: middle; text-align: center;'>" . $datos[$i][0] . "</td>";
             echo "<td style='vertical-align: middle; text-align: center;'>" . $datos[$i][3] . "</td>";
@@ -69,6 +70,7 @@ if($response = $class->getGuardias())
     }
     echo "</tbody>";
 echo "</table>";
+echo '</div>';
 }
 else
 {

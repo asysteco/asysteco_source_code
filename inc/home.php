@@ -14,9 +14,10 @@ if($_SESSION['Perfil'] === 'Admin')
             echo "</div>";
         echo "</div>"; 
         include_once($dirs['public'] . 'js/qr-reader.js');
+        include_once($dirs['public'] . 'js/scroller-interaction.js');
         echo '
             <script>
-            $("nav").hide();
+                $("nav").hide();
             </script>
         ';
     } else {
