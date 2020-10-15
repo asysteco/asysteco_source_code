@@ -5,11 +5,12 @@
         <?php if(!empty($message)) { echo $message; } ?>
     </div>
     <div class="outer-container">
-    <div id="ayuda-formato" style="background-color: #bdbdbd; border-radius: 10px; border: 1px solid grey; padding: 10px; color: black">
-        <h2>Formato Permitido</h2>
-        <p>El fichero CSV debe tener el siguiente formato para que sea aceptado correctamente:
-<pre style="background-color: #bdbdbd; border: 1px solid black; font-weight: bolder;">GRUPO;INICIALES;AULA;DIA;HORA</pre>
-            <b>GRUPO:</b> Nombre de curso/Grupo<br>
+    <div id="ayuda-formato" style="border-radius: 10px; padding: 10px; margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">
+        <h2 class="format-body">Formato Permitido</h2>
+        <p class="format-body">El fichero CSV debe tener el siguiente formato para que sea aceptado correctamente:</p>
+<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">GRUPO;INICIALES;AULA;DIA;HORA</pre>
+        <div class="format-body">
+            <b>GRUPO:</b> Nombre de Curso/Grupo<br>
             <b>INICIALES:</b> Iniciales correspondientes al profesor<br>
             <b>AULA:</b><br>
             <ul>
@@ -20,10 +21,10 @@
             <b>DIA:</b> Correspondiente al día de la semana, escrito en números (1 = Lunes, etc.)<br>
             <b>HORA:</b> Número referente a la hora impartida (4 Está considerada "Recreo", por lo tanto, son 7 horas en total)<br>
             <h4>Ejemplo de formato correcto:</h4>
-<pre style="background-color: #bdbdbd; border: 1px solid black; font-weight: bolder;">GRUPO;INICIALES;AULA;DIA;HORA  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
+        </div>
+<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">GRUPO;INICIALES;AULA;DIA;HORA  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
 2ESOA;MRG;AU101;3;1
 3BACHB;AAM;AU214;4;3</pre>
-    </p>
     </div>
     <br>
         <form class="form-inline" action="index.php?ACTION=horarios&OPT=" method="post"
