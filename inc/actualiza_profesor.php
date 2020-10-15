@@ -12,3 +12,12 @@ if ($_POST['ID'] != '') {
         $ERR_MSG = $class->ERR_ASYSTECO;
     }
 }
+
+
+
+$sql = "SELECT * FROM Profesores WHERE ID=? AND Iniciales=?";
+$id = "";
+$iniciales = "";
+$class->conex->prepare($sql);
+$bindParams = $class->conex->bind_param('is', $id, $iniciales);
+$class->query($sql, $bindParams);

@@ -5,10 +5,22 @@
         <?php if(!empty($message)) { echo $message; } ?>
     </div>
     <div class="outer-scontainer">
-<?php
-
- 
     
+    <div id="ayuda-formato" style="background-color: #bdbdbd; border-radius: 10px; border: 1px solid grey; padding: 10px; color: black">
+        <h2>Formato Permitido</h2>
+        <p>El fichero CSV debe tener el siguiente formato para que sea aceptado correctamente:
+<pre style="background-color: #bdbdbd; border: 1px solid black; font-weight: bolder;">INICIALES;NOMBRE;TUTOR</pre>
+            <b>INICIALES:</b> Iniciales correspondientes al nombre y apellidos del profesor<br>
+            <b>NOMBRE:</b> Nombre completo del profesor<br>
+            <b>TUTOR:</b> Nombre del grupo tutelado, si no existe grupo, escribir NO<br>
+            <h4>Ejemplo de formato correcto:</h4>
+<pre style="background-color: #bdbdbd; border: 1px solid black; font-weight: bolder;">INICIALES;NOMBRE;TUTOR  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
+AAM;Antonio Alarcón Muñoz;No
+CRL;Carolina Rodríguez López;3ESOA</pre>
+    </p>
+    </div>
+    <br>
+<?php
         echo '<form class="form-horizontal" action="index.php?ACTION=profesores&OPT=import-csv" method="post"
             name="frmCSVImport" id="frmCSVImport"
             enctype="multipart/form-data">
