@@ -207,10 +207,16 @@ class Asysteco
         }
     }
 
-    function getDate()
+    function getDate($timestamp = null)
     {
         date_default_timezone_set('Europe/Madrid');
-        if ($fecha = getdate()) {
+        $fecha = getdate();
+
+        if ($timestamp !== null) {
+            $fecha = getdate($timestamp);
+        }
+
+        if ($fecha) {
             if ($fecha['weekday'] === 'Monday') {
                 $fecha['weekday'] = "Lunes";
             } elseif ($fecha['weekday'] === 'Tuesday') {

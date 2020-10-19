@@ -116,6 +116,5 @@
 <script>
 <?php
  include_once($dirs['public'] . 'js/preview-import-horario.js');
-// include_once($dirs['public'] . 'js/import-horario.js');
 ?>
 </script>
