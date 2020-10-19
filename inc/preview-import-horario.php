@@ -1,5 +1,6 @@
 <?php
 
+require_once($dirs['class'] . 'ImportHorario.php');
 $fileName = $_FILES["file"]["tmp_name"];
 if ($_FILES["file"]["size"] > 0) {
     $file = fopen($fileName, "r");
@@ -20,12 +21,26 @@ if ($_FILES["file"]["size"] > 0) {
                         echo '</thead>';
                         echo '<tbody>';
                     while (($column = fgetcsv($file, 10000, ";")) !== FALSE) {
+                        if ($row === 1) {
+                            if (preg_match('/^GRUPO$/i', $column[0])
+                            && preg_match('/^INICIALES$/i', $column[1])
+                            && preg_match('/^AULA$/i', $column[2])
+                            && preg_match('/^DIA$/i', $column[3])
+                            && preg_match('/^HORA$/i', $column[4])) {
+                                $row ++;
+                                continue;
+                            } else {
+                                echo "error-cabecera";
+                                exit;
+                            }
+                        }
+                        $importHorario = new ImportHorario($column[0], $column[1], $column[2], $column[3], $column[4]);
                         echo '<tr>';
-                            echo "<td>$column[0]</td>";
-                            echo "<td>$column[1]</td>";
-                            echo "<td>$column[2]</td>";
-                            echo "<td>$column[3]</td>";
-                            echo "<td>$column[4]</td>";
+                            echo "<td>" . $importHorario->grupo() . "</td>";
+                            echo "<td>" . $importHorario->iniciales() . "</td>";
+                            echo "<td>" . $importHorario->aula() . "</td>";
+                            echo "<td>" . $importHorario->dia() . "</td>";
+                            echo "<td>" . $importHorario->hora() . "</td>";
                         echo '</tr>';
                     }
                         echo '</tbody>';

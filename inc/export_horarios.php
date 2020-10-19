@@ -9,8 +9,8 @@ if(isset($_GET['profesor']) && $_GET['profesor'] != '')
 }
 else
 {
-    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana FROM
-    (Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID) INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia
+    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales
+    FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
     ORDER BY ID_PROFESOR, Dia, HORA_TIPO";
 }
 if($response = $class->query($sql))
@@ -28,12 +28,10 @@ if($response = $class->query($sql))
         $fp = fopen($fn, 'w');
         $delimitador = ";";
         $titulo = [
-            'ID',
-            'CURSO',
-            'ABREVIATURA PROFESOR',
-            'PROFESOR',
+            'GRUPO',
+            'INICIALES',
             'AULA',
-            'DIA SEMANA',
+            'DIA',
             'HORA',
         ];
         // Escribimos los títulos para los campos
@@ -51,13 +49,11 @@ if($response = $class->query($sql))
                 $ERR_MSG = $class->ERR_ASYSTECO;
             }
             $campos = [
-                        $datos['ID'],
                         $datos['Grupo'],
                         $iniciales,
-                        $profesor,
                         $datos['Aula'],
-                        $datos['Diasemana'],
-                        $datos['HORA_TIPO'],
+                        $datos['Dia'],
+                        $datos['Hora'],
                     ];
             
             // Escibimos una línea por cada $datos
