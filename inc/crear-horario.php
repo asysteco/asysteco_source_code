@@ -24,8 +24,8 @@ echo "<select id='select_tipo'>";
 echo "<select>";
 echo '<br>';
 echo '<br>';
-echo "<a href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger' onclick=\"return confirm('¿Seguro que desea cancelar este horario?')\"><span class='glyphicon glyphicon-remove'></span> Cancelar cambios</a>";
-echo "<a href='index.php?ACTION=marcajes&OPT=create&ID_PROFESOR=$n[ID]' style='margin-left: 70%;' class='btn btn-success'><span class='glyphicon glyphicon-ok'></span> Aplicar cambios</a> ";
+echo "<a href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger pull-left' onclick=\"return confirm('¿Seguro que desea cancelar este horario?')\"><span class='glyphicon glyphicon-remove'></span> Cancelar cambios</a>";
+echo "<a href='index.php?ACTION=marcajes&OPT=create&ID_PROFESOR=$n[ID]' style='margin-left: 70%;' class='btn btn-success pull-right'><span class='glyphicon glyphicon-ok'></span> Aplicar cambios</a> ";
 
 echo "<div id='response'></div>";
 echo "</br>";

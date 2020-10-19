@@ -123,6 +123,10 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
           echo "<li class=' $act_cal_escolar '>";
             echo "<a href='$_SERVER[PHP_SELF]?ACTION=lectivos'><span class='glyphicon glyphicon-calendar'></span> Calendario escolar</a>";
           echo "</li>";
+
+          echo "<li>";
+            echo "<a href='$_SERVER[PHP_SELF]?ACTION=fichar-manual'><span class='glyphicon glyphicon-pencil'></span> Fichaje Manual</a>";
+          echo "</li>";
         echo "</ul>";
 
         echo '<ul class="nav navbar-nav navbar-right">';
