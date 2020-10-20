@@ -84,6 +84,17 @@
         }
 ?>
         <div id="todos-registros"></div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="loading" style='text-align: center; position: absolute; width: 100%; height: 100%;'>
+                    <img style="text-align: center; background-color: transparent;" src="resources/img/loading.gif" alt="Cargando...">
+                    <h2 id="loading-msg"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="file-content-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -101,16 +112,6 @@
       </div>
     </div>
   </div>
-</div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div id="loading" style='text-align: center; position: absolute; width: 100%; height: 100%;'>
-                    <img style="text-align: center; background-color: transparent;" src="resources/img/loading.gif" alt="Cargando...">
-                    <h2 id="loading-msg"></h2>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <script>
