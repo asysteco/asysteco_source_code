@@ -6,22 +6,22 @@
     </div>
     <div class="outer-scontainer">
     
-    <div id="ayuda-formato" style="background-color: #bdbdbd; border-radius: 10px; border: 1px solid grey; padding: 10px; color: black">
+    <div id="ayuda-formato" style="border-radius: 10px; padding: 10px; margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">
         <h2>Formato Permitido</h2>
         <p>El fichero CSV debe tener el siguiente formato para que sea aceptado correctamente:
-<pre style="background-color: #bdbdbd; border: 1px solid black; font-weight: bolder;">INICIALES;NOMBRE;TUTOR</pre>
+<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;"">INICIALES;NOMBRE;TUTOR</pre>
             <b>INICIALES:</b> Iniciales correspondientes al nombre y apellidos del profesor<br>
             <b>NOMBRE:</b> Nombre completo del profesor<br>
             <b>TUTOR:</b> Nombre del grupo tutelado, si no existe grupo, escribir NO<br>
             <h4>Ejemplo de formato correcto:</h4>
-<pre style="background-color: #bdbdbd; border: 1px solid black; font-weight: bolder;">INICIALES;NOMBRE;TUTOR  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
+<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;"">INICIALES;NOMBRE;TUTOR  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
 AAM;Antonio Alarcón Muñoz;No
 CRL;Carolina Rodríguez López;3ESOA</pre>
     </p>
     </div>
     <br>
 <?php
-        echo '<form class="form-horizontal" action="index.php?ACTION=profesores&OPT=import-csv" method="post"
+        echo '<form class="form-horizontal" action="index.php?ACTION=profesores&OPT=" method="post"
             name="frmCSVImport" id="frmCSVImport"
             enctype="multipart/form-data">
             <div class="input-row">
@@ -55,6 +55,24 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
         echo "<a id='btn-todos-registros-prof' class='btn btn-info'>Ver todos los registros</a>";
 ?>
         <div id="todos-registros"></div>
+<div id="file-content-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header" style="text-align: right;">
+            <h2 class="modal-title" style="text-align: center;">Previsualización de los datos a importar</h2>
+            <h5 class="modal-title" style="color: grey; text-align: center;">*Si los datos mostrados no coinciden con los que se van a importar, cancele el proceso y modifique su fichero CSV</h5>
+            <br>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar cambios</button>
+            <button type="button" class="btn btn-success import-data">Continuar</button>
+        </div>
+        <div id="file-content-preview"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar cambios</button>
+        <button type="button" class="btn btn-success import-data">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
         <div class="row">
             <div class="col-xs-12">
                 <div id="loading" style='text-align: center; position: absolute; width: 100%; height: 100%;'>
@@ -65,5 +83,8 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
         </div>
     </div>
 </div>
+<script>
 <?php
-    include_once($dirs['public'] . 'js/import-profesorado.js');
+    include_once($dirs['public'] . 'js/preview-import-profesores.js');
+?>
+</script>
