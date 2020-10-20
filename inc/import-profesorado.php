@@ -63,12 +63,12 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
             <h5 class="modal-title" style="color: grey; text-align: center;">*Si los datos mostrados no coinciden con los que se van a importar, cancele el proceso y modifique su fichero CSV</h5>
             <br>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar cambios</button>
-            <button type="button" class="btn btn-success import-data">Continuar</button>
+            <button type="button" class="btn btn-success import-data">Importar</button>
         </div>
         <div id="file-content-preview"></div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar cambios</button>
-        <button type="button" class="btn btn-success import-data">Continuar</button>
+        <button type="button" class="btn btn-success import-data">Importar</button>
       </div>
     </div>
   </div>
