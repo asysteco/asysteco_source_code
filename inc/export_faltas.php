@@ -128,12 +128,12 @@ for($i=0; $i<=$count; $i++)
         $Y = $sep[0];
 
         $campos = [
-            $datos['Iniciales'],
-            $datos['Nombre'],
+            utf8_decode($datos['Iniciales']),
+            utf8_decode($datos['Nombre']),
             "$dia/$m/$Y",
             $datos['Hora'],
             $datos['Dia'],
-            $datos['Diasemana'],
+            utf8_decode($datos['Diasemana']),
             'NO',
             'NO'
         ];
@@ -144,7 +144,7 @@ for($i=0; $i<=$count; $i++)
 }
 
 //cabeceras para descarga
-header('Content-Type: text/csv');
+header('Content-Type: text/csv; charset=utf-8');
 header('Content-Disposition: attachment; filename="' . $fn . '";');
 
 ob_end_clean();

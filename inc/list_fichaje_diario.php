@@ -42,7 +42,6 @@ if(isset($_GET['pag']))
     echo "<table class='table table-striped'>";
         echo "<thead>";
             echo "<tr>";
-                echo "<th>ID PROFESOR</th>";
                 echo "<th>NOMBRE</th>";
                 echo "<th>FICHAJE DE ENTRADA</th>";
                 echo "<th>FICHAJE DE SALIDA</th>";
@@ -58,7 +57,6 @@ if(isset($_GET['pag']))
             $m = $sep[1];
             $Y = $sep[0];
             echo "<tr>";
-                echo "<td>$datos[ID_PROFESOR]</td>";
                 echo "<td>$datos[Nombre]</td>";
                 echo "<td>$datos[F_entrada]</td>";
                 echo "<td>$datos[F_Salida]</td>";

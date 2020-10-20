@@ -49,19 +49,19 @@ if($response = $class->query($sql))
                 $ERR_MSG = $class->ERR_ASYSTECO;
             }
             $campos = [
-                        $datos['Grupo'],
-                        $iniciales,
-                        $datos['Aula'],
-                        $datos['Dia'],
-                        $datos['Hora'],
-                    ];
+                utf8_decode($datos['Grupo']),
+                utf8_decode($iniciales),
+                utf8_decode($datos['Aula']),
+                $datos['Dia'],
+                $datos['Hora'],
+            ];
             
             // Escibimos una línea por cada $datos
             fputcsv($fp, $campos, $delimitador);
         }
             
         //cabeceras para descarga
-        header('Content-Type: text/csv');
+        header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename="' . $fn . '";');
                     
         ob_end_clean();
