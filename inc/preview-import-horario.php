@@ -4,7 +4,7 @@ require_once($dirs['class'] . 'ImportHorario.php');
 $fileName = $_FILES["file"]["tmp_name"];
 if ($_FILES["file"]["size"] > 0) {
     $file = fopen($fileName, "r");
-    $row = 1;
+    $row = 0;
     echo "<div class='modal-body'>";
         echo "<div class='container-fluid'>";
             echo "<div class='row'>";
@@ -12,6 +12,7 @@ if ($_FILES["file"]["size"] > 0) {
                     echo '<table class="table-striped" style="width: 100%;">';
                         echo '<thead>';
                             echo '<tr>';
+                                echo '<th>Línea</th>';
                                 echo '<th>Grupo</th>';
                                 echo '<th>Iniciales</th>';
                                 echo '<th>Aula</th>';
@@ -21,7 +22,7 @@ if ($_FILES["file"]["size"] > 0) {
                         echo '</thead>';
                         echo '<tbody>';
                     while (($column = fgetcsv($file, 10000, ";")) !== FALSE) {
-                        if ($row === 1) {
+                        if ($row === 0) {
                             if (preg_match('/^GRUPO$/i', $column[0])
                             && preg_match('/^INICIALES$/i', $column[1])
                             && preg_match('/^AULA$/i', $column[2])
@@ -34,14 +35,22 @@ if ($_FILES["file"]["size"] > 0) {
                                 exit;
                             }
                         }
+
                         $importHorario = new ImportHorario($column[0], $column[1], $column[2], $column[3], $column[4]);
-                        echo '<tr>';
+
+                        if ($importHorario->rowStatus()) {
+                            echo '<tr>';
+                        } else {
+                            echo '<tr style="background-color: #ff9797;">';
+                        }
+                            echo "<td>" . $row . "</td>";
                             echo "<td>" . $importHorario->grupo() . "</td>";
                             echo "<td>" . $importHorario->iniciales() . "</td>";
                             echo "<td>" . $importHorario->aula() . "</td>";
                             echo "<td>" . $importHorario->dia() . "</td>";
                             echo "<td>" . $importHorario->hora() . "</td>";
                         echo '</tr>';
+                        $row ++;
                     }
                         echo '</tbody>';
                     echo '</table>';

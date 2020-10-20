@@ -8,6 +8,7 @@ class ImportHorario
     private int $dia;
     private int $hora;
 
+    private bool $rowStatus = true;
     private array $filaCompleta;
 
     public function __construct(
@@ -118,12 +119,21 @@ class ImportHorario
         $this->filaCompleta = $filaCompleta;
     }
 
+    public function rowStatus(): bool {
+        return $this->rowStatus;
+    }
+
+    public function setRowStatusFalse(): void {
+        $this->rowStatus = false;
+    }
+
     public function grupoValido($grupo)
     {
         if (isset($grupo) && preg_match('/^[a-zA-Z0-9 -]{2,25}$/i', $grupo)) {
             return true;
         }
 
+        $this->setRowStatusFalse();
         return false;
     }
 
@@ -133,6 +143,7 @@ class ImportHorario
             return true;
         }
 
+        $this->setRowStatusFalse();
         return false;
     }
 
@@ -142,6 +153,7 @@ class ImportHorario
             return true;
         }
 
+        $this->setRowStatusFalse();
         return false;
     }
 
@@ -151,6 +163,7 @@ class ImportHorario
             return true;
         }
 
+        $this->setRowStatusFalse();
         return false;
     }
 
@@ -160,6 +173,7 @@ class ImportHorario
             return true;
         }
 
+        $this->setRowStatusFalse();
         return false;
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
+require_once($dirs['class'] . 'ImportProfesor.php');
 $fileName = $_FILES["file"]["tmp_name"];
 if ($_FILES["file"]["size"] > 0) {
     $file = fopen($fileName, "r");
-    $row = 1;
+    $row = 0;
     echo "<div class='modal-body'>";
         echo "<div class='container-fluid'>";
             echo "<div class='row'>";
@@ -11,6 +12,7 @@ if ($_FILES["file"]["size"] > 0) {
                     echo '<table class="table-striped" style="width: 100%;">';
                         echo '<thead>';
                             echo '<tr>';
+                                echo '<th>Línea</th>';
                                 echo '<th>Iniciales</th>';
                                 echo '<th>Nombre</th>';
                                 echo '<th>Tutor</th>';
@@ -18,11 +20,31 @@ if ($_FILES["file"]["size"] > 0) {
                         echo '</thead>';
                         echo '<tbody>';
                     while (($column = fgetcsv($file, 10000, ";")) !== FALSE) {
-                        echo '<tr>';
-                            echo "<td>$column[0]</td>";
-                            echo "<td>$column[1]</td>";
-                            echo "<td>$column[2]</td>";
+                        if ($row === 0) {
+                            if (preg_match('/^INICIALES$/i', $column[0])
+                            && preg_match('/^NOMBRE$/i', $column[1])
+                            && preg_match('/^TUTOR$/i', $column[2])) {
+                                $row ++;
+                                continue;
+                            } else {
+                                echo "error-cabecera";
+                                exit;
+                            }
+                        }
+
+                        $importProfesor = new ImportProfesor($column[0], $column[1], $column[2]);
+
+                        if ($importProfesor->rowStatus()) {
+                            echo '<tr>';
+                        } else {
+                            echo '<tr style="background-color: #ff9797;">';
+                        }
+                            echo "<td>" . $row . "</td>";
+                            echo "<td>" . $importProfesor->iniciales() . "</td>";
+                            echo "<td>" . $importProfesor->nombre() . "</td>";
+                            echo "<td>" . $importProfesor->tutor() . "</td>";
                         echo '</tr>';
+                        $row++;
                     }
                         echo '</tbody>';
                     echo '</table>';

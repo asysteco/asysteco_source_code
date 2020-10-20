@@ -16,7 +16,7 @@ if ($_FILES["file"]["size"] > 0) {
             $dia = $importHorario->dia();
             $hora = $importHorario->hora();
 
-            if ($grupo && $grupo != '' && $iniciales && $iniciales != '' && $aula && $aula != '' && $dia && $dia != '' && $hora && $hora != '') {
+            if ($importHorario->rowStatus()) {
                 $tipo = $_POST['Tipo'];
                 $horaTipo = explode('', $tipo);
                 $horaTipo = $hora . $horaTipo[0];
@@ -38,8 +38,9 @@ if ($_FILES["file"]["size"] > 0) {
 
                 if (!$class->query("INSERT INTO Horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo)
                 VALUES ('$idProfesor', '$dia', '$horaTipo', '$hora', '$tipo', '$edificio', '$aula', '$grupo')")) {
-                    echo "Error al importar datos.";
+                    echo "Error-importar";
                     $inserted = false;
+                    exit;
                 }
             } else {
                 echo "Error al importar datos.<br> Revise los datos de la tabla y vuelva a intentarlo.";
