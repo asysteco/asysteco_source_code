@@ -78,7 +78,7 @@
             $num = $num_horarios->fetch_assoc();
             echo "<h3>Horarios importados: $num[numero]</h3>";
             echo "<h3>Registros totales: $num[total]</h3>";
-            echo "<a id='btn-todos-registros' class='btn btn-info'>Ver todos los registros</a>";
+            //echo "<a id='btn-todos-registros' class='btn btn-info'>Ver todos los registros</a>";
         }
         else
         {
