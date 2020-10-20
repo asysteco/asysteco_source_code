@@ -1,6 +1,5 @@
 <?php
 $dia = explode('/', $_POST['dia']);
-
 $dia = $dia[2] . '-' . $dia[1] . '-' . $dia[0];
 $diasemana = $class->getDate(strtotime($dia));
 $diasemana = $diasemana['weekday'];
