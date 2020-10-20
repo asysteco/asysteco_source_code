@@ -17,6 +17,8 @@
 <pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;"">INICIALES;NOMBRE;TUTOR  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
 AAM;Antonio Alarcón Muñoz;No
 CRL;Carolina Rodríguez López;3ESOA</pre>
+<p class="format-body">Si lo desea, haciendo click al siguiente botón puede descargar una plantilla del formato en CSV: 
+    <a href="index.php?ACTION=plantilla-profesores"><span class="glyphicon glyphicon-download-alt"></span></a></p>
     </p>
     </div>
     <br>
