@@ -25,6 +25,8 @@
 <pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">GRUPO;INICIALES;AULA;DIA;HORA  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
 2ESOA;MRG;AU101;3;1
 3BACHB;AAM;AU214;4;3</pre>
+    <p class="format-body">Si lo desea, haciendo click al siguiente botón puede descargar una plantilla del formato en CSV: 
+    <a href="index.php?ACTION=plantilla"><span class="glyphicon glyphicon-download-alt"></span></a></p>
     </div>
     <br>
         <form class="form-inline" action="index.php?ACTION=horarios&OPT=" method="post"
