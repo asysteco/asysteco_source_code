@@ -308,6 +308,9 @@ class Asysteco
                         if (!$this->query($insertHorario)) {
                             return false;
                         }
+                        if (!$this->query("DELETE FROM T_horarios WHERE ID_PROFESOR = '$id' AND Fecha_incorpora<='$fechaactual'")) {
+                            return false;
+                        }
                         $this->updateHoras($id);
                         $this->marcajes($id, 'add');
                     }
