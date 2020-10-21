@@ -42,6 +42,7 @@ if($response = $class->query($sql))
             $horaInicioSinSegundos = $horaInicioSplit[0] . ":" . $horaInicioSplit[1];
             $horaFinSplit = preg_split('/:/', $datos['Fin']);
             $horaFinSinSegundos = $horaFinSplit[0] . ":" . $horaFinSplit[1];
+            
             if (! $class->query("SELECT * FROM Horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' ORDER BY Hora ")->num_rows > 0) {
                 continue;
             }

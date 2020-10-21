@@ -6,6 +6,7 @@
             </script>
 <?php
 
+date_default_timezone_set('Europe/Madrid');
 if(! $n = $class->query("SELECT Nombre, ID FROM $class->profesores WHERE ID='$_GET[profesor]'")->fetch_assoc())
 {
     $ERR_MSG = $class->ERR_ASYSTECO;
@@ -46,8 +47,13 @@ $franja = $_GET['Tipo'];
 foreach ($franjasHorarias[$franja] as $valor => $datos)
 {
     $Hora = $valor;
+    $horaInicioSplit = preg_split('/:/', $datos['Inicio']);
+    $horaInicioSinSegundos = $horaInicioSplit[0] . ":" . $horaInicioSplit[1];
+    $horaFinSplit = preg_split('/:/', $datos['Fin']);
+    $horaFinSinSegundos = $horaFinSplit[0] . ":" . $horaFinSplit[1];
+    
     echo "<tr>";
-        echo "<td style='vertical-align: middle; text-align: center;'>$Hora</td>";
+        echo "<td style='text-align: center; vertical-align: middle;'>$horaInicioSinSegundos <br>$horaFinSinSegundos</td>";
         
         for($dialoop = 1; $dialoop <= 5; $dialoop++)
         {

@@ -3,7 +3,7 @@
 //--------------------------------------------------------
 
 echo "<div id='scroller' class='scroller'>";
-echo "</br><table id='listado-guardias' class='table table-hover scroller'>";
+echo "</br><table id='listado-guardias' class='table table-striped scroller'>";
     echo "<thead id='fila_cabecera'>";
         echo "<tr>";
             echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";

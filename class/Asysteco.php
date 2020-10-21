@@ -209,7 +209,6 @@ class Asysteco
 
     function getDate($timestamp = null)
     {
-        date_default_timezone_set('Europe/Madrid');
         $fecha = getdate();
 
         if ($timestamp !== null) {
@@ -282,12 +281,12 @@ class Asysteco
     {
         $time = "07:45:00"; // Hora límite para comprobar horarios
         $horaactual = date("H:i:s"); // Hora actual a comparar
+        $fechaactual = date("Y-m-d");
+
         if (isset($date) && $date != null && $this->validFormSQLDate($date)) {
             $fechaactual = $date;
             $time = "23:55:00";
             unset($_SESSION['fecha']);
-        } else {
-            $fechaactual = date("Y-m-d");
         }
 
         //$horaactual = "07:40:00"; 
@@ -330,20 +329,20 @@ class Asysteco
         // Línea de comprobación para que muestre todas las horas a partir de $horasistema el día $dia
 
         // $dia = '2020-9-23';
-         $horasistema = '09:00:00';
+        // $horasistema = '11:30:00';
 
         $sql = "SELECT DISTINCT Profesores.Nombre, Horarios.Aula, Horarios.Grupo, Horarios.Edificio, Horarios.Hora, Horarios.Tipo
         FROM ((Marcajes INNER JOIN Horarios ON Marcajes.ID_PROFESOR=Horarios.ID_PROFESOR AND Marcajes.Dia=Horarios.Dia AND Marcajes.Hora=Horarios.Hora)
         INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID)
-        INNER JOIN Horas ON Horarios.HORA_TIPO=Horas.HORA_TIPO
+        INNER JOIN Horas ON Marcajes.Hora=Horas.Hora AND Marcajes.Tipo=Horas.Tipo
         WHERE NOT EXISTS (SELECT * FROM Fichar WHERE Fichar.ID_PROFESOR=Profesores.ID AND Fichar.Fecha='$dia') 
         AND Marcajes.Fecha='$dia'
         AND (Marcajes.Asiste=0 OR Marcajes.Asiste=2)
         AND Profesores.Activo=1
         AND Profesores.Sustituido=0
-        AND Horas.Fin >= '$horasistema'
+        AND Horas.Fin > '$horasistema'
         ORDER BY Marcajes.Hora ASC, Horarios.Edificio ASC, Profesores.Nombre ASC";
-        // echo $sql;
+
         if ($exec = $this->query($sql)) {
             if ($exec->num_rows > 0) {
                 return $exec;
@@ -379,8 +378,7 @@ class Asysteco
                 return false;
             }
 
-            date_default_timezone_set('Europe/Madrid');
-            $fecha = date('Y-m-d');
+                $fecha = date('Y-m-d');
             $hora = date('H:i:s');
             $dia = $this->getDate();
             $horaSalida = $this->getHoraSalida($id);
