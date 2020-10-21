@@ -73,6 +73,10 @@ try{
         }
         $row++;
     }
+    if ($hoy) {
+        $class->updateHoras();
+        $class->marcajes();
+    }
 
 } catch ( Exception $e ){
       echo "Error-importar";
