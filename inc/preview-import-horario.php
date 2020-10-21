@@ -1,5 +1,18 @@
 <?php
 
+$response = $class->conex->query("SELECT DISTINCT Iniciales FROM Profesores WHERE TIPO <> 1");
+if ($response->num_rows > 0) {
+    $inicialesBD = $response->fetch_all();
+    $totalIniciales = [];
+    foreach ($inicialesBD as $key => $value) {
+        if (isset($value[0])) {
+            $totalIniciales[] = $value[0];
+        }
+    }
+} else {
+    exit;
+}
+
 require_once($dirs['class'] . 'ImportHorario.php');
 $fileName = $_FILES["file"]["tmp_name"];
 if ($_FILES["file"]["size"] > 0) {
@@ -38,7 +51,13 @@ if ($_FILES["file"]["size"] > 0) {
 
                         $importHorario = new ImportHorario($column[0], $column[1], $column[2], $column[3], $column[4]);
 
-                        if ($importHorario->rowStatus()) {
+                        if (isset($column[1]) && in_array($column[1], $totalIniciales)) {
+                            $profesorExist = true;
+                        } else {
+                            $profesorExist = false;
+                        }
+                        
+                        if ($importHorario->rowStatus() && $profesorExist) {
                             echo '<tr>';
                         } else {
                             echo '<tr style="background-color: #ff9797;">';

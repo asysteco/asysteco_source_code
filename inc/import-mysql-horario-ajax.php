@@ -12,6 +12,21 @@ if (isset($_POST['fecha'])) {
     }
 }
 
+$response = $class->conex->query("SELECT DISTINCT Iniciales, ID FROM Profesores WHERE TIPO <> 1");
+if ($response->num_rows > 0) {
+    $inicialesBD = $response->fetch_all();
+    $totalIniciales = [];
+    foreach ($inicialesBD as $key => $value) {
+        if (isset($value[0]) && isset($value[1])) {
+            $inicial = strtoupper($value[0]);
+            $id = $value[1];
+            $totalIniciales[$inicial] = $id;
+        }
+    }
+} else {
+    exit;
+}
+
 require_once($dirs['class'] . 'ImportHorario.php');
 $fileName = $_FILES["file"]["tmp_name"];
 if ($_FILES["file"]["size"] > 0) {
@@ -50,26 +65,28 @@ try{
         $edificio = str_split($aula);
         $edificio = $edificio[2];
 
-        $response = $class->conex->query("SELECT ID FROM Profesores WHERE Iniciales = '$iniciales'");
-        if ($response->num_rows === 1) {
-            $fila = $response->fetch_assoc();
-            $idProfesor = $fila['ID'];
+        if ($iniciales != '' && array_key_exists($iniciales, $totalIniciales)) {
+            $idProfesor = $totalIniciales[$iniciales];
+            $profesorExist = true;
         } else {
-            $msg = "El profesor con las Iniciales $Iniciales no existe, su horario no se importará.";
-            $class->notificar($_SESSION['ID'], $msg);
-            continue;
+            $profesorExist = false;
         }
-
-        if ($hoy) {
-            $sql = "INSERT INTO Horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo)
-            VALUES ('$idProfesor', '$dia', '$horaTipo', '$hora', '$tipo', '$edificio', '$aula', '$grupo')";
+        
+        if ($importHorario->rowStatus() && $profesorExist) {
+            if ($hoy) {
+                $sql = "INSERT INTO Horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo)
+                VALUES ('$idProfesor', '$dia', '$horaTipo', '$hora', '$tipo', '$edificio', '$aula', '$grupo')";
+            } else {
+                $sql = "INSERT INTO T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora)
+                VALUES ('$idProfesor', '$dia', '$horaTipo', '$hora', '$tipo', '$edificio', '$aula', '$grupo', '$fecha')";
+            }
+            
+            if (!$class->conex->query($sql)) {
+                throw new Exception('Error-importar');
+            }
+            
         } else {
-            $sql = "INSERT INTO T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora)
-            VALUES ('$idProfesor', '$dia', '$horaTipo', '$hora', '$tipo', '$edificio', '$aula', '$grupo', '$fecha')";
-        }
-        echo $sql;
-        if (!$class->conex->query($sql)) {
-            throw new Exception('error!');
+            throw new Exception('No-profesor');
         }
         $row++;
     }
@@ -79,7 +96,7 @@ try{
     }
 
 } catch ( Exception $e ){
-      echo "Error-importar";
+      echo $e;
       $class->conex->rollback();
 }
 $class->conex->commit();

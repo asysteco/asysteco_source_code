@@ -54,13 +54,13 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
         }
         echo "<h3>Profesores totales: $num_all[total]</h3>";
         echo "<h3>Profesores activos: $num_act[activos]</h3>";
-        echo "<a id='btn-todos-registros-prof' class='btn btn-info'>Ver todos los registros</a>";
+        //echo "<a id='btn-todos-registros-prof' class='btn btn-info'>Ver todos los registros</a>";
 ?>
         <div id="todos-registros"></div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div id="loading" style='text-align: center; position: absolute; width: 100%; height: 100%;'>
-                    <img style="text-align: center; background-color: transparent;" src="resources/img/loading.gif" alt="Cargando...">
+        <div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center; z-index: -1;">
+            <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
+                <div>
+                    <img src="resources/img/loading.gif" alt="Cargando...">
                     <h2 id="loading-msg"></h2>
                 </div>
             </div>
