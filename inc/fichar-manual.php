@@ -1,4 +1,5 @@
 <?php
+
 echo '<div class="container" style="margin-top:75px">';
     echo "<div class='row'>";
         echo "<div class='col-xs-12'>";
@@ -27,4 +28,3 @@ echo '<div class="container" style="margin-top:75px">';
         echo "</div>";
     echo "</div>";
 echo "</div>";
-?>
