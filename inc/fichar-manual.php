@@ -18,7 +18,18 @@ echo '<div class="container" style="margin-top:75px">';
             {
                 $ERR_MSG = $class->ERR_ASYSTECO;
             }
-                echo "<input type='time' name='hora' min='06:00' max='22:00' required>";
+                if($activeFicharSalida == 1)
+                {
+                    echo "<label>Hora Fichaje Entrada </label>&nbsp&nbsp";
+                    echo "<input type='time' name='horaentrada' min='06:00' max='22:00' required>&nbsp&nbsp&nbsp";
+                    echo "<label>Hora Fichaje Salida </label>&nbsp&nbsp";
+                    echo "<input type='time' name='horasalida' min='06:00' max='22:00' required>";
+                }
+                else
+                {
+                    echo "<label>Hora Fichaje Entrada </label>&nbsp&nbsp";
+                    echo "<input type='time' name='horaentrada' min='06:00' max='22:00' required>&nbsp&nbsp&nbsp";
+                }
                 echo "<br><br>";
                 echo "<input id='fichar-manual' class='form-control' name='dia' type='text' placeholder='' autocomplete='off'>";
                 echo "<br>";
