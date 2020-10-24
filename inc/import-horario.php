@@ -26,7 +26,7 @@
 2ESOA;MRG;AU101;3;1
 3BACHB;AAM;AU214;4;3</pre>
     <p class="format-body">Si lo desea, haciendo click al siguiente botón puede descargar una plantilla del formato en CSV: 
-    <a href="index.php?ACTION=plantilla"><span class="glyphicon glyphicon-download-alt"></span></a></p>
+    <a href="index.php?ACTION=plantilla-horarios"><span class="glyphicon glyphicon-download-alt"></span></a></p>
     </div>
     <br>
         <form class="form-inline" action="index.php?ACTION=horarios&OPT=" method="post"

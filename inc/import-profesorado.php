@@ -9,12 +9,12 @@
     <div id="ayuda-formato" style="border-radius: 10px; padding: 10px; margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">
         <h2>Formato Permitido</h2>
         <p>El fichero CSV debe tener el siguiente formato para que sea aceptado correctamente:
-<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;"">INICIALES;NOMBRE;TUTOR</pre>
+<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">INICIALES;NOMBRE;TUTOR</pre>
             <b>INICIALES:</b> Iniciales correspondientes al nombre y apellidos del profesor<br>
             <b>NOMBRE:</b> Nombre completo del profesor<br>
             <b>TUTOR:</b> Nombre del grupo tutelado, si no existe grupo, escribir NO<br>
             <h4>Ejemplo de formato correcto:</h4>
-<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;"">INICIALES;NOMBRE;TUTOR  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
+<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">INICIALES;NOMBRE;TUTOR  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
 AAM;Antonio Alarcón Muñoz;No
 CRL;Carolina Rodríguez López;3ESOA</pre>
 <p class="format-body">Si lo desea, haciendo click al siguiente botón puede descargar una plantilla del formato en CSV: 
