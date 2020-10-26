@@ -18,7 +18,25 @@
 
           <!-- Icon -->
           <div class="fadeIn first">
-            <img src="resources/img/<?php echo "$Titulo-logo.jpg"; ?>" width='125' id="icon" alt="Icono del centro" /> <h1>Iniciar Sesión</h1>
+            <img src="<?php
+            $path = 'resources/img/';
+            $name = 'logo-centro.';
+            $ext = ['jpg', 'png', 'svg'];
+            $logoFile = "";
+            
+            foreach ($ext as $value) {
+              if (is_file($path . $name . $value)) {
+                $logoFile = $path . $name . $value;
+              }
+            }
+
+            if ($logoFile !== '') {
+              echo $logoFile; 
+            } else {
+              echo $path . "default-logo.png";
+            }
+
+             ?>" width='125' id="icon" alt="Icono del centro" /> <h1>Iniciar Sesión</h1>
           </div>
 
           <!-- Login Form -->
