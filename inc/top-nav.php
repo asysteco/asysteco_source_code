@@ -157,6 +157,12 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
               echo '<li>';
                 echo '<a id="cambio-pass" href="index.php?ACTION=cambio_pass"><span id="cambio-pass-icon" class="glyphicon glyphicon-refresh"></span> Cambio de contraseña</a>';
               echo '</li>';
+              echo '<li>';
+                echo '<a id="admin-guide" href="index.php?ACTION=download_admin_guide"><span id="download-guide-admin-icon" class="glyphicon glyphicon-download-alt"></span> Guía aplicación Administración</a>';
+              echo '</li>';
+              echo '<li>';
+                echo '<a id="profesor-guide" href="index.php?ACTION=download_profesor_guide"><span id="download-guide-profesor-icon" class="glyphicon glyphicon-download-alt"></span> Guía aplicación Profesorado</a>';
+              echo '</li>';
             echo '</ul>';
           echo '</li>';
 
@@ -193,6 +199,9 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
           echo '<li>';
             echo '<a id="cambio-pass" href="index.php?ACTION=cambio_pass"><span id="cambio-pass-icon" class="glyphicon glyphicon-refresh"></span> Cambio de contraseña</a>';
           echo '</li>'; 
+          echo '<li>';
+            echo '<a id="profesor-guide" href="index.php?ACTION=download_profesor_guide"><span id="download-guide-profesor-icon" class="glyphicon glyphicon-download-alt"></span> Guía aplicación Profesorado</a>';
+          echo '</li>';
         echo '</ul>';
 
         echo '<ul class="nav navbar-nav navbar-right">';
