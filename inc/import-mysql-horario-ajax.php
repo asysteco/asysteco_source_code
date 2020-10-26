@@ -32,72 +32,71 @@ $fileName = $_FILES["file"]["tmp_name"];
 if ($_FILES["file"]["size"] > 0) {
     $file = fopen($fileName, "r");
     $row = 0;
-    
+
     $class->conex->autocommit(FALSE);
 
-try{
-
-    while (($column = fgetcsv($file, 10000, ";")) !== FALSE) {
-        if ($row === 0) {
-            if (preg_match('/^GRUPO$/i', $column[0])
-            && preg_match('/^INICIALES$/i', $column[1])
-            && preg_match('/^AULA$/i', $column[2])
-            && preg_match('/^DIA$/i', $column[3])
-            && preg_match('/^HORA$/i', $column[4])) {
-                $row ++;
-                continue;
-            } else {
-                echo "error-cabecera";
-                exit;
+    try {
+        while (($column = fgetcsv($file, 10000, ";")) !== FALSE) {
+            if ($row === 0) {
+                if (
+                    preg_match('/^GRUPO$/i', $column[0])
+                    && preg_match('/^INICIALES$/i', $column[1])
+                    && preg_match('/^AULA$/i', $column[2])
+                    && preg_match('/^DIA$/i', $column[3])
+                    && preg_match('/^HORA$/i', $column[4])
+                ) {
+                    $row++;
+                    continue;
+                } else {
+                    echo "error-cabecera";
+                    exit;
+                }
             }
-        }
 
-        $importHorario = new ImportHorario(utf8_encode($column[0]), utf8_encode($column[1]), utf8_encode($column[2]), $column[3], $column[4]);
+            $importHorario = new ImportHorario(utf8_encode($column[0]), utf8_encode($column[1]), utf8_encode($column[2]), $column[3], $column[4]);
 
-        $grupo =$importHorario->grupo();
-        $iniciales = $importHorario->iniciales();
-        $aula = $importHorario->aula();
-        $dia = $importHorario->dia();
-        $hora = $importHorario->hora();
-        $tipo = $_POST['Franja'];
-        $franja = $_POST['Franja'];
-        $horaTipo = $franjasHorarias[$franja][$hora]['Hora'];
-        $edificio = str_split($aula);
-        $edificio = $edificio[2];
+            $grupo = $importHorario->grupo();
+            $iniciales = $importHorario->iniciales();
+            $aula = $importHorario->aula();
+            $dia = $importHorario->dia();
+            $hora = $importHorario->hora();
+            $tipo = $_POST['Franja'];
+            $franja = $_POST['Franja'];
+            $horaTipo = $franjasHorarias[$franja][$hora]['Hora'];
+            $edificio = str_split($aula);
+            $edificio = $edificio[2];
 
-        if ($iniciales != '' && array_key_exists($iniciales, $totalIniciales)) {
-            $idProfesor = $totalIniciales[$iniciales];
-            $profesorExist = true;
-        } else {
-            $profesorExist = false;
-        }
-        
-        if ($importHorario->rowStatus() && $profesorExist) {
-            if ($hoy) {
-                $sql = "INSERT INTO Horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo)
+            if ($iniciales != '' && array_key_exists($iniciales, $totalIniciales)) {
+                $idProfesor = $totalIniciales[$iniciales];
+                $profesorExist = true;
+            } else {
+                $profesorExist = false;
+            }
+
+            if ($importHorario->rowStatus() && $profesorExist) {
+                if ($hoy) {
+                    $sql = "INSERT INTO Horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo)
                 VALUES ('$idProfesor', '$dia', '$horaTipo', '$hora', '$tipo', '$edificio', '$aula', '$grupo')";
-            } else {
-                $sql = "INSERT INTO T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora)
+                } else {
+                    $sql = "INSERT INTO T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora)
                 VALUES ('$idProfesor', '$dia', '$horaTipo', '$hora', '$tipo', '$edificio', '$aula', '$grupo', '$fecha')";
-            }
-            
-            if (!$class->conex->query($sql)) {
-                throw new Exception('Error-importar');
-            }
-            
-        } else {
-            throw new Exception('No-profesor');
-        }
-        $row++;
-    }
-    if ($hoy) {
-        $class->updateHoras();
-        $class->marcajes();
-    }
+                }
 
-} catch ( Exception $e ){
-      echo $e;
-      $class->conex->rollback();
-}
-$class->conex->commit();
+                if (!$class->conex->query($sql)) {
+                    throw new Exception('Error-importar');
+                }
+            } else {
+                throw new Exception('No-profesor');
+            }
+            $row++;
+        }
+        if ($hoy) {
+            $class->updateHoras();
+            $class->marcajes();
+        }
+    } catch (Exception $e) {
+        echo $e;
+        $class->conex->rollback();
+    }
+    $class->conex->commit();
 }

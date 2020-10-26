@@ -78,7 +78,25 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar cambios</button>
             <button type="button" class="btn btn-success import-data">Importar</button>
         </div>
-        <div id="file-content-preview"></div>
+      <div class='modal-body'>
+        <div class='container-fluid'>
+          <div class='row'>
+            <div class='col-xs-12'>
+              <table class="table-striped" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th>Línea</th>
+                    <th>Iniciales</th>
+                    <th>Nombre</th>
+                    <th>Tutor</th>
+                  </tr>
+                </thead>
+                <tbody id="file-content-preview"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar cambios</button>
         <button type="button" class="btn btn-success import-data">Importar</button>

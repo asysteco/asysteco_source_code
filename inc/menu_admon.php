@@ -36,25 +36,51 @@
             <a enlace="index.php?ACTION=admon&OPT=select&select=fichadi&pag=0" class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Fichajes de hoy</a>
             <a enlace="index.php?ACTION=admon&OPT=select&select=fichafe&pag=0" id='filtrofichajes' class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Fichaje Por Fechas</a>
             </br>
-            <h2>Borrado de Datos (Atención esta Acción es IRREVERSIBLE)</h2>
-            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger /*btn-select*/" onclick="pulsar()"><span class="glyphicon glyphicon-user"></span> Borrar Profesores</a>&nbsp; &nbsp;
-            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger /*btn-select*/" onclick="pulsar()"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios</a>&nbsp; &nbsp;
-            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger /*btn-select*/" onclick="pulsar()"><span class="glyphicon glyphicon-envelope"></span> Borrar Mensajes</a>
+            <h2>Borrado de Datos (Atención estas acciones son <b>IRREVERSIBLES</b>)</h2>
+            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger eliminar" elemento="profesores"><span class="glyphicon glyphicon-user"></span> Borrar Profesores</a>&nbsp; &nbsp;
+            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger eliminar" elemento="horarios"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios</a>&nbsp; &nbsp;
+            <!--a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger eliminar" onclick="deshabilitado()"><span class="glyphicon glyphicon-envelope"></span> Borrar Mensajes</a-->
             </br>
         <div class="col-xs-12">
-            <div id="loading" style='text-align: center; position: absolute; width: 100%; height: 100%;'>
-                <img style="text-align: center; background-color: transparent;" src="resources/img/loading.gif" alt="Cargando...">
-                <h2 id="loading-msg"></h2>
-            </div>
             <div id="btn-response"></div>
         </div>
     </div>
 </div>
+<div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center; z-index: -1;">
+    <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
+        <div>
+            <img src="resources/img/loading.gif" alt="Cargando...">
+            <h2 id="loading-msg"></h2>
+        </div>
+    </div>
+</div>
 
+<div id="error-modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" style="color: red;">Error!</h4>
+      </div>
+      <div class="modal-body">
+        <div id="error-content-modal" style="color: red;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script language="JavaScript">
-    function pulsar() 
+    function deshabilitado() 
     {
-        alert("Boton temporalmente desabilitado, disculpen las molestias");
+        alert("Boton temporalmente deshabilitado, disculpen las molestias");
     }
+
+    $('.eliminar').on('click', function() {
+        var elemento = $(this).attr('elemento');
+        confirm("Esta acción eliminará todos y cada uno de los " + elemento + " del sistema. Estos cambios serán irreversibles.\n"+
+        "¿Está seguro de continuar?");
+    });
 </script>
 
