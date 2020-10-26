@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="css/login-style.css">
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#login').focus();
+      });
+    </script>
     <title>Login</title>
 </head>
 <body>
