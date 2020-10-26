@@ -20,7 +20,7 @@ $titulo = [
 // Escribimos los títulos para los campos
 fputcsv($fp, $titulo, $delimitador);
 
-$query = "SELECT Iniciales, Nombre, Tutor FROM Profesores ORDER BY Profesores.Nombre ASC";
+$query = "SELECT Iniciales, Nombre, Tutor FROM Profesores WHERE TIPO <> 1 ORDER BY Profesores.Nombre ASC";
 $result =  $class->query($query);
 
 while ($datos = $result->fetch_assoc())

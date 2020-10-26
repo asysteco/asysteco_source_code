@@ -37,7 +37,7 @@ if ($_FILES["file"]["size"] > 0) {
             }
         }
 
-        $importHorario = new ImportHorario($column[0], $column[1], $column[2], $column[3], $column[4]);
+        $importHorario = new ImportHorario(utf8_encode($column[0]), utf8_encode($column[1]), utf8_encode($column[2]), $column[3], $column[4]);
 
         if (isset($column[1]) && in_array($column[1], $totalIniciales)) {
             $profesorExist = true;

@@ -20,7 +20,7 @@ if ($_FILES["file"]["size"] > 0) {
             }
         }
 
-        $importProfesor = new ImportProfesor($column[0], $column[1], $column[2]);
+        $importProfesor = new ImportProfesor(utf8_encode($column[0]), utf8_encode($column[1]), $column[2]);
 
         if ($importProfesor->rowStatus()) {
             echo '<tr>';
