@@ -37,8 +37,8 @@
             <a enlace="index.php?ACTION=admon&OPT=select&select=fichafe&pag=0" id='filtrofichajes' class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Fichaje Por Fechas</a>
             </br>
             <h2>Borrado de Datos (Atención estas acciones son <b>IRREVERSIBLES</b>)</h2>
-            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger eliminar" elemento="profesores"><span class="glyphicon glyphicon-user"></span> Borrar Profesores</a>&nbsp; &nbsp;
-            <a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger eliminar" elemento="horarios"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios</a>&nbsp; &nbsp;
+            <a enlace="index.php?ACTION=profesores&OPT=delete-all" class="btn btn-danger eliminar" elemento="profesores"><span class="glyphicon glyphicon-user"></span> Borrar Profesores</a>&nbsp; &nbsp;
+            <a enlace="index.php?ACTION=horarios&OPT=delete-all" class="btn btn-danger eliminar" elemento="horarios"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios</a>&nbsp; &nbsp;
             <!--a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger eliminar" onclick="deshabilitado()"><span class="glyphicon glyphicon-envelope"></span> Borrar Mensajes</a-->
             </br>
         <div class="col-xs-12">
@@ -71,16 +71,28 @@
     </div>
   </div>
 </div>
+
+<div id="fine-modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Correcto!</h4>
+      </div>
+      <div class="modal-body">
+        <div id="fine-content-modal" style="color: green;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script language="JavaScript">
     function deshabilitado() 
     {
         alert("Boton temporalmente deshabilitado, disculpen las molestias");
     }
-
-    $('.eliminar').on('click', function() {
-        var elemento = $(this).attr('elemento');
-        confirm("Esta acción eliminará todos y cada uno de los " + elemento + " del sistema. Estos cambios serán irreversibles.\n"+
-        "¿Está seguro de continuar?");
-    });
 </script>
-
+<script src="js/admon_delete"></script>

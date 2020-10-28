@@ -456,7 +456,7 @@ class Asysteco
         if ($response = $this->query($compruebalectivos)) {
             if ($response->num_rows > 0) {
                 if (func_num_args() == 0) {
-                    $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no'";
+                    $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>=CURDATE()";
                     $resp = $this->query($lectivos);
 
                     while ($lectivo = $resp->fetch_assoc()) {
