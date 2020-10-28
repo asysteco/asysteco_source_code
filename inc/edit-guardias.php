@@ -74,6 +74,5 @@ $(document).ready(function(){
                 $('#error-content-modal').html(e);
         }
     });
-    //$('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias'),
 })
 </script>
