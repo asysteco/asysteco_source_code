@@ -197,63 +197,14 @@ else
 }
 
 echo "<script>
-    $(document).ready(function(){
-        $('.modal-backdrop').remove(),
-        $('#loading').fadeOut()
-    })
+    $('#anterior-profesor').click(function(){
+        $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=$anterior[ID]')
+    });
+
+    $('#siguiente-profesor').click(function(){
+        $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=$siguiente[ID]')
+    });
 </script>";
+?>
 
-echo "<script>
-$('#anterior-profesor').click(function(){
-    $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=$anterior[ID]')
-});
-
-$('#siguiente-profesor').click(function(){
-    $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=$siguiente[ID]')
-});
-
-$('#select-edit-guardias').on('change', function(){
-profesor = $(this).val(),
-$('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+profesor)
-});
-
-$('.act').hide();
-$('.act').on('click', function(){
-$('#loading-msg').html('Cargando...'),
-$('#loading').show(),
-$('#guardias-response').html(''),
-enlace = $(this).attr('enlace'),
-$('#guardias-response').load(enlace),
-setTimeout(function(){
-$('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$n[ID])
-},200)
-});
-
-$('.remove-guardia').on('click', function(){
-$('#loading-msg').html('Cargando...'),
-$('#loading').show(),
-$('#guardias-response').html(''),
-enlace = $(this).attr('enlace'),
-$('#guardias-response').load(enlace),
-setTimeout(function(){
-$('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor='+$n[ID])
-},200)
-});
-
-$('.edificio').on('change', function() {
-edificio = $(this).val(),
-id = $(this).attr('id').split('-'),
-plus = 'plus-'+id[1]+'-'+id[2];
-if(edificio == '')
-{
-    $('#'+plus).hide();
-    return
-}
-else
-{
-    enlace = $('#'+plus).attr('enlace'),
-    $('#'+plus).attr('enlace', enlace+'&e='+edificio),
-    $('#'+plus).show()
-}
-});
-</script>";
+<script src="js/update_guardias.js"></script>
