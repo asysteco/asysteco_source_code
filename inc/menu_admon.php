@@ -95,4 +95,4 @@
         alert("Boton temporalmente deshabilitado, disculpen las molestias");
     }
 </script>
-<script src="js/admon_delete"></script>
+<script src="js/admon_delete.js"></script>
