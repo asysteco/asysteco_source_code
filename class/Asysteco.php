@@ -186,15 +186,15 @@ class Asysteco
         if ($this->conex) {
             if ($response = $this->query("SELECT Profesores.ID, Nombre, Iniciales, Perfiles.Tipo FROM Profesores INNER JOIN Perfiles ON Profesores.Tipo=Perfiles.ID WHERE Profesores.ID='$id' AND Activo = 1 AND Profesores.Tipo = 1")) {
                 if ($response->num_rows == 1) {
-                        $fila = $response->fetch_assoc();
+                    $fila = $response->fetch_assoc();
 
-                        $_SESSION['logged'] = true;
-                        $_SESSION['LID'] = $Titulo;
-                        $_SESSION['Iniciales'] = $fila['Iniciales'];
-                        $_SESSION['ID'] = $fila['ID'];
-                        $_SESSION['Nombre'] = $fila['Nombre'];
-                        $_SESSION['Perfil'] = $fila['Tipo'];
-                        return true;
+                    $_SESSION['logged'] = true;
+                    $_SESSION['LID'] = $Titulo;
+                    $_SESSION['Iniciales'] = $fila['Iniciales'];
+                    $_SESSION['ID'] = $fila['ID'];
+                    $_SESSION['Nombre'] = $fila['Nombre'];
+                    $_SESSION['Perfil'] = $fila['Tipo'];
+                    return true;
                 } else {
                     $this->ERR_ASYSTECO = "Código QR incorrecto, solo un administrador puede activar el lector.";
                     return false;
@@ -381,7 +381,7 @@ class Asysteco
                 return false;
             }
 
-                $fecha = date('Y-m-d');
+            $fecha = date('Y-m-d');
             $hora = date('H:i:s');
             $dia = $this->getDate();
             $horaSalida = $this->getHoraSalida($id);
@@ -393,17 +393,22 @@ class Asysteco
                 return false;
             }
 
+            if (!$response = $this->query("SELECT Hora FROM Horas WHERE Fin >= $hora LIMIT 1")) {
+                return false;
+            }
+
+            $hf = $response->fetch_assoc();
+            $horaFichaje = $hf['Hora'];
+
             $sql = "SELECT DISTINCT ID, F_Salida FROM Fichar WHERE Fecha='$fecha' AND ID_PROFESOR='$id'";
             if ($response = $this->query($sql)) {
                 if ($response->num_rows == 0) {
                     $fichar = "INSERT INTO Fichar (ID_PROFESOR, F_entrada, F_Salida, DIA_SEMANA, Fecha) 
                                 VALUES ($id, '$hora', '$horaSalida', '$dia[weekday]', '$fecha')";
-
                     $this->query($fichar);
-
-                    $marcajes = "UPDATE Marcajes SET Asiste='1' WHERE Fecha='$fecha' AND ID_PROFESOR='$id'";
-
+                    $marcajes = "UPDATE Marcajes SET Asiste='1' WHERE Fecha='$fecha' AND ID_PROFESOR='$id' AND Hora='$horaFichaje'";
                     $this->query($marcajes);
+
                     return true;
                 } else {
                     if ($activeFicharSalida != 1) {
@@ -411,7 +416,7 @@ class Asysteco
                         return false;
                     } else {
                         $datosRegistro = $response->fetch_assoc();
-                        if($datosRegistro == $horaSalida) {
+                        if ($datosRegistro == $horaSalida) {
                             $ficharSalida = "UPDATE Fichar SET F_Salida='$hora' WHERE ID='$datosRegistro[ID]'";
                             $this->query($ficharSalida);
                             $this->ERR_ASYSTECO = "<span id='okqr' style='color: white; font-weight: bolder; background-color: green;'><h3>Fichaje de salida correcto.</h3></span>";
