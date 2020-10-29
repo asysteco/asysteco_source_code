@@ -149,7 +149,7 @@ class ImportHorario
 
     public function aulaValida($aula)
     {
-        if (isset($aula) && preg_match('/^[a-zA-Z]{2}[1-9][0-9]{2}$/i', $aula)) {
+        if (isset($aula) && preg_match('/^[a-zA-Z]{2}[1-9][0-9A-Z]{1,3}$/i', $aula)) {
             return true;
         }
 
