@@ -24,7 +24,12 @@ class Asysteco
         if (!$this->conex->connect_errno) {
             return $this->conex;
         } else {
-            $this->ERR_ASYSTECO = "Fallo al conectar a MySQL: (" . $this->conex->connect_errno . ") " . $this->conex->connect_error;
+            if($_SESSION['LID'] === 'Testing') {
+                $this->ERR_ASYSTECO = "Fallo al conectar a MySQL: (" . $this->conex->connect_errno . ") " . $this->conex->connect_error;
+            } else {
+                $this->ERR_ASYSTECO = "Error al conectar con el servicio...";
+            }
+
             return false;
         }
     }
@@ -42,7 +47,11 @@ class Asysteco
         if ($response = $this->conex->query($sql)) {
             return $response;
         } else {
-            $this->ERR_ASYSTECO = "ERR_CODE: " . $this->conex->errno . "<br>ERROR: " . $this->conex->error;
+            if($_SESSION['LID'] === 'Testing') {
+                $this->ERR_ASYSTECO = "ERR_CODE: " . $this->conex->errno . "<br>ERROR: " . $this->conex->error;
+            } else {
+                $this->ERR_ASYSTECO = "Error inesperado, contacte con los administradores...";
+            }
             return false;
         }
     }
@@ -68,7 +77,6 @@ class Asysteco
                 return false;
             }
         } else {
-            $ERR_MSG = $this->ERR_ASYSTECO;
             return false;
         }
     }
