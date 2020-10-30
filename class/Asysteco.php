@@ -393,7 +393,7 @@ class Asysteco
                 return false;
             }
 
-            if (!$response = $this->query("SELECT Hora FROM Horas WHERE Fin >= $hora LIMIT 1")) {
+            if (!$response = $this->query("SELECT Hora FROM Horas WHERE Fin >= '$hora' LIMIT 1")) {
                 return false;
             }
 
