@@ -48,7 +48,7 @@ class Asysteco
             return $response;
         } else {
             if($_SESSION['LID'] === 'Testing') {
-                $this->ERR_ASYSTECO = "ERR_CODE: " . $this->conex->errno . "<br>ERROR: " . $this->conex->error;
+                $this->ERR_ASYSTECO = "ERR_CODE: " . $this->conex->errno . "<br>ERROR: " . $this->conex->error . '<br>' . $sql;
             } else {
                 $this->ERR_ASYSTECO = "Error inesperado, contacte con los administradores...";
             }
@@ -428,7 +428,7 @@ class Asysteco
                         return false;
                     } else {
                         $datosRegistro = $response->fetch_assoc();
-                        if ($datosRegistro['F_Salida'] == '00:00:00') {
+                        if ($datosRegistro['F_Salida'] === $horaSalida) {
                             $ficharSalida = "UPDATE Fichar SET F_Salida='$hora' WHERE ID='$datosRegistro[ID]'";
                             $this->query($ficharSalida);
                             $marcajes = "UPDATE Marcajes SET Asiste='0' WHERE Fecha='$fecha' AND ID_PROFESOR='$id' AND Hora>'$horaFichaje'";
