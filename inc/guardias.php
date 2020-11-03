@@ -22,7 +22,6 @@ if($response = $class->getGuardias())
     {
         $tipoKey = $datos[$i][5];
         $horaKey = $datos[$i][4];
-        $horaTipoHorario = $franjasHorarias[$tipoKey][$horaKey]['Hora'];
         $horaInicioHorario = $franjasHorarias[$tipoKey][$horaKey]['Inicio'];
         $horaFinHorario = $franjasHorarias[$tipoKey][$horaKey]['Fin'];
         $horaInicioSplit = preg_split('/:/', $horaInicioHorario);

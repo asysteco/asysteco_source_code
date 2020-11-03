@@ -62,7 +62,6 @@ if ($_FILES["file"]["size"] > 0) {
             $hora = $importHorario->hora();
             $tipo = $_POST['Franja'];
             $franja = $_POST['Franja'];
-            $horaTipo = $franjasHorarias[$franja][$hora]['Hora'];
             $edificio = str_split($aula);
             $edificio = $edificio[2];
 
@@ -75,11 +74,11 @@ if ($_FILES["file"]["size"] > 0) {
 
             if ($importHorario->rowStatus() && $profesorExist) {
                 if ($hoy) {
-                    $sql = "INSERT INTO Horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo)
-                VALUES ('$idProfesor', '$dia', '$horaTipo', '$hora', '$tipo', '$edificio', '$aula', '$grupo')";
+                    $sql = "INSERT INTO Horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo)
+                VALUES ('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$aula', '$grupo')";
                 } else {
-                    $sql = "INSERT INTO T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora)
-                VALUES ('$idProfesor', '$dia', '$horaTipo', '$hora', '$tipo', '$edificio', '$aula', '$grupo', '$fecha')";
+                    $sql = "INSERT INTO T_horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora)
+                VALUES ('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$aula', '$grupo', '$fecha')";
                 }
 
                 if (!$class->conex->query($sql)) {

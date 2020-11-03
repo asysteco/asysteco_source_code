@@ -7,7 +7,7 @@ Diasemana.Diasemana
 FROM
 (Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID)
 INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia
-ORDER BY ID_PROFESOR, Dia, HORA_TIPO";
+ORDER BY ID_PROFESOR, Dia, Hora";
 
 $result = $class->query($sql);
 if (! empty($result)) 
@@ -37,7 +37,7 @@ if (! empty($result))
                 <td>$row[Nombre]</td>
                 <td>$row[Aula]</td>
                 <td>$row[Diasemana]</td>
-                <td>$row[HORA_TIPO]</td>
+                <td>$row[Hora]</td>
             </tr>
         ";
         }

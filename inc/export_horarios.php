@@ -5,13 +5,13 @@ if(isset($_GET['profesor']) && $_GET['profesor'] != '')
     $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana FROM
     (Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID) INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia
     WHERE ID_PROFESOR = '$_GET[profesor]'
-    ORDER BY ID_PROFESOR, Dia, HORA_TIPO";
+    ORDER BY ID_PROFESOR, Dia, Hora";
 }
 else
 {
     $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales
     FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
-    ORDER BY ID_PROFESOR, Dia, HORA_TIPO";
+    ORDER BY ID_PROFESOR, Dia, Hora";
 }
 if($response = $class->query($sql))
 {

@@ -17,7 +17,7 @@ if($response = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE $c
         }
         if($class->query("UPDATE Profesores SET Sustituido=1 WHERE ID='$_GET[ID_PROFESOR]'"))
         {
-            if($class->query("INSERT INTO $class->horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida) SELECT $_GET[ID_SUSTITUTO], Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida FROM $class->horarios WHERE ID_PROFESOR='$_GET[ID_PROFESOR]'"))
+            if($class->query("INSERT INTO $class->horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida) SELECT $_GET[ID_SUSTITUTO], Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida FROM $class->horarios WHERE ID_PROFESOR='$_GET[ID_PROFESOR]'"))
             {
                 $MSG = "$profesor[Nombre] ha sido sustituido/a correctamente por $sustituto[Nombre]";
             }

@@ -7,8 +7,8 @@ if (isset($_GET['act'])) {
     $Tipo = $_GET['Tipo'];
 
     if (!$class->query("INSERT
-          INTO T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora) 
-          VALUES ('$_GET[ID]', '$_GET[Dia]', '1M', '$_GET[Hora]', '$Tipo', '$Edificio', 'Selec.', 'Selec.', '00:00:00', '00:00:00', '$_GET[Fecha]')")) {
+          INTO T_horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora) 
+          VALUES ('$_GET[ID]', '$_GET[Dia]', '$_GET[Hora]', '$Tipo', '$Edificio', 'Selec.', 'Selec.', '00:00:00', '00:00:00', '$_GET[Fecha]')")) {
       $MSG = 'Error-add';
     }
   } elseif ($_GET['act'] == 'del' && isset($_GET['ID'])) {
@@ -26,8 +26,8 @@ if (isset($_GET['act'])) {
       $Edificio = mysqli_real_escape_string($class->conex, utf8_encode($sed[2]));
       preg_match('/^[0-9]$/', $Edificio) ? $Edificio : $Edificio = 0;
     }
-    if (!$class->query("INSERT INTO T_horarios (ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora) 
-          SELECT ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora
+    if (!$class->query("INSERT INTO T_horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora) 
+          SELECT ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida, Fecha_incorpora
           FROM T_horarios
           WHERE ID_PROFESOR='$_GET[ID]' AND Fecha_incorpora='$_GET[Fecha]' AND Dia='$_GET[Dia]' AND Hora='$_GET[Hora]' LIMIT 1")) {
       $MSG = 'Error-remove';

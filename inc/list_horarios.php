@@ -95,7 +95,7 @@ if(isset($_GET['pag']))
             echo "<td>$datos[Aula]</td>";
             echo "<td>$datos[Dia]</td>";
             echo "<td>$datos[Diasemana]</td>";
-            echo "<td>$datos[HORA_TIPO]</td>";
+            echo "<td>$datos[Hora]</td>";
         echo "</tr>";
     }
 

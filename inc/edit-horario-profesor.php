@@ -18,8 +18,8 @@ if($result = $class->query($temp_table))
     if(! $result->num_rows > 0)
     {
         $temp_horario = 
-            "INSERT INTO T_horarios(ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_Entrada, Hora_Salida, Fecha_incorpora)
-                    SELECT ID_PROFESOR, Dia, HORA_TIPO, Hora, Tipo, Edificio, Aula, Grupo, Hora_Entrada, Hora_Salida, '$_GET[fecha]' as Fecha_incorpora
+            "INSERT INTO T_horarios(ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_Entrada, Hora_Salida, Fecha_incorpora)
+                    SELECT ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_Entrada, Hora_Salida, '$_GET[fecha]' as Fecha_incorpora
                     FROM Horarios
                     WHERE ID_PROFESOR = '$_GET[profesor]'";
         if(! $res = $class->query($temp_horario))
