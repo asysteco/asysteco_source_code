@@ -12,7 +12,7 @@
 <pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">INICIALES;NOMBRE;TUTOR</pre>
             <b>INICIALES:</b> Iniciales correspondientes al nombre y apellidos del profesor<br>
             <b>NOMBRE:</b> Nombre completo del profesor<br>
-            <b>TUTOR:</b> Nombre del grupo tutelado, si no existe grupo, escribir NO<br>
+            <b>TUTOR:</b> Nombre del grupo tutelado, si no existe grupo, escribir No<br>
             <h4>Ejemplo de formato correcto:</h4>
 <pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">INICIALES;NOMBRE;TUTOR  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
 AAM;Antonio Alarcón Muñoz;No
@@ -100,40 +100,6 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar cambios</button>
         <button type="button" class="btn btn-success import-data">Importar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="error-modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" style="color: red;">Error!</h4>
-      </div>
-      <div class="modal-body">
-        <div id="error-content-modal" style="color: red;"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="fine-modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Correcto!</h4>
-      </div>
-      <div class="modal-body">
-        <div id="fine-content-modal" style="color: green;"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
       </div>
     </div>
   </div>
