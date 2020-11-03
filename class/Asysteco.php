@@ -407,6 +407,10 @@ class Asysteco
 
             $hf = $response->fetch_assoc();
             $horaFichaje = $hf['Hora'];
+            if ($horaFichaje === null) {
+                $this->ERR_ASYSTECO = "<span id='noqr' style='color: black; font-weight: bolder; background-color: red;'><h3>Está fuera de Horario.</h3></span>";
+                return false;
+            }
 
             $sql = "SELECT DISTINCT ID, F_Salida FROM Fichar WHERE Fecha='$fecha' AND ID_PROFESOR='$id'";
             if ($response = $this->query($sql)) {
@@ -414,7 +418,7 @@ class Asysteco
                     $fichar = "INSERT INTO Fichar (ID_PROFESOR, F_entrada, F_Salida, DIA_SEMANA, Fecha) 
                                 VALUES ($id, '$hora', '$horaSalida', '$dia[weekday]', '$fecha')";
                     $this->query($fichar);
-                    $marcajes = "UPDATE Marcajes SET Asiste='1' WHERE Fecha='$fecha' AND ID_PROFESOR='$id' AND Hora='$horaFichaje'";
+                    $marcajes = "UPDATE Marcajes SET Asiste='1' WHERE Fecha='$fecha' AND ID_PROFESOR='$id' AND Hora>='$horaFichaje'";
                     $this->query($marcajes);
 
                     return true;
@@ -424,9 +428,11 @@ class Asysteco
                         return false;
                     } else {
                         $datosRegistro = $response->fetch_assoc();
-                        if ($datosRegistro == $horaSalida) {
+                        if ($datosRegistro['F_Salida'] == '00:00:00') {
                             $ficharSalida = "UPDATE Fichar SET F_Salida='$hora' WHERE ID='$datosRegistro[ID]'";
                             $this->query($ficharSalida);
+                            $marcajes = "UPDATE Marcajes SET Asiste='0' WHERE Fecha='$fecha' AND ID_PROFESOR='$id' AND Hora>'$horaFichaje'";
+                            $this->query($marcajes);
                             $this->ERR_ASYSTECO = "<span id='okqr' style='color: white; font-weight: bolder; background-color: green;'><h3>Fichaje de salida correcto.</h3></span>";
                             return false;
                         } else {
@@ -760,7 +766,6 @@ class Asysteco
         WHERE Profesores.ID='$id' AND Horarios.Dia='$diaSemana'
         ORDER BY Hora_salida DESC
         LIMIT 1";
-        $response = $this->query($sql);
         if ($horaSalida = $this->query($sql)->fetch_assoc()) {
             return $horaSalida['Hora_salida'];
         } else {
