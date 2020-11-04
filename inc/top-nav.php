@@ -127,6 +127,8 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
                   Editar Guardias
                 </a>';
                 echo '</li>';
+              echo '<li><a href="index.php?ACTION=horarios&OPT=cursos"><span class="glyphicon glyphicon-pencil"></span> Gestionar Cursos</a></li>';
+              echo '<li><a href="index.php?ACTION=horarios&OPT=aulas"><span class="glyphicon glyphicon-pencil"></span> Gestionar Aulas</a></li>';
               echo '<li><a href="index.php?ACTION=horarios&OPT=import-form"><span class="glyphicon glyphicon-open"></span> Importar horarios</a></li>';
             echo '</ul>';
           echo '</li>';
