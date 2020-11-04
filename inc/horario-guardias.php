@@ -198,11 +198,11 @@ else
 
 echo "<script>
     $('#anterior-profesor').click(function(){
-        $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=$anterior[ID]')
+        loadGuardias($anterior[ID]);
     });
 
     $('#siguiente-profesor').click(function(){
-        $('#guardias-response').load('index.php?ACTION=horarios&OPT=guardias&profesor=$siguiente[ID]')
+        loadGuardias($siguiente[ID]);
     });
 </script>";
 ?>
