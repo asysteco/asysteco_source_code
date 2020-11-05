@@ -4,15 +4,15 @@ require_once($dirs['class'] . 'Aulas.php');
 
 $classAulas = new Aulas;
 
-$action = $_GET['action'];
-$aula = $_GET['aula'];
-$data = $_GET['data'];
+$action = $_POST['action'];
+$aula = $_POST['aula'];
+$data = $_POST['data'];
 $MSG = 'Ok-action';
 
 if ($action === 'add') {
     if ($response = $class->query("SELECT Nombre FROM Aulas WHERE Nombre = '$aula'")) {
         if ($response->num_rows == 0) {
-            if ($classCurso->cursoValido($aula)) {
+            if ($classAulas->aulaValida($aula)) {
                 if (!$class->query("INSERT INTO Aulas (Nombre) VALUES ('$aula')")) {
                     $MSG = 'Error-add';
                 }
@@ -28,7 +28,7 @@ if ($action === 'add') {
 } elseif ($action === 'update') {
     if ($response = $class->query("SELECT Nombre FROM Aulas WHERE Nombre = '$aula'")) {
         if ($response->num_rows == 0) {
-            if ($classCurso->cursoValido($aula)) {
+            if ($classAulas->aulaValida($aula)) {
                 if (!$class->query("UPDATE Aulas SET Nombre = '$aula' WHERE ID = '$data'")) {
                     $MSG = 'Error-update';
                 }
