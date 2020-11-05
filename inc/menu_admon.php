@@ -27,6 +27,7 @@
             <a enlace="index.php?ACTION=admon&OPT=select&export=faltas" id="exportfaltas" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Faltas</a>
             <a enlace="index.php?ACTION=admon&OPT=select&export=horarios" id="exporthorarios" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Horarios</a>
             <a enlace="index.php?ACTION=admon&OPT=select&export=profesores" id="exportprofesores" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Profesores</a>
+            <a enlace="index.php?ACTION=admon&OPT=select&export=fichajes" id="exportfichajes" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Fichajes</a>
             </br>
             <h2>Mostrar en Pantalla</h2>
             <!--a enlace="index.php?ACTION=admon&OPT=select&select=marcajes&pag=0" id='filtromarcaje' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Marcajes</a-->
