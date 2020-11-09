@@ -1,7 +1,10 @@
 <?php
-if(isset($_GET['act']) && $_GET['act'] != '')
+
+$action = $_GET['act'];
+
+if(isset($action) && $action != '')
 {
-    if($_GET['act'] == 'Asiste')
+    if($action == 'Asiste')
     {
         if($class->query("UPDATE Marcajes SET Asiste=$_GET[Valor] WHERE ID_PROFESOR='$_GET[Profesor]' AND Fecha='$_GET[Fecha]' AND Hora='$_GET[Hora]'"))
         {
@@ -10,14 +13,17 @@ if(isset($_GET['act']) && $_GET['act'] != '')
             if($_GET['Valor'] == 1)
             {
                 $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Horas: {$franjasHorarias[$franja][$_GET[Hora]]['Inicio']} - {$franjasHorarias[$franja][$_GET[Hora]]['Fin']} como Asistido.";
+                $MSG= 'Ok-asiste';
             }
             elseif($_GET['Valor'] == 0)
             {
                 $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Horas: {$franjasHorarias[$franja][$_GET[Hora]]['Inicio']} - {$franjasHorarias[$franja][$_GET[Hora]]['Fin']} como Falta.";
+                $MSG= 'Ok-falta';
             }
             elseif($_GET['Valor'] == 2)
             {
                 $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Horas: {$franjasHorarias[$franja][$_GET[Hora]]['Inicio']} - {$franjasHorarias[$franja][$_GET[Hora]]['Fin']} como Actividad Extraescolar.";
+                $MSG= 'Ok-extraescolar';
             }
             else
             {
@@ -27,17 +33,14 @@ if(isset($_GET['act']) && $_GET['act'] != '')
             if(! $class->notificar($_GET['Profesor'], $msg))
             {
                 echo $class->ERR_ASYSTECO;
-                return false;
             }
-            return true;
         }
         else
         {
-            echo $class->ERR_ASYSTECO;
-            return false;
+            $MSG = 'Error-action';
         }
     }
-    elseif($_GET['act'] == 'Justificada')
+    elseif($action == 'Justificada')
     {
         $response = $class->query("SELECT DISTINCT Tipo FROM Horarios WHERE ID_PROFESOR='$_GET[Profesor]'")->fetch_assoc();
         $franja = $response['Tipo'];
@@ -46,10 +49,12 @@ if(isset($_GET['act']) && $_GET['act'] != '')
             if($_GET['Valor'] == 1)
             {
                 $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Hora: {$franjasHorarias[$franja][$_GET[Hora]]['Inicio']} - {$franjasHorarias[$franja][$_GET[Hora]]['Fin']} como Falta Justificada.";
+                $MSG= 'Ok-justificada';
             }
             elseif($_GET['Valor'] == 0)
             {
                 $msg = "$_SESSION[Nombre] ha modificado el registro del Día: $_GET[Fecha] Hora: {$franjasHorarias[$franja][$_GET[Hora]]['Inicio']} - {$franjasHorarias[$franja][$_GET[Hora]]['Fin']} retirando la justificación.";
+                $MSG= 'Ok-injustificado';
             }
             else
             {
@@ -59,22 +64,26 @@ if(isset($_GET['act']) && $_GET['act'] != '')
             if(! $class->notificar($_GET['Profesor'], $msg))
             {
                 echo $class->ERR_ASYSTECO;
-                return false;
             }
-            return true;
         }
         else
         {
-            echo $class->ERR_ASYSTECO;
-            return false;
+            $MSG = 'Error-action';
         }
+    } elseif($action == 'getrow'){
+        $response = $class->query("SELECT Marcajes.*, Diasemana 
+        FROM Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
+        WHERE ID_PROFESOR='$_GET[Profesor]' AND Fecha='$_GET[Fecha]' AND Hora='$_GET[Hora]'");
     }
     else
     {
-        echo $ERR_MSG = "Acción no válida."; 
+        $MSG = 'Error-Invalid-action'; 
     }
 }
 else
 {
-    echo $ERR_MSG = "No se ha establecido acción."; 
+    
+    $MSG = 'Error-parameter';; 
 }
+
+echo $MSG;
