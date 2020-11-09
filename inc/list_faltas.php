@@ -62,15 +62,7 @@ else
 
 if(isset($_GET['fechainicio']) && isset($_GET['fechafin']) && $_GET['fechainicio'] !='' && $_GET['fechafin'] !='')
 {
-    if(isset($_GET['profesor']) && $_GET['profesor'] != '')
-    {
-        $and= "AND";
-    }
-    else
-    {
-        $and = "";
-    }
-    $fechas="Fecha BETWEEN '$fini' AND '$ffin'";
+    $fechas=" AND Fecha BETWEEN '$fini' AND '$ffin'";
 }
 else
 {
@@ -101,13 +93,13 @@ if(isset($_GET['pag']))
         echo "</select>";
         echo "</h3>";
     echo "</div>";
-    if(isset($profesor) || isset($fechas))
+    if((isset($profesor) && $profesor !='') || (isset($fechas) && $fechas !=''))
     {
         $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
         FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
             INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-        WHERE Asiste=0 $profesor $and $fechas
-        ORDER BY Profesores.Nombre ASC
+        WHERE Asiste=0 $profesor $fechas AND Marcajes.Fecha<=NOW()
+        ORDER BY Marcajes.Fecha, Profesores.Nombre ASC
         LIMIT $page_size OFFSET $offset_var";
     }
     else
@@ -115,8 +107,8 @@ if(isset($_GET['pag']))
         $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
         FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
             INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-        WHERE Asiste=0
-        ORDER BY Profesores.Nombre ASC
+        WHERE Asiste=0 AND Marcajes.Fecha<=NOW()
+        ORDER BY Marcajes.Fecha, Profesores.Nombre ASC
         LIMIT $page_size OFFSET $offset_var";
     }
     # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;

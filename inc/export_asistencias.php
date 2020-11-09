@@ -78,15 +78,7 @@ else
 
 if(isset($_GET['fechainicio']) && isset($_GET['fechafin']) && $_GET['fechainicio'] !='' && $_GET['fechafin'] !='')
 {
-    if(isset($_GET['profesor']) && $_GET['profesor'] != '')
-    {
-        $and= "AND";
-    }
-    else
-    {
-        $and = "";
-    }
-    $fechas="Fecha BETWEEN '$fini' AND '$ffin'";
+    $fechas=" AND Fecha BETWEEN '$fini' AND '$ffin'";
 }
 else
 {
@@ -104,13 +96,13 @@ if($respuesta = $class->query("SELECT * FROM Marcajes WHERE Asiste=1 OR Asiste=2
         for($i=0; $i<=$count; $i++)
         {
             $offset_var = $i * $page_size;
-            if(isset($profesor) || isset($fechas))
+            if((isset($profesor) && $profesor !='') || (isset($fechas) && $fechas !=''))
             {
                 $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana  
                 FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID) 
                 INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
-                WHERE (Asiste=1 OR Asiste=2) $profesor $and $fechas 
-                ORDER BY Profesores.Nombre ASC 
+                WHERE (Asiste=1 OR Asiste=2) $profesor $fechas 
+                ORDER BY Marcajes.Fecha, Profesores.Nombre ASC 
                 LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
             }
             else
@@ -119,11 +111,11 @@ if($respuesta = $class->query("SELECT * FROM Marcajes WHERE Asiste=1 OR Asiste=2
                 FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID) 
                 INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
                 WHERE Asiste=1 OR Asiste=2 
-                ORDER BY Profesores.Nombre ASC 
+                ORDER BY Marcajes.Fecha, Profesores.Nombre ASC 
                 LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
             }
             $result =  $class->query($query);
-        
+            
             while ($datos = $result->fetch_assoc())
             {
                 $sep = preg_split('/[ -]/', $datos['Fecha']);
