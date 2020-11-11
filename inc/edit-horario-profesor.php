@@ -81,7 +81,16 @@ if($response = $class->query($sql))
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
                     $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
-                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo, ID, Tipo, Edificio FROM T_horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' AND Dia='$dialoop' AND Fecha_incorpora='$_GET[fecha]' ORDER BY Hora "))
+                    if($response = $class->query(
+                        "SELECT Hora, Dia, Aulas.Nombre as Aula, Cursos.Nombre as Curso, T_horarios.ID, Tipo, Edificio
+                        FROM (T_horarios 
+                            INNER JOIN Cursos ON T_horarios.grupo = Cursos.ID)
+                            INNER JOIN Aulas ON T_horarios.Aula = Aulas.ID
+                        WHERE ID_PROFESOR='$_GET[profesor]'
+                            AND Hora='$Hora'
+                            AND Dia='$dialoop'
+                            AND Fecha_incorpora='$_GET[fecha]'
+                        ORDER BY Hora "))
                     {
                         if($response->num_rows > 0)
                         {
@@ -110,12 +119,12 @@ if($response = $class->query($sql))
                                 
                                 echo "<b>Aula: </b>";
                                 echo "<span id='sp_" . $fila[0][4] . "_Aula' class='txt'>" . $fila[0][2] . "</span>";
-                                if($res_aula = $class->query("SELECT DISTINCT $class->horarios.Aula FROM $class->horarios WHERE $class->horarios.Aula <> '' ORDER BY $class->horarios.Aula"))
+                                if($res_aula = $class->query("SELECT DISTINCT ID, Nombre FROM Aulas WHERE Nombre <> '' ORDER BY Nombre"))
                                 {
                                     echo "<select id='in_" . $fila[0][4] . "_Aula' class='entrada' name='Aula'>";
                                         while($fila_aula = $res_aula->fetch_assoc())
                                         {
-                                            echo "<option value='$fila_aula[Aula]'>$fila_aula[Aula]</option>";
+                                            echo "<option value='$fila_aula[ID]'>$fila_aula[Nombre]</option>";
                                         }
                                     echo "</select>";
                                 }
@@ -130,12 +139,12 @@ if($response = $class->query($sql))
                                     //echo $espacio . $fila[$i][3];
 
                                     echo  $espacio . "<span id='sp2_" . $fila[$i][4] . "_Grupo' class='txt'>" . $fila[$i][3] . "</span> ";
-                                    if($res_grupo = $class->query("SELECT DISTINCT $class->horarios.Grupo FROM $class->horarios WHERE $class->horarios.Grupo <> '' ORDER BY $class->horarios.Grupo"))
+                                    if($res_grupo = $class->query("SELECT DISTINCT ID, Nombre FROM Cursos WHERE Nombre <> '' ORDER BY Nombre"))
                                     {
                                         echo "<select id='in2_" . $fila[$i][4] . "_Grupo' class='entrada' name='Grupo'>";
                                             while($fila_grupo = $res_grupo->fetch_assoc())
                                             {
-                                                echo "<option value='$fila_grupo[Grupo]'>$fila_grupo[Grupo]</option>";
+                                                echo "<option value='$fila_grupo[ID]'>$fila_grupo[Nombre]</option>";
                                             }
                                         echo "</select>";
                                     }
@@ -202,7 +211,7 @@ else
     </div>
 </div>
 
-<div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center; z-index: -1;">
+<div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
     <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
         <div>
             <img src="resources/img/loading.gif" alt="Cargando...">

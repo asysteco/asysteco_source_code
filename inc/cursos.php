@@ -19,7 +19,7 @@
                         while($row = $response->fetch_assoc()){
                             echo "<tr id='fila_$row[ID]' style='text-align: center;'>";
                                 echo "<td>";
-                                    echo "<input id='input_$row[ID]' type='text' class='hide-it'>";
+                                    echo "<input id='input_$row[ID]' type='text' class='form-control hide-it' style='width: 30%; display: inline-block;'>";
                                     echo "<span id='txt_$row[ID]' class='show-it'>$row[Nombre]</span> ";
                                     echo "<a id='btn_$row[ID]' data='$row[ID]' class='btn btn-success hide-it update'>Aplicar</a>";
                                 echo "</td>";
@@ -44,7 +44,7 @@
     </div>
 </div>
 
-<div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center; z-index: -1;">
+<div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
     <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
         <div>
             <img src="resources/img/loading.gif" alt="Cargando...">

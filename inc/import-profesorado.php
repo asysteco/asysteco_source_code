@@ -57,7 +57,7 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
         //echo "<a id='btn-todos-registros-prof' class='btn btn-info'>Ver todos los registros</a>";
 ?>
         <div id="todos-registros"></div>
-        <div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center; z-index: -1;">
+        <div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
             <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
                 <div>
                     <img src="resources/img/loading.gif" alt="Cargando...">

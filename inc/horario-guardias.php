@@ -108,7 +108,15 @@ if($response = $class->query($sql))
                                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                                 {
                                     $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
-                                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo, Edificio FROM Horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' AND Dia='$dialoop' ORDER BY Hora "))
+                                    if($response = $class->query(
+                                        "SELECT Hora, Dia, Aulas.Nombre as Aula, Cursos.Nombre as Curso, Edificio
+                                        FROM (Horarios 
+                                            INNER JOIN Cursos ON Horarios.grupo = Cursos.ID)
+                                            INNER JOIN Aulas ON Horarios.Aula = Aulas.ID
+                                        WHERE ID_PROFESOR='$_GET[profesor]'
+                                            AND Hora='$Hora'
+                                            AND Dia='$dialoop'
+                                        ORDER BY Hora "))
                                     {
                                         if($response->num_rows > 0)
                                         {

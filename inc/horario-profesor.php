@@ -17,9 +17,8 @@ if($response = $class->query($sql))
         $datosprof = $response->fetch_assoc();
         $franja = $datosprof['Tipo'];
         echo "<h2>Horario: $n[Nombre]</h2>";
-        echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=edit-horario-profesor&profesor=$n[ID]' class='btn btn-success'>Editar horario</a>";
-        echo "<input id='fecha-edit' style='width: 25%; display: inline-block; margin-left: 25px;' type='text' class='form-control' placeholder='Seleccione una fecha...'>";
-        echo "<a id='eliminar-horario' style='margin-left: 50%;' href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
+        echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success pull-left'>Editar horario</a>";
+        echo "<a id='eliminar-horario' href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger pull-right' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
         echo "<div id='response'></div>";
         echo "</br>";
         echo "<table class='table'>";
@@ -43,7 +42,13 @@ if($response = $class->query($sql))
             $horaFinSplit = preg_split('/:/', $datos['Fin']);
             $horaFinSinSegundos = $horaFinSplit[0] . ":" . $horaFinSplit[1];
             
-            if (! $class->query("SELECT * FROM Horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' ORDER BY Hora ")->num_rows > 0) {
+            if (! $class->query("SELECT Horarios.*, Cursos.Nombre as Curso, Aulas.Nombre as Aula
+                                FROM (Horarios 
+                                    INNER JOIN Cursos ON Horarios.grupo = Cursos.ID)
+                                    INNER JOIN Aulas ON Horarios.Aula = Aulas.ID
+                                WHERE ID_PROFESOR='$_GET[profesor]'
+                                AND Hora='$Hora'
+                                ORDER BY Hora ")->num_rows > 0) {
                 continue;
             }
             echo "<tr id='Hora_$Hora'>";
@@ -51,7 +56,14 @@ if($response = $class->query($sql))
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
                     $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
-                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo, Edificio FROM Horarios WHERE ID_PROFESOR='$_GET[profesor]' AND Hora='$Hora' AND Dia='$dialoop' ORDER BY Hora "))
+                    if($response = $class->query("SELECT Hora, Dia, Aulas.Nombre as Aula, Cursos.Nombre as Curso, Edificio
+                    FROM (Horarios 
+                        INNER JOIN Cursos ON Horarios.grupo = Cursos.ID)
+                        INNER JOIN Aulas ON Horarios.Aula = Aulas.ID
+                    WHERE ID_PROFESOR='$_GET[profesor]'
+                        AND Hora='$Hora'
+                        AND Dia='$dialoop'
+                    ORDER BY Hora "))
                     {
                         if($response->num_rows > 0)
                         {
@@ -89,7 +101,7 @@ if($response = $class->query($sql))
         echo "</tbody>";
         echo "</table>";
         include_once('js/update_horario.js');
-        include_once('js/temp_horario.js');
+        // include_once('js/temp_horario.js');
     }
     elseif($response->num_row > 1)
     {
