@@ -16,6 +16,8 @@ if (!empty($action)) {
             $sql = "INSERT INTO Horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo)
                     VALUES ('$profesor', '$dia', '$hora', 'Mañana', '1', '$aula', '$curso')";
             $query = $class->conex->query($sql);
+            $class->marcajes($profesor, 'remove');
+            $class->marcajes($profesor, 'add');
             $MSG = $query ? 'Ok-add': 'Error-add';
         } else {
             $MSG = 'Error-empty';
@@ -84,6 +86,8 @@ if (!empty($action)) {
     } elseif ($action === 'remove') {
         $sql = "DELETE FROM Horarios WHERE ID = '$rowId' AND ID_PROFESOR = '$profesor'";
         $MSG = $class->conex->query($sql) ? 'Ok-remove': 'Error-remove';
+        $class->marcajes($profesor, 'remove');
+        $class->marcajes($profesor, 'add');
     } elseif ($action === 'get') {
         $sql = "";
         $MSG = $class->conex->query($sql) ? 'Ok-get': 'Error-get';
