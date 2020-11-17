@@ -61,7 +61,6 @@ if (!empty($action)) {
                         throw new Exception('Error-update');
                     }
                 }
-                var_dump($aulasSql, $datos);
 
                 if ($countCursos) {
                     $cursosSql = sprintf("UPDATE Horarios
