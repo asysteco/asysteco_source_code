@@ -12,10 +12,23 @@ if (isset($_POST['fecha'])) {
     }
 }
 
+$totalHorarios = [];
+$response = $class->conex->query("SELECT DISTINCT  ID_PROFESOR, Dia, Hora, Aula, Grupo FROM Horarios");
+if ($response->num_rows > 0) {
+    $registroHorarios = $response->fetch_all();
+    foreach ($registroHorarios as $key => $value) {
+        if (isset($value[0]) && isset($value[1])) {
+            $ID = $value[0];
+            $diaHoraAulaGrupo = $value[1] . '_' . $value[2] . '_' . $value[3] . '_' . $value[4];
+            $totalHorarios[$ID][$diaHoraAulaGrupo] = true;
+        }
+    }
+}
+
+$totalIniciales = [];
 $response = $class->conex->query("SELECT DISTINCT  ID, Iniciales FROM Profesores WHERE TIPO <> 1");
 if ($response->num_rows > 0) {
     $inicialesBD = $response->fetch_all();
-    $totalIniciales = [];
     foreach ($inicialesBD as $key => $value) {
         if (isset($value[0]) && isset($value[1])) {
             $inicial = strtoupper($value[1]);
@@ -23,8 +36,6 @@ if ($response->num_rows > 0) {
             $totalIniciales[$inicial] = $id;
         }
     }
-} else {
-    exit;
 }
 
 $totalCursos = [];
@@ -58,6 +69,8 @@ $fileName = $_FILES["file"]["tmp_name"];
 if ($_FILES["file"]["size"] > 0) {
     $file = fopen($fileName, "r");
     $row = 0;
+    $sqlHoy = '';
+    $sqlFecha = '';
 
     $class->conex->autocommit(FALSE);
 
@@ -93,74 +106,67 @@ if ($_FILES["file"]["size"] > 0) {
 
             if ($iniciales != '' && array_key_exists($iniciales, $totalIniciales)) {
                 $idProfesor = $totalIniciales[$iniciales];
-                $profesorExist = true;
             } else {
-                $profesorExist = false;
+                throw new Exception('No-profesor');
             }
 
             if ($grupo != '' && array_key_exists($grupo, $totalCursos)) {
                 $idCurso = $totalCursos[$grupo];
-                $grupoExist = true;
             } else {
-                $sql = "INSERT INTO Cursos (Nombre) VALUES ('$grupo')";
-                $idCurso = $class->conex->query($sql) ? $class->conex->insert_id: $grupoExist = false;
+                $sqlCursos = "INSERT INTO Cursos (Nombre) VALUES ('$grupo')";
+                $idCurso = $class->conex->query($sqlCursos) ? $class->conex->insert_id: false;
 
-                $totalCursos = [];
-                $rCurso = $class->conex->query("SELECT ID, Nombre FROM Cursos");
-                if ($rCurso->num_rows > 0) {
-                    $nombresCursos = $rCurso->fetch_all();
-                    foreach ($nombresCursos as $key => $value) {
-                        if (isset($value[0]) && isset($value[1])) {
-                            $nombre = strtoupper($value[1]);
-                            $id = $value[0];
-                            $totalCursos[$nombre] = $id;
-                        }
-                    }
-                }
+                $totalCursos[$grupo] = $idCurso;
             }
 
             if ($aula != '' && array_key_exists($aula, $totalAulas)) {
                 $idAula = $totalAulas[$aula];
-                $aulaExist = true;
             } else {
-                $sql = "INSERT INTO Aulas (Nombre) VALUES ('$aula')";
-                $idAula = $class->conex->query($sql) ? $class->conex->insert_id: $aulaExist = false;
+                $sqlAulas = "INSERT INTO Aulas (Nombre) VALUES ('$aula')";
+                $idAula = $class->conex->query($sqlAulas) ? $class->conex->insert_id: false;
                 
-                $totalAulas = [];
-                $rAula = $class->conex->query("SELECT ID, Nombre FROM Aulas");
-                if ($rAula->num_rows > 0) {
-                    $nombresAulas = $rAula->fetch_all();
-                    foreach ($nombresAulas as $key => $value) {
-                        if (isset($value[0]) && isset($value[1])) {
-                            $nombre = strtoupper($value[1]);
-                            $id = $value[0];
-                            $totalAulas[$nombre] = $id;
-                        }
-                    }
-                }
+                $totalAulas[$aula] = $idAula;
             }
 
-            if ($importHorario->rowStatus() && $profesorExist && $grupoExist && $aulaExist) {
-
+            $horarioNotExist = false;
+            if ($idProfesor != '' && $idCurso && $idCurso != '' && $idAula && $idAula != '' && $dia != '' && $hora != '') {
                 if ($hoy) {
-                    $sql = "INSERT INTO Horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo)
-                VALUES ('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso')";
+                    $diaHoraKey = $dia . '_' . $hora . '_' . $idAula . '_' . $idCurso;
+                    if (isset($totalHorarios[$idProfesor][$diaHoraKey]) && $totalHorarios[$idProfesor][$diaHoraKey] === true) {
+                        continue;
+                    } else {
+                        $sqlHoy .= $row === 1 ? "('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso')":
+                                            ",('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso')";
+                        $totalHorarios[$idProfesor][$diaHoraKey] = true;
+                    }
                 } else {
-                    $sql = "INSERT INTO T_horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora)
-                VALUES ('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso', '$fecha')";
+                    $sqlFecha .= $row === 1 ? "('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso', '$fecha')":
+                                        ",('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso', '$fecha')";
                 }
 
-                if (!$class->conex->query($sql)) {
-                    throw new Exception('Error-importar');
-                }
+                $horarioNotExist = true;
             } else {
-                throw new Exception('No-profesor');
+                throw new Exception('Error-unexpected');
             }
             $row++;
         }
-        if ($hoy) {
-            $class->updateHoras();
-            $class->marcajes();
+
+        if (!empty($sqlHoy) || !empty($sqlFecha)) {
+            if ($hoy) {
+                $sqlInsert = sprintf("INSERT INTO Horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo) VALUES %s", $sqlHoy);
+            } else {
+                $sqlInsert = sprintf("INSERT INTO T_horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora) VALUES %s", $sqlFecha);
+            }
+            if (!$class->conex->query($sqlInsert)) {
+                echo $class->conex->error;
+                throw new Exception('Error-importar');
+            }
+            if ($hoy) {
+                $class->updateHoras();
+                $class->marcajes();
+            }
+        } else {
+            echo "empty-import";
         }
     } catch (Exception $e) {
         echo $e;
@@ -168,3 +174,4 @@ if ($_FILES["file"]["size"] > 0) {
     }
     $class->conex->commit();
 }
+exit;

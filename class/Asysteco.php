@@ -482,15 +482,17 @@ class Asysteco
         if ($response = $this->conex->query($compruebalectivos)) {
             if ($response->num_rows > 0) {
                 if (func_num_args() == 0) {
-                    $lectivos = "SELECT Lectivos.Fecha FROM Lectivos WHERE Lectivos.Festivo='no' AND Lectivos.Fecha >= CURDATE()";
-                    $resp = $this->conex->query($lectivos);
+                    $ejec = "DELETE FROM Marcajes WHERE Fecha >= CURDATE()";
+                    $this->conex->query($ejec);
 
-                    while ($lectivo = $resp->fetch_assoc()) {
-                        $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
-                        FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-                        WHERE Dia = WEEKDAY('$lectivo[Fecha]')+1";
-                        $this->conex->query($ejec);
-                    }
+                    $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, Fecha, Hora, Tipo, Dia, 0
+                    FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID,
+                        Lectivos
+                    WHERE Festivo = 'no'
+                        AND Dia = WEEKDAY(Fecha)+1
+                        AND Fecha >= CURDATE()";
+                        
+                    $this->conex->query($ejec);
                 } elseif (func_num_args() == 2) {
                     $args = func_get_args();
                     $profesor = $args[0];
