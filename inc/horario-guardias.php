@@ -33,15 +33,15 @@ if($response = $class->query($sql))
                 // Obtenemos los siguientes registros de profesores:
                 // Primer, Ultimo, Siguiente y Anterior
             
-                if(! $maxmin = $class->query("SELECT MAX(Profesores.ID) AS Ultimo, MIN(Profesores.ID) AS Primero FROM Profesores WHERE Activo=1 AND TIPO=2 AND Sustituido=0 AND EXISTS (SELECT * FROM Horarios WHERE ID_PROFESOR=Profesores.ID) ORDER BY ID ASC")->fetch_assoc())
+                if(! $maxmin = $class->query("SELECT MAX(Profesores.ID) AS Ultimo, MIN(Profesores.ID) AS Primero FROM Profesores WHERE Activo=1 AND TIPO=2 AND Sustituido=0 AND EXISTS (SELECT * FROM Horarios WHERE ID_PROFESOR=Profesores.ID) ORDER BY ID ASC")->fetch_assoc() ?? ['Ultimo' => '', 'Primero' => ''])
                 {
                     $ERR_MSG = $class->ERR_ASYSTECO;
                 }
-                if(! $siguiente = $class->query("SELECT ID FROM Profesores WHERE ID > '$n[ID]' AND Activo=1 AND TIPO=2 AND Sustituido=0 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC LIMIT 1")->fetch_assoc())
+                if(! $siguiente = $class->query("SELECT ID FROM Profesores WHERE ID > '$n[ID]' AND Activo=1 AND TIPO=2 AND Sustituido=0 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID ASC LIMIT 1")->fetch_assoc() ?? ['ID' => ''])
                 {
                     $ERR_MSG = $class->ERR_ASYSTECO;
                 }
-                if(! $anterior = $class->query("SELECT ID FROM Profesores WHERE ID < '$n[ID]' AND Activo=1 AND TIPO=2 AND Sustituido=0 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID DESC LIMIT 1")->fetch_assoc())
+                if(! $anterior = $class->query("SELECT ID FROM Profesores WHERE ID < '$n[ID]' AND Activo=1 AND TIPO=2 AND Sustituido=0 AND EXISTS (SELECT * FROM $class->horarios WHERE ID_PROFESOR=$class->profesores.ID) ORDER BY ID DESC LIMIT 1")->fetch_assoc() ?? ['ID' => ''])
                 {
                     $ERR_MSG = $class->ERR_ASYSTECO;
                 }

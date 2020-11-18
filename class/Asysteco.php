@@ -476,13 +476,13 @@ class Asysteco
 
     function marcajes()
     {
-        $compruebalectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos";
+        $compruebalectivos = "SELECT Lectivos.Fecha FROM Lectivos";
         $fechaactual = date('Y-m-d');
 
         if ($response = $this->conex->query($compruebalectivos)) {
             if ($response->num_rows > 0) {
                 if (func_num_args() == 0) {
-                    $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>=CURDATE()";
+                    $lectivos = "SELECT Lectivos.Fecha FROM Lectivos WHERE Lectivos.Festivo='no' AND Lectivos.Fecha >= CURDATE()";
                     $resp = $this->conex->query($lectivos);
 
                     while ($lectivo = $resp->fetch_assoc()) {
@@ -497,7 +497,7 @@ class Asysteco
                     $subopt = $args[1];
 
                     if ($subopt == 'add') {
-                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>='$fechaactual' ORDER BY Fecha";
+                        $lectivos = "SELECT Lectivos.Fecha FROM Lectivos WHERE Lectivos.Festivo='no' AND Lectivos.Fecha >= CURDATE() ORDER BY Fecha";
                         $resp = $this->conex->query($lectivos);
 						
                         while ($lectivo = $resp->fetch_assoc()) {
@@ -513,11 +513,7 @@ class Asysteco
                             $this->conex->query($ejec);
                         }
                     } elseif ($subopt == 'remove') {
-                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha>='$fechaactual' ORDER BY Fecha";
-                        $resp = $this->conex->query($lectivos);
-                        $lectivo = $resp->fetch_assoc();
-
-                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Fecha>=CURDATE()";
+                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR = '$profesor' AND Fecha >= CURDATE()";
                         $this->conex->query($ejec);
                     } else {
                         $this->ERR_ASYSTECO = "No se puede realizar esta acción.";
@@ -531,7 +527,7 @@ class Asysteco
                     $subopt = $args[3];
 
                     if ($subopt == 'add') {
-                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha >= '$fechaactual' ORDER BY Fecha";
+                        $lectivos = "SELECT Lectivos.Fecha FROM Lectivos WHERE Lectivos.Festivo = 'no' AND Lectivos.Fecha >= CURDATE() ORDER BY Fecha";
                         $resp = $this->conex->query($lectivos);
 
                         while ($lectivo = $resp->fetch_assoc()) {
@@ -547,12 +543,7 @@ class Asysteco
                             $this->conex->query($ejec);
                         }
                     } elseif ($subopt == 'remove') {
-
-                        $lectivos = "SELECT $this->lectivos.Fecha FROM $this->lectivos WHERE $this->lectivos.Festivo='no' AND $this->lectivos.Fecha >= '$fechaactual' ORDER BY Fecha";
-                        $resp = $this->conex->query($lectivos);
-                        $lectivo = $resp->fetch_assoc();
-
-                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Dia='$dia' AND Hora='$hora' AND Fecha>='$lectivo[Fecha]'";
+                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR = '$profesor' AND Dia = '$dia' AND Hora = '$hora' AND Fecha >= CURDATE()";
                         $this->conex->query($ejec);
                     } else {
                         $this->ERR_ASYSTECO = "No se puede realizar esta acción.";
@@ -850,10 +841,10 @@ class Asysteco
             $array = cal_from_jd($start, CAL_GREGORIAN);
             if ($array['dayname'] == "Saturday" || $array['dayname'] == "Sunday") {
             } else {
-                if (!$this->searchDuplicateField($diasmes, 'Fecha', $this->lectivos)) {
-                    $this->query("UPDATE $this->lectivos SET $this->lectivos.Festivo='no' WHERE $this->lectivos.Fecha='$diasmes'");
+                if (!$this->searchDuplicateField($diasmes, 'Fecha', 'Lectivos')) {
+                    $this->query("UPDATE Lectivos SET Lectivos.Festivo='no' WHERE Lectivos.Fecha='$diasmes'");
                 } else {
-                    if ($this->query("INSERT INTO $this->lectivos (Fecha) VALUES ('$inicio')")) {
+                    if ($this->query("INSERT INTO Lectivos (Fecha) VALUES ('$inicio')")) {
                     } else {
                         return false;
                     }

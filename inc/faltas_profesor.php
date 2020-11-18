@@ -18,7 +18,7 @@ if($resp = $class->query($sql))
         echo "<div id='marcaje-response'></div>";
         echo "<div id='table-container'>";
             echo "<div id='full-table'>";
-                echo "<table id='tabla-asistencias' class='table'>";
+                echo "<table class='table'>";
                     echo "<thead>";
                         echo "<tr>";
                             echo "<th  class='hidden'>Fecha</th>";

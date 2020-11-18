@@ -2,6 +2,7 @@
 
 $nombreProfesor = $_GET['nProfesor'];
 $profesor = $_GET['profesor'];
+
 $totalDias = [];
 $rDiasemana = $class->conex->query("SELECT ID, Diasemana FROM Diasemana ORDER BY ID");
 if ($rDiasemana->num_rows > 0) {
@@ -92,6 +93,10 @@ if ($rAula->num_rows > 0) {
                     ?>
                 </select>
                 <a action="add" class="btn btn-success act">Añadir Hora</a>
+            </div>
+            <div id="programar-horario">
+                <input type="text" id="fecha-programar-horario" class="form-control" autocomplete="off" placeholder="Selecciona una fecha..." style="display: inline-block; width: 20%;">
+                <a action="program" class="btn btn-success act" style="display: inline-block; margin-top: -4px;">Programar Horario</a>
             </div>
             <table id="tableHorarios" class="table table-striped">
                 <thead>

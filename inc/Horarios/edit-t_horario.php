@@ -8,18 +8,19 @@ $hora = $_POST['hora'] ?? '';
 $aula = $_POST['aula'] ?? '';
 $curso = $_POST['curso'] ?? '';
 $datos = $_POST['datos'] ?? '';
+$date = $_POST['date'] ?? '';
 $MSG = 'Error-inesperado';
 
-function isAvailable($conex, $profesor, $dia, $hora, $aula, $curso) {
+function isAvailable($conex, $profesor, $dia, $hora, $aula, $curso, $date) {
     $sql = "SELECT *
-            FROM Horarios
+            FROM T_horarios
             WHERE ID_PROFESOR = '$profesor'
                 AND Dia = '$dia'
                 AND Hora = '$hora'
                 AND Aula = '$aula'
-                AND Grupo = '$curso'";
+                AND Grupo = '$curso'
+                AND Fecha_incorpora = '$date'";
     $query = $conex->query($sql);
-
     if ($query->num_rows > 0) {
         return false;
     } else {
@@ -30,12 +31,10 @@ function isAvailable($conex, $profesor, $dia, $hora, $aula, $curso) {
 if (!empty($action)) {
     if ($action === 'add') {
         if (!empty($profesor) && !empty($dia) && !empty($hora) && !empty($aula) && !empty($curso)) {
-            if ($resp = isAvailable($class->conex, $profesor, $dia, $hora, $aula, $curso)) {
-                $sql = "INSERT INTO Horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo)
-                        VALUES ('$profesor', '$dia', '$hora', 'Mañana', '1', '$aula', '$curso')";
+            if (isAvailable($class->conex, $profesor, $dia, $hora, $aula, $curso, $date)) {
+                $sql = "INSERT INTO T_horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora)
+                        VALUES ('$profesor', '$dia', '$hora', 'Mañana', '1', '$aula', '$curso', '$date')";
                 $query = $class->conex->query($sql);
-                $class->marcajes($profesor, 'remove');
-                $class->marcajes($profesor, 'add');
                 $MSG = $query ? 'Ok-add': 'Error-add';
             } else {
                 $MSG = 'Error-duplicate';
@@ -72,7 +71,7 @@ if (!empty($action)) {
                 $inlineCursosId = implode(',', $cursosId);
 
                 if ($countAulas) {
-                    $aulasSql = sprintf("UPDATE Horarios
+                    $aulasSql = sprintf("UPDATE T_horarios
                     SET Aula = CASE %s
                     END
                     WHERE ID_PROFESOR = '$profesor'
@@ -84,7 +83,7 @@ if (!empty($action)) {
                 }
 
                 if ($countCursos) {
-                    $cursosSql = sprintf("UPDATE Horarios
+                    $cursosSql = sprintf("UPDATE T_horarios
                     SET Grupo = CASE %s
                     END
                     WHERE ID_PROFESOR = '$profesor'
@@ -104,13 +103,11 @@ if (!empty($action)) {
 
         }
     } elseif ($action === 'remove') {
-        $sql = "DELETE FROM Horarios WHERE ID = '$rowId' AND ID_PROFESOR = '$profesor'";
+        $sql = "DELETE FROM T_horarios WHERE ID = '$rowId' AND ID_PROFESOR = '$profesor'";
         $MSG = $class->conex->query($sql) ? 'Ok-remove': 'Error-remove';
-        $class->marcajes($profesor,'remove');
-        $class->marcajes($profesor, 'add');
-    } elseif ($action === 'get') {
-        $sql = "";
-        $MSG = $class->conex->query($sql) ? 'Ok-get': 'Error-get';
+    } elseif ($action === 'cancel-program') {
+        $sql = "DELETE FROM T_horarios WHERE ID_PROFESOR = '$profesor' AND Fecha_incorpora = '$date'";
+        $MSG = $class->conex->query($sql) ? 'Ok-cancel': 'Error-cancel';
     } else {
         $MSG = "Error-action";
     }
