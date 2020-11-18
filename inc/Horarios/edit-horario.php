@@ -36,6 +36,7 @@ if (!empty($action)) {
                 $query = $class->conex->query($sql);
                 $class->marcajes($profesor, 'remove');
                 $class->marcajes($profesor, 'add');
+                $class->updateHoras($profesor);
                 $MSG = $query ? 'Ok-add': 'Error-add';
             } else {
                 $MSG = 'Error-duplicate';
@@ -108,6 +109,7 @@ if (!empty($action)) {
         $MSG = $class->conex->query($sql) ? 'Ok-remove': 'Error-remove';
         $class->marcajes($profesor,'remove');
         $class->marcajes($profesor, 'add');
+        $class->updateHoras($profesor);
     } elseif ($action === 'get') {
         $sql = "";
         $MSG = $class->conex->query($sql) ? 'Ok-get': 'Error-get';

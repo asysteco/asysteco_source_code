@@ -499,22 +499,38 @@ class Asysteco
                     if ($subopt == 'add') {
                         $lectivos = "SELECT Lectivos.Fecha FROM Lectivos WHERE Lectivos.Festivo='no' AND Lectivos.Fecha >= CURDATE() ORDER BY Fecha";
                         $resp = $this->conex->query($lectivos);
-						
-                        while ($lectivo = $resp->fetch_assoc()) {
-                            if ($this->asistidoHoy($profesor) && $fechaactual == $lectivo['Fecha']) {
-                                $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 1
-                                FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-                                WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
-                            } else {
-                                $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
-                                FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-                                WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
+                        
+                        $this->conex->autocommit(FALSE);
+                        try {
+                            while ($lectivo = $resp->fetch_assoc()) {
+                                if ($this->asistidoHoy($profesor) && $fechaactual == $lectivo['Fecha']) {
+                                    $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 1
+                                    FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
+                                    WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
+                                } else {
+                                    $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, '$lectivo[Fecha]' as Fecha, Hora, Tipo, Dia, 0
+                                    FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
+                                    WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
+                                }
+                                if (!$this->conex->query($ejec)) {
+                                    throw new Exception('Error-add-marcajes');
+                                }
                             }
-                            $this->conex->query($ejec);
+                        } catch (Exception $e) {
+                            $this->conex->rollback();
                         }
+                        $this->conex->commit();
                     } elseif ($subopt == 'remove') {
-                        $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR = '$profesor' AND Fecha >= CURDATE()";
-                        $this->conex->query($ejec);
+                        $this->conex->autocommit(FALSE);
+                        try {
+                            $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR = '$profesor' AND Fecha >= CURDATE()";
+                            if (!$this->conex->query($ejec)) {
+                                throw new Exception('Error-add-marcajes');
+                            }
+                        } catch (Exception $e) {
+                            $this->conex->rollback();
+                        }
+                        $this->conex->commit();
                     } else {
                         $this->ERR_ASYSTECO = "No se puede realizar esta acción.";
                         return false;
@@ -590,7 +606,7 @@ class Asysteco
     function updateHoras()
     {
         if (func_num_args() == 0) {
-            if ($response = $this->query("SELECT DISTINCT ID_PROFESOR FROM $this->horarios")) {
+            if ($response = $this->conex->query("SELECT DISTINCT ID_PROFESOR FROM Horarios")) {
                 $id = [];
                 while ($row = $response->fetch_assoc()) {
                     $id[] = $row['ID_PROFESOR'];
@@ -599,10 +615,10 @@ class Asysteco
                     // Por cada Día, comprobamos y actualizamos sus Hora_entrada y Hora_salida
                     for ($i = 1; $i <= 5; $i++) {
                         // Obtenemos su primera Hora
-                        if ($res = $this->query("SELECT Hora, Tipo FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora ASC LIMIT 1")) {
+                        if ($res = $this->conex->query("SELECT Hora, Tipo FROM Horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora ASC LIMIT 1")) {
                             if ($res->num_rows > 0) {
                                 $primera = $res->fetch_assoc();
-                                if (!$p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[Hora]' AND Tipo='$primera[Tipo]'")->fetch_assoc()) {
+                                if (!$p = $this->conex->query("SELECT Inicio FROM Horas WHERE Hora='$primera[Hora]' AND Tipo='$primera[Tipo]'")->fetch_assoc()) {
                                     return false;
                                 }
                             } else {
@@ -613,10 +629,10 @@ class Asysteco
                         }
 
                         // Obtenemos su ultima Hora
-                        if ($res = $this->query("SELECT Hora, Tipo FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora DESC LIMIT 1")) {
+                        if ($res = $this->conex->query("SELECT Hora, Tipo FROM Horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora DESC LIMIT 1")) {
                             if ($res->num_rows > 0) {
                                 $ultima = $res->fetch_assoc();
-                                if (!$u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[Hora]' AND Tipo='$ultima[Tipo]'")->fetch_assoc()) {
+                                if (!$u = $this->conex->query("SELECT Fin FROM Horas WHERE Hora='$ultima[Hora]' AND Tipo='$ultima[Tipo]'")->fetch_assoc()) {
                                     return false;
                                 }
                             } else {
@@ -626,7 +642,7 @@ class Asysteco
                             return false;
                         }
                         // Modificamos Hora_entrada y Hora_salida de cada Horario
-                        if (!$this->query("UPDATE $this->horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$profe' AND Dia='$i'")) {
+                        if (!$this->conex->query("UPDATE Horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$profe' AND Dia='$i'")) {
                             return false;
                         }
                     }
@@ -635,104 +651,98 @@ class Asysteco
                 return false;
             }
         } elseif (func_num_args() == 1) {
-            foreach (func_get_args() as $arg) {
-                if ($this->validFormDate($arg)) {
-                    if ($response = $this->query("SELECT DISTINCT ID_PROFESOR FROM T_horarios")) {
-                        $id = [];
-                        while ($row = $response->fetch_assoc()) {
-                            $id[] = $row['ID_PROFESOR'];
-                        }
-                        foreach ($id as $profe) {
-                            // Por cada Día, comprobamos y actualizamos sus Hora_entrada y Hora_salida
-                            for ($i = 1; $i <= 5; $i++) {
-                                // Conseguimos su primera Hora
-                                if ($res = $this->query("SELECT Hora, Tipo FROM T_horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora ASC LIMIT 1")) {
-                                    if ($res->num_rows > 0) {
-                                        $primera = $res->fetch_assoc();
-                                        if (!$p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[Hora]' AND Tipo='$primera[Tipo]'")->fetch_assoc()) {
-                                            return false;
-                                        }
-                                    } else {
-                                        continue;
-                                    }
-                                } else {
-                                    return false;
-                                }
-
-                                // Conseguimos su ultima Hora
-                                if ($res = $this->query("SELECT Hora, Tipo FROM T_horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora DESC LIMIT 1")) {
-                                    if ($res->num_rows > 0) {
-                                        $ultima = $res->fetch_assoc();
-                                        if (!$u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[Hora]' AND Tipo='$ultima[Tipo]'")->fetch_assoc()) {
-                                            return false;
-                                        }
-                                    } else {
-                                        continue;
-                                    }
-                                } else {
-                                    return false;
-                                }
-                                return true;
-                                // Modificamos Hora_entrada y Hora_salida de cada Horario
-                                if (!$this->query("UPDATE T_horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$profe' AND Dia='$i'")) {
-                                    return false;
-                                }
-                            }
-                        }
-                    } else {
-                        return false;
+            $args = func_get_args();
+            $arg = $args[0];
+            if ($this->validFormDate($arg)) {
+                if ($response = $this->conex->query("SELECT DISTINCT ID_PROFESOR FROM T_horarios")) {
+                    $id = [];
+                    while ($row = $response->fetch_assoc()) {
+                        $id[] = $row['ID_PROFESOR'];
                     }
-                } elseif (preg_match('/^[0-9]+$/', $arg)) {
-                    unset($this->ERR_ASYSTECO);
-                    if ($response = $this->query("SELECT DISTINCT ID_PROFESOR FROM $this->horarios WHERE ID_PROFESOR='$arg'")) {
-                        $id = [];
-                        while ($row = $response->fetch_assoc()) {
-                            $id[] = $row['ID_PROFESOR'];
-                        }
-                        foreach ($id as $profe) {
-                            // Por cada Día, comprobamos y actualizamos sus Hora_entrada y Hora_salida
-                            for ($i = 1; $i <= 5; $i++) {
-                                // Conseguimos su primera Hora
-                                if ($res = $this->query("SELECT Hora, Tipo FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora ASC LIMIT 1")) {
-                                    if ($res->num_rows > 0) {
-                                        $primera = $res->fetch_assoc();
-                                        if (!$p = $this->query("SELECT Inicio FROM Horas WHERE Hora='$primera[Hora]' AND Tipo='$primera[Tipo]'")->fetch_assoc()) {
-                                            return false;
-                                        }
-                                    } else {
-                                        continue;
+                    foreach ($id as $profe) {
+                        // Por cada Día, comprobamos y actualizamos sus Hora_entrada y Hora_salida
+                        for ($i = 1; $i <= 5; $i++) {
+                            // Conseguimos su primera Hora
+                            if ($res = $this->conex->query("SELECT Hora, Tipo FROM T_horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora ASC LIMIT 1")) {
+                                if ($res->num_rows > 0) {
+                                    $primera = $res->fetch_assoc();
+                                    if (!$p = $this->conex->query("SELECT Inicio FROM Horas WHERE Hora='$primera[Hora]' AND Tipo='$primera[Tipo]'")->fetch_assoc()) {
+                                        return false;
                                     }
                                 } else {
-                                    return false;
+                                    continue;
                                 }
+                            } else {
+                                return false;
+                            }
 
-                                // Conseguimos su ultima Hora
-                                if ($res = $this->query("SELECT Hora, Tipo FROM $this->horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora DESC LIMIT 1")) {
-                                    if ($res->num_rows > 0) {
-                                        $ultima = $res->fetch_assoc();
-                                        if (!$u = $this->query("SELECT Fin FROM Horas WHERE Hora='$ultima[Hora]' AND Tipo='$ultima[Tipo]'")->fetch_assoc()) {
-                                            return false;
-                                        }
-                                    } else {
-                                        continue;
+                            // Conseguimos su ultima Hora
+                            if ($res = $this->conex->query("SELECT Hora, Tipo FROM T_horarios WHERE ID_PROFESOR='$profe' AND Dia='$i' ORDER BY Hora DESC LIMIT 1")) {
+                                if ($res->num_rows > 0) {
+                                    $ultima = $res->fetch_assoc();
+                                    if (!$u = $this->conex->query("SELECT Fin FROM Horas WHERE Hora='$ultima[Hora]' AND Tipo='$ultima[Tipo]'")->fetch_assoc()) {
+                                        return false;
                                     }
                                 } else {
-                                    return false;
+                                    continue;
                                 }
-
-                                // Modificamos Hora_entrada y Hora_salida de cada Horario
-                                if (!$this->query("UPDATE $this->horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$profe' AND Dia='$i'")) {
-                                    return false;
-                                }
+                            } else {
+                                return false;
+                            }
+                            return true;
+                            // Modificamos Hora_entrada y Hora_salida de cada Horario
+                            if (!$this->conex->query("UPDATE T_horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$profe' AND Dia='$i'")) {
+                                return false;
                             }
                         }
-                    } else {
-                        return false;
                     }
                 } else {
-                    $this->ERR_ASYSTECO = "Argumento no válido.";
                     return false;
                 }
+            } elseif (preg_match('/^[0-9]+$/', $arg)) {
+                // Por cada Día, comprobamos y actualizamos sus Hora_entrada y Hora_salida
+                $this->conex->autocommit(FALSE);
+                try {
+                    for ($i = 1; $i <= 5; $i++) {
+                        // Conseguimos su primera Hora
+                        if ($res = $this->conex->query("SELECT Hora, Tipo FROM Horarios WHERE ID_PROFESOR='$arg' AND Dia='$i' ORDER BY Hora ASC LIMIT 1")) {
+                            if ($res->num_rows > 0) {
+                                $primera = $res->fetch_assoc();
+                                if (!$p = $this->conex->query("SELECT Inicio FROM Horas WHERE Hora='$primera[Hora]' AND Tipo='$primera[Tipo]'")->fetch_assoc()) {
+                                    throw new Exception('Error-get-first-hora');
+                                }
+                            } else {
+                                continue;
+                            }
+                        } else {
+                            throw new Exception('Error-get-first-hora-tipo');
+                        }
+                        // Conseguimos su ultima Hora
+                        if ($res = $this->conex->query("SELECT Hora, Tipo FROM Horarios WHERE ID_PROFESOR='$arg' AND Dia='$i' ORDER BY Hora DESC LIMIT 1")) {
+                            if ($res->num_rows > 0) {
+                                $ultima = $res->fetch_assoc();
+                                if (!$u = $this->conex->query("SELECT Fin FROM Horas WHERE Hora='$ultima[Hora]' AND Tipo='$ultima[Tipo]'")->fetch_assoc()) {
+                                    throw new Exception('Error-get-last-hora');
+                                }
+                            } else {
+                                continue;
+                            }
+                        } else {
+                            throw new Exception('Error-get-last-hora-tipo');
+                        }
+                        // Modificamos Hora_entrada y Hora_salida de cada Horario
+                        if (!$this->conex->query("UPDATE Horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$arg' AND Dia='$i'")) {
+                            throw new Exception('Error-update-horas');
+                        }
+                    }
+                } catch (Exception $e) {
+                    $this->conex->rollback();
+                }
+                $this->conex->commit();
+                return true;
+            } else {
+                $this->ERR_ASYSTECO = "Argumento no válido.";
+                return false;
             }
         } else {
             $this->ERR_ASYSTECO = "Número de argumentos incorrecto.";
