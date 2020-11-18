@@ -69,15 +69,20 @@ class Asysteco
     function compruebaCambioPass()
     {
         $pass = $this->encryptPassword($_SESSION['Iniciales'] . '12345');
-        if ($response = $this->query("SELECT ID FROM $this->profesores WHERE Password='$pass' AND ID='$_SESSION[ID]'")) {
-            if ($response->num_rows == 0) {
-                return true;
+        if ($_SESSION['changedPass'] === 1) {
+            return true;
+        } else {
+            if ($response = $this->query("SELECT ID FROM $this->profesores WHERE Password='$pass' AND ID='$_SESSION[ID]'")) {
+                if ($response->num_rows == 0) {
+                    $_SESSION['changedPass'] = 1;
+                    return true;
+                } else {
+                    $this->ERR_ASYSTECO = "Debes cambiar la contraseña.";
+                    return false;
+                }
             } else {
-                $this->ERR_ASYSTECO = "Debes cambiar la contraseña.";
                 return false;
             }
-        } else {
-            return false;
         }
     }
 
@@ -87,6 +92,7 @@ class Asysteco
         unset($_SESSION['LID']);
         unset($_SESSION['Nombre']);
         unset($_SESSION['Tipo']);
+        unset($_SESSION['changedPass']);
         session_destroy();
         session_abort();
         header("Refresh: 1; https://asysteco.com/Bezmiliana/index.php");
@@ -173,6 +179,7 @@ class Asysteco
                         $_SESSION['ID'] = $fila['ID'];
                         $_SESSION['Nombre'] = $fila['Nombre'];
                         $_SESSION['Perfil'] = $fila['Tipo'];
+                        $_SESSION['changedPass'] = 0;
                         return true;
                     } else {
                         return false;
