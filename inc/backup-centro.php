@@ -418,7 +418,7 @@ if($respuesta = $class->query("SELECT * FROM Fichar"))
 
 $zip =  new ZipArchive();
 
-$filename = 'Copia_Seguridad.zip';
+$filename = 'Copia_Seguridad_'. $insti_db .'.zip';
 $archivo1 = $pf;
 $archivo2 = $ho;
 $archivo3 = $ma;
