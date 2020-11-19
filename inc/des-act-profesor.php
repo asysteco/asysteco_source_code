@@ -1,5 +1,8 @@
 <?php
-if($resp = $class->query("SELECT ID, Nombre, TIPO FROM $class->profesores WHERE $class->profesores.ID='$_GET[ID]' AND $class->profesores.Activo=1"))
+
+$profesor = $_GET['ID'];
+
+if($resp = $class->query("SELECT ID, Nombre, TIPO FROM $class->profesores WHERE $class->profesores.ID='$profesor' AND $class->profesores.Activo=1"))
 {
     if($resp->num_rows > 0)
     {
@@ -10,12 +13,12 @@ if($resp = $class->query("SELECT ID, Nombre, TIPO FROM $class->profesores WHERE 
         }
         else
         {
-            if($class->query("UPDATE Profesores SET Activo=0 WHERE ID='$_GET[ID]'"))
+            if($class->query("UPDATE Profesores SET Activo=0 WHERE ID='$profesor'"))
             {
                 $msg = "Usuario desactivado.";
-                $class->notificar($_GET['ID'], $msg);
+                $class->notificar($profesor, $msg);
                 $MSG = "Cambios realizados correctamente.";
-                $_GET['profesor'] = $_GET['ID'];
+                $_GET['profesor'] = $profesor;
                 include_once($dirs['inc'] . 'remove-horario-profesor.php');
             }
             else
@@ -27,10 +30,11 @@ if($resp = $class->query("SELECT ID, Nombre, TIPO FROM $class->profesores WHERE 
     }
     else
     {
-        if($class->query("UPDATE Profesores SET Activo=1 WHERE ID='$_GET[ID]'"))
+        if($class->query("UPDATE Profesores SET Activo=1 WHERE ID='$profesor'"))
         {
             $msg = "Usuario activado.";
-            $class->notificar($_GET['ID'], $msg);
+            $class->notificar($profesor, $msg);
+            $class->marcajes($profesor, 'add');
             $MSG = "Cambios realizados correctamente.";
         }
         else

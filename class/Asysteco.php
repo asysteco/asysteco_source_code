@@ -322,7 +322,6 @@ class Asysteco
                         if (!$this->query("DELETE FROM Horarios WHERE ID_PROFESOR = '$id'")) {
                             return false;
                         }
-                        $this->marcajes($id, 'remove');
                         $insertHorario = "INSERT INTO Horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida) SELECT ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida
                         FROM T_horarios WHERE ID_PROFESOR='$id' AND Fecha_incorpora='$fechaactual'";
 
@@ -333,6 +332,7 @@ class Asysteco
                             return false;
                         }
                         $this->updateHoras($id);
+                        $this->marcajes($id, 'remove');
                         $this->marcajes($id, 'add');
                     }
                     return $_SESSION['fecha'] = $fechaactual;

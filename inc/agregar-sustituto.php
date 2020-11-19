@@ -1,5 +1,9 @@
 <?php
-if($response = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE $class->profesores.ID='$_GET[ID_PROFESOR]' AND $class->profesores.TIPO='1'"))
+
+$pSustituido = $_GET['ID_PROFESOR'];
+$pSustituto = $_GET['ID_SUSTITUTO'];
+
+if($response = $class->query("SELECT ID, Nombre FROM Profesores WHERE Profesores.ID='$pSustituido' AND Profesores.TIPO='1'"))
 {
     if($response->num_rows > 0)
     {
@@ -7,22 +11,24 @@ if($response = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE $c
     }
     else
     {
-        if(! $profesor = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE $class->profesores.ID='$_GET[ID_PROFESOR]'")->fetch_assoc())
+        if(! $profesor = $class->query("SELECT ID, Nombre FROM Profesores WHERE Profesores.ID='$pSustituido'")->fetch_assoc())
         {
             echo $class->ERR_ASYSTECO;
         }
-        if(! $sustituto = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE $class->profesores.ID='$_GET[ID_SUSTITUTO]'")->fetch_assoc())
+        if(! $sustituto = $class->query("SELECT ID, Nombre FROM Profesores WHERE Profesores.ID='$pSustituto'")->fetch_assoc())
         {
             echo $class->ERR_ASYSTECO;
         }
-        if($class->query("UPDATE Profesores SET Sustituido=1 WHERE ID='$_GET[ID_PROFESOR]'"))
+        if($class->query("UPDATE Profesores SET Sustituido=1 WHERE ID='$pSustituido'"))
         {
-            if($class->query("INSERT INTO $class->horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida) SELECT $_GET[ID_SUSTITUTO], Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida FROM $class->horarios WHERE ID_PROFESOR='$_GET[ID_PROFESOR]'"))
+            if($class->query(
+                "INSERT INTO Horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida)
+                SELECT $pSustituto, Dia, Hora, Tipo, Edificio, Aula, Grupo, Hora_entrada, Hora_salida FROM Horarios WHERE ID_PROFESOR='$pSustituido'"))
             {
                 $MSG = "$profesor[Nombre] ha sido sustituido/a correctamente por $sustituto[Nombre]";
             }
-            $_GET['ID_PROFESOR'] = $_GET['ID_SUSTITUTO'];
-            $class->marcajes($_GET['ID_PROFESOR']);
+            $class->marcajes($pSustituido, 'remove');
+            $class->marcajes($pSustituto, 'add');
         }
         else
         {
