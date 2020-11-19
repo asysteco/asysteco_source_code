@@ -101,7 +101,6 @@ if($response = $class->query($sql))
         echo "</tbody>";
         echo "</table>";
         include_once('js/update_horario.js');
-        // include_once('js/temp_horario.js');
     }
     elseif($response->num_row > 1)
     {
@@ -113,7 +112,7 @@ if($response = $class->query($sql))
         echo "$n[Nombre] no tiene horario";
         echo "</h1>";
         echo "<div style='text-align: center;'>";
-            echo "<a id='crear-horario' href='index.php?ACTION=horarios&OPT=crear&profesor=$n[ID]&Tipo=Mañana' class='btn btn-success'>Crear horario para $n[Nombre]</a>";
+            echo "<a id='crear-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success'>Crear horario para $n[Nombre]</a>";
         echo "</div>";
     }
 }
