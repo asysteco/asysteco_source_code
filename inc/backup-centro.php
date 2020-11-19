@@ -43,21 +43,29 @@ if($respuesta = $class->query("SELECT * FROM Profesores"))
 // HORARIOS
 if(isset($_GET['profesor']) && $_GET['profesor'] != '')
 {
-    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana FROM
-    (Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID) INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia
+    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo FROM
+    Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
+    INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia 
+    INNER JOIN Aulas ON Aulas.ID=Horarios.Aula 
+    INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
     WHERE ID_PROFESOR = '$_GET[profesor]'
     ORDER BY ID_PROFESOR, Dia, Hora";
 }
 else
 {
-    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales
+    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo
     FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
+    INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia
+    INNER JOIN Aulas ON Aulas.ID=Horarios.Aula 
+    INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
     ORDER BY ID_PROFESOR, Dia, Hora";
 }
 if($response = $class->query($sql))
 {
+    //echo "<h2>Registros de Horarios</h2>"; 
     if ($response->num_rows > 0) 
     {
+        $fn = "Horarios.csv";
         $fp = fopen($ho, 'w');
         $delimitador = ";";
         $titulo = [
@@ -66,6 +74,7 @@ if($response = $class->query($sql))
             'AULA',
             'DIA',
             'HORA',
+            'EDIFICIO'
         ];
         // Escribimos los títulos para los campos
         fputcsv($fp, $titulo, $delimitador);
@@ -87,6 +96,7 @@ if($response = $class->query($sql))
                 utf8_decode($datos['Aula']),
                 $datos['Dia'],
                 $datos['Hora'],
+                $datos['Edificio'],
             ];
             
             // Escibimos una línea por cada $datos
@@ -414,6 +424,3 @@ unlink($pf);
 unlink($ho);
 unlink($ma);
 unlink($fi);
-
-
-    
