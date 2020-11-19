@@ -1,5 +1,5 @@
 <?php
-$files = glob('tmp/*.png');
+$files = glob('tmp/*.*');
 foreach($files as $file)
 {
     if(is_file($file))

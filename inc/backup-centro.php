@@ -1,14 +1,12 @@
 <?php
 
 // PROFESORES
-/*$ff = "tmp/";*/
+$ff = "tmp/";
 $pf = "Profesores.csv";
-/*chdir($ff);
-if(is_file($pf))
-{
-    unlink($pf);
-}*/
-
+$ho = "Horarios.csv";
+$ma = "Marcajes.csv";
+$fi = "Fichajes.csv";
+chdir($ff);
 $fp = fopen($pf, 'w');
 $delimitador = ";";
 $titulo = [
@@ -60,13 +58,6 @@ if($response = $class->query($sql))
 {
     if ($response->num_rows > 0) 
     {
-        /*$ff = "tmp/";*/
-        $ho = "Horarios.csv";
-        /*chdir($ff);
-        if(is_file($ho))
-        {
-            unlink($ho);
-        }*/
         $fp = fopen($ho, 'w');
         $delimitador = ";";
         $titulo = [
@@ -113,14 +104,6 @@ if($response = $class->query($sql))
 
 
 // MARCAJES
-/*$ff = "tmp/";*/
-$ma = "Marcajes.csv";
-/*chdir($ff);
-if(is_file($ma))
-{
-    unlink($ma);
-}*/
-
 $fp = fopen($ma, 'w');
 $delimitador = ";";
 $titulo = [
@@ -275,14 +258,6 @@ if($respuesta = $class->query("SELECT * FROM Marcajes"))
 }
 
 // FICHAJE
-/*$ff = "tmp/";*/
-$fi = "Fichajes.csv";
-chdir($ff);
-/*if(is_file($fi))
-{
-    unlink($fi);
-}*/
-
 $fp = fopen($fi, 'w');
 $delimitador = ";";
 $titulo = [
@@ -431,9 +406,14 @@ if($zip->open($filename, ZIPARCHIVE::CREATE)===true) {
     $zip->addFile($archivo3);
     $zip->addFile($archivo4);
     $zip->close();
-    header("location: $filename");
+    header("location: $ff$filename");
 }else{
     echo "Error creando archivo ". $filename;
 }
+unlink($pf);
+unlink($ho);
+unlink($ma);
+unlink($fi);
 
-       
+
+    
