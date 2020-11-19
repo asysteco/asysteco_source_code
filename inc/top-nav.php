@@ -1,6 +1,4 @@
-
 <body>
-
 <?php
 
 $noleidos = "SELECT count(*) as new
@@ -70,15 +68,15 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
 
           echo "<li class='dropdown $act_horario'><a class='dropdown-toggle' data-toggle='dropdown' href='#'><span class='glyphicon glyphicon-calendar'></span> Horario <span class='caret'></span></a>";
             echo '<ul class="dropdown-menu">';
-              echo '<li>';
-                echo '<a href="index.php?ACTION=horarios&OPT=edit-guardias">
-                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar3-week" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
-                  <path fill-rule="evenodd" d="M12 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-5 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2-3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-5 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-                  </svg> 
-                  Editar Guardias
-                </a>';
-                echo '</li>';
+              // echo '<li>';
+              //   echo '<a href="index.php?ACTION=horarios&OPT=edit-guardias">
+              //     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar3-week" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              //     <path fill-rule="evenodd" d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+              //     <path fill-rule="evenodd" d="M12 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-5 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2-3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-5 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+              //     </svg> 
+              //     Editar Guardias
+              //   </a>';
+              //   echo '</li>';
               echo '<li><a href="index.php?ACTION=horarios&OPT=cursos"><span class="glyphicon glyphicon-pencil"></span> Gestionar Cursos</a></li>';
               echo '<li><a href="index.php?ACTION=horarios&OPT=aulas"><span class="glyphicon glyphicon-pencil"></span> Gestionar Aulas</a></li>';
               echo '<li><a href="index.php?ACTION=horarios&OPT=import-form"><span class="glyphicon glyphicon-open"></span> Importar horarios</a></li>';
