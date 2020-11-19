@@ -1,6 +1,4 @@
-
 <body>
-
 <?php
 
 $noleidos = "SELECT count(*) as new
