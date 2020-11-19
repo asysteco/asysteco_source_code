@@ -120,6 +120,7 @@
                   <th>Aula</th>
                   <th>Día</th>
                   <th>Hora</th>
+                  <th>Edificio</th>
                 </tr>
               </thead>
                 <tbody id="file-content-preview"></tbody>

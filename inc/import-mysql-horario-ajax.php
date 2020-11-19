@@ -11,6 +11,7 @@ if (isset($_POST['fecha'])) {
         $hoy = false;
     }
 }
+$edificio = 1;
 
 $totalHorarios = [];
 $response = $class->conex->query("SELECT DISTINCT  ID_PROFESOR, Dia, Hora, Aula, Grupo FROM Horarios");
@@ -101,8 +102,15 @@ if ($_FILES["file"]["size"] > 0) {
             $hora = $importHorario->hora();
             $tipo = $_POST['Franja'];
             $franja = $_POST['Franja'];
-            $edificio = str_split($aula);
-            $edificio = $edificio[2];
+            
+            if (isset($column[5])) {
+                if (preg_match('/^[1-9]$/', $column[5])) {
+                    $edificio = $column[5];
+                } else {
+                    echo "error-edificio";
+                    exit;
+                }
+            }
 
             if ($iniciales != '' && array_key_exists($iniciales, $totalIniciales)) {
                 $idProfesor = $totalIniciales[$iniciales];

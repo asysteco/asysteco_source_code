@@ -60,32 +60,42 @@ if ($rAula->num_rows > 0) {
         <div class='col-xs-12'>
             <h1 id="profesor" data="<?=$profesor;?>">Gestionar Horario de <b><?=$nombreProfesor?></b></h1>
             <div class="add-fields">
-                <select id="add-dia" class="form-control" style="display: inline-block; width: 20%;">
-                    <option value=''>Selecciona un día...</option>
+                <select id="add-dia" class="form-control" style="display: inline-block; width: 15%;">
+                    <option value=''>Selec. día...</option>
                     <?php
                     foreach($totalDias as $key => $value) {
                         echo "<option value='$value'>$key</option>";
                     }
                     ?>
                 </select>
-                <select id="add-hora" class="form-control" style="display: inline-block; width: 20%;">
-                    <option value=''>Selecciona una hora...</option>
+                <select id="add-edificio" class="form-control" style="display: inline-block; width: 15%;">
+                    <option value=''>Selec. Edificio...</option>
+                    <?php
+                    if (isset($options['edificios'])) {
+                        for($i = 1; $i <= $options['edificios']; $i++) {
+                            echo "<option value='$i'> Edificio $i</option>";
+                        }
+                    }
+                    ?>
+                </select>
+                <select id="add-hora" class="form-control" style="display: inline-block; width: 15%;">
+                    <option value=''>Selec. hora...</option>
                     <?php
                     foreach($totalHoras as $key => $value) {
                         echo "<option value='$value'>$key</option>";
                     }
                     ?>
                 </select>
-                <select id="add-aula" class="form-control" style="display: inline-block; width: 20%;">
-                    <option value=''>Selecciona un Aula...</option>
+                <select id="add-aula" class="form-control" style="display: inline-block; width: 15%;">
+                    <option value=''>Selec. Aula...</option>
                     <?php
                     foreach($totalAulas as $key => $value) {
                         echo "<option value='$value'>$key</option>";
                     }
                     ?>
                 </select>
-                <select id="add-curso" class="form-control" style="display: inline-block; width: 20%;">
-                    <option value=''>Selecciona un Curso/Grupo...</option>
+                <select id="add-curso" class="form-control" style="display: inline-block; width: 15%;">
+                    <option value=''>Selec. Curso/Grupo...</option>
                     <?php
                     foreach($totalCursos as $key => $value) {
                         echo "<option value='$value'>$key</option>";
@@ -102,6 +112,7 @@ if ($rAula->num_rows > 0) {
                 <thead>
                     <tr style="text-align: center;">
                         <th style="text-align: center; font-size: 15pt;">Hora</th>
+                        <th style="text-align: center; font-size: 15pt;">Edificio</th>
                         <th style="text-align: center; font-size: 15pt;">Aula</th>
                         <th style="text-align: center; font-size: 15pt;">Curso/Grupo</th>
                         <th style="text-align: center; font-size: 15pt;">Eliminar</th>
@@ -127,6 +138,7 @@ if ($rAula->num_rows > 0) {
                             }
                             echo "<tr id='fila_".$row->ID."' style='text-align: center;'>";
                                 echo "<td>". $row->Inicio . ' - ' . $row->Fin ."</td>";
+                                echo "<td>". $row->Edificio ."</td>";
                                 echo "<td>";
                                     echo "<select id='select_".$row->ID."' data-info='".$row->ID."' data-field='Aula' class='form-control update'>";
                                         foreach($totalAulas as $key => $value) {
