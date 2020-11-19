@@ -18,13 +18,13 @@
                     if ($response->num_rows > 0) {
                         while($row = $response->fetch_assoc()){
                             echo "<tr id='fila_$row[ID]' style='text-align: center;'>";
-                                echo "<td>";
+                                echo "<td style='vertical-align: middle;'>";
                                     echo "<input id='input_$row[ID]' type='text' class='form-control hide-it' style='width: 30%; display: inline-block;'>";
                                     echo "<span id='txt_$row[ID]' class='show-it'>$row[Nombre]</span> ";
                                     echo "<a id='btn_$row[ID]' data='$row[ID]' class='btn btn-success hide-it update'>Aplicar</a>";
                                 echo "</td>";
-                                echo "<td><span fields='edit_$row[ID]' class='glyphicon glyphicon-pencil edit'></span></td>";
-                                echo "<td><span data='$row[ID]' action='remove' class='glyphicon glyphicon-trash remove'></span></td>";
+                                echo "<td style='vertical-align: middle;'><span fields='edit_$row[ID]' class='glyphicon glyphicon-pencil edit'></span></td>";
+                                echo "<td style='vertical-align: middle;'><span data='$row[ID]' action='remove' class='glyphicon glyphicon-trash remove'></span></td>";
                             echo "</tr>";
                         }
                     } else {
