@@ -2,15 +2,21 @@
 
 if(isset($_GET['profesor']) && $_GET['profesor'] != '')
 {
-    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana FROM
-    (Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID) INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia
+    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo FROM
+    Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
+    INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia 
+    INNER JOIN Aulas ON Aulas.ID=Horarios.Aula 
+    INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
     WHERE ID_PROFESOR = '$_GET[profesor]'
     ORDER BY ID_PROFESOR, Dia, Hora";
 }
 else
 {
-    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales
+    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo
     FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
+    INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia
+    INNER JOIN Aulas ON Aulas.ID=Horarios.Aula 
+    INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
     ORDER BY ID_PROFESOR, Dia, Hora";
 }
 if($response = $class->query($sql))
@@ -33,6 +39,7 @@ if($response = $class->query($sql))
             'AULA',
             'DIA',
             'HORA',
+            'EDIFICIO'
         ];
         // Escribimos los títulos para los campos
         fputcsv($fp, $titulo, $delimitador);
@@ -54,6 +61,7 @@ if($response = $class->query($sql))
                 utf8_decode($datos['Aula']),
                 $datos['Dia'],
                 $datos['Hora'],
+                $datos['Edificio'],
             ];
             
             // Escibimos una línea por cada $datos
