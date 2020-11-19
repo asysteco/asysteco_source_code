@@ -58,7 +58,13 @@ class Asysteco
 
     function isLogged($Titulo)
     {
-        if ($_SESSION['logged'] === true && $_SESSION['LID'] === "$Titulo" && isset($_SESSION['Nombre']) && isset($_SESSION['Iniciales']) && $_SESSION['Nombre'] != '') {
+        if (isset($_SESSION['logged']) &&
+            $_SESSION['logged'] === true &&
+            $_SESSION['LID'] === "$Titulo" &&
+            isset($_SESSION['Nombre']) &&
+            isset($_SESSION['Iniciales']) &&
+            !empty($_SESSION['Nombre']) &&
+            !empty($_SESSION['Iniciales'])) {
             return true;
         } else {
             $this->ERR_ASYSTECO = "Debe iniciar sesión.";

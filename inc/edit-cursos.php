@@ -4,9 +4,9 @@ require_once($dirs['class'] . 'Cursos.php');
 
 $classCurso = new Cursos;
 
-$action = $_POST['action'];
-$curso = $_POST['curso'];
-$data = $_POST['data'];
+$action = $_POST['action'] ?? '';
+$curso = $_POST['curso'] ?? '';
+$data = $_POST['data'] ?? '';
 $MSG = 'Ok-action';
 
 if ($action === 'add') {

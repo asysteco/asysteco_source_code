@@ -46,7 +46,7 @@
 
           <!-- Login Form -->
           <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-            <input type="text" id="login" class="fadeIn second" name="Iniciales" value="<?php echo $_POST['Iniciales']; ?>" placeholder="Usuario (Iniciales)" required>
+            <input type="text" id="login" class="fadeIn second" name="Iniciales" value="<?= isset($_POST['Iniciales']) ? $_POST['Iniciales']: ''; ?>" placeholder="Usuario (Iniciales)" required>
             <input type="password" id="password" class="fadeIn third" name="pass" placeholder="Contraseña" required>
             <input type="submit" class="fadeIn fourth" value="Iniciar">
           </form>
