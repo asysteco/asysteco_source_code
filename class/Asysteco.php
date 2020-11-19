@@ -352,20 +352,18 @@ class Asysteco
 
         // Línea de comprobación para que muestre todas las horas a partir de $horasistema el día $dia
 
-        // $dia = '2020-9-23';
-        // $horasistema = '11:30:00';
-
-        $sql = "SELECT DISTINCT Profesores.Nombre, Horarios.Aula, Horarios.Grupo, Horarios.Edificio, Horarios.Hora, Horarios.Tipo
-        FROM ((Marcajes INNER JOIN Horarios ON Marcajes.ID_PROFESOR=Horarios.ID_PROFESOR AND Marcajes.Dia=Horarios.Dia AND Marcajes.Hora=Horarios.Hora)
-        INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID)
-        INNER JOIN Horas ON Marcajes.Hora=Horas.Hora AND Marcajes.Tipo=Horas.Tipo
-        WHERE NOT EXISTS (SELECT * FROM Fichar WHERE Fichar.ID_PROFESOR=Profesores.ID AND Fichar.Fecha='$dia') 
-        AND Marcajes.Fecha='$dia'
-        AND (Marcajes.Asiste=0 OR Marcajes.Asiste=2)
-        AND Profesores.Activo=1
-        AND Profesores.Sustituido=0
-        AND Horas.Fin > '$horasistema'
-        ORDER BY Marcajes.Hora ASC, Horarios.Edificio ASC, Profesores.Nombre ASC";
+        $sql = "SELECT DISTINCT p.Nombre, A.Nombre as Aula, C.Nombre as Grupo, h.Edificio, h.Hora, h.Tipo
+        FROM Marcajes m INNER JOIN Horarios h ON m.ID_PROFESOR = h.ID_PROFESOR AND m.Hora = h.Hora AND m.Dia = h.Dia
+        INNER JOIN Profesores p ON m.ID_PROFESOR = p.ID AND h.ID_PROFESOR = p.ID
+        INNER JOIN Horas hs ON h.Hora = hs.Hora AND m.Hora = hs.Hora
+        INNER JOIN Aulas A ON h.Aula = A.ID
+        INNER JOIN Cursos C ON h.Grupo = C.ID
+        WHERE (m.Asiste = 0 OR m.Asiste = 2)
+        AND p.Activo=1
+        AND p.Sustituido=0
+        AND m.Fecha = '$dia'
+        AND hs.Fin > '$horasistema'
+        ORDER BY m.Hora ASC, h.Edificio ASC, p.Nombre ASC";
 
         if ($exec = $this->query($sql)) {
             if ($exec->num_rows > 0) {
@@ -431,7 +429,7 @@ class Asysteco
                     $fichar = "INSERT INTO Fichar (ID_PROFESOR, F_entrada, F_Salida, DIA_SEMANA, Fecha) 
                                 VALUES ($id, '$hora', '$horaSalida', '$dia[weekday]', '$fecha')";
                     $this->query($fichar);
-                    $marcajes = "UPDATE Marcajes SET Asiste='1' WHERE Fecha='$fecha' AND ID_PROFESOR='$id' AND Hora>='$horaFichaje'";
+                    $marcajes = "UPDATE Marcajes SET Asiste = 1 WHERE Fecha='$fecha' AND ID_PROFESOR='$id' AND Hora >= '$horaFichaje'";
                     $this->query($marcajes);
 
                     return true;
