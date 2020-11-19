@@ -139,9 +139,6 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
               echo '<li>';
                 echo '<a id="profesor-guide" href="index.php?ACTION=download_profesor_guide"><span id="download-guide-profesor-icon" class="glyphicon glyphicon-download-alt"></span> Guía aplicación Profesorado</a>';
               echo '</li>';
-              echo '<li>';
-                echo '<a id="backup" href="index.php?ACTION=backup"><span id="backup-icon" class="glyphicon glyphicon-floppy-save"></span> Copia de Seguridad</a>';
-              echo '</li>';
             echo '</ul>';
           echo '</li>';
 

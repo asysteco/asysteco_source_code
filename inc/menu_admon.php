@@ -43,6 +43,9 @@
             <a enlace="index.php?ACTION=horarios&OPT=delete-all-t" class="btn btn-danger eliminar" elemento="t-horarios"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios Programados</a>
             <!--a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger eliminar" onclick="deshabilitado()"><span class="glyphicon glyphicon-envelope"></span> Borrar Mensajes</a-->
             </br>
+            <h2>Copia de seguridad del centro</h2>
+            <a href="index.php?ACTION=backup-centro" id="backup" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Copia de seguridad</a>
+            </br>
         <div class="col-xs-12">
             <div id="btn-response"></div>
         </div>
