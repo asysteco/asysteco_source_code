@@ -5,12 +5,10 @@ if($resp = $class->query($sql))
 {
     $n = $resp->fetch_assoc();
     $n = $n['Nombre'];
-    $f = $class->getDate();
-    $fecha = $f['year'] . "-" . $f['mon'] . "-" . $f['mday'];
+    $fecha = date('Y-m-d');
     // La variable Fecha la utilizará como día límite desde que existen marcajes para mostrar los registros
     // La siguiente línea la utilizaremos para realizar pruebas
     
-    //$fecha = '2020-10-22';
     if($response = $class->query("SELECT Marcajes.*, Diasemana FROM Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID WHERE ID_PROFESOR=" . mysqli_real_escape_string($class->conex, $_GET['ID']) . " AND Fecha <= '$fecha' ORDER BY Fecha DESC, Dia, Hora"))
     {
         echo "<h1>Asistencias lectivas de <b>$n</b></h1>";
