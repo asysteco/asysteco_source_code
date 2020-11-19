@@ -4,6 +4,7 @@ $action = $_POST['action'] ?? '';
 $rowId = $_POST['rowId'] ?? '';
 $profesor = $_POST['profesor'] ?? '';
 $dia = $_POST['dia'] ?? '';
+$edificio = $_POST['edificio'] ?? '';
 $hora = $_POST['hora'] ?? '';
 $aula = $_POST['aula'] ?? '';
 $curso = $_POST['curso'] ?? '';
@@ -33,7 +34,7 @@ if (!empty($action)) {
         if (!empty($profesor) && !empty($dia) && !empty($hora) && !empty($aula) && !empty($curso)) {
             if (isAvailable($class->conex, $profesor, $dia, $hora, $aula, $curso, $date)) {
                 $sql = "INSERT INTO T_horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora)
-                        VALUES ('$profesor', '$dia', '$hora', 'Mañana', '1', '$aula', '$curso', '$date')";
+                        VALUES ('$profesor', '$dia', '$hora', 'Mañana', '$edificio', '$aula', '$curso', '$date')";
                 $query = $class->conex->query($sql);
                 $MSG = $query ? 'Ok-add': 'Error-add';
             } else {
