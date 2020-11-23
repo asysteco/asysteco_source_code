@@ -23,7 +23,7 @@
                 <label>Hora Fichaje Entrada </label>
                 <input id='add-hora-entrada' type='time' name='horaentrada' min='06:00' max='22:00' style='margin-left: 2%;' required>
                 <br><br>
-                <?php if ($options['ficharSalida'] == 1) { ?>
+                <?php if ($options['ficharSalida'] === 1) { ?>
                     <label>Hora Fichaje Salida </label>
                     <input id='add-hora-salida' type='time' name='horasalida' min='06:00' max='22:00' style='margin-left: 3%;' required>
                     <br><br>

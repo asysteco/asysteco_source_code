@@ -350,8 +350,6 @@ class Asysteco
         $dia = date('Y-m-d');
         $horasistema = date('H:i:s');
 
-        // Línea de comprobación para que muestre todas las horas a partir de $horasistema el día $dia
-
         $sql = "SELECT DISTINCT p.Nombre, A.Nombre as Aula, C.Nombre as Grupo, h.Edificio, h.Hora, h.Tipo
         FROM Marcajes m INNER JOIN Horarios h ON m.ID_PROFESOR = h.ID_PROFESOR AND m.Hora = h.Hora AND m.Dia = h.Dia
         INNER JOIN Profesores p ON m.ID_PROFESOR = p.ID AND h.ID_PROFESOR = p.ID
