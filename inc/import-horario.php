@@ -120,7 +120,11 @@
                   <th>Aula</th>
                   <th>Día</th>
                   <th>Hora</th>
-                  <th>Edificio</th>
+                  <?php
+                  if (isset($options['edificios']) && $options['edificios'] > 1) {
+                    echo '<th>Edificio</th>';
+                  }
+                  ?>
                 </tr>
               </thead>
                 <tbody id="file-content-preview"></tbody>
