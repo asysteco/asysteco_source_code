@@ -12,23 +12,19 @@
         <div class="format-body">
             <b>GRUPO:</b> Nombre de Curso/Grupo<br>
             <b>INICIALES:</b> Iniciales correspondientes al profesor<br>
-            <b>AULA:</b>Nombre del Aula<br>
+            <b>AULA:</b><br>
+            <ul>
+                <li>Los dos primeros caracteres corresponden al tipo de <b>aula</b>. (AU: Aula; DP: Departamento; GU: Guardia)</li>
+                <li>El tercer caracter correspone al <b>edificio</b>. (Si el centro cuenta con un solo edificio se pondrá 1)</li>
+                <li>Los dos últimos corresponden al <b>número del aula</b>.</li>
+            </ul>
             <b>DIA:</b> Correspondiente al día de la semana, escrito en números (1 = Lunes, etc.)<br>
-            <b>HORA:</b> Número referente a la hora impartida (<?= $recreo;?> Está considerada "Recreo", por lo tanto, son 7 horas en total)<br>
-            <?php if (isset($options['edificios']) && $options['edificios'] > 1){ echo '<b>EDIFICIO:</b> Número del edificio en el que se impartirá la hora.<br>';}?>
+            <b>HORA:</b> Número referente a la hora impartida (4 Está considerada "Recreo", por lo tanto, son 7 horas en total)<br>
             <h4>Ejemplo de formato correcto:</h4>
         </div>
-        <?php
-        if (isset($options['edificios']) && $options['edificios'] > 1){
-          echo '<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">GRUPO;INICIALES;AULA;DIA;HORA;EDIFICIO  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
-2ESOA;MRG;AU101;3;1;2
-3BACHB;AAM;AU214;4;3;1</pre>';
-        } else {
-          echo '<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">GRUPO;INICIALES;AULA;DIA;HORA  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
+<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">GRUPO;INICIALES;AULA;DIA;HORA  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
 2ESOA;MRG;AU101;3;1
-3BACHB;AAM;AU214;4;3</pre>';
-        }
-    ?>
+3BACHB;AAM;AU214;4;3</pre>
     <p class="format-body">Si lo desea, haciendo click al siguiente botón puede descargar una plantilla del formato en CSV: 
     <a href="index.php?ACTION=plantilla-horarios"><span class="glyphicon glyphicon-download-alt"></span></a></p>
     </div>
@@ -124,11 +120,7 @@
                   <th>Aula</th>
                   <th>Día</th>
                   <th>Hora</th>
-                  <?php
-                  if (isset($options['edificios']) && $options['edificios'] > 1) {
-                    echo '<th>Edificio</th>';
-                  }
-                  ?>
+                  <th>Edificio</th>
                 </tr>
               </thead>
                 <tbody id="file-content-preview"></tbody>

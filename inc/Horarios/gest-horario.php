@@ -68,18 +68,16 @@ if ($rAula->num_rows > 0) {
                     }
                     ?>
                 </select>
-                <?php
-                if (isset($options['edificios']) && $options['edificios'] > 1) {
-                    echo '<select id="add-edificio" class="form-control" style="display: inline-block; width: 15%;">';
-                        echo "<option value=''>Selec. Edificio...</option>";
-                            for($i = 1; $i <= $options['edificios']; $i++) {
-                                echo "<option value='$i'> Edificio $i</option>";
-                            }
-                    echo '</select>';
-                } else {
-                    echo '<input id="add-edificio" type="hidden" class="form-control" style="display: inline-block; width: 15%;" value="1">';
-                }
-                ?>
+                <select id="add-edificio" class="form-control" style="display: inline-block; width: 15%;">
+                    <option value=''>Selec. Edificio...</option>
+                    <?php
+                    if (isset($options['edificios'])) {
+                        for($i = 1; $i <= $options['edificios']; $i++) {
+                            echo "<option value='$i'> Edificio $i</option>";
+                        }
+                    }
+                    ?>
+                </select>
                 <select id="add-hora" class="form-control" style="display: inline-block; width: 15%;">
                     <option value=''>Selec. hora...</option>
                     <?php
@@ -114,11 +112,7 @@ if ($rAula->num_rows > 0) {
                 <thead>
                     <tr style="text-align: center;">
                         <th style="text-align: center; font-size: 15pt;">Hora</th>
-                        <?php
-                            if (isset($options['edificios']) && $options['edificios'] > 1) {
-                                echo '<th style="text-align: center; font-size: 15pt;">Edificio</th>';
-                            }
-                        ?>
+                        <th style="text-align: center; font-size: 15pt;">Edificio</th>
                         <th style="text-align: center; font-size: 15pt;">Aula</th>
                         <th style="text-align: center; font-size: 15pt;">Curso/Grupo</th>
                         <th style="text-align: center; font-size: 15pt;">Eliminar</th>
@@ -144,9 +138,7 @@ if ($rAula->num_rows > 0) {
                             }
                             echo "<tr id='fila_".$row->ID."' style='text-align: center;'>";
                                 echo "<td>". $row->Inicio . ' - ' . $row->Fin ."</td>";
-                                if (isset($options['edificios']) && $options['edificios'] > 1) {
-                                    echo "<td>". $row->Edificio ."</td>";
-                                }
+                                echo "<td>". $row->Edificio ."</td>";
                                 echo "<td>";
                                     echo "<select id='select_".$row->ID."' data-info='".$row->ID."' data-field='Aula' class='form-control update'>";
                                         foreach($totalAulas as $key => $value) {

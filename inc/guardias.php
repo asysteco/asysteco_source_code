@@ -6,12 +6,9 @@ echo "<div id='scroller' class='scroller'>";
 echo "</br><table id='listado-guardias' class='table table-striped scroller'>";
     echo "<thead id='fila_cabecera'>";
         echo "<tr>";
-            echo "<th style='vertical-align: middle; text-align: center;'>Fila</th>";
             echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
             echo "<th style='vertical-align: middle; text-align: center;'>Profesor</th>";
-            if (isset($options['edificios']) && $options['edificios'] > 1) {
-                echo "<th style='vertical-align: middle; text-align: center;'>Edificio</th>";
-            }
+            echo "<th style='vertical-align: middle; text-align: center;'>Edificio</th>";
             echo "<th style='vertical-align: middle; text-align: center;'>Aula</th>";
             echo "<th style='vertical-align: middle; text-align: center;'>Grupo</th>";
         echo "</tr>";
@@ -31,14 +28,10 @@ if($response = $class->getGuardias())
         $horaInicioSinSegundos = $horaInicioSplit[0] . ":" . $horaInicioSplit[1];
         $horaFinSplit = preg_split('/:/', $horaFinHorario);
         $horaFinSinSegundos = $horaFinSplit[0] . ":" . $horaFinSplit[1];
-        $fila = $i+1;
         echo "<tr id='fila_$i'>";
-            echo "<td style='vertical-align: middle; text-align: center;'>" . $fila . "</td>";
             echo "<td style='vertical-align: middle; text-align: center;'>" . $horaInicioSinSegundos . " - " . $horaFinSinSegundos . "</td>";
             echo "<td style='vertical-align: middle; text-align: center;'>" . $datos[$i][0] . "</td>";
-            if (isset($options['edificios']) && $options['edificios'] > 1) {
-                echo "<td style='vertical-align: middle; text-align: center;'>" . $datos[$i][3] . "</td>";
-            }
+            echo "<td style='vertical-align: middle; text-align: center;'>" . $datos[$i][3] . "</td>";
             echo "<td style='vertical-align: middle; text-align: center;'><b>" . $datos[$i][1] . "</b></td>";
             echo "<td style='vertical-align: middle; text-align: center;'><b>";
                 echo $datos[$i][2];

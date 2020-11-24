@@ -65,9 +65,7 @@ if ($_FILES["file"]["size"] > 0) {
         echo "<td>" . $importHorario->aula() . "</td>";
         echo "<td>" . $importHorario->dia() . "</td>";
         echo "<td>" . $importHorario->hora() . "</td>";
-        if (isset($options['edificios']) && $options['edificios'] > 1) {
-            echo "<td>" . $edificio . "</td>";
-        }
+        echo "<td>" . $edificio . "</td>";
         echo '</tr>';
         $row++;
     }
