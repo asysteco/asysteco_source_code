@@ -84,7 +84,7 @@ if($response = $class->query($sql))
                 'INICIALES',
                 'AULA',
                 'DIA',
-                'HORA',
+                'HORA'
             ];
         }
         // Escribimos los títulos para los campos
