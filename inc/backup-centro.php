@@ -68,14 +68,25 @@ if($response = $class->query($sql))
         $fn = "Horarios.csv";
         $fp = fopen($ho, 'w');
         $delimitador = ";";
-        $titulo = [
-            'GRUPO',
-            'INICIALES',
-            'AULA',
-            'DIA',
-            'HORA',
-            'EDIFICIO'
-        ];
+            
+        if (isset($options['edificios']) && $options['edificios'] > 1){
+            $titulo = [
+                'GRUPO',
+                'INICIALES',
+                'AULA',
+                'DIA',
+                'HORA',
+                'EDIFICIO'
+            ];
+        }else{
+            $titulo = [
+                'GRUPO',
+                'INICIALES',
+                'AULA',
+                'DIA',
+                'HORA',
+            ];
+        }
         // Escribimos los títulos para los campos
         fputcsv($fp, $titulo, $delimitador);
         while($datos = $response->fetch_assoc()) 
@@ -90,14 +101,25 @@ if($response = $class->query($sql))
             {
                 $ERR_MSG = $class->ERR_ASYSTECO;
             }
-            $campos = [
-                utf8_decode($datos['Grupo']),
-                utf8_decode($iniciales),
-                utf8_decode($datos['Aula']),
-                $datos['Dia'],
-                $datos['Hora'],
-                $datos['Edificio'],
-            ];
+                  if (isset($options['edificios']) && $options['edificios'] > 1) {
+                    $campos = [
+                        utf8_decode($datos['Grupo']),
+                        utf8_decode($iniciales),
+                        utf8_decode($datos['Aula']),
+                        $datos['Dia'],
+                        $datos['Hora'],
+                        $datos['Edificio'],
+                    ];
+                  }
+                  else{
+                    $campos = [
+                        utf8_decode($datos['Grupo']),
+                        utf8_decode($iniciales),
+                        utf8_decode($datos['Aula']),
+                        $datos['Dia'],
+                        $datos['Hora'],
+                    ];
+                  }
             
             // Escibimos una línea por cada $datos
             fputcsv($fp, $campos, $delimitador);
