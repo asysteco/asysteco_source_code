@@ -76,20 +76,36 @@ if(isset($_GET['pag']))
     # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
 
     $result =  $class->query($query);
-    echo "<table class='table table-striped'>";
-        echo "<thead>";
-            echo "<tr>";
-                echo "<th>INICIALES</th>";
-                echo "<th>PROFESOR</th>";
-                echo "<th>CURSO</th>";
-                echo "<th>AULA</th>";
-                echo "<th>DIA</th>";
-                echo "<th>DIA SEMANA</th>";
-                echo "<th>HORA</th>";
-                echo "<th>EDIFICIO</th>";
-            echo "</tr>";
-        echo "</thead>";
-        echo "<tbody>";
+    if (isset($options['edificios']) && $options['edificios'] > 1) {
+        echo "<table class='table table-striped'>";
+            echo "<thead>";
+                echo "<tr>";
+                    echo "<th>INICIALES</th>";
+                    echo "<th>PROFESOR</th>";
+                    echo "<th>CURSO</th>";
+                    echo "<th>AULA</th>";
+                    echo "<th>DIA</th>";
+                    echo "<th>DIA SEMANA</th>";
+                    echo "<th>HORA</th>";
+                    echo "<th>EDIFICIO</th>";
+                echo "</tr>";
+            echo "</thead>";
+            echo "<tbody>";
+    } else {
+        echo "<table class='table table-striped'>";
+            echo "<thead>";
+                echo "<tr>";
+                    echo "<th>INICIALES</th>";
+                    echo "<th>PROFESOR</th>";
+                    echo "<th>CURSO</th>";
+                    echo "<th>AULA</th>";
+                    echo "<th>DIA</th>";
+                    echo "<th>DIA SEMANA</th>";
+                    echo "<th>HORA</th>";
+                echo "</tr>";
+            echo "</thead>";
+            echo "<tbody>";
+    }
 
     while ($datos = $result->fetch_assoc())
     {
@@ -97,16 +113,28 @@ if(isset($_GET['pag']))
         $dia = $sep[2];
         $m = $sep[1];
         $Y = $sep[0];
-        echo "<tr>";
-            echo "<td>$datos[Iniciales]</td>";
-            echo "<td>$datos[Nombre]</td>";
-            echo "<td>$datos[Grupo]</td>";
-            echo "<td>$datos[Aula]</td>";
-            echo "<td>$datos[Dia]</td>";
-            echo "<td>$datos[Diasemana]</td>";
-            echo "<td>$datos[Hora]</td>";
-            echo "<td>$datos[Edificio]</td>";
-        echo "</tr>";
+        if (isset($options['edificios']) && $options['edificios'] > 1) {
+            echo "<tr>";
+                echo "<td>$datos[Iniciales]</td>";
+                echo "<td>$datos[Nombre]</td>";
+                echo "<td>$datos[Grupo]</td>";
+                echo "<td>$datos[Aula]</td>";
+                echo "<td>$datos[Dia]</td>";
+                echo "<td>$datos[Diasemana]</td>";
+                echo "<td>$datos[Hora]</td>";
+                echo "<td>$datos[Edificio]</td>";
+            echo "</tr>";
+        } else {
+            echo "<tr>";
+                echo "<td>$datos[Iniciales]</td>";
+                echo "<td>$datos[Nombre]</td>";
+                echo "<td>$datos[Grupo]</td>";
+                echo "<td>$datos[Aula]</td>";
+                echo "<td>$datos[Dia]</td>";
+                echo "<td>$datos[Diasemana]</td>";
+                echo "<td>$datos[Hora]</td>";
+            echo "</tr>";
+        }
     }
 
         echo "</tbody>";
