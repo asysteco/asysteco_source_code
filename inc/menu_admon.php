@@ -21,9 +21,10 @@
                     $ERR_MSG = $class->ERR_ASYSTECO;
                 }
 
+              // He arreglado cosas
+              // He arreglado cosas
+              // He arreglado cosas
 
-
-                
             ?>
             <h2>Exportar a Excel</h2>
             <a enlace="index.php?ACTION=admon&OPT=select&export=marcajes" id="exportmarcajes" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Marcajes</a>
