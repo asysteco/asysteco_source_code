@@ -21,8 +21,9 @@
                     $ERR_MSG = $class->ERR_ASYSTECO;
                 }
 
-              // He arreglado cosas
-              // He arreglado cosassfdasf a fs
+              // He arreglado cosas asas
+              // He arreglado cosas sas Nueva funcionalidad tope de guapa
+              // He arreglado cosas sasd
 
             ?>
             <h2>Exportar a Excel</h2>
