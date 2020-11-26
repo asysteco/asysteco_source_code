@@ -28,6 +28,7 @@ function isAvailable($conex, $profesor, $dia, $hora, $aula, $curso) {
     }
 }
 
+
 if (!empty($action)) {
     if ($action === 'add') {
         if (!empty($profesor) && !empty($dia) && !empty($hora) && !empty($aula) && !empty($curso)) {
