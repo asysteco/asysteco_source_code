@@ -886,4 +886,20 @@ class Asysteco
             $inicio = date("Y-m-d", strtotime("+1 day", strtotime($inicio)));
         }
     }
+
+    function formatEuropeanDateToSQLDate($euDate) 
+    {
+        if(!$this->validFormDate($euDate)) {
+            return false;
+        }
+
+        $splitDate = preg_split('/\//', $euDate);
+        $day = $splitDate[0];
+        $month = $splitDate[1];
+        $year = $splitDate[2];
+        
+        $sqlDate = $year .'-'. $month .'-'. $day;
+
+        return $sqlDate;
+    } 
 }
