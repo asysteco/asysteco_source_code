@@ -9,7 +9,7 @@ if($_SESSION['Perfil'] === 'Admin')
                 include($dirs['inc'] . 'Qr/qr-reader.php');
             echo "</div>";
             echo "<div class='col-xs-12 col-md-8' style='text-align: center;'>";
-                include($dirs['inc'] . 'guardias.php');
+                include($dirs['inc'] . 'Horarios/guardias.php');
             echo "</div>";
             echo "</div>";
         echo "</div>"; 
