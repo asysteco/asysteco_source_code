@@ -102,7 +102,7 @@ if($response = $class->query($sql))
         echo "</table>";
         include_once('js/update_horario.js');
     }
-    elseif($response->num_row > 1)
+    elseif($response->num_rows > 1)
     {
         echo "<h1 style='vertical-align: middle; text-align: center;'>Formato no válido, revise su horario...</h1>";
     }
