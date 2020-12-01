@@ -46,7 +46,7 @@ else
 echo '<div class="container-fluid" style="margin-top:50px">';
     echo "<div class='row'>";
         echo "<div class='col-xs-12' style='text-align: center;'>";
-            include($dirs['inc'] . 'guardias.php');
+            include($dirs['inc'] . 'Horarios/guardias.php');
         echo "</div>";
     echo "</div>";
 echo "</div>";
