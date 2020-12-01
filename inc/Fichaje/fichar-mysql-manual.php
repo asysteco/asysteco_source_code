@@ -16,10 +16,8 @@ if ($class->validFormSQLDate($dia)) {
                     $class->conex->autocommit(FALSE);
                     try {
                         if (!$options['ficharSalida']) {
-                            if (!$res = $class->conex->query("SELECT DISTINCT Hora_salida FROM Horarios WHERE ID_PROFESOR = '$id' AND Dia = WEEKDAY('$dia')+1")->fetch_object()) {           
-                                throw new Exception('Error-Insert');
-                            }
-                            $horaSalida = $res->Hora_salida;
+                            $res = $class->conex->query("SELECT DISTINCT Hora_salida FROM Horarios WHERE ID_PROFESOR = '$id' AND Dia = WEEKDAY('$dia')+1")->fetch_object();
+                            $horaSalida = $res->Hora_salida ?? '00:00:00';
                         }
 
                         if (!$class->conex->query("INSERT INTO Fichar (ID_PROFESOR, F_entrada, F_Salida, DIA_SEMANA, Fecha)

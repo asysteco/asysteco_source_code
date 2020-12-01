@@ -1,75 +1,58 @@
 <?php
 
-// PROFESORES
 $ff = "tmp/";
 $pf = "Profesores.csv";
 $ho = "Horarios.csv";
 $ma = "Marcajes.csv";
 $fi = "Fichajes.csv";
 chdir($ff);
-$fp = fopen($pf, 'w');
-$delimitador = ";";
-$titulo = [
-    'INICIALES',
-    'NOMBRE',
-    'TUTOR'
-];
+
+// PROFESORES
 
 // Escribimos los títulos para los campos
-fputcsv($fp, $titulo, $delimitador);
-if($respuesta = $class->query("SELECT * FROM Profesores"))
-{
-    if($respuesta->num_rows > 0)
-    {
-        $query = "SELECT Iniciales, Nombre, Tutor FROM Profesores WHERE TIPO <> 1 ORDER BY Profesores.Nombre ASC";
-        $result =  $class->query($query);
-        
-        while ($datos = $result->fetch_assoc())
-        {
+if ($respuesta = $class->query("SELECT Iniciales, Nombre, Tutor FROM Profesores WHERE TIPO <> 1 ORDER BY Profesores.Nombre ASC")) {
+    if ($respuesta->num_rows > 0) {
+        $fp = fopen($pf, 'w');
+        $delimitador = ";";
+        $titulo = [
+            'INICIALES',
+            'NOMBRE',
+            'TUTOR'
+        ];
+
+        fputcsv($fp, $titulo, $delimitador);
+
+        while ($datos = $respuesta->fetch_assoc()) {
             $campos = [
                 utf8_decode($datos['Iniciales']),
                 utf8_decode($datos['Nombre']),
                 utf8_decode($datos['Tutor'])
             ];
-        
+
             // Escibimos una línea por cada $datos
             fputcsv($fp, $campos, $delimitador);
         }
-    }else{
+    } else {
         $ERR_MSG = $class->ERR_ASYSTECO;
     }
 }
 
 // HORARIOS
-if(isset($_GET['profesor']) && $_GET['profesor'] != '')
-{
-    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo FROM
-    Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
-    INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia 
-    INNER JOIN Aulas ON Aulas.ID=Horarios.Aula 
-    INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
-    WHERE ID_PROFESOR = '$_GET[profesor]'
-    ORDER BY ID_PROFESOR, Dia, Hora";
-}
-else
-{
-    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo
+$sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo
     FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
     INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia
     INNER JOIN Aulas ON Aulas.ID=Horarios.Aula 
     INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
     ORDER BY ID_PROFESOR, Dia, Hora";
-}
-if($response = $class->query($sql))
-{
-    //echo "<h2>Registros de Horarios</h2>"; 
-    if ($response->num_rows > 0) 
-    {
-        $fn = "Horarios.csv";
+
+if ($response = $class->query($sql)) {
+    if ($response->num_rows > 0) {
+        $titulo = '';
+        $delimitador = '';
         $fp = fopen($ho, 'w');
         $delimitador = ";";
-            
-        if (isset($options['edificios']) && $options['edificios'] > 1){
+
+        if (isset($options['edificios']) && $options['edificios'] > 1) {
             $titulo = [
                 'GRUPO',
                 'INICIALES',
@@ -78,7 +61,7 @@ if($response = $class->query($sql))
                 'HORA',
                 'EDIFICIO'
             ];
-        }else{
+        } else {
             $titulo = [
                 'GRUPO',
                 'INICIALES',
@@ -87,185 +70,108 @@ if($response = $class->query($sql))
                 'HORA'
             ];
         }
-        // Escribimos los títulos para los campos
+
         fputcsv($fp, $titulo, $delimitador);
-        while($datos = $response->fetch_assoc()) 
-        {
-            if($nombre = $class->query("SELECT Nombre, Iniciales FROM Profesores WHERE ID='$datos[ID_PROFESOR]'"))
-            {
+
+        while ($datos = $response->fetch_assoc()) {
+            if ($nombre = $class->query("SELECT Nombre, Iniciales FROM Profesores WHERE ID='$datos[ID_PROFESOR]'")) {
                 $prof = $nombre->fetch_assoc();
                 $profesor = $prof['Nombre'];
                 $iniciales = $prof['Iniciales'];
-            }
-            else
-            {
+            } else {
                 $ERR_MSG = $class->ERR_ASYSTECO;
             }
-                  if (isset($options['edificios']) && $options['edificios'] > 1) {
-                    $campos = [
-                        utf8_decode($datos['Grupo']),
-                        utf8_decode($iniciales),
-                        utf8_decode($datos['Aula']),
-                        $datos['Dia'],
-                        $datos['Hora'],
-                        $datos['Edificio'],
-                    ];
-                  }
-                  else{
-                    $campos = [
-                        utf8_decode($datos['Grupo']),
-                        utf8_decode($iniciales),
-                        utf8_decode($datos['Aula']),
-                        $datos['Dia'],
-                        $datos['Hora'],
-                    ];
-                  }
-            
+            if (isset($options['edificios']) && $options['edificios'] > 1) {
+                $campos = [
+                    utf8_decode($datos['Grupo']),
+                    utf8_decode($iniciales),
+                    utf8_decode($datos['Aula']),
+                    $datos['Dia'],
+                    $datos['Hora'],
+                    $datos['Edificio'],
+                ];
+            } else {
+                $campos = [
+                    utf8_decode($datos['Grupo']),
+                    utf8_decode($iniciales),
+                    utf8_decode($datos['Aula']),
+                    $datos['Dia'],
+                    $datos['Hora'],
+                ];
+            }
+
             // Escibimos una línea por cada $datos
             fputcsv($fp, $campos, $delimitador);
         }
-
-        
-
-    }else{
+    } else {
         $ERR_MSG = $class->ERR_ASYSTECO;
     }
-}else{
+} else {
     $ERR_MSG = $class->ERR_ASYSTECO;
 }
 
 
 // MARCAJES
-$fp = fopen($ma, 'w');
-$delimitador = ";";
-$titulo = [
-    'INICIALES',
-    'PROFESOR',
-    'FECHA',
-    'HORA',
-    'DIA',
-    'DIA SEMANA',
-    'ASISTENCIA',
-    'ACTIVIDAD EXTRAESCOLAR'
-];
 
 // Escribimos los títulos para los campos
-fputcsv($fp, $titulo, $delimitador);
 
-if(isset($_GET['profesor']) && $_GET['profesor'] != '')
-{
-    $profesor = " AND ID_PROFESOR = '$_GET[profesor]'";
-    $sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-    WHERE Profesores.Activo=1 AND ID_PROFESOR = '$_GET[profesor]' 
-    ORDER BY Profesores.Nombre ASC";
-}
-else
-{
-    $profesor = "";
-    $sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-    WHERE Profesores.Activo=1 AND Marcajes.Fecha<=NOW()
-    ORDER BY Profesores.Nombre ASC";
-}
-if(isset($_GET['fechainicio']) && isset($_GET['fechafin']))
-{
-    $fi = preg_split('/\//', $_GET['fechainicio']);
-            $dia = $fi[0];
-            $m = $fi[1];
-            $Y = $fi[2];
-    $fini = $Y .'-'. $m .'-'. $dia;
-    $ff = preg_split('/\//', $_GET['fechafin']);
-            $dia = $ff[0];
-            $m = $ff[1];
-            $Y = $ff[2];
-    $ffin = $Y .'-'. $m .'-'. $dia;
-    if($class->validFormSQLDate($fini) && $class->validFormSQLDate($ffin))
-    {
-        if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID WHERE Profesores.Activo=1 AND Fecha BETWEEN '$fini' AND '$ffin'"))
-        {
-            die($class->ERR_ASYSTECO);
-        }
-    }
-}
-else
-{
-    if(! $response = $class->query("SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-    WHERE Profesores.Activo=1
-    ORDER BY Profesores.Nombre ASC"))
-    {
-        die($class->ERR_ASYSTECO);
-    }
-}
+$sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
+FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
+    INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
+WHERE Profesores.Activo=1 AND Marcajes.Fecha<=NOW()
+ORDER BY Profesores.Nombre ASC";
 
-if(isset($_GET['fechainicio']) && isset($_GET['fechafin']) && $_GET['fechainicio'] !='' && $_GET['fechafin'] !='')
-{
-    $fechas=" AND Fecha BETWEEN '$fini' AND '$ffin'";
-}
-else
-{
-    $fechas="";
-}
+if ($response = $class->query($sql)) {
 
-$page_size = 15000;
-$total_records = $response->num_rows;
-$count=ceil($total_records/$page_size);
+    $page_size = 15000;
+    $total_records = $response->num_rows;
+    $count = ceil($total_records / $page_size);
 
-if($respuesta = $class->query("SELECT * FROM Marcajes"))
-{
-    if($respuesta->num_rows > 0)
-    {
-        for($i=0; $i<=$count; $i++) 
-        {
+    if ($response->num_rows > 0) {
+        $titulo = '';
+        $delimitador = '';
+        $fp = fopen($ma, 'w');
+        $delimitador = ";";
+        $titulo = [
+            'INICIALES',
+            'PROFESOR',
+            'FECHA',
+            'HORA',
+            'DIA',
+            'DIA SEMANA',
+            'ASISTENCIA',
+            'ACTIVIDAD EXTRAESCOLAR'
+        ];
+
+        fputcsv($fp, $titulo, $delimitador);
+
+        for ($i = 0; $i <= $count; $i++) {
             $offset_var = $i * $page_size;
-        
-            if(isset($profesor) && $profesor !='' || (isset($fechas) && $fechas !=''))
-            {
-                $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-                        FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-                            INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-                        WHERE Profesores.Activo=1 $profesor $fechas AND Marcajes.Fecha<=NOW()
-                        ORDER BY Marcajes.Fecha, Profesores.Nombre ASC 
-                        LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
-            }
-            else
-            {
-                $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
+            $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
                         FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
                             INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
                         WHERE Profesores.Activo=1 AND Marcajes.Fecha<=NOW()
                         ORDER BY Marcajes.Fecha, Profesores.Nombre ASC 
-                        LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
-            }
+                        LIMIT $page_size OFFSET $offset_var";
             $result =  $class->query($query);
-        
-            while ($datos = $result->fetch_assoc())
-            {
+
+            while ($datos = $result->fetch_assoc()) {
                 $sep = preg_split('/[ -]/', $datos['Fecha']);
                 $dia = $sep[2];
                 $m = $sep[1];
                 $Y = $sep[0];
-        
-                if($datos['Asiste'] == 0)
-                {
+
+                if ($datos['Asiste'] == 0) {
                     $asist = "NO";
                     $extra = "NO";
-                }
-                elseif($datos['Asiste'] == 1)
-                {
+                } elseif ($datos['Asiste'] == 1) {
                     $asist = "SI";
                     $extra = "NO";
-                }
-                elseif($datos['Asiste'] == 2)
-                {
+                } elseif ($datos['Asiste'] == 2) {
                     $asist = "SI";
                     $extra = "SI";
                 }
-        
+
                 $campos = [
                     utf8_decode($datos['Iniciales']),
                     utf8_decode($datos['Nombre']),
@@ -276,132 +182,60 @@ if($respuesta = $class->query("SELECT * FROM Marcajes"))
                     $asist,
                     $extra
                 ];
-        
+
                 // Escibimos una línea por cada $datos
                 fputcsv($fp, $campos, $delimitador);
-        
             }
         }
-    }else{
+    } else {
         $ERR_MSG = $class->ERR_ASYSTECO;
     }
-}else{
-    $ERR_MSG = $class->ERR_ASYSTECO;
 }
 
 // FICHAJE
-$fp = fopen($fi, 'w');
-$delimitador = ";";
-$titulo = [
-    'PROFESOR',
-    'FECHA',
-    'HORA FICHAJE',
-    'HORA SALIDA',
-    'DIA SEMANA'
-];
 
 // Escribimos los títulos para los campos
-fputcsv($fp, $titulo, $delimitador);
 
-if(isset($_GET['profesor']) && $_GET['profesor'] != '')
-{
-    $profesor = " ID_PROFESOR = '$_GET[profesor]'";
-    $sql = "SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
-    FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID)
-    WHERE ID_PROFESOR = '$_GET[profesor]' 
-    ORDER BY Profesores.Nombre ASC";
-}
-else
-{
-    $profesor = "";
-    $sql = "SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
-    FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID) 
-    ORDER BY Profesores.Nombre ASC";
-}
+$sql = "SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
+FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID) 
+ORDER BY Profesores.Nombre ASC";
 
-if(isset($_GET['fechainicio']) && isset($_GET['fechafin']))
-{
-    $fi = preg_split('/\//', $_GET['fechainicio']);
-            $dia = $fi[0];
-            $m = $fi[1];
-            $Y = $fi[2];
-    $fini = $Y .'-'. $m .'-'. $dia;
-    $ff = preg_split('/\//', $_GET['fechafin']);
-            $dia = $ff[0];
-            $m = $ff[1];
-            $Y = $ff[2];
-    $ffin = $Y .'-'. $m .'-'. $dia;
-    if($class->validFormSQLDate($fini) && $class->validFormSQLDate($ffin))
-    {
-        if(! $response = $class->query("SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
-        FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID) WHERE Fecha BETWEEN '$fini' AND '$ffin'"))
-        {
-            die($class->ERR_ASYSTECO);
-        }
-    }
-}
-else
-{
-    if(! $response = $class->query("SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
-    FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID)
-    ORDER BY Profesores.Nombre ASC"))
-    {
-        die($class->ERR_ASYSTECO);
-    }
-}
+if ($response = $class->query($sql)) {
+    $page_size = 15000;
+    $total_records = $response->num_rows;
+    $count = ceil($total_records / $page_size);
 
-if(isset($_GET['fechainicio']) && isset($_GET['fechafin']) && $_GET['fechainicio'] !='' && $_GET['fechafin'] !='')
-{
-    if(isset($_GET['profesor']) && $_GET['profesor'] != '')
-    {
-        $and= "AND";
-    }
-    else
-    {
-        $and = "";
-    }
-    $fechas="Fecha BETWEEN '$fini' AND '$ffin'";
-}
-else
-{
-    $fechas="";
-}
+    if ($response->num_rows > 0) {
+        $titulo = '';
+        $delimitador = '';
+        $fp = fopen($fi, 'w');
+        $delimitador = ";";
+        $titulo = [
+            'PROFESOR',
+            'FECHA',
+            'HORA FICHAJE',
+            'HORA SALIDA',
+            'DIA SEMANA'
+        ];
 
-$page_size = 15000;
-$total_records = $response->num_rows;
-$count=ceil($total_records/$page_size);
+        fputcsv($fp, $titulo, $delimitador);
 
-if($respuesta = $class->query("SELECT * FROM Fichar"))
-{
-    if($respuesta->num_rows > 0)
-    {
-        for($i=0; $i<=$count; $i++)
-        {
+        for ($i = 0; $i <= $count; $i++) {
             $offset_var = $i * $page_size;
-            if((isset($profesor) && $profesor !='') || (isset($fechas) && $fechas !=''))
-            {
-                $query = "SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
-                FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID)
-                WHERE $profesor $and $fechas 
-                ORDER BY Profesores.Nombre ASC 
-                LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
-            }
-            else
-            {
-                $query = "SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
-                FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID)
-                ORDER BY Profesores.Nombre ASC 
-                LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
-            }
+
+            $query = "SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
+            FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID)
+            ORDER BY Profesores.Nombre ASC 
+            LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
+
             $result =  $class->query($query);
 
-            while ($datos = $result->fetch_assoc())
-            {
+            while ($datos = $result->fetch_assoc()) {
                 $sep = preg_split('/[ -]/', $datos['Fecha']);
                 $dia = $sep[2];
                 $m = $sep[1];
                 $Y = $sep[0];
-        
+
                 $campos = [
                     utf8_decode($datos['Nombre']),
                     "$dia/$m/$Y",
@@ -409,40 +243,50 @@ if($respuesta = $class->query("SELECT * FROM Fichar"))
                     $datos['F_Salida'],
                     utf8_decode($datos['DIA_SEMANA'])
                 ];
-        
+
                 // Escibimos una línea por cada $datos
                 fputcsv($fp, $campos, $delimitador);
             }
         }
-    }else{
+    } else {
         $ERR_MSG = $class->ERR_ASYSTECO;
     }
-
-}else{
-    $ERR_MSG = $class->ERR_ASYSTECO;
 }
+
 
 
 $zip =  new ZipArchive();
 
-$filename = 'Copia_Seguridad_'. $insti_db .'.zip';
-$archivo1 = $pf;
-$archivo2 = $ho;
-$archivo3 = $ma;
-$archivo4 = $fi;
+$filename = 'Copia_Seguridad_' . $options['Centro'] . '.zip';
 
-if($zip->open($filename, ZIPARCHIVE::CREATE)===true) {
+if ($zip->open($filename, ZIPARCHIVE::CREATE) === true) {
 
-    $zip->addFile($archivo1);
-    $zip->addFile($archivo2);
-    $zip->addFile($archivo3);
-    $zip->addFile($archivo4);
+    is_file($pf) ? $zip->addFile($pf) : '';
+    is_file($ho) ? $zip->addFile($ho) : '';
+    is_file($ma) ? $zip->addFile($ma) : '';
+    is_file($fi) ? $zip->addFile($fi) : '';
     $zip->close();
-    header("location: $ff$filename");
-}else{
-    echo "Error creando archivo ". $filename;
+
+    if (is_file($filename)) {
+        header("location: $ff$filename");
+    } else {
+        echo "<div style='width: 100%; height: 100vh; text-align: center;'>";
+        echo "<div style='box-shadow: 4px 4px 16px 16px grey; width: 50%; margin-left: auto; margin-right: auto; border-radius: 10px;'>";
+        echo "<h1 style='color: green; margin-top: 40vh; vartical-align: middle; padding: 25px;'>No hay datos para realizar copia.</h1>";
+        echo "</div>";
+        echo "</div>";
+        echo "<script>setTimeout(function(){window.location.href = '$_SERVER[HTTP_REFERER]'}, 1500)</script>";
+    }
+} else {
+    echo "<div style='width: 100%; height: 100vh; text-align: center;'>";
+    echo "<div style='box-shadow: 4px 4px 16px 16px grey; width: 50%; margin-left: auto; margin-right: auto; border-radius: 10px;'>";
+    echo "<h1 style='color: red; margin-top: 40vh; vartical-align: middle; padding: 25px;'>Error creando archivo $filename</h1>";
+    echo "</div>";
+    echo "</div>";
+    echo "<script>setTimeout(function(){window.location.href = '$_SERVER[HTTP_REFERER]'}, 1500)</script>";
 }
-unlink($pf);
-unlink($ho);
-unlink($ma);
-unlink($fi);
+
+is_file($pf) ? unlink($pf) : '';
+is_file($ho) ? unlink($ho) : '';
+is_file($ma) ? unlink($ma) : '';
+is_file($fi) ? unlink($fi) : '';

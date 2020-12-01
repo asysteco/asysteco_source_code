@@ -49,7 +49,7 @@
             <!--a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger eliminar" onclick="deshabilitado()"><span class="glyphicon glyphicon-envelope"></span> Borrar Mensajes</a-->
             </br>
             <h2>Copia de seguridad del centro</h2>
-            <a href="index.php?ACTION=backup-centro" id="backup" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Copia de seguridad</a>
+            <a href="index.php?ACTION=backup-centro" id="backup" class="btn btn-success" target="_blank" download><span class="glyphicon glyphicon-floppy-save"></span> Copia de seguridad</a>
             </br>
         <div class="col-xs-12">
             <div id="btn-response"></div>
