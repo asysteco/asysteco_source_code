@@ -64,7 +64,8 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
                     {
                         if($resp->num_rows > 0)
                         {
-                            echo "<a href='index.php?ACTION=profesores&OPT=sustituir&ID=$datos[ID]' class='btn btn-info'>Sustituir</a><br><br>";
+                            echo "<a href='index.php?ACTION=profesores' style='margin-left: 30px' class='btn btn-danger pull-left'>Cancelar</a>";
+                            echo "<a href='index.php?ACTION=profesores&OPT=sustituir&ID=$datos[ID]' style='margin-right: 30px' class='btn btn-info pull-right'>Sustituir</a><br><br>";
                         } 
                         else
                         {

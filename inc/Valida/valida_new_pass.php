@@ -18,7 +18,7 @@ $_POST['new_pass_c'] = $class->encryptPassword($_POST['new_pass_c']);
                         $MSG = 'Contraseña cambiada satisfatoriamente.';
                         $cambiada = true;
                         header("Refresh:1; url=index.php?ACTION=logout");
-                        include_once($dirs['inc'] . 'errors.php');
+                        include_once($dirs['inc'] . 'Interfaces/errors.php');
                     }
                     else
                     {
@@ -49,7 +49,7 @@ $_POST['new_pass_c'] = $class->encryptPassword($_POST['new_pass_c']);
 }
 if(isset($cambiada))
 {
-    include_once($dirs['inc'] . 'top-nav.php');
-    die(include_once($dirs['inc'] . 'errors.php'));
+    include_once($dirs['inc'] . 'Interfaces/top-nav.php');
+    die(include_once($dirs['inc'] . 'Interfaces/errors.php'));
 }
 ?>

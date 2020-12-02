@@ -1,6 +1,6 @@
 <?php
 
-include_once($dirs['inc'] . 'mcript.php');
+include_once($dirs['inc'] . 'Helper/mcript.php');
 if (isset($_SESSION['ID']) && !empty($_SESSION['ID'])) {
     echo '
         <div class="container" style="margin-top:50px">
