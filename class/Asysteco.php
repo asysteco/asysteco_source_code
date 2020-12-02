@@ -892,8 +892,7 @@ class Asysteco
         if(!$this->validFormDate($euDate)) {
             return false;
         }
-
-        $splitDate = preg_split('/\//', $euDate);
+        $splitDate = explode('/', $euDate);
         $day = $splitDate[0];
         $month = $splitDate[1];
         $year = $splitDate[2];
@@ -901,5 +900,21 @@ class Asysteco
         $sqlDate = $year .'-'. $month .'-'. $day;
 
         return $sqlDate;
-    } 
+    }
+
+    function formatSQLDateToEuropeanDate($sqlDate) 
+    {
+        if(!$this->validFormSQLDate($sqlDate)) {
+            return false;
+        }
+
+        $sep = explode('-', $sqlDate);
+        $day = $sep[2];
+        $month = $sep[1];
+        $year = $sep[0];
+
+        $date = $day . '/' . $month . '/' . $year;
+
+        return $date;
+    }
 }
