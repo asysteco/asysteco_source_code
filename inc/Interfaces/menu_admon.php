@@ -20,11 +20,6 @@
                 {
                     $ERR_MSG = $class->ERR_ASYSTECO;
                 }
-
-              // He arreglado cosas asas
-              // He arreglado cosas sas Nueva funcionalidad tope de guapa
-              // He arreglado cosas sasd
-
             ?>
             <h2>Exportar a Excel</h2>
             <a enlace="index.php?ACTION=admon&OPT=select&export=marcajes" id="exportmarcajes" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Marcajes</a>
@@ -35,7 +30,6 @@
             <a enlace="index.php?ACTION=admon&OPT=select&export=fichajes" id="exportfichajes" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Fichajes</a>
             </br>
             <h2>Mostrar en Pantalla</h2>
-            <!--a enlace="index.php?ACTION=admon&OPT=select&select=marcajes&pag=0" id='filtromarcaje' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Marcajes</a-->
             <a enlace="index.php?ACTION=admon&OPT=select&select=asistencias&pag=0"id='filtroasistencias' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Asistencias</a>
             <a enlace="index.php?ACTION=admon&OPT=select&select=faltas&pag=0" id='filtrofaltas' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Faltas</a>
             <a enlace="index.php?ACTION=admon&OPT=select&select=horarios&pag=0" id='filtrohorarios' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Horarios</a>
@@ -45,8 +39,7 @@
             <h2>Borrado de Datos (Atención estas acciones son <b>IRREVERSIBLES</b>)</h2>
             <a enlace="index.php?ACTION=profesores&OPT=delete-all" class="btn btn-danger eliminar" elemento="profesores"><span class="glyphicon glyphicon-user"></span> Borrar Profesores</a>
             <a enlace="index.php?ACTION=horarios&OPT=delete-all" class="btn btn-danger eliminar" elemento="horarios"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios</a>
-            <a enlace="index.php?ACTION=horarios&OPT=delete-all-t" class="btn btn-danger eliminar" elemento="t-horarios"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios Programados</a>
-            <!--a enlace="index.php?ACTION=admon&OPT=" class="btn btn-danger eliminar" onclick="deshabilitado()"><span class="glyphicon glyphicon-envelope"></span> Borrar Mensajes</a-->
+            <a enlace="index.php?ACTION=horarios&OPT=delete-all-t" id="eliminar-t-horarios" class="btn btn-danger eliminar" elemento="t-horarios"><span class="glyphicon glyphicon-calendar"></span> Borrar Horarios Programados</a>
             </br>
             <h2>Copia de seguridad del centro</h2>
             <a href="index.php?ACTION=backup-centro" id="backup" class="btn btn-success" target="_blank" download><span class="glyphicon glyphicon-floppy-save"></span> Copia de seguridad</a>
