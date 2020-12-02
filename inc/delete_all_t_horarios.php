@@ -20,7 +20,6 @@ if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($f
     }
 }
 try {
-    var_dump("DELETE FROM T_horarios $whereFilter");
     if (!$mysql->query("DELETE FROM T_horarios $whereFilter")) {
         throw new Exception('Error-temp-horarios');
     }
