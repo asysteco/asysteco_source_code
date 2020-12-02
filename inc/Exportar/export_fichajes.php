@@ -33,8 +33,8 @@ if (isset($profesor) && !empty($profesor)) {
 }
 
 if(isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($fechaFin)) {
-    $fini = $class->formatEuropeanToSQLDate($fechaInicio);
-    $fini = $class->formatEuropeanToSQLDate($fechaFin);
+    $fini = $class->formatEuropeanDateToSQLDate($fechaInicio);
+    $ffin = $class->formatEuropeanDateToSQLDate($fechaFin);
 
     if($fini && $ffin) {
         $whereFilter .= " AND Fecha >= '$fini' AND Fecha <= '$ffin'";
@@ -44,7 +44,7 @@ if(isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($fe
 if (! $response = $class->query("SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
 FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID) $whereFilter
 ORDER BY Profesores.Nombre ASC")) {
-    $errorMessage = 'No existen datos para exportar...';
+    $errorMessage = 'Ha ocurrido un error inesperado...';
 }
 
 $page_size = 15000;

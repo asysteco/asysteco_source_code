@@ -1,5 +1,11 @@
 <?php
 
+$profesor = $_GET['profesor'] ?? '';
+$fechaInicio = $_GET['fechainicio'] ?? '';
+$fechaFin = $_GET['fechafin'] ?? '';
+$whereFilter = ' AND Fecha <= CURDATE()';
+$errorMessage = '';
+
 // Preparamos directorio tmp, borrando fichero si existe
 $ff = "tmp/";
 $fn = "Listado_Marcajes.csv";
@@ -25,97 +31,48 @@ $titulo = [
 // Escribimos los títulos para los campos
 fputcsv($fp, $titulo, $delimitador);
 
-if(isset($_GET['profesor']) && $_GET['profesor'] != '')
-{
-    $profesor = " AND ID_PROFESOR = '$_GET[profesor]'";
-    $sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-    WHERE Profesores.Activo=1 AND ID_PROFESOR = '$_GET[profesor]' 
-    ORDER BY Profesores.Nombre ASC";
+if (isset($profesor) && !empty($profesor)) {
+    $whereFilter .= " AND ID_PROFESOR = $profesor";
 }
-else
-{
-    $profesor = "";
-    $sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-    WHERE Profesores.Activo=1 AND Marcajes.Fecha<=NOW()
-    ORDER BY Profesores.Nombre ASC";
-}
-if(isset($_GET['fechainicio']) && isset($_GET['fechafin']))
-{
-    $fi = preg_split('/\//', $_GET['fechainicio']);
-            $dia = $fi[0];
-            $m = $fi[1];
-            $Y = $fi[2];
-    $fini = $Y .'-'. $m .'-'. $dia;
-    $ff = preg_split('/\//', $_GET['fechafin']);
-            $dia = $ff[0];
-            $m = $ff[1];
-            $Y = $ff[2];
-    $ffin = $Y .'-'. $m .'-'. $dia;
-    if($class->validFormSQLDate($fini) && $class->validFormSQLDate($ffin))
-    {
-        if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID WHERE Profesores.Activo=1 AND Fecha BETWEEN '$fini' AND '$ffin'"))
-        {
-            die($class->ERR_ASYSTECO);
-        }
-    }
-}
-else
-{
-    if(! $response = $class->query("SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-    FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-        INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-    WHERE Profesores.Activo=1
-    ORDER BY Profesores.Nombre ASC"))
-    {
-        die($class->ERR_ASYSTECO);
+
+if(isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($fechaFin)) {
+    $fini = $class->formatEuropeanDateToSQLDate($fechaInicio);
+    $ffin = $class->formatEuropeanDateToSQLDate($fechaFin);
+    if($fini && $ffin) {
+        $whereFilter .= " AND Fecha >= '$fini' AND Fecha <= '$ffin'";
     }
 }
 
-if(isset($_GET['fechainicio']) && isset($_GET['fechafin']) && $_GET['fechainicio'] !='' && $_GET['fechafin'] !='')
-{
-    $fechas=" AND Fecha BETWEEN '$fini' AND '$ffin'";
-}
-else
-{
-    $fechas="";
+if(! $response = $class->query("SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
+FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
+    INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
+WHERE Profesores.Activo=1
+ORDER BY Profesores.Nombre ASC")) {
+    $errorMessage = 'Ha ocurrido un error inesperado...';
 }
 
 $page_size = 15000;
 $total_records = $response->num_rows;
 $count=ceil($total_records/$page_size);
 
-if($respuesta = $class->query("SELECT * FROM Marcajes"))
-{
-    if($respuesta->num_rows > 0)
-    {
+$mysql = $class->conex;
+$mysql->autocommit(FALSE);
+
+if(empty($errorMessage) && $response->num_rows > 0) {
+    try {
         for($i=0; $i<=$count; $i++) 
         {
             $offset_var = $i * $page_size;
-        
-            if(isset($profesor) && $profesor !='' || (isset($fechas) && $fechas !=''))
-            {
-                $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-                        FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-                            INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-                        WHERE Profesores.Activo=1 $profesor $fechas AND Marcajes.Fecha<=NOW()
-                        ORDER BY Marcajes.Fecha, Profesores.Nombre ASC 
-                        LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
+            $sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
+            FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
+                INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
+            WHERE Profesores.Activo=1 $whereFilter
+            ORDER BY Marcajes.Fecha, Profesores.Nombre ASC 
+            LIMIT $page_size OFFSET $offset_var";
+            if (!$result = $mysql->query($sql)) {
+                throw new Exception('Ha ocurrido un error inesperado...');
             }
-            else
-            {
-                $query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-                        FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-                            INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-                        WHERE Profesores.Activo=1 AND Marcajes.Fecha<=NOW()
-                        ORDER BY Marcajes.Fecha, Profesores.Nombre ASC 
-                        LIMIT $page_size OFFSET $offset_var"; # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
-            }
-            $result =  $class->query($query);
-        
+
             while ($datos = $result->fetch_assoc())
             {
                 $sep = preg_split('/[ -]/', $datos['Fecha']);
@@ -155,35 +112,31 @@ if($respuesta = $class->query("SELECT * FROM Marcajes"))
         
             }
         }
-        //cabeceras para descarga
-        header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename="' . $fn . '";');
-        
-        ob_end_clean();
-        
-        readfile($fn);
-        
-        if(is_file($fn))
-        {
-            unlink($fn);
-        }
-        exit;
+    } catch (Exception $e) {
+        $errorMessage = $e;
+        $mysql->rollback();
     }
-    else
+    $mysql->commit();
+
+    //cabeceras para descarga
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename="' . $fn . '";');
+    
+    ob_end_clean();
+    
+    readfile($fn);
+    
+    if(is_file($fn))
     {
-        echo "<div style='width: 100%; height: 100vh; text-align: center;'>";
-        echo "<div style='box-shadow: 4px 4px 16px 16px grey; width: 50%; margin-left: auto; margin-right: auto; border-radius: 10px;'>";
-            echo "<h1 style='color: red; margin-top: 40vh; vartical-align: middle; padding: 25px;'>No existen datos a exportar...</h1>";
-        echo "</div>";
-        echo "</div>";
-        echo "<script>setTimeout(function(){window.close()}, 1500)</script>";
+        unlink($fn);
     }
+    exit;
 }
-else
-{
+
+if(empty($errorMessage)) {
     echo "<div style='width: 100%; height: 100vh; text-align: center;'>";
     echo "<div style='box-shadow: 4px 4px 16px 16px grey; width: 50%; margin-left: auto; margin-right: auto; border-radius: 10px;'>";
-        echo "<h1 style='color: red; margin-top: 40vh; vartical-align: middle; padding: 25px;'>Ha ocurrido un error inesperado...</h1>";
+        echo "<h1 style='color: red; margin-top: 40vh; vartical-align: middle; padding: 25px;'>No existen datos a exportar...</h1>";
     echo "</div>";
     echo "</div>";
     echo "<script>setTimeout(function(){window.close()}, 1500)</script>";

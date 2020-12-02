@@ -1,27 +1,24 @@
 <?php
 
-if(isset($_GET['profesor']) && $_GET['profesor'] != '')
-{
-    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo FROM
-    Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
-    INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia 
-    INNER JOIN Aulas ON Aulas.ID=Horarios.Aula 
-    INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
-    WHERE ID_PROFESOR = '$_GET[profesor]'
-    ORDER BY ID_PROFESOR, Dia, Hora";
+$profesor = $_GET['profesor'] ?? '';
+$whereFilter = '';
+$errorMessage = '';
+$edificios = $options['edificios'];
+
+if (isset($profesor) && !empty($profesor)) {
+    $whereFilter = "WHERE ID_PROFESOR = $profesor";
 }
-else
-{
-    $sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo
-    FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
-    INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia
-    INNER JOIN Aulas ON Aulas.ID=Horarios.Aula 
-    INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
-    ORDER BY ID_PROFESOR, Dia, Hora";
-}
+
+$sql = "SELECT Horarios.*, Profesores.Nombre, Profesores.Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo FROM
+Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
+INNER JOIN Diasemana ON Diasemana.ID=Horarios.Dia 
+INNER JOIN Aulas ON Aulas.ID=Horarios.Aula 
+INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
+$whereFilter
+ORDER BY ID_PROFESOR, Dia, Hora";
+
 if($response = $class->query($sql))
 {
-    //echo "<h2>Registros de Horarios</h2>"; 
     if ($response->num_rows > 0) 
     {
         $ff = "tmp/";
@@ -33,7 +30,7 @@ if($response = $class->query($sql))
         }
         $fp = fopen($fn, 'w');
         $delimitador = ";";
-        if (isset($options['edificios']) && $options['edificios'] > 1) {
+        if (isset($edificios) && $edificios > 1) {
             $titulo = [
                 'GRUPO',
                 'INICIALES',
@@ -55,20 +52,10 @@ if($response = $class->query($sql))
         fputcsv($fp, $titulo, $delimitador);
         while($datos = $response->fetch_assoc()) 
         {
-            if($nombre = $class->query("SELECT Nombre, Iniciales FROM Profesores WHERE ID='$datos[ID_PROFESOR]'"))
-            {
-                $prof = $nombre->fetch_assoc();
-                $profesor = $prof['Nombre'];
-                $iniciales = $prof['Iniciales'];
-            }
-            else
-            {
-                $ERR_MSG = $class->ERR_ASYSTECO;
-            }
-            if (isset($options['edificios']) && $options['edificios'] > 1) {
+            if (isset($edificios) && $edificios > 1) {
                 $campos = [
                     utf8_decode($datos['Grupo']),
-                    utf8_decode($iniciales),
+                    utf8_decode($datos['Iniciales']),
                     utf8_decode($datos['Aula']),
                     $datos['Dia'],
                     $datos['Hora'],
@@ -78,7 +65,7 @@ if($response = $class->query($sql))
                 
             $campos = [
                 utf8_decode($datos['Grupo']),
-                utf8_decode($iniciales),
+                utf8_decode($datos['Iniciales']),
                 utf8_decode($datos['Aula']),
                 $datos['Dia'],
                 $datos['Hora'],
