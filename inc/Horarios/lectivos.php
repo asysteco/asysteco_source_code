@@ -32,7 +32,7 @@ if($response = $class->query("SELECT * FROM $class->lectivos"))
     }
 
     echo "<div class='col-xs-12 col-md-8'>";
-        include_once($dirs['inc'] . 'calendario.php');
+        include_once($dirs['inc'] . 'Horarios/calendario.php');
     echo "</div>";
 }
 else

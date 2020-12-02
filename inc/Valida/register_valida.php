@@ -22,7 +22,7 @@ if(! isset($ERR_REG_FORM))
         {
             $MSG = "Te has registrado correctamente.";
             header("Refresh:2; url=index.php");
-            include_once($dirs['inc'] . 'msg_modal.php');
+            include_once($dirs['inc'] . 'Interfaces/msg_modal.php');
         }
         else
         {
