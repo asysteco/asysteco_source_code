@@ -68,25 +68,16 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
 
           echo "<li class='dropdown $act_horario'><a class='dropdown-toggle' data-toggle='dropdown' href='#'><span class='glyphicon glyphicon-calendar'></span> Horario <span class='caret'></span></a>";
             echo '<ul class="dropdown-menu">';
-              // echo '<li>';
-              //   echo '<a href="index.php?ACTION=horarios&OPT=edit-guardias">
-              //     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar3-week" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              //     <path fill-rule="evenodd" d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
-              //     <path fill-rule="evenodd" d="M12 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-5 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2-3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-5 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-              //     </svg> 
-              //     Editar Guardias
-              //   </a>';
-              //   echo '</li>';
-              echo '<li><a href="index.php?ACTION=horarios&OPT=cursos"><span class="glyphicon glyphicon-pencil"></span> Gestionar Cursos</a></li>';
-              echo '<li><a href="index.php?ACTION=horarios&OPT=aulas"><span class="glyphicon glyphicon-pencil"></span> Gestionar Aulas</a></li>';
-              echo '<li><a href="index.php?ACTION=horarios&OPT=import-form"><span class="glyphicon glyphicon-open"></span> Importar horarios</a></li>';
+              echo '<li class="' . $act_gestCursos . '"><a href="index.php?ACTION=horarios&OPT=cursos"><span class="glyphicon glyphicon-pencil"></span> Gestionar Cursos</a></li>';
+              echo '<li class="' . $act_gestAulas . '"><a href="index.php?ACTION=horarios&OPT=aulas"><span class="glyphicon glyphicon-pencil"></span> Gestionar Aulas</a></li>';
+              echo '<li class="' . $act_importHorarios . '"><a href="index.php?ACTION=horarios&OPT=import-form"><span class="glyphicon glyphicon-open"></span> Importar horarios</a></li>';
             echo '</ul>';
           echo '</li>';
 
           echo "<li class='dropdown $act_profesores '><a class='dropdown-toggle' data-toggle='dropdown' href='#'><span class='glyphicon glyphicon-education'></span> Profesores <span class='caret'></a>";
             echo "<ul class='dropdown-menu'>";
-              echo "<li><a href='$_SERVER[PHP_SELF]?ACTION=profesores'><span class='glyphicon glyphicon-education'></span> Mostrar profesores</a></li>";
-              echo "<li><a href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=import-form'><span class='glyphicon glyphicon-plus'></span> Importar profesores</a></li>";
+              echo "<li class='$act_showProf'><a href='$_SERVER[PHP_SELF]?ACTION=profesores'><span class='glyphicon glyphicon-education'></span> Mostrar profesores</a></li>";
+              echo "<li class='$act_importProf'><a href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=import-form'><span class='glyphicon glyphicon-plus'></span> Importar profesores</a></li>";
             echo "</ul>";
           echo "</li>";
 
@@ -115,20 +106,15 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
               echo "<li class='$act_qr'>";
                 echo '<a href="index.php?ACTION=qrcoder"><span class="glyphicon glyphicon-qrcode"></span> Activador de lector</a>';
               echo '</li>';
-              echo '<li>';
-                /*echo'<a id="message" href="index.php?ACTION=mensajes"><span id="message-icon" class="glyphicon glyphicon-comment"></span> Mensajes ';*/
-                  echo $notificacion;
-                echo '</a>';
-              echo '</li>';
-              echo '<li>';
+              echo "<li class='$act_admon'>";
                 echo '<a id="admon" href="index.php?ACTION=admon"><span id="admon-icon" class="glyphicon glyphicon-folder-close"></span> Administración</a>';
               echo '</li>';
-              echo '<li>';
+              echo "<li class='$act_notification'>";
                 echo '<a id="notif" href="index.php?ACTION=notificaciones"><span id="notif-icon" class="glyphicon glyphicon-bell"></span> Notificaciones';
                   echo $notificacion_alert;
                 echo '</a>';
               echo '</li>';
-              echo '<li>';
+              echo "<li class='$act_changePass'>";
                 echo '<a id="cambio-pass" href="index.php?ACTION=cambio_pass"><span id="cambio-pass-icon" class="glyphicon glyphicon-refresh"></span> Cambio de contraseña</a>';
               echo '</li>';
               echo '<li>';
@@ -170,7 +156,7 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
           echo "<li class='$act_qr'>";
             echo '<a href="index.php?ACTION=qrcoder"><span class="glyphicon glyphicon-qrcode"></span> Mi código QR</a>';
           echo '</li>';
-          echo '<li>';
+          echo "<li class='$act_changePass'>";
             echo '<a id="cambio-pass" href="index.php?ACTION=cambio_pass"><span id="cambio-pass-icon" class="glyphicon glyphicon-refresh"></span> Cambio de contraseña</a>';
           echo '</li>'; 
           echo '<li>';
@@ -180,25 +166,15 @@ echo '<nav class="navbar navbar-inverse navbar-fixed-top">';
 
         echo '<ul class="nav navbar-nav navbar-right">';
         echo '<li>';
-          /*echo "<li class='dropdown $act_usuario'>";*/
-            echo "<a class='dropdown-toggle' data-toggle='dropdown'><span class='glyphicon glyphicon-user'></span> ";
-              echo $_SESSION['Nombre'];
-              /*echo $notificacion;*/
-              /*echo '<span class="caret"></span>';*/
-            echo '</a>';
-            /*echo '<ul class="dropdown-menu">';
-              echo '<li>';
-                echo'<a id="message" href="index.php?ACTION=mensajes"><span id="message-icon" class="glyphicon glyphicon-comment"></span> Mensajes ';
-                  echo $notificacion;
-                echo '</a>';
-              echo '</li>'; 
-            echo '</ul>';*/
-          echo '</li>';
+          echo "<a class='dropdown-toggle' data-toggle='dropdown'><span class='glyphicon glyphicon-user'></span> ";
+            echo $_SESSION['Nombre'];
+          echo '</a>';
+        echo '</li>';
 
-          echo "<li>";
-            echo "<a href='$_SERVER[PHP_SELF]?ACTION=logout'><span class='glyphicon glyphicon-log-out'></span> Cerrar Sesión</a>";
-          echo "</li>";
-        echo '</ul>';
+        echo "<li>";
+          echo "<a href='$_SERVER[PHP_SELF]?ACTION=logout'><span class='glyphicon glyphicon-log-out'></span> Cerrar Sesión</a>";
+        echo "</li>";
+      echo '</ul>';
       }
 
     echo '</div>';

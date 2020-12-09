@@ -1,6 +1,6 @@
 <?php
 
-include_once($dirs['inc'] . 'Helper/mcript.php');
+include_once($dirs['Helper'] . 'mcript.php');
 if (isset($_SESSION['ID']) && !empty($_SESSION['ID'])) {
     echo '
         <div class="container" style="margin-top:50px">
@@ -12,7 +12,7 @@ if (isset($_SESSION['ID']) && !empty($_SESSION['ID'])) {
     if (isset($options['GoogleQR']) && $options['GoogleQR'] == 1) {
         echo '<img class="img-thumbnail" src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=' . urlencode($dato_encriptado) . '&choe=UTF-8" title="Código QR" />';
     } else {
-        include_once($dirs['inc'] . 'phpqrcode/qrlib.php');
+        include_once($dirs['phpqrcode'] . 'qrlib.php');
         $codesDir = "tmp/";
         $codeFile = uniqid() . '.png';
         QRcode::png($dato_encriptado, $codesDir . $codeFile, 'H', '10');

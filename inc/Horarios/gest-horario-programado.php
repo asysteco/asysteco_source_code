@@ -175,7 +175,7 @@ if ($programDate !== '') {
                             }
                         } else {
                             echo "<tr style='text-align: center;'>";
-                                echo "<td colspan='100%'><h3>No hay hora asignadas.</h3></td>";
+                                echo "<td colspan='100%'><h3>No hay horas asignadas.</h3></td>";
                             echo "</tr>";
                         }
                     } else {
