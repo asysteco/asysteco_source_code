@@ -24,8 +24,8 @@ echo '<div class="container" style="margin-top:50px">';
             {
                 $ERR_MSG = $class->ERR_ASYSTECO;
             }
-            echo "<a href='$_SERVER[HTTP_REFERER]' class='btn btn-danger pull-left'>Cancelar</a>";
-            echo "<button class='btn btn-info pull-right' value='profesores' name='ACTION'>Agregar</button>";
+            echo "<a id='sustituto_cancelar' href='$_SERVER[HTTP_REFERER]' class='btn btn-danger pull-left'>Cancelar</a>";
+            echo "<button id='sustituto_agregar' class='btn btn-success pull-right' value='profesores' name='ACTION'>Agregar</button>";
             echo "</form>";
         echo "</div>";
     echo "</div>";

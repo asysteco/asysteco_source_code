@@ -2,7 +2,6 @@
 
 if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Sustituido FROM $class->profesores WHERE ID='$_GET[ID]'"))
 {
-    
     $datos = $response->fetch_assoc();
     echo '<div class="container" style="margin-top:50px">';
         echo '<div class="wrapper fadeInDown">';
@@ -69,7 +68,8 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
                         } 
                         else
                         {
-                            echo "<a href='index.php?ACTION=profesores&OPT=remove-sustituto&ID=$datos[ID]' class='btn btn-info'>Retirar Sustituto</a><br><br>";
+                            echo "<a href='index.php?ACTION=profesores' id='profe_cancelar' class='btn btn-danger pull-left'>Cancelar</a>";
+                            echo "<a href='index.php?ACTION=profesores&OPT=remove-sustituto&ID=$datos[ID]' id='profe_retirar' style='margin-right: 30px' class='btn btn-warning pull-right'>Retirar Sustituto</a><br><br>";
                         }
                     }
                     echo "<button class='btn btn-info' name='ACTION' value='editar_profesor'>Actualizar Profesor</button></br></br>";
