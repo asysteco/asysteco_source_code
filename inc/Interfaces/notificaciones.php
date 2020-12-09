@@ -24,7 +24,7 @@ echo '<div class="container" id="botonera" style="margin-top:75px">';
                             $ultimos = "";
                             if($datos['Visto'] == 0)
                             {
-                                $ultimos = "style='background-color: #f5d42f;'";
+                                $ultimos = "style='background-color: #fff2b3; font-weight: bold;'";
                             }
                         $sep = preg_split('/[ -]/', $datos['Fecha']);
                         $dia = $sep[2];
