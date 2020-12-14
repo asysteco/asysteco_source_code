@@ -82,12 +82,7 @@ if($response = $class->query($sql))
                     
         ob_end_clean();
             
-        readfile($fn);
-            
-        if(is_file($fn))
-        {
-            unlink($fn);
-        }
+        echo $ff.$fn;
     } else {
         echo "<div style='width: 100%; height: 100vh; text-align: center;'>";
             echo "<div style='box-shadow: 4px 4px 16px 16px grey; width: 50%; margin-left: auto; margin-right: auto; border-radius: 10px;'>";

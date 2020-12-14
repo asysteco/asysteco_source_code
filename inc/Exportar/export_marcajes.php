@@ -8,7 +8,7 @@ $errorMessage = '';
 
 // Preparamos directorio tmp, borrando fichero si existe
 $ff = "tmp/";
-$fn = "Listado_Marcajes.csv";
+$fn = "Listado_marcajes.csv";
 chdir($ff);
 if(is_file($fn))
 {
@@ -124,12 +124,7 @@ if(empty($errorMessage) && $response->num_rows > 0) {
     
     ob_end_clean();
     
-    readfile($fn);
-    
-    if(is_file($fn))
-    {
-        unlink($fn);
-    }
+    echo $ff.$fn;
     exit;
 }
 

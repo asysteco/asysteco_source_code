@@ -44,12 +44,7 @@ if($respuesta = $class->query("SELECT * FROM Profesores"))
         
         ob_end_clean();
         
-        readfile($fn);
-        
-        if(is_file($fn))
-        {
-            unlink($fn);
-        }
+        echo $ff.$fn;
         exit;
     }
     else
