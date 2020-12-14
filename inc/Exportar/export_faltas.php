@@ -103,12 +103,7 @@ if(empty($errorMessage) && $response->num_rows > 0) {
     
     ob_end_clean();
     
-    readfile($fn);
-    
-    if(is_file($fn))
-    {
-        unlink($fn);
-    }
+    echo $ff.$fn;
     exit;
 }
 

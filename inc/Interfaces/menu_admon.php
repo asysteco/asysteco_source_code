@@ -7,7 +7,7 @@
                 {
                     if($response->num_rows > 0)
                     {
-                        echo "<select id='select_admon' name='Profesor' class='form-control'>";
+                        echo "<select id='select_profesor' name='Profesor' class='form-control'>";
                         echo "<option value=''> Selecciona un profesor... </option>";
                         while($fila = $response->fetch_assoc())
                         {
@@ -22,19 +22,19 @@
                 }
             ?>
             <h2>Exportar a Excel</h2>
-            <a enlace="index.php?ACTION=admon&OPT=select&export=marcajes" id="exportmarcajes" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Marcajes</a>
-            <a enlace="index.php?ACTION=admon&OPT=select&export=asistencias" id="exportasistencias" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Asistencias</a>
-            <a enlace="index.php?ACTION=admon&OPT=select&export=faltas" id="exportfaltas" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Faltas</a>
-            <a enlace="index.php?ACTION=admon&OPT=select&export=horarios" id="exporthorarios" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Horarios</a>
-            <a enlace="index.php?ACTION=admon&OPT=select&export=profesores" id="exportprofesores" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Profesores</a>
-            <a enlace="index.php?ACTION=admon&OPT=select&export=fichajes" id="exportfichajes" class="btn btn-info btn-export"><span class="glyphicon glyphicon-open"></span> Fichajes</a>
+            <a data-item="marcajes" action="export" id="exportmarcajes" class="btn btn-info btn-export act"><span class="glyphicon glyphicon-open"></span> Marcajes</a>
+            <a data-item="asistencias" action="export" id="exportasistencias" class="btn btn-info btn-export act"><span class="glyphicon glyphicon-open"></span> Asistencias</a>
+            <a data-item="faltas" action="export" id="exportfaltas" class="btn btn-info btn-export act"><span class="glyphicon glyphicon-open"></span> Faltas</a>
+            <a data-item="horarios" action="export" id="exporthorarios" class="btn btn-info btn-export act"><span class="glyphicon glyphicon-open"></span> Horarios</a>
+            <a data-item="profesores" action="export" id="exportprofesores" class="btn btn-info btn-export act"><span class="glyphicon glyphicon-open"></span> Profesores</a>
+            <a data-item="fichajes" action="export" id="exportfichajes" class="btn btn-info btn-export act"><span class="glyphicon glyphicon-open"></span> Fichajes</a>
             </br>
             <h2>Mostrar en Pantalla</h2>
-            <a enlace="index.php?ACTION=admon&OPT=select&select=asistencias&pag=0"id='filtroasistencias' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Asistencias</a>
-            <a enlace="index.php?ACTION=admon&OPT=select&select=faltas&pag=0" id='filtrofaltas' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Faltas</a>
-            <a enlace="index.php?ACTION=admon&OPT=select&select=horarios&pag=0" id='filtrohorarios' class="btn btn-success btn-select"><span class="glyphicon glyphicon-eye-open"></span> Horarios</a>
-            <a enlace="index.php?ACTION=admon&OPT=select&select=fichadi&pag=0" class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Fichajes de hoy</a>
-            <a enlace="index.php?ACTION=admon&OPT=select&select=fichafe&pag=0" id='filtrofichajes' class="btn btn-success btn-select"><span class="glyphicon glyphicon-calendar"></span> Fichaje Por Fechas</a>
+            <a data-item="asistencias" action="select" id='filtroasistencias' class="btn btn-success btn-select act"><span class="glyphicon glyphicon-eye-open"></span> Asistencias</a>
+            <a data-item="faltas" action="select" id='filtrofaltas' class="btn btn-success btn-select act"><span class="glyphicon glyphicon-eye-open"></span> Faltas</a>
+            <a data-item="horarios" action="select" id='filtrohorarios' class="btn btn-success btn-select act"><span class="glyphicon glyphicon-eye-open"></span> Horarios</a>
+            <a data-item="fichajeDiario" action="select" class="btn btn-success btn-select act"><span class="glyphicon glyphicon-calendar"></span> Fichajes de hoy</a>
+            <a data-item="fichajeFechaFilter" action="select" id='filtrofichajes' class="btn btn-success btn-select act"><span class="glyphicon glyphicon-calendar"></span> Fichaje Por Fechas</a>
             </br>
             <h2>Borrado de Datos (Atención estas acciones son <b>IRREVERSIBLES</b>)</h2>
             <a enlace="index.php?ACTION=profesores&OPT=delete-all" class="btn btn-danger eliminar" elemento="profesores"><span class="glyphicon glyphicon-user"></span> Borrar Profesores</a>
@@ -49,47 +49,13 @@
         </div>
     </div>
 </div>
-<div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
+<div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center; z-index: 99">
     <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
         <div>
             <img src="resources/img/loading.gif" alt="Cargando...">
             <h2 id="loading-msg"></h2>
         </div>
     </div>
-</div>
-
-<div id="error-modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" style="color: red;">Error!</h4>
-      </div>
-      <div class="modal-body">
-        <div id="error-content-modal" style="color: red;"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="fine-modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Correcto!</h4>
-      </div>
-      <div class="modal-body">
-        <div id="fine-content-modal" style="color: green;"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <script language="JavaScript">
@@ -99,3 +65,5 @@
     }
 </script>
 <script src="js/admon_delete.js"></script>
+<script src="js/admon_filtrado_fecha.js"></script>
+<script src="js/admon.js"></script>
