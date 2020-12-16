@@ -1,161 +1,128 @@
 <?php
 
-if(! $response = $class->query("SELECT ID_PROFESOR FROM Marcajes WHERE Asiste=0"))
-{
-    die($class->ERR_ASYSTECO);
-}
-
-if(isset($_GET['profesor']) && $_GET['profesor'] != '')
-{
-    $profesor = "WHERE ID_PROFESOR = '$_GET[profesor]'";
-    $sql = "SELECT Horarios.*, Profesores.Nombre, Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo
-    FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
-    INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID 
-    INNER JOIN Aulas ON Aulas.ID=Horarios.Aula
-    INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
-    WHERE ID_PROFESOR = '$_GET[profesor]'";
-}
-else
-{
-    $profesor = "";
-    $sql = "SELECT Horarios.*, Profesores.Nombre, Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo
-    FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
-    INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-    INNER JOIN ON Aulas ON Aulas.ID=Horarios.Aula
-    INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo";
-}
-
-
+$profesor = $_GET['profesor'] ?? '';
+$fechaInicio = $_GET['fechainicio'] ?? '';
+$fechaFin = $_GET['fechafin'] ?? '';
+$whereFilter = '';
+$errorMessage = '';
+$element = $_GET['element'] ?? '';
+$edificios = $options['edificios'];
 $offset_var = $_GET['pag'];
-
 $page_size = 200;
+
+if (isset($profesor) && !empty($profesor)) {
+    $whereFilter = " WHERE P.ID = $profesor";
+}
+
+$sql = "SELECT P.Iniciales, P.Nombre, D.Diasemana, A.Nombre as Aula, C.Nombre as Grupo, H.Dia, H.Hora
+FROM Horarios H INNER JOIN Profesores P ON H.ID_PROFESOR=P.ID
+INNER JOIN Diasemana D ON H.Dia=D.ID
+INNER JOIN Aulas A ON A.ID=H.Aula
+INNER JOIN Cursos C ON C.ID=H.Grupo
+$whereFilter 
+ORDER BY P.Nombre ASC, H.Hora
+LIMIT $page_size OFFSET $offset_var";
+if(! $response = $class->query($sql))
+{
+    $errorMessage = 'Ha ocurrido un error inesperado...';
+}
+
 $total_records = $response->num_rows;
 $count=ceil($total_records/$page_size);
 
-if(isset($_GET['pag']))
-{
-    echo "<div class='páginas' style='margin-top: 25px;'>";
-        echo "<h3>Página ";
-        echo "<select id='select_pag'>";
-            for($j=0; $j<$count; $j++)
-            {
-                if($_GET['pag'] == $j*$page_size)
-                {
-                    $selected = 'selected';
+if (empty($errorMessage) && $response->num_rows > 0) {
+    if(isset($offset_var)) {
+        if ($count > 1) {
+            echo "<div class='páginas' style='margin-top: 25px;'>";
+                echo "<h3>Página ";
+                echo "<select id='select_pag'>";
+                for($j=0; $j<$count; $j++) {
+                    $currentPage = $j*$page_size;
+                    $selected = $offset_var == $j*$page_size ? 'selected' : '';
+                    echo "<option value='$currentPage' action='select' element='$element' profesor='$profesor' $selected>";
+                        echo $pag = ($j+1);
+                    echo '</option> ';
                 }
-                else
-                {
-                    $selected = '';
-                }
-                echo '<option value="index.php?ACTION=admon&OPT=select&select=faltas&pag=' . $j*$page_size . '" class="btn-select" ' . $selected . '><span class="glyphicon glyphicon-eye-open"></span> ' . $pag = ($j+1) . '</option> ';
+                echo "</select>";
+                echo "</h3>";
+            echo "<div>";
+        }
+        echo "<table class='table table-striped'>";
+            echo "<thead>";
+                echo "<tr>";
+                    echo "<th>INICIALES</th>";
+                    echo "<th>PROFESOR</th>";
+                    echo "<th>CURSO</th>";
+                    echo "<th>AULA</th>";
+                    echo "<th>DIA</th>";
+                    echo "<th>DIA SEMANA</th>";
+                    echo "<th>HORA</th>";
+        if (isset($edificios) && $edificios > 1) {
+            echo "<th>EDIFICIO</th>";
+        } 
+                echo "</tr>";
+            echo "</thead>";
+        echo "<tbody>";
+        while ($datos = $response->fetch_assoc())
+        {
+            echo "<tr>";
+                echo "<td>$datos[Iniciales]</td>";
+                echo "<td>$datos[Nombre]</td>";
+                echo "<td>$datos[Grupo]</td>";
+                echo "<td>$datos[Aula]</td>";
+                echo "<td>$datos[Dia]</td>";
+                echo "<td>$datos[Diasemana]</td>";
+                echo "<td>$datos[Hora]</td>";
+            if (isset($edificios) && $edificios > 1) {
+                    echo "<td>$datos[Edificio]</td>";
             }
-        echo "</select>";
-        echo "</h3>";
-    echo "<div>";
-    if(isset($profesor))
-    {
-        $query = "SELECT Horarios.*, Profesores.Nombre, Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo
-        FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
-        INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-        INNER JOIN Aulas ON Aulas.ID=Horarios.Aula
-        INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
-        $profesor 
-        ORDER BY Profesores.Nombre ASC
-        LIMIT $page_size OFFSET $offset_var";
-    }
-    else
-    {
-        $query = "SELECT Horarios.*, Profesores.Nombre, Iniciales, Diasemana.Diasemana, Aulas.Nombre as Aula, Cursos.Nombre as Grupo
-        FROM Horarios INNER JOIN Profesores ON Horarios.ID_PROFESOR=Profesores.ID
-        INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
-        INNER JOIN Aulas ON Aulas.ID=Horarios.Aula
-        INNER JOIN Cursos ON Cursos.ID=Horarios.Grupo
-        ORDER BY Profesores.Nombre ASC
-        LIMIT $page_size OFFSET $offset_var";
-    }
-    # "select id from shipment Limit ".$page_size." OFFSET ".$offset_var;
-
-    $result =  $class->query($query);
-    if (isset($options['edificios']) && $options['edificios'] > 1) {
-        echo "<table class='table table-striped'>";
-            echo "<thead>";
-                echo "<tr>";
-                    echo "<th>INICIALES</th>";
-                    echo "<th>PROFESOR</th>";
-                    echo "<th>CURSO</th>";
-                    echo "<th>AULA</th>";
-                    echo "<th>DIA</th>";
-                    echo "<th>DIA SEMANA</th>";
-                    echo "<th>HORA</th>";
-                    echo "<th>EDIFICIO</th>";
-                echo "</tr>";
-            echo "</thead>";
-            echo "<tbody>";
-    } else {
-        echo "<table class='table table-striped'>";
-            echo "<thead>";
-                echo "<tr>";
-                    echo "<th>INICIALES</th>";
-                    echo "<th>PROFESOR</th>";
-                    echo "<th>CURSO</th>";
-                    echo "<th>AULA</th>";
-                    echo "<th>DIA</th>";
-                    echo "<th>DIA SEMANA</th>";
-                    echo "<th>HORA</th>";
-                echo "</tr>";
-            echo "</thead>";
-            echo "<tbody>";
-    }
-
-    while ($datos = $result->fetch_assoc())
-    {
-        $sep = preg_split('/[ -]/', $datos['Fecha']);
-        $dia = $sep[2];
-        $m = $sep[1];
-        $Y = $sep[0];
-        if (isset($options['edificios']) && $options['edificios'] > 1) {
-            echo "<tr>";
-                echo "<td>$datos[Iniciales]</td>";
-                echo "<td>$datos[Nombre]</td>";
-                echo "<td>$datos[Grupo]</td>";
-                echo "<td>$datos[Aula]</td>";
-                echo "<td>$datos[Dia]</td>";
-                echo "<td>$datos[Diasemana]</td>";
-                echo "<td>$datos[Hora]</td>";
-                echo "<td>$datos[Edificio]</td>";
-            echo "</tr>";
-        } else {
-            echo "<tr>";
-                echo "<td>$datos[Iniciales]</td>";
-                echo "<td>$datos[Nombre]</td>";
-                echo "<td>$datos[Grupo]</td>";
-                echo "<td>$datos[Aula]</td>";
-                echo "<td>$datos[Dia]</td>";
-                echo "<td>$datos[Diasemana]</td>";
-                echo "<td>$datos[Hora]</td>";
             echo "</tr>";
         }
+            echo "</tbody>";
+        echo "</table>";
     }
-
-        echo "</tbody>";
-    echo "</table>";
+} else {
+    echo "<h2 style='color: grey;'><i>No existen datos que mostrar.</i></h2>";
 }
-else
-{
-    echo "No hay páginas.<br>";
+if (!empty($errorMessage)) {
+    echo $errorMessage;
 }
 
 echo "<script>";
-    echo "$(document).ready(function () {
-        $('#loading').delay().fadeOut()
-    });";
-    echo "
+echo "$(document).ready(function () {
+    $('#loading').delay().fadeOut()
+});";
+echo "
     $('#select_pag').on('change', function() {
-        $('#btn-response').html(''),
-        $('#loading-msg').html('Cargando...'),
-        $('#loading').show(),
-        enlace = $(this).val(),
-        $('#btn-response').load(enlace)
+        element = $(this).children().attr('element');
+        action = $(this).children().attr('action');
+        page = $(this).val();
+        profesor = $(this).children().attr('profesor');
+        urlPath = 'index.php?ACTION=admon&OPT=select';
+        data = {
+            'action': action,
+            'element': element,
+            'profesor': profesor,
+            'pag': page
+        };
+        
+        $.ajax({
+            url: urlPath,
+            type: 'GET',
+            data:  data,
+            beforeSend : function() {
+                $('#loading-msg').html('Cargando...');
+                $('#loading').show();
+            },
+            success: function(data) {
+                $('#btn-response').html(data);
+                $('#loading').fadeOut();
+            },
+            error: function(e) {
+                $('#error-modal').modal('show'),
+                $('#error-content-modal').html(e);
+            }          
+        });
     });
-    ";
+";
 echo "</script>";
