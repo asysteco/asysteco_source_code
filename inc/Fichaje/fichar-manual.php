@@ -1,6 +1,6 @@
-<div class="container" style="margin-top:75px">
-    <div class='row'>
-        <div class='col-xs-12'>
+<div class="container" style="margin-top:50px">
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
             <h1>Fichaje Manual</h1>
             <form action='index.php?ACTION=fichar-mysql-manual' method='POST'>
                 <?php
@@ -30,8 +30,8 @@
                 <?php } ?>
                 <input id='add-fecha' class='form-control' name='dia' type='text' placeholder='Seleccione una fecha' autocomplete='off' required>
                 <br>
-                <a href='index.php?ACTION=profesores' class='btn btn-danger pull-left'>Cancelar</a>
-                <button id='add-manual' action='add' class='btn btn-info pull-right'>Realizar Fichaje</button>
+                <a  id='remove-manual' href='index.php?ACTION=profesores' class='btn btn-danger pull-left'>Cancelar</a>
+                <button id='add-manual' action='add' class='btn btn-success pull-right'>Realizar Fichaje</button>
             </form>
         </div>
     </div>
