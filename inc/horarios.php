@@ -14,7 +14,7 @@ if($response = $class->query($sql))
         $franja = $datosprof['Tipo'];
         echo "<h2>Horario</h2>";
         echo "</br>";
-        echo "<table class='table'>";
+        echo "<table class='table' style='margin-top: 25px;'>";
         echo "<thead>";
             echo "<tr>";
                 echo "<th style='text-align: center;'>Horas</th>";
@@ -35,13 +35,13 @@ if($response = $class->query($sql))
             $horaFinSplit = preg_split('/:/', $datos['Fin']);
             $horaFinSinSegundos = $horaFinSplit[0] . ":" . $horaFinSplit[1];
             
-            if (! $class->query("SELECT Horarios.*, Cursos.Nombre as Curso, Aulas.Nombre as Aula
-                                FROM (Horarios 
-                                    INNER JOIN Cursos ON Horarios.grupo = Cursos.ID)
-                                    INNER JOIN Aulas ON Horarios.Aula = Aulas.ID
-                                WHERE ID_PROFESOR='$_SESSION[ID]'
-                                AND Hora='$Hora'
-                                ORDER BY Hora ")->num_rows > 0) {
+            if (! $class->query("SELECT H.*, C.Nombre as Curso, A.Nombre as Aula
+                                FROM (Horarios H
+                                    INNER JOIN Cursos C ON H.grupo = C.ID)
+                                    INNER JOIN Aulas A ON H.Aula = A.ID
+                                WHERE H.ID_PROFESOR='$_SESSION[ID]'
+                                AND H.Hora='$Hora'
+                                ORDER BY H.Hora ")->num_rows > 0) {
                 continue;
             }
             echo "<tr id='Hora_$Hora'>";
