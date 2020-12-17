@@ -157,11 +157,11 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
               echo '<div class="dropdown-divider"></div>';
               echo "<a class='dropdown-item text-light' id='admin-guide' href='index.php?ACTION=download_admin_guide'>
                 <i id='cambio-pass-icon' style='font-size: 20px; vertical-align: middle;' class='fa fa-cloud-download'></i>
-                <span style='vertical-align: middle;'> Guía aplicación Administración</span>
+                <span style='vertical-align: middle;'> Guía de uso Administración</span>
               </a>";
               echo "<a class='dropdown-item text-light' id='profesor-guide' href='index.php?ACTION=download_profesor_guide'>
                 <i id='cambio-pass-icon' style='font-size: 20px; vertical-align: middle;' class='fa fa-cloud-download'></i>
-                <span style='vertical-align: middle;'> Guía aplicación Profesorado</span>
+                <span style='vertical-align: middle;'> Guía de uso Profesorado</span>
               </a>";
           echo '</ul>';
         echo '</li>';
