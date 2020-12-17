@@ -63,7 +63,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC
             LIMIT $page_size OFFSET $offset_var";
             if (!$result = $mysql->query($sql)) {
-                throw new Exception('No existen datos para exportar...');
+                throw new Exception('Ha ocurrido un error...');
             }
             if($result->num_rows > 0) {
                 echo "<table class='table table-striped'>";
