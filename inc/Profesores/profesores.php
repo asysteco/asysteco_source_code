@@ -12,7 +12,7 @@ if($_SESSION['Perfil'] === 'Admin')
       <input style='width: 25%; display: inline-block;' id='busca_prof' class='form-control' type='text' placeholder='Buscar Profesor...' autocomplete='off'>
       <label for='busca_prof'> <span style='font-size: 20px;' class='fa fa-search'></span></label><br>";
     echo "</br><table id='tabla_profesores' class='table table-hover'>";
-    echo "<thead>";
+    echo "<thead class='thead-dark'>";
         echo "<tr>";
             echo "<th>Nombre</th>";
             echo "<th>Iniciales</th>";

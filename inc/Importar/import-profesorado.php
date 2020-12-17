@@ -71,13 +71,18 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
 <div id="file-content-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-        <div class="modal-header" style="text-align: right;">
-            <h2 class="modal-title" style="text-align: center;">Previsualización de los datos a importar</h2>
-            <h5 class="modal-title" style="color: grey; text-align: center;">*Si los datos mostrados no coinciden con los que se van a importar, cancele el proceso y modifique su fichero CSV</h5>
-            <br>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar cambios</button>
-            <button type="button" class="btn btn-success import-data">Importar</button>
-        </div>
+      <div class="modal-buttons-header">
+        <button type="button" class="btn btn-danger float-left" data-dismiss="modal">Cancelar cambios</button>
+        <button type="button" class="btn btn-success import-data float-right">Importar</button>
+      </div>
+      <div class="modal-subtitle">
+        <h3 class="modal-title" style="text-align: center;">Previsualización de los datos a importar</h3>
+        <h6 class="modal-title" style="color: grey; text-align: center;"><i>
+          *El fichero no será importado, si se encuentra una línea de color: <div style="display: inline-block; width: 25px; height: 10px; background: #ff9797;"></div> .
+          <br>
+          *Si los datos mostrados no coinciden con los que se desea importar, cancele el proceso y modifique su fichero CSV
+        </i></h6>
+      </div>
       <div class='modal-body'>
         <div class='container-fluid'>
           <div class='row'>
@@ -97,9 +102,9 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar cambios</button>
-        <button type="button" class="btn btn-success import-data">Importar</button>
+      <div class="modal-buttons-footer">
+        <button type="button" class="btn btn-danger float-left" data-dismiss="modal">Cancelar cambios</button>
+        <button type="button" class="btn btn-success import-data float-right">Importar</button>
       </div>
     </div>
   </div>
