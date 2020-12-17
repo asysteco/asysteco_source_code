@@ -84,7 +84,7 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
               <span style='vertical-align: middle;'> Importar horarios</span>
             </a>";
           echo '</ul>';
-          echo '</li>';
+        echo '</li>';
         // Horarios Dropdown start
 
         // Profesores Dropdown start
