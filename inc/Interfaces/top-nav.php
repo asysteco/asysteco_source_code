@@ -59,10 +59,14 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
     echo '</div>';
     echo '<div class="collapse navbar-collapse" id="top-menu">';
       echo '<ul class="navbar-nav mr-auto">';
+      
+        // Home start
         echo "<li class='nav-item $act_home'>";
           echo "<a class='nav-link' href='index.php'> Inicio</a>";
         echo "</li>";
+        // Home end
 
+        // Horarios Dropdown start
         echo "<li class='nav-item dropdown $act_horario'>";
           echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'> Horario </a>";
           echo '<ul class="dropdown-menu bg-dark">';
@@ -80,8 +84,10 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
               <span style='vertical-align: middle;'> Importar horarios</span>
             </a>";
           echo '</ul>';
-        echo '</li>';
+          echo '</li>';
+        // Horarios Dropdown start
 
+        // Profesores Dropdown start
         echo "<li class='nav-item dropdown $act_profesores '>";
           echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'>";
             echo "<span style='vertical-align: middle;'> Profesores</span>";
@@ -91,6 +97,10 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
               <i style='font-size: 20px; vertical-align: middle;' class='fa fa-eye'></i>
               <span style='vertical-align: middle;'> Mostrar profesores</span>
             </a>";
+            echo "<a class='dropdown-item text-light $act_regProf' href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=add-profesor'>
+              <i style='font-size: 20px; vertical-align: middle;' class='fa fa-plus'></i>
+              <span style='vertical-align: middle;'> Añadir profesores</span>
+            </a>";
             echo '<div class="dropdown-divider"></div>';
             echo "<a class='dropdown-item text-light $act_importProf' href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=import-form'>
               <i style='font-size: 20px; vertical-align: middle;' class='fa fa-cloud-upload'></i>
@@ -98,21 +108,30 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
             </a>";
           echo "</ul>";
         echo "</li>";
+        // Profesores Dropdown end
 
+        // Asistencias actuales start
         echo "<li class='nav-item $act_asistencia'>";
           echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=all'>Asistencias actuales</a>";
         echo "</li>";
+        // Asistencias actuales end
 
+        // Calendario escolar start
         echo "<li class='nav-item $act_cal_escolar '>";
           echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=lectivos'>Calendario escolar</a>";
         echo "</li>";
+        // Calendario escolar end
 
+      // Fichaje Manual start
         echo "<li class='nav-item'>";
           echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=fichar-manual'>Fichaje Manual</a>";
         echo "</li>";
       echo "</ul>";
+      // Fichaje Manual end
 
       echo '<ul class="nav navbar-nav navbar-right">';
+
+        // User Dropdown start
         echo "<li class='nav-item dropdown $act_usuario'>";
           echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'>";
             echo "<i vertical-align: middle;' class='fa fa-user-o'></i> ";
@@ -148,6 +167,7 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
               </a>";
           echo '</ul>';
         echo '</li>';
+        // User Dropdown end
 
         echo "<li class='nav-item'>";
           echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=logout'><i class='fa fa-sign-out'></i> Cerrar Sesión</a>";
@@ -169,14 +189,19 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
     echo '<div class="collapse navbar-collapse" id="top-menu">';
       echo '<ul class="navbar-nav mr-auto">';
 
-      echo "<li class='nav-item $act_horario'>";
-        echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=horarios'>Inicio</a>";
-      echo "</li>";
+        // Horario start
+        echo "<li class='nav-item $act_horario'>";
+          echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=horarios'>Inicio</a>";
+        echo "</li>";
+        // Horario end
 
+        // Guardias start
         echo "<li class='nav-item $act_guardias'>";
           echo "<a class='nav-link' href='index.php?ACTION=guardias'>Guardias</a>";
         echo "</li>";
+        // Guardias end
         
+        // Mis asistencias start
         echo "<li class='nav-item $act_asistencia'>";
           echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=sesion&d=$d&m=$m&Y=$Y'>Mis asistencias</a>";
         echo "</li>";
@@ -186,31 +211,33 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
           </a>';
         echo '</li>';
       echo '</ul>';
+      // Mis asistencias end
 
-      // User Dropdown start
       echo '<ul class="nav navbar-nav navbar-right">';
-      echo '<li class="nav-item dropdown">';
-        echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'>
-          <i vertical-align: middle;' class='fa fa-user-o'></i> ";
-          echo $_SESSION['Nombre'];
-        echo '</a>';
-        echo '<ul class="dropdown-menu dropdown-menu-right bg-dark">';
-          echo "<a id='cambio-pass' class='dropdown-item text-light $act_changePass' href='index.php?ACTION=cambio_pass'>
-            <i id='cambio-pass-icon' style='font-size: 20px; vertical-align: middle;' class='fa fa-refresh'></i>
-            <span style='vertical-align: middle;'> Cambio de contraseña </span>
-          </a>";
-          echo '<div class="dropdown-divider"></div>';
-          echo '<a id="profesor-guide" class="dropdown-item text-light" href="index.php?ACTION=download_profesor_guide">
-            <span id="download-guide-profesor-icon" style="font-size: 20px;" class="fa fa-cloud-download"></span> Guía de uso
-          </a>';
-        echo '</ul>';
-      echo '</li>';
-      // User Dropdown end
 
-      echo "<li class='nav-item'>";
-      echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=logout'><i class='fa fa-sign-out'></i> Cerrar Sesión</a>";
-      echo "</li>";
-    echo '</ul>';
+        // User Dropdown start
+        echo '<li class="nav-item dropdown">';
+          echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'>
+            <i vertical-align: middle;' class='fa fa-user-o'></i> ";
+            echo $_SESSION['Nombre'];
+          echo '</a>';
+          echo '<ul class="dropdown-menu dropdown-menu-right bg-dark">';
+            echo "<a id='cambio-pass' class='dropdown-item text-light $act_changePass' href='index.php?ACTION=cambio_pass'>
+              <i id='cambio-pass-icon' style='font-size: 20px; vertical-align: middle;' class='fa fa-refresh'></i>
+              <span style='vertical-align: middle;'> Cambio de contraseña </span>
+            </a>";
+            echo '<div class="dropdown-divider"></div>';
+            echo '<a id="profesor-guide" class="dropdown-item text-light" href="index.php?ACTION=download_profesor_guide">
+              <span id="download-guide-profesor-icon" style="font-size: 20px;" class="fa fa-cloud-download"></span> Guía de uso
+            </a>';
+          echo '</ul>';
+        echo '</li>';
+        // User Dropdown end
+
+        echo "<li class='nav-item'>";
+        echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=logout'><i class='fa fa-sign-out'></i> Cerrar Sesión</a>";
+        echo "</li>";
+      echo '</ul>';
     }
 echo '</nav>';
 
