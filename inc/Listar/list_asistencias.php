@@ -3,14 +3,14 @@
 $profesor = $_GET['profesor'] ?? '';
 $fechaInicio = $_GET['fechainicio'] ?? '';
 $fechaFin = $_GET['fechafin'] ?? '';
-$whereFilter = ' AND Fecha <= CURDATE()';
+$whereFilter = ' AND M.Fecha <= CURDATE()';
 $errorMessage = '';
 $element = $_GET['element'];
 $offset_var = $_GET['pag'];
 $page_size = 200;
 
 if (isset($profesor) && !empty($profesor)) {
-    $whereFilter .= " AND ID_PROFESOR = $profesor";
+    $whereFilter .= " AND M.ID_PROFESOR = $profesor";
 }
 
 if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($fechaFin)) {
@@ -18,15 +18,15 @@ if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($f
     $ffin = $class->formatEuropeanDateToSQLDate($fechaFin);
 
     if($fini && $ffin) {
-        $whereFilter .= " AND Fecha >= '$fini' AND Fecha <= '$ffin'";
+        $whereFilter .= " AND M.Fecha >= '$fini' AND M.Fecha <= '$ffin'";
     }
 }
 
-$query = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-    INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
-WHERE Asiste=1 OR Asiste=2 
-ORDER BY Profesores.Nombre ASC";
+$query = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
+FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
+    INNER JOIN Diasemana D ON M.Dia=D.ID 
+WHERE (M.Asiste=1 OR M.Asiste=2) $whereFilter
+ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC";
 
 if(! $response = $class->query($query)) {
     $errorMessage = 'Ha ocurrido un error inesperado...';
@@ -56,11 +56,11 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 echo "</h3>";
             echo "</div>";
             }
-            $sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-            FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
-                INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-            WHERE (Asiste=1 OR Asiste=2) $whereFilter
-            ORDER BY Marcajes.Fecha, Profesores.Nombre ASC
+            $sql = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
+            FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
+                INNER JOIN Diasemana D ON M.Dia=D.ID 
+            WHERE (M.Asiste=1 OR M.Asiste=2) $whereFilter
+            ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC
             LIMIT $page_size OFFSET $offset_var";
             if (!$result = $mysql->query($sql)) {
                 throw new Exception('No existen datos para exportar...');
@@ -83,14 +83,11 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             
                 while ($datos = $result->fetch_assoc())
                 {
-                    $sep = preg_split('/[ -]/', $datos['Fecha']);
-                    $dia = $sep[2];
-                    $m = $sep[1];
-                    $Y = $sep[0];
+                    $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                     echo "<tr>";
                         echo "<td>$datos[Iniciales]</td>";
                         echo "<td>$datos[Nombre]</td>";
-                        echo "<td>$datos[Fecha]</td>";
+                        echo "<td>$fecha</td>";
                         echo "<td>$datos[Hora]</td>";
                         echo "<td>$datos[Dia]</td>";
                         echo "<td>$datos[Diasemana]</td>";
