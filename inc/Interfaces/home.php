@@ -3,12 +3,12 @@
 if($_SESSION['Perfil'] === 'Admin')
 {
     if ($options['QR-reader']) {
-        echo '<div class="container-fluid" style="margin-top:50px">';
+        echo '<div class="container-fluid">';
             echo "<div class='row'>";
-            echo "<div id='qreader' class='col-xs-12 col-md-4' >";
+            echo "<div id='qreader' class='col-12 col-md-4' >";
                 include($dirs['Qr'] . 'qr-reader.php');
             echo "</div>";
-            echo "<div class='col-xs-12 col-md-8' style='text-align: center;'>";
+            echo "<div class='col-12 col-md-8' style='text-align: center;'>";
                 include($dirs['Horarios'] . 'guardias.php');
             echo "</div>";
             echo "</div>";
@@ -23,12 +23,12 @@ if($_SESSION['Perfil'] === 'Admin')
             </script>
         ';
     } else {
-        echo '<div class="container-fluid" style="margin-top:50px">';
+        echo '<div class="container-fluid">';
             echo "<div class='row'>";
-            echo "<div id='qreader' class='col-xs-12 col-md-4' >";
+            echo "<div id='qreader' class='col-12 col-md-4' >";
                 include($dirs['Qr'] . 'qr-webcam.php');
             echo "</div>";
-            echo "<div class='col-xs-12 col-md-8' style='text-align: center;'>";
+            echo "<div class='col-12 col-md-8' style='text-align: center;'>";
                 include($dirs['Horarios'] . 'guardias.php');
             echo "</div>";
             echo "</div>";
@@ -43,9 +43,9 @@ if($_SESSION['Perfil'] === 'Admin')
 }
 else
 {
-echo '<div class="container-fluid" style="margin-top:50px">';
+echo '<div class="container-fluid">';
     echo "<div class='row'>";
-        echo "<div class='col-xs-12' style='text-align: center;'>";
+        echo "<div class='col-12' style='text-align: center;'>";
             include($dirs['Horarios'] . 'guardias.php');
         echo "</div>";
     echo "</div>";

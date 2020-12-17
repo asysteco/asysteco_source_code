@@ -1,5 +1,5 @@
-<div class="container" style="margin-top:50px">
-    <h2>Importar Horarios desde CSV</h2>
+<div class="container">
+    <h1>Importar Horarios desde CSV</h1>
     <div id="response"
         class="<?php if(!empty($type)) { echo $type . " display-block"; } ?>">
         <?php if(!empty($message)) { echo $message; } ?>
@@ -30,7 +30,7 @@
         }
     ?>
     <p class="format-body">Si lo desea, haciendo click al siguiente botón puede descargar una plantilla del formato en CSV: 
-    <a href="index.php?ACTION=plantilla-horarios"><span class="glyphicon glyphicon-download-alt"></span></a></p>
+    <a href="index.php?ACTION=plantilla-horarios"><span style="font-size: 20px;" class="fa fa-cloud-download"></span></a></p>
     </div>
     <br>
         <form class="form-inline" action="index.php?ACTION=horarios&OPT=" method="post"
@@ -90,7 +90,7 @@
         }
 ?>
       <div id="todos-registros"></div>
-        <div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
+        <div id="loading" class="col-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
             <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
                 <div>
                     <img src="resources/img/loading.gif" alt="Cargando...">
@@ -114,7 +114,7 @@
     <div class='modal-body'>
       <div class='container-fluid'>
         <div class='row'>
-          <div class='col-xs-12'>
+          <div class='col-12'>
             <table class="table-striped" style="width: 100%;">
               <thead>
                 <tr>

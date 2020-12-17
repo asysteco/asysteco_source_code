@@ -52,6 +52,7 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
         case 'add-profesor':
             if (isset($_POST['add-profesor']) && $_POST['add-profesor'] === 'add') {
             if ($class->validRegisterProf()) {
+                $act_regProf = 'active';
                 $MSG = "Profesor: $_POST[Nombre] con iniciales: $_POST[Iniciales] añadido correctamente";
                 header('Refresh: 2; index.php?ACTION=profesores');
                 include_once($dirs['Interfaces'] . 'header.php');
@@ -87,7 +88,7 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
             break;
 
         case 'des-act':
-            include_once($dirs['inc'] . 'Profesor/des-act-profesor.php');
+            include_once($dirs['Profesores'] . 'des-act-profesor.php');
             if (isset($ERR_MSG) && $ERR_MSG != '') {
             header("Location: index.php?ACTION=profesores&ERR_MSG=" . $ERR_MSG);
             } else {

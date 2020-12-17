@@ -17,12 +17,12 @@ if($response = $class->query($sql))
         $datosprof = $response->fetch_assoc();
         $franja = $datosprof['Tipo'];
         echo "<h2>Horario: $n[Nombre]</h2>";
-        echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success pull-left'>Editar horario</a>";
-        echo "<a id='eliminar-horario' href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger pull-right' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
+        echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success float-left'>Editar horario</a>";
+        echo "<a id='eliminar-horario' href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger float-right' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
         echo "<div id='response'></div>";
         echo "</br>";
-        echo "<table class='table'>";
-        echo "<thead>";
+        echo "<table class='table' style='margin-top: 25px;'>";
+        echo "<thead class='thead-dark'>";
             echo "<tr>";
                 echo "<th style='text-align: center;'>Horas</th>";
                 echo "<th style='text-align: center;'>Lunes</th>";
@@ -55,7 +55,7 @@ if($response = $class->query($sql))
             echo "<td style='text-align: center; vertical-align: middle;'>$horaInicioSinSegundos <br>$horaFinSinSegundos</td>";
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
-                    $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
+                    $dia['wday'] == $dialoop ? $dia['color'] = "table-success" : $dia['color'] = '';
                     if($response = $class->query("SELECT Hora, Dia, Aulas.Nombre as Aula, Cursos.Nombre as Curso, Edificio
                     FROM (Horarios 
                         INNER JOIN Cursos ON Horarios.grupo = Cursos.ID)

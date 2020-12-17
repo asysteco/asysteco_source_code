@@ -231,19 +231,6 @@ if ($class->isLogged($Titulo)) {
                 }
                 break;
 
-            case 'edit-horario-profesor':
-                if ($_SESSION['Perfil'] == 'Admin') {
-                    $scripts = '<link rel="stylesheet" href="css/horarios-edit.css">';
-                    include_once($dirs['Interfaces'] . 'header.php');
-                    include_once($dirs['Interfaces'] . 'top-nav.php');
-                    include_once($dirs['Editar'] . 'edit-horario-profesor.php');
-                } else {
-                    $MSG = "Acceso denegado.";
-                    header("Refresh:2; url=index.php");
-                    include_once($dirs['Interfaces'] . 'msg_modal.php');
-                }
-                break;
-
             case 'edit-t':
                 if ($_SESSION['Perfil'] == 'Admin') {
                     include_once($dirs['Editar'] . 'edit-t-horario.php');
@@ -267,16 +254,6 @@ if ($class->isLogged($Titulo)) {
             case 'registros':
                 if ($_SESSION['Perfil'] == 'Admin') {
                     include_once($dirs['Horarios'] . 'muestra-registros-horarios.php');
-                } else {
-                    $MSG = "Acceso denegado.";
-                    header("Refresh:2; url=index.php");
-                    include_once($dirs['Interfaces'] . 'msg_modal.php');
-                }
-                break;
-
-            case 'guardias':
-                if ($_SESSION['Perfil'] == 'Admin') {
-                    include_once($dirs['Horarios'] . 'horario-guardias.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");

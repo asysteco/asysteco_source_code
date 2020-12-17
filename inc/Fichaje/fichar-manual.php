@@ -1,4 +1,4 @@
-<div class="container" style="margin-top:50px">
+<div class="container">
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <h1>Fichaje Manual</h1>
@@ -30,8 +30,8 @@
                 <?php } ?>
                 <input id='add-fecha' class='form-control' name='dia' type='text' placeholder='Seleccione una fecha' autocomplete='off' required>
                 <br>
-                <a  id='remove-manual' href='index.php?ACTION=profesores' class='btn btn-danger pull-left'>Cancelar</a>
-                <button id='add-manual' action='add' class='btn btn-success pull-right'>Realizar Fichaje</button>
+                <a  id='remove-manual' href='index.php?ACTION=profesores' class='btn btn-danger float-left'>Cancelar</a>
+                <button id='add-manual' action='add' class='btn btn-success float-right'>Realizar Fichaje</button>
             </form>
         </div>
     </div>

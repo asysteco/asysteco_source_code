@@ -3,11 +3,11 @@
 include_once($dirs['Helper'] . 'mcript.php');
 if (isset($_SESSION['ID']) && !empty($_SESSION['ID'])) {
     echo '
-        <div class="container" style="margin-top:50px">
+        <div class="container">
             <div class="row" style="text-align: center;">
-                <div class="col-xs-12">
-                <h3>Código de fichaje</h3>
-        ';
+                <div class="col-12">';
+            echo $_SESSION['Perfil'] == 'Admin' ? '<h1>Código activador</h1>' : '<h1>Código de fichaje</h1>';
+            
     $dato_encriptado = $encriptar($_SESSION['ID']);
     if (isset($options['GoogleQR']) && $options['GoogleQR'] == 1) {
         echo '<img class="img-thumbnail" src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=' . urlencode($dato_encriptado) . '&choe=UTF-8" title="Código QR" />';
@@ -24,7 +24,7 @@ if (isset($_SESSION['ID']) && !empty($_SESSION['ID'])) {
     } else {
         echo "<br><br><span>* Acerque el código al lector QR para fichar.</span>";
     }
-    echo "<div id='clean_tmp' class='hidden'></div>";
+    echo "<div id='clean_tmp' class='d-none'></div>";
     echo "</div>";
     echo "</div>";
     echo "</div>";
