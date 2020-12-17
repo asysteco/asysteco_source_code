@@ -15,7 +15,7 @@ if($response = $class->query($sql))
         echo "<H1>Horario</H1>";
         echo "</br>";
         echo "<table class='table' style='margin-top: 25px;'>";
-        echo "<thead>";
+        echo "<thead class='thead-dark'>";
             echo "<tr>";
                 echo "<th style='text-align: center;'>Horas</th>";
                 echo "<th style='text-align: center;'>Lunes</th>";
@@ -48,7 +48,7 @@ if($response = $class->query($sql))
             echo "<td style='text-align: center; vertical-align: middle;'>$horaInicioSinSegundos <br>$horaFinSinSegundos</td>";
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
-                    $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
+                    $dia['wday'] == $dialoop ? $dia['color'] = "table-success" : $dia['color'] = '';
                     if($response = $class->query("SELECT Hora, Dia, Aulas.Nombre as Aula, Cursos.Nombre as Curso, Edificio
                     FROM (Horarios 
                         INNER JOIN Cursos ON Horarios.grupo = Cursos.ID)

@@ -5,9 +5,9 @@ if (isset($_SESSION['ID']) && !empty($_SESSION['ID'])) {
     echo '
         <div class="container">
             <div class="row" style="text-align: center;">
-                <div class="col-12">
-                <h1>Código de fichaje</h1>
-        ';
+                <div class="col-12">';
+            echo $_SESSION['Perfil'] == 'Admin' ? '<h1>Código activador</h1>' : '<h1>Código de fichaje</h1>';
+            
     $dato_encriptado = $encriptar($_SESSION['ID']);
     if (isset($options['GoogleQR']) && $options['GoogleQR'] == 1) {
         echo '<img class="img-thumbnail" src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=' . urlencode($dato_encriptado) . '&choe=UTF-8" title="Código QR" />';

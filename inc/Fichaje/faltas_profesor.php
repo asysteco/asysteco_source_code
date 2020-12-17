@@ -94,7 +94,7 @@ if($resp = $class->query($sql))
                                 }
                                 else
                                 {
-                                    echo "<td><span class='fa fa-times' title='Para marcar esta hora como asistida, contacte con Jefatura.'></span></td>";
+                                    echo "<td><span style='font-size: 25px; vertical-align: middle;' class='fa fa-times' title='Para marcar esta hora como asistida, contacte con Jefatura.'></span></td>";
                                     echo "<td></td>";
                                     if($datos['Justificada'] == 1)
                                     {

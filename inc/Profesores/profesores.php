@@ -8,7 +8,6 @@ if($_SESSION['Perfil'] === 'Admin')
     echo '<div class="container">';
     echo "<div id='horario'></div>";
     echo "<h1>Profesores</h1>";
-    echo "<a href='index.php?ACTION=profesores&OPT=add-profesor' class='btn btn-info'>Registrar Profesor</a></br>";
     echo "<br><h4 style='display: inline-block; margin-right: 15px;'>Buscar profesor: </h4>
       <span style='font-size: 20px;' class='fa fa-search'></span> 
       <input style='width: 25%; display: inline-block;' id='busca_prof' class='form-control' type='text' placeholder='Buscar Profesor...' autocomplete='off'><br>";
