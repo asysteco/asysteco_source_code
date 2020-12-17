@@ -21,7 +21,7 @@ if($response = $class->query($sql))
         echo "<a id='eliminar-horario' href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger pull-right' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
         echo "<div id='response'></div>";
         echo "</br>";
-        echo "<table class='table'>";
+        echo "<table class='table' style='margin-top: 25px;'>";
         echo "<thead>";
             echo "<tr>";
                 echo "<th style='text-align: center;'>Horas</th>";

@@ -19,7 +19,7 @@ if($resp = $class->query("SELECT ID, Nombre, TIPO FROM $class->profesores WHERE 
                 $class->notificar($profesor, $msg);
                 $MSG = "Cambios realizados correctamente.";
                 $_GET['profesor'] = $profesor;
-                include_once($dirs['inc'] . 'remove-horario-profesor.php');
+                include_once($dirs['Horarios'] . 'remove-horario-profesor.php');
             }
             else
             {

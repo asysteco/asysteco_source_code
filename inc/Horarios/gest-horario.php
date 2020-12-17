@@ -55,9 +55,9 @@ if ($rAula->num_rows > 0) {
     }
 }
 ?>
-<div class="container" style="margin-top:75px">
+<div class="container">
     <div class='row'>
-        <div class='col-xs-12'>
+        <div class='col-12'>
             <h1 id="profesor" data="<?=$profesor;?>">Gestionar Horario de <b><?=$nombreProfesor?></b></h1>
             <div class="add-fields">
                 <select id="add-dia" class="form-control" style="display: inline-block; width: 15%;">
@@ -104,7 +104,7 @@ if ($rAula->num_rows > 0) {
                     }
                     ?>
                 </select>
-                <a action="add" class="btn btn-success act">Añadir Hora</a>
+                <a action="add" class="btn btn-success act" style="margin-bottom: 5px;">Añadir Hora</a>
             </div>
             <div id="programar-horario">
                 <input type="text" id="fecha-programar-horario" class="form-control" autocomplete="off" placeholder="Selecciona una fecha..." style="display: inline-block; width: 20%;">
@@ -163,7 +163,7 @@ if ($rAula->num_rows > 0) {
                                         }
                                     echo "</select>";
                                 echo "</td>";
-                                echo "<td><span data='".$row->ID."' action='remove' class='glyphicon glyphicon-trash remove act'></span></td>";
+                                echo "<td><span data='".$row->ID."' action='remove' style='font-size: 25px;' class='fa fa-trash-o remove act'></span></td>";
                             echo "</tr>";
                             $ultimodia = $row->Diasemana;
                         }
@@ -185,7 +185,7 @@ if ($rAula->num_rows > 0) {
 </div>
 <a id="cancel-btn" action="cancel" class="btn btn-danger act">Cancelar cambios</a>
 <a id="update-btn" action="update" class="btn btn-success act">Aplicar cambios</a>
-<div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
+<div id="loading" class="col-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
     <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
         <div>
             <img src="resources/img/loading.gif" alt="Cargando...">

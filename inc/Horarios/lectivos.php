@@ -1,7 +1,7 @@
-<div class="container" style="margin-top: 50px; margin-left: auto; margin-right: auto; width: 85%;">
+<div class="container" style="margin-top: 75px; margin-left: auto; margin-right: auto; width: 85%;">
     <div class="row">
-        <div class="col-xs-12 col-md-4">
-        <h2>Calendario escolar</h2>
+        <div class="col-12 col-md-4">
+        <h1>Calendario escolar</h1>
         <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
             <h3>Fechas Lectivas:</h3>
             <h4>Inicio:</h4>
@@ -31,7 +31,7 @@ if($response = $class->query("SELECT * FROM $class->lectivos"))
         ';        
     }
 
-    echo "<div class='col-xs-12 col-md-8'>";
+    echo "<div class='col-12 col-md-8'>";
         include_once($dirs['Horarios'] . 'calendario.php');
     echo "</div>";
 }

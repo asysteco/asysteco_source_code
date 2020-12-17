@@ -4,7 +4,7 @@
 
           <!-- Icon -->
         <div class="fadeIn first">
-        	 <h1>Cambiar Contraseña</h1>
+        	 <h1 style="margin: 15px;">Cambiar Contraseña</h1>
         </div>
 
           <!-- Login Form -->

@@ -1,8 +1,8 @@
 <?php
-echo '<div class="container" style="margin-top:75px">';
+echo '<div class="container">';
     echo "<div class='row'>";
-        echo "<div class='col-xs-12'>";
-            echo "<h2>Registrar Profesor</h2>";
+        echo "<div class='col-12'>";
+            echo "<h1>Registrar Profesor</h1>";
             echo "<form action='index.php?ACTION=profesores&OPT=add-profesor' method='post'>";
             echo "<input type='text' name='Iniciales' value='$_POST[Iniciales]' class='form-control' placeholder='Iniciales Profesor'>";
             echo "</br>";
