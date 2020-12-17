@@ -80,7 +80,7 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
         <h6 class="modal-title" style="color: grey; text-align: center;"><i>
           *El fichero no será importado, si se encuentra una línea de color: <div style="display: inline-block; width: 25px; height: 10px; background: #ff9797;"></div> .
           <br>
-          *Si los datos mostrados no coinciden con los que se desea importar, cancele el proceso y modifique su fichero CSV
+          *Si los datos mostrados no coinciden con los que se desea importar, cancele el proceso y modifique su fichero CSV.
         </i></h6>
       </div>
       <div class='modal-body'>
