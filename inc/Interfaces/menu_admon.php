@@ -45,7 +45,7 @@
             <h2>Copia de seguridad del centro</h2>
             <a href="index.php?ACTION=backup-centro" id="backup" class="btn btn-success" target="_blank" download><span style="font-size: 20px;" class="fa fa-floppy-o"></span> Copia de seguridad</a>
             </br>
-        <div class="col-12">
+        <div class="col-12" style="margin-top: 25px;">
             <div id="btn-response"></div>
         </div>
     </div>

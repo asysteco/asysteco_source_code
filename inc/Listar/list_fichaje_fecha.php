@@ -1,30 +1,33 @@
 <?php
 
+$profesor = $_GET['profesor'] ?? '';
 $fechaInicio = $_GET['fechainicio'] ?? '';
 $fechaFin = $_GET['fechafin'] ?? '';
-$whereFilter = ' WHERE Fecha <= CURDATE()';
+$whereFilter = ' WHERE F.Fecha <= CURDATE()';
 $errorMessage = '';
-$selectfecha = '';
 $element = $_GET['element'];
-
+$page_size = 200;
 $offset_var = $_GET['pag'];
+
+if (isset($profesor) && !empty($profesor)) {
+    $whereFilter .= " AND F.ID_PROFESOR = $profesor";
+}
 
 if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($fechaFin)) {
     $fini = $class->formatEuropeanDateToSQLDate($fechaInicio);
     $ffin = $class->formatEuropeanDateToSQLDate($fechaFin);
 
     if($fini && $ffin) {
-        $whereFilter .= " AND Fecha >= '$fini' AND Fecha <= '$ffin'";
-        $selectfecha .= "&fechainicio=$_GET[fechainicio]&fechafin=$_GET[fechafin]";
+        $whereFilter .= " AND F.Fecha >= '$fini' AND F.Fecha <= '$ffin'";
     }
 }
-if(! $response = $class->query("SELECT ID_PROFESOR FROM Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID"))
+$query = "SELECT F.ID_PROFESOR FROM Fichar F INNER JOIN Profesores P ON F.ID_PROFESOR=P.ID $whereFilter";
+
+if(!$response = $class->query($query))
 {
     $errorMessage = 'Ha ocurrido un error inesperado...';
 }
 
-
-$page_size = 200;
 $total_records = $response->num_rows;
 $count=ceil($total_records/$page_size);
 
@@ -41,7 +44,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     for($j=0; $j<$count; $j++) {
                         $currentPage = $j*$page_size;
                         $selected = $offset_var == $j*$page_size ? 'selected' : '';
-                        echo "<option value='$currentPage' action='select' element='$element' start='$fechaInicio' end='$fechaFin' $selected>";
+                        echo "<option value='$currentPage' action='select' element='$element' profesor='$profesor' start='$fechaInicio' end='$fechaFin' $selected>";
                             echo $pag = ($j+1);
                         echo '</option> ';
                     }
@@ -49,10 +52,10 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     echo "</h3>";
                 echo "<div>";
             }
-            $sql = "SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
-            FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID)
+            $sql = "SELECT F.ID_PROFESOR, P.Nombre, F.F_entrada, F.F_Salida, F.DIA_SEMANA, F.Fecha
+            FROM (Fichar F INNER JOIN Profesores P ON F.ID_PROFESOR=P.ID)
             $whereFilter
-            ORDER BY Profesores.Nombre ASC
+            ORDER BY F.Fecha DESC, F.F_entrada ASC, P.Nombre ASC
             LIMIT $page_size OFFSET $offset_var";
             if (!$result = $mysql->query($sql)) {
                 throw new Exception('Ha ocurrido un error...');
@@ -71,16 +74,13 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     echo "<tbody>";
                     while ($datos = $result->fetch_assoc())
                     {
-                        $sep = preg_split('/[ -]/', $datos['Fecha']);
-                        $dia = $sep[2];
-                        $m = $sep[1];
-                        $Y = $sep[0];
+                        $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                         echo "<tr>";
                             echo "<td>$datos[Nombre]</td>";
                             echo "<td>$datos[F_entrada]</td>";
                             echo "<td>$datos[F_Salida]</td>";
                             echo "<td>$datos[DIA_SEMANA]</td>";
-                            echo "<td>$dia/$m/$Y</td>";
+                            echo "<td>$fecha</td>";
                         echo "</tr>";
                     }
                     echo "</tbody>";
@@ -108,12 +108,14 @@ echo "
         element = $(this).children().attr('element');
         action = $(this).children().attr('action');
         page = $(this).val();
+        profesor = $(this).children().attr('profesor');
         start = $(this).children().attr('start');
         end = $(this).children().attr('end');
         urlPath = 'index.php?ACTION=admon&OPT=select';
         data = {
             'action': action,
             'element': element,
+            'profesor': profesor,
             'fechainicio': start,
             'fechafin': end,
             'pag': page
