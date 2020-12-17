@@ -4,7 +4,6 @@ $fechaInicio = $_GET['fechainicio'] ?? '';
 $fechaFin = $_GET['fechafin'] ?? '';
 $whereFilter = ' WHERE Fecha <= CURDATE()';
 $errorMessage = '';
-$selectfecha = '';
 $element = $_GET['element'];
 
 $offset_var = $_GET['pag'];
@@ -15,10 +14,9 @@ if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($f
 
     if($fini && $ffin) {
         $whereFilter .= " AND Fecha >= '$fini' AND Fecha <= '$ffin'";
-        $selectfecha .= "&fechainicio=$_GET[fechainicio]&fechafin=$_GET[fechafin]";
     }
 }
-if(! $response = $class->query("SELECT ID_PROFESOR FROM Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID"))
+if(!$response = $class->query("SELECT ID_PROFESOR FROM Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID"))
 {
     $errorMessage = 'Ha ocurrido un error inesperado...';
 }
