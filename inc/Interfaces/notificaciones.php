@@ -1,13 +1,13 @@
 <?php
-echo '<div class="container" id="botonera" style="margin-top:75px">';
+echo '<div class="container" id="botonera">';
     echo '<div class="row">'; 
-        echo '<div class="col-xs-12">';
+        echo '<div class="col-12">';
                 $response = "SELECT Notificaciones.*, Profesores.Nombre, Profesores.Iniciales FROM Notificaciones INNER JOIN Profesores ON Notificaciones.ID_PROFESOR=Profesores.ID ORDER BY Fecha DESC LIMIT 100";
 
                 $result = $class->query($response);
                 if (! empty($result)) 
                 {
-                    echo "<h2>Registros de Notificaciones</h2>"; 
+                    echo "<h1>Registros de Notificaciones</h1>"; 
                     echo "<table id='userTable' class='table table-striped'>
                         <thead>
                             <tr>

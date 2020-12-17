@@ -60,9 +60,9 @@ if ($programDate !== '') {
         }
     }
     ?>
-    <div class="container" style="margin-top:75px">
+    <div class="container">
         <div class='row'>
-            <div class='col-xs-12'>
+            <div class='col-12'>
                 <h1 id="profesor" data="<?=$profesor;?>">Programar Horario para <b><?=$nombreProfesor?></b></h1>
                 <h4 id="program-date" data="<?=$mysqlProgramDate?>" data-real="<?=$programDate?>">*<i> Al "Programar este horario", entrará en vigor el día <?=$programDate?></i></h4>
                 <div class="add-fields">
@@ -110,7 +110,7 @@ if ($programDate !== '') {
                         }
                         ?>
                     </select>
-                    <a action="add" class="btn btn-success act">Añadir Hora</a>
+                    <a action="add" class="btn btn-success act" style="margin-bottom: 5px;">Añadir Hora</a>
                 </div>
                 <table id="tableHorarios" class="table table-striped">
                     <thead>
@@ -169,7 +169,7 @@ if ($programDate !== '') {
                                             }
                                         echo "</select>";
                                     echo "</td>";
-                                    echo "<td><span data='".$row->ID."' action='remove' class='glyphicon glyphicon-trash remove act'></span></td>";
+                                    echo "<td><span data='".$row->ID."' action='remove' style='font-size: 25px;' class='fa fa-trash-o remove act'></span></td>";
                                 echo "</tr>";
                                 $ultimodia = $row->Diasemana;
                             }
@@ -191,7 +191,7 @@ if ($programDate !== '') {
     </div>
     <a id="cancel-btn" action="cancel" class="btn btn-danger act">Cancelar cambios</a>
     <a id="update-btn" action="update" class="btn btn-success act">Aplicar cambios</a>
-    <div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
+    <div id="loading" class="col-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
         <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
             <div>
                 <img src="resources/img/loading.gif" alt="Cargando...">

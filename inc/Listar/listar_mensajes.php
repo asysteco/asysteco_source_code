@@ -1,5 +1,5 @@
 <?php  
-        echo "<div id='listado_mensajes' class='col-xs-12'>";
+        echo "<div id='listado_mensajes' class='col-12'>";
         echo "<h2>Mensajes</h2>";
         echo '<div id="tabs">';
             echo '<ul>';

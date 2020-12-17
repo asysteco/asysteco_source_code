@@ -1,4 +1,4 @@
-<div class="container" style="margin-top:50px">
+<div class="container">
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <h1>Fichaje Manual</h1>

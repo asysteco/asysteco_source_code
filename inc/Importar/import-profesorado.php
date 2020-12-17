@@ -1,5 +1,5 @@
-<div class="container" style="margin-top:50px">
-    <h2>Importar Profesores desde CSV</h2>
+<div class="container">
+    <h1>Importar Profesores desde CSV</h1>
     <div id="response"
         class="<?php if(!empty($type)) { echo $type . " display-block"; } ?>">
         <?php if(!empty($message)) { echo $message; } ?>
@@ -18,7 +18,7 @@
 AAM;Antonio Alarcón Muñoz;No
 CRL;Carolina Rodríguez López;3ESOA</pre>
 <p class="format-body">Si lo desea, haciendo click al siguiente botón puede descargar una plantilla del formato en CSV: 
-    <a href="index.php?ACTION=plantilla-profesores"><span class="glyphicon glyphicon-download-alt"></span></a></p>
+    <a href="index.php?ACTION=plantilla-profesores"><span style="font-size: 20px;" class="fa fa-cloud-download"></span></a></p>
     </p>
     </div>
     <br>
@@ -57,7 +57,7 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
         //echo "<a id='btn-todos-registros-prof' class='btn btn-info'>Ver todos los registros</a>";
 ?>
         <div id="todos-registros"></div>
-        <div id="loading" class="col-xs-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
+        <div id="loading" class="col-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
             <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
                 <div>
                     <img src="resources/img/loading.gif" alt="Cargando...">
@@ -81,7 +81,7 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
       <div class='modal-body'>
         <div class='container-fluid'>
           <div class='row'>
-            <div class='col-xs-12'>
+            <div class='col-12'>
               <table class="table-striped" style="width: 100%;">
                 <thead>
                   <tr>
