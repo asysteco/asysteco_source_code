@@ -81,7 +81,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     echo "</thead>";
                     echo "<tbody>";
             
-                while ($datos = $response->fetch_assoc())
+                while ($datos = $result->fetch_assoc())
                 {
                     $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                     echo "<tr>";
