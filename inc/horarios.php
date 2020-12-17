@@ -34,29 +34,52 @@ if($response = $class->query($sql))
             $horaInicioSinSegundos = $horaInicioSplit[0] . ":" . $horaInicioSplit[1];
             $horaFinSplit = preg_split('/:/', $datos['Fin']);
             $horaFinSinSegundos = $horaFinSplit[0] . ":" . $horaFinSplit[1];
-            if (! $class->query("SELECT * FROM Horarios WHERE ID_PROFESOR='$_SESSION[ID]' AND Hora='$Hora' ORDER BY Hora ")->num_rows > 0) {
+            
+            if (! $class->query("SELECT Horarios.*, Cursos.Nombre as Curso, Aulas.Nombre as Aula
+                                FROM (Horarios 
+                                    INNER JOIN Cursos ON Horarios.grupo = Cursos.ID)
+                                    INNER JOIN Aulas ON Horarios.Aula = Aulas.ID
+                                WHERE ID_PROFESOR='$_SESSION[ID]'
+                                AND Hora='$Hora'
+                                ORDER BY Hora ")->num_rows > 0) {
                 continue;
             }
-            echo "<tr>";
-                echo "<td style='text-align: center; vertical-align: middle;'>$horaInicioSinSegundos <br>$horaFinSinSegundos</td>";
-                
+            echo "<tr id='Hora_$Hora'>";
+            echo "<td style='text-align: center; vertical-align: middle;'>$horaInicioSinSegundos <br>$horaFinSinSegundos</td>";
                 for($dialoop = 1; $dialoop <= 5; $dialoop++)
                 {
                     $dia['wday'] == $dialoop ? $dia['color'] = "success" : $dia['color'] = '';
-                    if($response = $class->query("SELECT Hora, Dia, Aula, Grupo FROM Horarios WHERE ID_PROFESOR='$_SESSION[ID]' AND Hora='$Hora' AND Dia='$dialoop' ORDER BY Hora "))
+                    if($response = $class->query("SELECT Hora, Dia, Aulas.Nombre as Aula, Cursos.Nombre as Curso, Edificio
+                    FROM (Horarios 
+                        INNER JOIN Cursos ON Horarios.grupo = Cursos.ID)
+                        INNER JOIN Aulas ON Horarios.Aula = Aulas.ID
+                    WHERE ID_PROFESOR='$_SESSION[ID]'
+                        AND Hora='$Hora'
+                        AND Dia='$dialoop'
+                    ORDER BY Hora "))
                     {
                         if($response->num_rows > 0)
                         {
                             $fila = $response->fetch_all();
                             $m=2;
                             echo "<td style='text-align: center; vertical-align: middle;' class=' $dia[color]'>";
-                            echo "<b>Aula: </b>" . $fila[0][2];
-                            echo "<br><b>Grupo: </b>";
-                            for($i=0;$i<count($fila);$i++)
+                            
+                            if($fila[0][3] == 'Guardia')
                             {
-                                $m % 2 == 0 ? $espacio = " " : $espacio = "<br>";
-                                echo $espacio . $fila[$i][3];
-                                $m++;
+                                echo "<span><b>Guardia</b></span>";
+                                echo "<br>";
+                                echo "<span><b>Edificio " . $fila[0][4] . "</b></span>";
+                            }
+                            else
+                            {
+                                echo "<b>Aula: </b>" . $fila[0][2];
+                                echo "<br><b>Grupo: </b>";
+                                for($i=0;$i<count($fila);$i++)
+                                {
+                                    $m % 2 == 0 ? $espacio = " " : $espacio = "<br>";
+                                    echo $espacio . $fila[$i][3];
+                                    $m++;
+                                }
                             }
                             echo "</td>";
                         }
