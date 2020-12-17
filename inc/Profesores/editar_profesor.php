@@ -65,13 +65,13 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
                     {
                         if($resp->num_rows > 0)
                         {
-                            echo "<a href='index.php?ACTION=profesores' style='margin-left: 30px' class='btn btn-danger pull-left'>Cancelar</a>";
-                            echo "<a href='index.php?ACTION=profesores&OPT=sustituir&ID=$datos[ID]' style='margin-right: 30px' class='btn btn-info pull-right'>Sustituir</a><br><br>";
+                            echo "<a href='index.php?ACTION=profesores' style='margin-left: 30px' class='btn btn-danger float-left'>Cancelar</a>";
+                            echo "<a href='index.php?ACTION=profesores&OPT=sustituir&ID=$datos[ID]' style='margin-right: 30px' class='btn btn-info float-right'>Sustituir</a><br><br>";
                         } 
                         else
                         {
-                            echo "<a href='index.php?ACTION=profesores' id='profe_cancelar' class='btn btn-danger pull-left'>Cancelar</a>";
-                            echo "<a href='index.php?ACTION=profesores&OPT=remove-sustituto&ID=$datos[ID]' id='profe_retirar' style='margin-right: 30px' class='btn btn-warning pull-right'>Retirar Sustituto</a><br><br>";
+                            echo "<a href='index.php?ACTION=profesores' id='profe_cancelar' class='btn btn-danger float-left'>Cancelar</a>";
+                            echo "<a href='index.php?ACTION=profesores&OPT=remove-sustituto&ID=$datos[ID]' id='profe_retirar' style='margin-right: 30px' class='btn btn-warning float-right'>Retirar Sustituto</a><br><br>";
                         }
                     }
                     echo "<button class='btn btn-info' name='ACTION' value='editar_profesor'>Actualizar Profesor</button></br></br>";

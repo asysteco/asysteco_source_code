@@ -68,7 +68,7 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
 
         // Horarios Dropdown start
         echo "<li class='nav-item dropdown $act_horario'>";
-          echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'> Horario </a>";
+          echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'>Horario</a>";
           echo '<ul class="dropdown-menu bg-dark">';
             echo "<a class='dropdown-item text-light $act_gestCursos' href='index.php?ACTION=horarios&OPT=cursos'>
               <i style='font-size: 20px; vertical-align: middle;' class='fa fa-pencil-square-o'></i>
@@ -89,9 +89,7 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
 
         // Profesores Dropdown start
         echo "<li class='nav-item dropdown $act_profesores '>";
-          echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'>";
-            echo "<span style='vertical-align: middle;'> Profesores</span>";
-          echo "</a>";
+          echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'>Profesores</a>";
           echo "<ul class='dropdown-menu bg-dark'>";
             echo "<a class='dropdown-item text-light $act_showProf' href='$_SERVER[PHP_SELF]?ACTION=profesores'>
               <i style='font-size: 20px; vertical-align: middle;' class='fa fa-eye'></i>

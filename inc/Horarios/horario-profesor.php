@@ -17,8 +17,8 @@ if($response = $class->query($sql))
         $datosprof = $response->fetch_assoc();
         $franja = $datosprof['Tipo'];
         echo "<h2>Horario: $n[Nombre]</h2>";
-        echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success pull-left'>Editar horario</a>";
-        echo "<a id='eliminar-horario' href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger pull-right' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
+        echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success float-left'>Editar horario</a>";
+        echo "<a id='eliminar-horario' href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger float-right' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
         echo "<div id='response'></div>";
         echo "</br>";
         echo "<table class='table' style='margin-top: 25px;'>";
