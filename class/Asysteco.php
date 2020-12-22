@@ -24,10 +24,10 @@ class Asysteco
         if (!$this->conex->connect_errno) {
             return $this->conex;
         } else {
-            if($_SESSION['LID'] === 'Testing') {
+            if($_SESSION['LID'] === 'Testing' || (int)$_COOKIE['debug'] === 1) {
                 $this->ERR_ASYSTECO = "Fallo al conectar a MySQL: (" . $this->conex->connect_errno . ") " . $this->conex->connect_error;
             } else {
-                $this->ERR_ASYSTECO = "Error al conectar con el servicio...";
+                $this->ERR_ASYSTECO = "Error al conectar con el servicio, inténtelo más tarde o contacte con los administradores.";
             }
 
             return false;
@@ -47,8 +47,8 @@ class Asysteco
         if ($response = $this->conex->query($sql)) {
             return $response;
         } else {
-            if($_SESSION['LID'] === 'Testing') {
-                $this->ERR_ASYSTECO = "ERR_CODE: " . $this->conex->errno . "<br>ERROR: " . $this->conex->error . '<br>' . $sql;
+            if($_SESSION['LID'] === 'Testing' || (int)$_COOKIE['debug'] === 1) {
+                $this->ERR_ASYSTECO = "ERR_CODE: " . $this->conex->errno . "<br>ERROR: " . $this->conex->error . '<br>SQL: ' . $sql;
             } else {
                 $this->ERR_ASYSTECO = "Error inesperado, contacte con los administradores...";
             }
