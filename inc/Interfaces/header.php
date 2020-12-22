@@ -16,26 +16,7 @@
   <script src="js/toastr/toastr.min.js"></script>
   <script src="js/datepicker_common.js"></script>
   <script src="js/flecha.js"></script>
-  
-  <script>
-    toastr.options = {
-      "closeButton": false,
-      "debug": false,
-      "newestOnTop": true,
-      "progressBar": false,
-      "positionClass": "toast-bottom-right",
-      "preventDuplicates": true,
-      "onclick": null,
-      "showDuration": "300",
-      "hideDuration": "1000",
-      "timeOut": "5000",
-      "extendedTimeOut": "1000",
-      "showEasing": "swing",
-      "hideEasing": "linear",
-      "showMethod": "fadeIn",
-      "hideMethod": "fadeOut"
-    }
-  </script>
+  <script src="js/toastr/toastr-settings.js"></script>
   
   <?php if(isset($scripts)){ echo $scripts;} ?>
 

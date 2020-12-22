@@ -19,9 +19,9 @@
                         while($row = $response->fetch_assoc()){
                             echo "<tr id='fila_$row[ID]' style='text-align: center;'>";
                                 echo "<td style='vertical-align: middle;'>";
-                                    echo "<input id='input_$row[ID]' type='text' class='form-control hide-it' style='width: 30%; display: inline-block;'>";
+                                    echo "<input id='input_$row[ID]' type='text' class='form-control hide-it' style='width: 30%; display: inline-block; vertical-align: middle;'>";
                                     echo "<span id='txt_$row[ID]' class='show-it'>$row[Nombre]</span> ";
-                                    echo "<a id='btn_$row[ID]' data='$row[ID]' class='btn btn-success hide-it update text-light'>Aplicar</a>";
+                                    echo "<a id='btn_$row[ID]' data='$row[ID]' class='btn btn-success hide-it update' style='vertical-align: middle;'>Aplicar</a>";
                                 echo "</td>";
                                 echo "<td style='font-size: 25px; vertical-align: middle;'><span fields='edit_$row[ID]' class='fa fa-pencil-square-o edit'></span></td>";
                                 echo "<td style='font-size: 25px; vertical-align: middle;'><span data='$row[ID]' action='remove' class='fa fa-trash-o remove'></span></td>";
