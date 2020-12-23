@@ -43,6 +43,7 @@ if ($_SESSION['Perfil'] === 'Admin') {
         ';
     }
 } else {
+    include_once($dirs['Interfaces'] . 'top-nav.php');
     echo '<div class="container-fluid">';
     echo "<div class='row'>";
     echo "<div class='col-12' style='text-align: center;'>";
