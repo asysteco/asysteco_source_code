@@ -6,8 +6,9 @@ $fechaFin = $_GET['fechafin'] ?? '';
 $whereFilter = ' AND M.Fecha <= CURDATE()';
 $errorMessage = '';
 $element = $_GET['element'];
-$offset_var = $_GET['pag'];
 $page_size = 200;
+$offset_var = $_GET['pag'];
+$tituloListado = "Faltas Injustificadas";
 
 if (isset($profesor) && !empty($profesor)) {
     $whereFilter .= " AND M.ID_PROFESOR = $profesor";
@@ -22,10 +23,12 @@ if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($f
     }
 }
 
-$query = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
+$query = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana, Ho.Inicio, Ho.Fin
 FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
-    INNER JOIN Diasemana D ON M.Dia=D.ID 
-WHERE (M.Asiste=1 OR M.Asiste=2) $whereFilter
+    INNER JOIN Diasemana D ON M.Dia=D.ID
+    INNER JOIN Horas Ho ON M.Hora=Ho.Hora
+WHERE M.Asiste = 0
+    AND Justificada = 0 $whereFilter
 ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC";
 
 if(! $response = $class->query($query)) {
@@ -41,6 +44,7 @@ $mysql->autocommit(FALSE);
 if (empty($errorMessage) && $response->num_rows > 0) {
     try {
         if(isset($offset_var)) {
+            echo "<h2>$tituloListado</h2>";
             if($count > 1) {
             echo "<div class='páginas' style='margin-top: 25px;'>";
                 echo "<h3>Página ";
@@ -55,17 +59,19 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 echo "</select>";
                 echo "</h3>";
             echo "</div>";
-            }
-            $sql = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
+            }            
+            $sql = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana, Ho.Inicio, Ho.Fin
             FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
-                INNER JOIN Diasemana D ON M.Dia=D.ID 
-            WHERE (M.Asiste=1 OR M.Asiste=2) $whereFilter
+                INNER JOIN Diasemana D ON M.Dia=D.ID
+                INNER JOIN Horas Ho ON M.Hora=Ho.Hora
+                WHERE M.Asiste = 0
+                    AND Justificada = 0 $whereFilter
             ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC
             LIMIT $page_size OFFSET $offset_var";
             if (!$result = $mysql->query($sql)) {
                 throw new Exception('Ha ocurrido un error...');
             }
-            if($result->num_rows > 0) {
+            if ($result->num_rows > 0) {
                 echo "<table class='table table-striped'>";
                     echo "<thead class='thead-dark'>";
                         echo "<tr>";
@@ -83,23 +89,19 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             
                 while ($datos = $result->fetch_assoc())
                 {
+                    $horaInicio = $class->transformHoraMinutos($datos['Inicio']);
+                    $horaFin = $class->transformHoraMinutos($datos['Fin']);
+
                     $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                     echo "<tr>";
                         echo "<td>$datos[Iniciales]</td>";
                         echo "<td>$datos[Nombre]</td>";
                         echo "<td>$fecha</td>";
-                        echo "<td>$datos[Hora]</td>";
+                        echo "<td>$horaInicio<br>$horaFin</td>";
                         echo "<td>$datos[Dia]</td>";
                         echo "<td>$datos[Diasemana]</td>";
-                        echo "<td>SI</td>";
-                        if($datos['Asiste'] == 2)
-                        {
-                            echo "<td>SI</td>";
-                        }
-                        else
-                        {
-                            echo "<td>NO</td>";
-                        }
+                        echo "<td>NO</td>";
+                        echo "<td>NO</td>";
                     echo "</tr>";
                 }
                     echo "</tbody>";
@@ -111,9 +113,10 @@ if (empty($errorMessage) && $response->num_rows > 0) {
         $class->conex->rollback();
     }
     $class->conex->commit();
-}else {
+} else {
     echo "<h2 style='color: grey;'><i>No existen datos que mostrar.</i></h2>";
 }
+
 if (!empty($errorMessage)) {
     echo $errorMessage;
 }

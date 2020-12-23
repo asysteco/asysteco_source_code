@@ -23,22 +23,26 @@
                 }
             ?>
             <h2>Exportar a Excel</h2>
-            <a data-item="marcajes" action="export" id="exportmarcajes" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Marcajes</a>
-            <a data-item="asistencias" action="export" id="exportasistencias" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Asistencias</a>
-            <a data-item="faltas" action="export" id="exportfaltas" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Faltas</a>
-            <a data-item="horarios" action="export" id="exporthorarios" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Horarios</a>
-            <a data-item="profesores" action="export" id="exportprofesores" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Profesores</a>
-            <a data-item="fichajes" action="export" id="exportfichajes" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Fichajes</a>
+            <a data-item="marcajes" action="export" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Marcajes</a>
+            <a data-item="asistencias" action="export" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Asistencias</a>
+            <a data-item="faltas" action="export" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Faltas</a>
+            <a data-item="horarios" action="export" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Horarios</a>
+            <a data-item="profesores" action="export" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Profesores</a>
+            <a data-item="fichajes" action="export" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Fichajes</a>
+            <a data-item="Faltas_Injustificadas" action="export" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Faltas Injustificadas</a>
+            <a data-item="Faltas_Justificadas" action="export" class="btn btn-info btn-export act"><span style="font-size: 20px;" class="fa fa-cloud-download"></span> Faltas Justificadas</a>
             </br>
             <h2>Mostrar en Pantalla</h2>
-            <a data-item="asistencias" action="select" id='filtroasistencias' class="btn btn-success btn-select act"><span style="font-size: 20px;" class="fa fa-eye"></span> Asistencias</a>
-            <a data-item="faltas" action="select" id='filtrofaltas' class="btn btn-success btn-select act"><span style="font-size: 20px;" class="fa fa-eye"></span> Faltas</a>
-            <a data-item="horarios" action="select" id='filtrohorarios' class="btn btn-success btn-select act"><span style="font-size: 20px;" class="fa fa-eye"></span> Horarios</a>
+            <a data-item="asistencias" action="select" class="btn btn-success btn-select act"><span style="font-size: 20px;" class="fa fa-eye"></span> Asistencias</a>
+            <a data-item="faltas" action="select" class="btn btn-success btn-select act"><span style="font-size: 20px;" class="fa fa-eye"></span> Faltas</a>
+            <a data-item="horarios" action="select" class="btn btn-success btn-select act"><span style="font-size: 20px;" class="fa fa-eye"></span> Horarios</a>
             <a data-item="fichajeDiario" action="select" class="btn btn-success btn-select act"><span style="font-size: 20px;" class="fa fa-calendar"></span> Fichajes de hoy</a>
-            <a data-item="fichajeFechaFilter" action="select" id='filtrofichajes' class="btn btn-success btn-select act"><span style="font-size: 20px;" class="fa fa-calendar"></span> Fichaje Por Fechas</a>
+            <a data-item="fichajeFechaFilter" action="select" class="btn btn-success btn-select act"><span style="font-size: 20px;" class="fa fa-calendar"></span> Fichaje Por Fechas</a>
+            <a data-item="faltasInjustificadas" action="select" class="btn btn-success btn-select act"><span style="font-size: 20px;" class="fa fa-calendar-minus-o"></span> Faltas Injustificadas</a>
+            <a data-item="faltasJustificadas" action="select" class="btn btn-success btn-select act"><span style="font-size: 20px;" class="fa fa-calendar-check-o"></span> Faltas Justificadas</a>
             </br>
             <h2>Borrado de Datos (Atención estas acciones son <b>IRREVERSIBLES</b>)</h2>
-            <a enlace="index.php?ACTION=profesores&OPT=delete-all" class="btn btn-danger eliminar" elemento="profesores"><span style="font-size: 20px;" class="fa fa-user-o"></span> Borrar Profesores</a>
+            <a enlace="index.php?ACTION=profesores&OPT=delete-all" class="btn btn-danger eliminar" elemento="profesores"><span style="font-size: 20px;" class="fa fa-user-times"></span> Borrar Profesores</a>
             <a enlace="index.php?ACTION=horarios&OPT=delete-all" class="btn btn-danger eliminar" elemento="horarios"><span style="font-size: 20px;" class="fa fa-calendar-times-o"></span> Borrar Horarios</a>
             <a enlace="index.php?ACTION=horarios&OPT=delete-all-t" id="eliminar-t-horarios" class="btn btn-danger eliminar" elemento="t-horarios"><span style="font-size: 20px;" class="fa fa-calendar-times-o"></span> Borrar Horarios Programados</a>
             </br>

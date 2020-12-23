@@ -64,7 +64,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             }
             if($result->num_rows > 0) {
                 echo "<table class='table table-striped'>";
-                    echo "<thead>";
+                    echo "<thead class='thead-dark'>";
                         echo "<tr>";
                             echo "<th>INICIALES</th>";
                             echo "<th>PROFESOR</th>";
