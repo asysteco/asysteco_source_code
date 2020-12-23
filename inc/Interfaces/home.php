@@ -45,10 +45,11 @@ if ($_SESSION['Perfil'] === 'Admin') {
 } else {
     include_once($dirs['Interfaces'] . 'top-nav.php');
     echo '<div class="container-fluid">';
-    echo "<div class='row'>";
-    echo "<div class='col-12' style='text-align: center;'>";
-    include($dirs['Horarios'] . 'guardias.php');
-    echo "</div>";
-    echo "</div>";
+        echo "<div class='row'>";
+            echo "<div class='col-12' style='text-align: center;'>";
+                echo "<h1>Guardias disponibles</h1>";
+                include($dirs['Horarios'] . 'guardias.php');
+            echo "</div>";
+        echo "</div>";
     echo "</div>";
 }
