@@ -68,7 +68,7 @@ if(empty($errorMessage) && $response->num_rows > 0) {
                 FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID) 
                 INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
                 WHERE Asiste=0 $whereFilter
-                ORDER BY Marcajes.Fecha, Profesores.Nombre ASC 
+                ORDER BY Marcajes.Fecha ASC, Profesores.Nombre ASC 
                 LIMIT $page_size OFFSET $offset_var";
                 if (!$result = $mysql->query($sql)) {
                     throw new Exception('No existen datos para exportar...');
