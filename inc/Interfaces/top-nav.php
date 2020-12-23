@@ -155,6 +155,11 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
               <span style='vertical-align: middle;'> Cambio de contraseña </span>
               </a>";
               echo '<div class="dropdown-divider"></div>';
+              echo "<a class='dropdown-item text-light' id='info-horario' href='#'>
+                <i id='info-horario-icon' style='font-size: 20px; vertical-align: middle;' class='fa fa-calendar-o'></i>
+                <span style='vertical-align: middle;'> Horario del centro</span>
+              </a>";
+              echo '<div class="dropdown-divider"></div>';
               echo "<a class='dropdown-item text-light' id='admin-guide' href='index.php?ACTION=download&OPT=admin-guide'>
                 <i id='cambio-pass-icon' style='font-size: 20px; vertical-align: middle;' class='fa fa-cloud-download'></i>
                 <span style='vertical-align: middle;'> Guía de uso Administración</span>
@@ -171,6 +176,9 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
           echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=logout'><i class='fa fa-sign-out'></i> Cerrar Sesión</a>";
         echo "</li>";
       echo '</ul>';
+      ?>
+      <script src="js/top-nav.js"></script>
+      <?php
     }
     
     if($_SESSION['Perfil'] === 'Profesor')
@@ -242,3 +250,13 @@ echo '</nav>';
 include_once($dirs['public'] . 'js/animate.js');
 
 echo "<div id='flecha_div' class='flecha_div'><a href='#'><img id='flecha' class='flecha' src='resources/img/flecha.png'/></a></div>";
+
+echo '
+<div id="loading" class="col-12" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center; z-index: 99;">
+    <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
+        <div>
+            <img src="resources/img/loading.gif" alt="Cargando...">
+            <h2 id="loading-msg"></h2>
+        </div>
+    </div>
+</div>';

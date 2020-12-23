@@ -12,54 +12,11 @@ if ($class->isLogged($Titulo)) {
                 break;
 
             case 'gest-horario':
+                $scripts = '<link rel="stylesheet" href="css/gest-horario.css">';
                 $extras = "
                     $(function (){
                         $('#fecha-programar-horario').datepicker({minDate: 1});
                     });
-                ";
-                $style = "
-                #profesor, .add-fields {
-                    text-align: center;
-                    margin-bottom: 25px;
-                }
-                table {
-                    text-align: center;
-                    width: 80%;
-                    margin: 5px;
-                }
-                table th {
-                    text-align:center;
-                }
-                .remove {
-                    padding: 10px;
-                    transition-duration: 0.2s;
-                }
-                #programar-horario {
-                    text-align: center;
-                }
-                #program-date {
-                    text-align: center;
-                    color: grey;
-                    margin-bottom: 25px;                  
-                }
-                #update-btn, #apply-program {
-                    position: fixed;
-                    top: 75px;
-                    right: 25px;
-                    background-color: #5cb85ccf;
-                }
-                #update-btn:hover, #apply-program:hover {
-                    background-color: #449d44;
-                }
-                #cancel-btn, #cancel-program {
-                    position: fixed;
-                    top: 75px;
-                    left: 25px;
-                    background-color: #d9534fc4;
-                }
-                #cancel-btn:hover, #cancel-program:hover {
-                    background-color: #d9534f;
-                }
                 ";
                 include_once($dirs['Interfaces'] . 'header.php');
                 include_once($dirs['Interfaces'] . 'top-nav.php');
@@ -95,21 +52,7 @@ if ($class->isLogged($Titulo)) {
                 if ($_SESSION['Perfil'] == 'Admin') {
                     $act_gestCursos = 'active';
 
-                    $style = "
-                        table {
-                        text-align: center;
-                        width: 80%;
-                        margin: 5px;
-                        }
-                        table th, table td {
-                        text-align:center;
-                        vertical-align: middle;
-                        }
-                        .remove, .edit {
-                        padding: 10px;
-                        transition-duration: 0.2s;
-                        }
-                    ";
+                    $scripts = '<link rel="stylesheet" href="css/aulas-cursos.css">';
                     include_once($dirs['Interfaces'] . 'header.php');
                     include_once($dirs['Interfaces'] . 'top-nav.php');
                     include_once($dirs['Editar'] . 'cursos.php');
@@ -134,21 +77,7 @@ if ($class->isLogged($Titulo)) {
                 if ($_SESSION['Perfil'] == 'Admin') {
                     $act_gestAulas = 'active';
 
-                    $style = "
-                        table {
-                        text-align: center;
-                        width: 80%;
-                        margin: 5px;
-                        }
-                        table th, table td {
-                        text-align:center;
-                        vertical-align: middle;
-                        }
-                        .remove, .edit {
-                        padding: 10px;
-                        transition-duration: 0.2s;
-                        }
-                    ";
+                    $scripts = '<link rel="stylesheet" href="css/aulas-cursos.css">';
                     include_once($dirs['Interfaces'] . 'header.php');
                     include_once($dirs['Interfaces'] . 'top-nav.php');
                     include_once($dirs['Editar'] . 'aulas.php');
@@ -316,6 +245,16 @@ if ($class->isLogged($Titulo)) {
             case 'delete-all-t':
                 if ($_SESSION['Perfil'] == 'Admin') {
                     include_once($dirs['Horarios'] . 'delete_all_t_horarios.php');
+                } else {
+                    $MSG = "Acceso denegado.";
+                    header("Refresh:2; url=index.php");
+                    include_once($dirs['Interfaces'] . 'msg_modal.php');
+                }
+                break;
+
+            case 'info':
+                if ($_SESSION['Perfil'] == 'Admin') {
+                    include_once($dirs['Horarios'] . 'info-horario-centro.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
