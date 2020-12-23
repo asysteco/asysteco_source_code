@@ -150,6 +150,16 @@ class Asysteco
         }
     }
 
+    public function validSQLTime(string $time): bool
+    {
+        if (preg_match('/^([0-1][0-9]|2[0-4]):([0-5][0-9]|60):([0-5][0-9]|60)$/', $time)) {
+            return true;
+        } else {
+            $this->ERR_ASYSTECO = "Formato de hora no válido";
+            return false;
+        }
+    }
+
     function validFormIni($registerini)
     {
         $registerini = strtoupper($registerini);
@@ -887,10 +897,10 @@ class Asysteco
         }
     }
 
-    function formatEuropeanDateToSQLDate($euDate) 
+    public function formatEuropeanDateToSQLDate($euDate): ?string
     {
         if(!$this->validFormDate($euDate)) {
-            return false;
+            return null;
         }
         $splitDate = explode('/', $euDate);
         $day = $splitDate[0];
@@ -898,14 +908,13 @@ class Asysteco
         $year = $splitDate[2];
         
         $sqlDate = $year .'-'. $month .'-'. $day;
-
         return $sqlDate;
     }
 
-    function formatSQLDateToEuropeanDate($sqlDate) 
+    public function formatSQLDateToEuropeanDate($sqlDate): ?string
     {
-        if(!$this->validFormSQLDate($sqlDate)) {
-            return false;
+        if (!$this->validFormSQLDate($sqlDate)) {
+            return null;
         }
 
         $sep = explode('-', $sqlDate);
@@ -914,7 +923,20 @@ class Asysteco
         $year = $sep[0];
 
         $date = $day . '/' . $month . '/' . $year;
-
         return $date;
+    }
+
+    public function transformHoraMinutos(string $sqlTime, string $delimiter = ':'): ?string
+    {
+        if (!$this->validSQLTime($sqlTime)) {
+            return null;
+        }
+
+        $sep = explode($delimiter, $sqlTime);
+        $hours = $sep[0];
+        $minutes = $sep[1];
+
+        $time = $hours . ':' . $minutes;
+        return $time;
     }
 }

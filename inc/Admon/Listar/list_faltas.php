@@ -3,14 +3,14 @@
 $profesor = $_GET['profesor'] ?? '';
 $fechaInicio = $_GET['fechainicio'] ?? '';
 $fechaFin = $_GET['fechafin'] ?? '';
-$whereFilter = ' WHERE F.Fecha <= CURDATE()';
+$whereFilter = ' AND M.Fecha <= CURDATE()';
 $errorMessage = '';
 $element = $_GET['element'];
 $page_size = 200;
 $offset_var = $_GET['pag'];
 
 if (isset($profesor) && !empty($profesor)) {
-    $whereFilter .= " AND F.ID_PROFESOR = $profesor";
+    $whereFilter .= " AND M.ID_PROFESOR = $profesor";
 }
 
 if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($fechaFin)) {
@@ -18,13 +18,17 @@ if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($f
     $ffin = $class->formatEuropeanDateToSQLDate($fechaFin);
 
     if($fini && $ffin) {
-        $whereFilter .= " AND F.Fecha >= '$fini' AND F.Fecha <= '$ffin'";
+        $whereFilter .= " AND M.Fecha >= '$fini' AND M.Fecha <= '$ffin'";
     }
 }
-$query = "SELECT F.ID_PROFESOR FROM Fichar F INNER JOIN Profesores P ON F.ID_PROFESOR=P.ID $whereFilter";
 
-if(!$response = $class->query($query))
-{
+$query = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
+FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
+    INNER JOIN Diasemana D ON M.Dia=D.ID 
+WHERE M.Asiste=0 $whereFilter
+ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC";
+
+if(! $response = $class->query($query)) {
     $errorMessage = 'Ha ocurrido un error inesperado...';
 }
 
@@ -37,52 +41,60 @@ $mysql->autocommit(FALSE);
 if (empty($errorMessage) && $response->num_rows > 0) {
     try {
         if(isset($offset_var)) {
-            if ($count > 1) {
-                echo "<div class='páginas' style='margin-top: 25px;'>";
-                    echo "<h3>Página ";
-                    echo "<select id='select_pag'>";
-                    for($j=0; $j<$count; $j++) {
-                        $currentPage = $j*$page_size;
-                        $selected = $offset_var == $j*$page_size ? 'selected' : '';
-                        echo "<option value='$currentPage' action='select' element='$element' profesor='$profesor' start='$fechaInicio' end='$fechaFin' $selected>";
-                            echo $pag = ($j+1);
-                        echo '</option> ';
-                    }
-                    echo "</select>";
-                    echo "</h3>";
-                echo "<div>";
-            }
-            $sql = "SELECT F.ID_PROFESOR, P.Nombre, F.F_entrada, F.F_Salida, F.DIA_SEMANA, F.Fecha
-            FROM (Fichar F INNER JOIN Profesores P ON F.ID_PROFESOR=P.ID)
-            $whereFilter
-            ORDER BY F.Fecha DESC, F.F_entrada ASC, P.Nombre ASC
+            if($count > 1) {
+            echo "<div class='páginas' style='margin-top: 25px;'>";
+                echo "<h3>Página ";
+                echo "<select id='select_pag'>";
+                for($j=0; $j<$count; $j++) {
+                    $currentPage = $j*$page_size;
+                    $selected = $offset_var == $j*$page_size ? 'selected' : '';
+                    echo "<option value='$currentPage' action='select' element='$element' profesor='$profesor' start='$fechaInicio' end='$fechaFin' $selected>";
+                        echo $pag = ($j+1);
+                    echo '</option> ';
+                }
+                echo "</select>";
+                echo "</h3>";
+            echo "</div>";
+            }            
+            $sql = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
+            FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
+                INNER JOIN Diasemana D ON M.Dia=D.ID 
+            WHERE M.Asiste=0 $whereFilter
+            ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC
             LIMIT $page_size OFFSET $offset_var";
             if (!$result = $mysql->query($sql)) {
                 throw new Exception('Ha ocurrido un error...');
             }
-            if($result->num_rows > 0) {
+            if ($result->num_rows > 0) {
                 echo "<table class='table table-striped'>";
-                    echo "<thead>";
+                    echo "<thead class='thead-dark'>";
                         echo "<tr>";
-                            echo "<th>NOMBRE</th>";
-                            echo "<th>FICHAJE DE ENTRADA</th>";
-                            echo "<th>FICHAJE DE SALIDA</th>";
-                            echo "<th>DIA SEMANA</th>";
+                            echo "<th>INICIALES</th>";
+                            echo "<th>PROFESOR</th>";
                             echo "<th>FECHA</th>";
+                            echo "<th>HORA</th>";
+                            echo "<th>DIA</th>";
+                            echo "<th>DIA SEMANA</th>";
+                            echo "<th>ASISTENCIA</th>";
+                            echo "<th>ACTIVIDAD EXTRAESCOLAR</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
-                    while ($datos = $result->fetch_assoc())
-                    {
-                        $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
-                        echo "<tr>";
-                            echo "<td>$datos[Nombre]</td>";
-                            echo "<td>$datos[F_entrada]</td>";
-                            echo "<td>$datos[F_Salida]</td>";
-                            echo "<td>$datos[DIA_SEMANA]</td>";
-                            echo "<td>$fecha</td>";
-                        echo "</tr>";
-                    }
+            
+                while ($datos = $result->fetch_assoc())
+                {
+                    $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
+                    echo "<tr>";
+                        echo "<td>$datos[Iniciales]</td>";
+                        echo "<td>$datos[Nombre]</td>";
+                        echo "<td>$fecha</td>";
+                        echo "<td>$datos[Hora]</td>";
+                        echo "<td>$datos[Dia]</td>";
+                        echo "<td>$datos[Diasemana]</td>";
+                        echo "<td>NO</td>";
+                        echo "<td>NO</td>";
+                    echo "</tr>";
+                }
                     echo "</tbody>";
                 echo "</table>";
             }
@@ -95,6 +107,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
 } else {
     echo "<h2 style='color: grey;'><i>No existen datos que mostrar.</i></h2>";
 }
+
 if (!empty($errorMessage)) {
     echo $errorMessage;
 }

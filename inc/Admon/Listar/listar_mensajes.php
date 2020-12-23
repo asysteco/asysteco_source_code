@@ -21,7 +21,7 @@
             echo "</script>";
             echo"
                 <table class='table table-striped'>
-                    <thead>
+                    <thead class='thead-dark'>
                         <tr>
                             <th>EMISOR</th>
                             <th>RECEPTOR</th>

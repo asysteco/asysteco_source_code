@@ -3,27 +3,32 @@
 $profesor = $_GET['profesor'] ?? '';
 $fechaInicio = $_GET['fechainicio'] ?? '';
 $fechaFin = $_GET['fechafin'] ?? '';
-$whereFilter = '';
+$whereFilter = ' AND M.Fecha <= CURDATE()';
 $errorMessage = '';
-$element = $_GET['element'] ?? '';
-$edificios = $options['edificios'];
+$element = $_GET['element'];
 $offset_var = $_GET['pag'];
 $page_size = 200;
 
 if (isset($profesor) && !empty($profesor)) {
-    $whereFilter = " WHERE P.ID = $profesor";
+    $whereFilter .= " AND M.ID_PROFESOR = $profesor";
 }
 
-$query = "SELECT P.Iniciales, P.Nombre, D.Diasemana, A.Nombre as Aula, C.Nombre as Grupo, H.Dia, H.Hora
-FROM Horarios H INNER JOIN Profesores P ON H.ID_PROFESOR=P.ID
-INNER JOIN Diasemana D ON H.Dia=D.ID
-INNER JOIN Aulas A ON A.ID=H.Aula
-INNER JOIN Cursos C ON C.ID=H.Grupo
-$whereFilter 
-ORDER BY P.Nombre ASC, H.Hora";
+if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($fechaFin)) {
+    $fini = $class->formatEuropeanDateToSQLDate($fechaInicio);
+    $ffin = $class->formatEuropeanDateToSQLDate($fechaFin);
 
-if(! $response = $class->query($query))
-{
+    if($fini && $ffin) {
+        $whereFilter .= " AND M.Fecha >= '$fini' AND M.Fecha <= '$ffin'";
+    }
+}
+
+$query = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
+FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
+    INNER JOIN Diasemana D ON M.Dia=D.ID 
+WHERE (M.Asiste=1 OR M.Asiste=2) $whereFilter
+ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC";
+
+if(! $response = $class->query($query)) {
     $errorMessage = 'Ha ocurrido un error inesperado...';
 }
 
@@ -36,62 +41,65 @@ $mysql->autocommit(FALSE);
 if (empty($errorMessage) && $response->num_rows > 0) {
     try {
         if(isset($offset_var)) {
-            if ($count > 1) {
-                echo "<div class='páginas' style='margin-top: 25px;'>";
-                    echo "<h3>Página ";
-                    echo "<select id='select_pag'>";
-                    for($j=0; $j<$count; $j++) {
-                        $currentPage = $j*$page_size;
-                        $selected = $offset_var == $j*$page_size ? 'selected' : '';
-                        echo "<option value='$currentPage' action='select' element='$element' profesor='$profesor' $selected>";
-                            echo $pag = ($j+1);
-                        echo '</option> ';
-                    }
-                    echo "</select>";
-                    echo "</h3>";
-                echo "<div>";
+            if($count > 1) {
+            echo "<div class='páginas' style='margin-top: 25px;'>";
+                echo "<h3>Página ";
+                echo "<select id='select_pag'>";
+                for($j=0; $j<$count; $j++) {
+                    $currentPage = $j*$page_size;
+                    $selected = $offset_var == $j*$page_size ? 'selected' : '';
+                    echo "<option value='$currentPage' action='select' element='$element' profesor='$profesor' start='$fechaInicio' end='$fechaFin' $selected>";
+                        echo $pag = ($j+1);
+                    echo '</option> ';
+                }
+                echo "</select>";
+                echo "</h3>";
+            echo "</div>";
             }
-            $sql = "SELECT P.Iniciales, P.Nombre, D.Diasemana, A.Nombre as Aula, C.Nombre as Grupo, H.Dia, H.Hora
-            FROM Horarios H INNER JOIN Profesores P ON H.ID_PROFESOR=P.ID
-            INNER JOIN Diasemana D ON H.Dia=D.ID
-            INNER JOIN Aulas A ON A.ID=H.Aula
-            INNER JOIN Cursos C ON C.ID=H.Grupo
-            $whereFilter 
-            ORDER BY P.Nombre ASC, H.Hora
+            $sql = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
+            FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
+                INNER JOIN Diasemana D ON M.Dia=D.ID 
+            WHERE (M.Asiste=1 OR M.Asiste=2) $whereFilter
+            ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC
             LIMIT $page_size OFFSET $offset_var";
             if (!$result = $mysql->query($sql)) {
-                throw new Exception('No existen datos para exportar...');
+                throw new Exception('Ha ocurrido un error...');
             }
             if($result->num_rows > 0) {
                 echo "<table class='table table-striped'>";
-                    echo "<thead>";
+                    echo "<thead class='thead-dark'>";
                         echo "<tr>";
                             echo "<th>INICIALES</th>";
                             echo "<th>PROFESOR</th>";
-                            echo "<th>CURSO</th>";
-                            echo "<th>AULA</th>";
+                            echo "<th>FECHA</th>";
+                            echo "<th>HORA</th>";
                             echo "<th>DIA</th>";
                             echo "<th>DIA SEMANA</th>";
-                            echo "<th>HORA</th>";
-                if (isset($edificios) && $edificios > 1) {
-                    echo "<th>EDIFICIO</th>";
-                } 
+                            echo "<th>ASISTENCIA</th>";
+                            echo "<th>ACTIVIDAD EXTRAESCOLAR</th>";
                         echo "</tr>";
                     echo "</thead>";
-                echo "<tbody>";
+                    echo "<tbody>";
+            
                 while ($datos = $result->fetch_assoc())
                 {
+                    $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                     echo "<tr>";
                         echo "<td>$datos[Iniciales]</td>";
                         echo "<td>$datos[Nombre]</td>";
-                        echo "<td>$datos[Grupo]</td>";
-                        echo "<td>$datos[Aula]</td>";
+                        echo "<td>$fecha</td>";
+                        echo "<td>$datos[Hora]</td>";
                         echo "<td>$datos[Dia]</td>";
                         echo "<td>$datos[Diasemana]</td>";
-                        echo "<td>$datos[Hora]</td>";
-                    if (isset($edificios) && $edificios > 1) {
-                            echo "<td>$datos[Edificio]</td>";
-                    }
+                        echo "<td>SI</td>";
+                        if($datos['Asiste'] == 2)
+                        {
+                            echo "<td>SI</td>";
+                        }
+                        else
+                        {
+                            echo "<td>NO</td>";
+                        }
                     echo "</tr>";
                 }
                     echo "</tbody>";
@@ -103,7 +111,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
         $class->conex->rollback();
     }
     $class->conex->commit();
-} else {
+}else {
     echo "<h2 style='color: grey;'><i>No existen datos que mostrar.</i></h2>";
 }
 if (!empty($errorMessage)) {
@@ -120,11 +128,15 @@ echo "
         action = $(this).children().attr('action');
         page = $(this).val();
         profesor = $(this).children().attr('profesor');
+        start = $(this).children().attr('start');
+        end = $(this).children().attr('end');
         urlPath = 'index.php?ACTION=admon&OPT=select';
         data = {
             'action': action,
             'element': element,
             'profesor': profesor,
+            'fechainicio': start,
+            'fechafin': end,
             'pag': page
         };
         

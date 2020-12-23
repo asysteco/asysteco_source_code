@@ -155,11 +155,11 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
               <span style='vertical-align: middle;'> Cambio de contraseña </span>
               </a>";
               echo '<div class="dropdown-divider"></div>';
-              echo "<a class='dropdown-item text-light' id='admin-guide' href='index.php?ACTION=download_admin_guide'>
+              echo "<a class='dropdown-item text-light' id='admin-guide' href='index.php?ACTION=download&OPT=admin-guide'>
                 <i id='cambio-pass-icon' style='font-size: 20px; vertical-align: middle;' class='fa fa-cloud-download'></i>
                 <span style='vertical-align: middle;'> Guía de uso Administración</span>
               </a>";
-              echo "<a class='dropdown-item text-light' id='profesor-guide' href='index.php?ACTION=download_profesor_guide'>
+              echo "<a class='dropdown-item text-light' id='profesor-guide' href='index.php?ACTION=download&OPT=profesor-guide'>
                 <i id='cambio-pass-icon' style='font-size: 20px; vertical-align: middle;' class='fa fa-cloud-download'></i>
                 <span style='vertical-align: middle;'> Guía de uso Profesorado</span>
               </a>";
@@ -225,7 +225,7 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
               <span style='vertical-align: middle;'> Cambio de contraseña </span>
             </a>";
             echo '<div class="dropdown-divider"></div>';
-            echo '<a id="profesor-guide" class="dropdown-item text-light" href="index.php?ACTION=download_profesor_guide">
+            echo '<a id="profesor-guide" class="dropdown-item text-light" href="index.php?ACTION=download&OPT=profesor-guide">
               <span id="download-guide-profesor-icon" style="font-size: 20px;" class="fa fa-cloud-download"></span> Guía de uso
             </a>';
           echo '</ul>';

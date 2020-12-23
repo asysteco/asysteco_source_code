@@ -68,8 +68,9 @@ if (isset($options['edificios']) && $options['edificios'] > 1) {
 
 // Escribimos los títulos para los campos
 fputcsv($fp, $titulo, $delimitador);
+$countCampos = count($campos);
 
-for ($i = 0; $i <= count($campos); $i++) {
+for ($i = 0; $i < $countCampos; $i++) {
     // Escibimos una línea por cada campo de $campos
     fputcsv($fp, $campos[$i], $delimitador);
 }
