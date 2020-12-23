@@ -27,15 +27,15 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] == 'Admin') {
                 if (isset($action) && $action === 'export') {
                     if ($element === 'marcajes') {
                         include_once($dirs['Exportar'] . 'export_marcajes.php');
-                    } elseif ($element === 'asistencias') {
+                    } elseif ($element === 'Asistencias') {
                         include_once($dirs['Exportar'] . 'export_asistencias.php');
-                    } elseif ($element === 'faltas') {
+                    } elseif ($element === 'Faltas') {
                         include_once($dirs['Exportar'] . 'export_faltas.php');
-                    } elseif ($element === 'horarios') {
+                    } elseif ($element === 'Horarios') {
                         include_once($dirs['Exportar'] . 'export_horarios.php');
-                    } elseif ($element === 'profesores') {
+                    } elseif ($element === 'Profesores') {
                         include_once($dirs['Exportar'] . 'export_profesores.php');
-                    } elseif ($element === 'fichajes') {
+                    } elseif ($element === 'Fichajes') {
                         include_once($dirs['Exportar'] . 'export_fichajes.php');
                     } elseif ($element === 'Faltas_Injustificadas') {
                         include_once($dirs['Exportar'] . 'export_faltas_injustificadas.php');
