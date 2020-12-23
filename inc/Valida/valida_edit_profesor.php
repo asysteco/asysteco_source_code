@@ -12,7 +12,7 @@ if(isset($_POST['ID']) && $_POST['ID'] != '')
                 {
                     if($class->validFormName($_POST['Nombre']))
                     {
-                        include_once($dirs['inc'] . 'actualiza_profesor.php');
+                        include_once($dirs['Profesores'] . 'actualiza_profesor.php');
                     }
                     else
                     {
@@ -28,7 +28,7 @@ if(isset($_POST['ID']) && $_POST['ID'] != '')
             {
                 if($class->validFormName($_POST['Nombre']))
                 {
-                    include_once($dirs['inc'] . 'actualiza_profesor.php');
+                    include_once($dirs['Profesores'] . 'actualiza_profesor.php');
                 }
                 else
                 {
