@@ -24,10 +24,10 @@ class Asysteco
         if (!$this->conex->connect_errno) {
             return $this->conex;
         } else {
-            if($_SESSION['LID'] === 'Testing') {
+            if($_SESSION['LID'] === 'Testing' || (int)$_COOKIE['debug'] === 1) {
                 $this->ERR_ASYSTECO = "Fallo al conectar a MySQL: (" . $this->conex->connect_errno . ") " . $this->conex->connect_error;
             } else {
-                $this->ERR_ASYSTECO = "Error al conectar con el servicio...";
+                $this->ERR_ASYSTECO = "Error al conectar con el servicio, inténtelo más tarde o contacte con los administradores.";
             }
 
             return false;
@@ -47,8 +47,8 @@ class Asysteco
         if ($response = $this->conex->query($sql)) {
             return $response;
         } else {
-            if($_SESSION['LID'] === 'Testing') {
-                $this->ERR_ASYSTECO = "ERR_CODE: " . $this->conex->errno . "<br>ERROR: " . $this->conex->error . '<br>' . $sql;
+            if($_SESSION['LID'] === 'Testing' || (int)$_COOKIE['debug'] === 1) {
+                $this->ERR_ASYSTECO = "ERR_CODE: " . $this->conex->errno . "<br>ERROR: " . $this->conex->error . '<br>SQL: ' . $sql;
             } else {
                 $this->ERR_ASYSTECO = "Error inesperado, contacte con los administradores...";
             }
@@ -146,6 +146,16 @@ class Asysteco
             $this->ERR_ASYSTECO = "Formato de fecha no válido. 
             <br>
             Formato válido: AAAA-mm-dd";
+            return false;
+        }
+    }
+
+    public function validSQLTime(string $time): bool
+    {
+        if (preg_match('/^([0-1][0-9]|2[0-4]):([0-5][0-9]|60):([0-5][0-9]|60)$/', $time)) {
+            return true;
+        } else {
+            $this->ERR_ASYSTECO = "Formato de hora no válido";
             return false;
         }
     }
@@ -349,8 +359,6 @@ class Asysteco
     {
         $dia = date('Y-m-d');
         $horasistema = date('H:i:s');
-
-        // Línea de comprobación para que muestre todas las horas a partir de $horasistema el día $dia
 
         $sql = "SELECT DISTINCT p.Nombre, A.Nombre as Aula, C.Nombre as Grupo, h.Edificio, h.Hora, h.Tipo
         FROM Marcajes m INNER JOIN Horarios h ON m.ID_PROFESOR = h.ID_PROFESOR AND m.Hora = h.Hora AND m.Dia = h.Dia
@@ -887,5 +895,48 @@ class Asysteco
             }
             $inicio = date("Y-m-d", strtotime("+1 day", strtotime($inicio)));
         }
+    }
+
+    public function formatEuropeanDateToSQLDate($euDate): ?string
+    {
+        if(!$this->validFormDate($euDate)) {
+            return null;
+        }
+        $splitDate = explode('/', $euDate);
+        $day = $splitDate[0];
+        $month = $splitDate[1];
+        $year = $splitDate[2];
+        
+        $sqlDate = $year .'-'. $month .'-'. $day;
+        return $sqlDate;
+    }
+
+    public function formatSQLDateToEuropeanDate($sqlDate): ?string
+    {
+        if (!$this->validFormSQLDate($sqlDate)) {
+            return null;
+        }
+
+        $sep = explode('-', $sqlDate);
+        $day = $sep[2];
+        $month = $sep[1];
+        $year = $sep[0];
+
+        $date = $day . '/' . $month . '/' . $year;
+        return $date;
+    }
+
+    public function transformHoraMinutos(string $sqlTime, string $delimiter = ':'): ?string
+    {
+        if (!$this->validSQLTime($sqlTime)) {
+            return null;
+        }
+
+        $sep = explode($delimiter, $sqlTime);
+        $hours = $sep[0];
+        $minutes = $sep[1];
+
+        $time = $hours . ':' . $minutes;
+        return $time;
     }
 }
