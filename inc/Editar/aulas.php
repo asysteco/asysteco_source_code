@@ -44,13 +44,5 @@
     </div>
 </div>
 
-<div id="loading" class="col-12" style="position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center;">
-    <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
-        <div>
-            <img src="resources/img/loading.gif" alt="Cargando...">
-            <h2 id="loading-msg"></h2>
-        </div>
-    </div>
-</div>
 
 <script src="js/edit-aulas.js"></script>
