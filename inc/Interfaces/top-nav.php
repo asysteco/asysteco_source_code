@@ -155,6 +155,10 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
               <span style='vertical-align: middle;'> Cambio de contraseña </span>
               </a>";
               echo '<div class="dropdown-divider"></div>';
+              echo "<a class='dropdown-item text-light' id='info-horario' href='index.php?ACTION=download&OPT=admin-guide'>
+                <i id='info-horario-icon' style='font-size: 20px; vertical-align: middle;' class='fa fa-calendar-o'></i>
+                <span style='vertical-align: middle;'> Horario del centro</span>
+              </a>";
               echo "<a class='dropdown-item text-light' id='admin-guide' href='index.php?ACTION=download&OPT=admin-guide'>
                 <i id='cambio-pass-icon' style='font-size: 20px; vertical-align: middle;' class='fa fa-cloud-download'></i>
                 <span style='vertical-align: middle;'> Guía de uso Administración</span>
