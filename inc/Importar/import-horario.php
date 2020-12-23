@@ -30,7 +30,7 @@
         }
     ?>
     <p class="format-body">Si lo desea, haciendo click al siguiente botón puede descargar una plantilla del formato en CSV: 
-    <a href="index.php?ACTION=plantilla-horarios"><span style="font-size: 20px;" class="fa fa-cloud-download"></span></a></p>
+    <a href="index.php?ACTION=download&OPT=plantilla-horarios"><span style="font-size: 20px;" class="fa fa-cloud-download"></span></a></p>
     </div>
     <br>
         <form class="form-inline" action="index.php?ACTION=horarios&OPT=" method="post"

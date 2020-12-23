@@ -42,8 +42,10 @@ fputcsv($fp, $titulo, $delimitador);
             utf8_decode('No')
         ]
     ];
+
+$countCampos = count($campos);
     
-for ($i = 0; $i <= count($campos); $i++) {
+for ($i = 0; $i < $countCampos; $i++) {
     // Escibimos una línea por cada campo de $campos
     fputcsv($fp, $campos[$i], $delimitador);
 }

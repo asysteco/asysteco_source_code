@@ -18,7 +18,7 @@
 AAM;Antonio Alarcón Muñoz;No
 CRL;Carolina Rodríguez López;3ESOA</pre>
 <p class="format-body">Si lo desea, haciendo click al siguiente botón puede descargar una plantilla del formato en CSV: 
-    <a href="index.php?ACTION=plantilla-profesores"><span style="font-size: 20px;" class="fa fa-cloud-download"></span></a></p>
+    <a href="index.php?ACTION=download&OPT=plantilla-profesores"><span style="font-size: 20px;" class="fa fa-cloud-download"></span></a></p>
     </p>
     </div>
     <br>

@@ -47,7 +47,7 @@
             <a enlace="index.php?ACTION=horarios&OPT=delete-all-t" id="eliminar-t-horarios" class="btn btn-danger eliminar" elemento="t-horarios"><span style="font-size: 20px;" class="fa fa-calendar-times-o"></span> Borrar Horarios Programados</a>
             </br>
             <h2>Copia de seguridad del centro</h2>
-            <a href="index.php?ACTION=backup-centro" id="backup" class="btn btn-success" target="_blank" download><span style="font-size: 20px;" class="fa fa-floppy-o"></span> Copia de seguridad</a>
+            <a href="index.php?ACTION=admon&OPT=backup-centro" id="backup" class="btn btn-success" target="_blank" download><span style="font-size: 20px;" class="fa fa-floppy-o"></span> Copia de seguridad</a>
             </br>
         <div class="col-12" style="margin-top: 25px;">
             <div id="btn-response"></div>
