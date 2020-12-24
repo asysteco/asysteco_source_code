@@ -116,19 +116,11 @@ if ($class->isLogged($Titulo)) {
                 if ($_SESSION['Perfil'] == 'Admin') {
                     $act_importHorarios = 'active';
 
+                    $scripts = '<link rel="stylesheet" href="css/import-csv.css">';
                     $extras = "
                         $(function (){
                             $('#fecha_incorpora').datepicker({minDate: 0});
                         });
-                        ";
-                    $style = "
-                        input[type=file] {
-                            display: inline-block;
-                            padding: 6px 12px 6px 0;
-                        }
-                        .format-body {
-                            margin-left: 25px;
-                        }
                         ";
                     include_once($dirs['Interfaces'] . 'header.php');
                     include_once($dirs['Interfaces'] . 'top-nav.php');

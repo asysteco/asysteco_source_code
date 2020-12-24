@@ -1,14 +1,15 @@
 <div class="container">
     <h1>Importar Horarios desde CSV</h1>
+    <a id="toggleInfo" href="#" class="btn btn-info"><i class="fa fa-info-circle" aria-hidden="true"></i> Formato CSV</a>
     <div id="response"
         class="<?php if(!empty($type)) { echo $type . " display-block"; } ?>">
         <?php if(!empty($message)) { echo $message; } ?>
     </div>
     <div class="outer-container">
-    <div id="ayuda-formato" style="border-radius: 10px; padding: 10px; margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">
+    <div id="ayuda-formato" style="display: none; border-radius: 10px; padding: 10px; margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">
         <h2 class="format-body">Formato Permitido</h2>
         <p class="format-body">El fichero CSV debe tener el siguiente formato para que sea aceptado correctamente:</p>
-<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">GRUPO;INICIALES;AULA;DIA;HORA</pre>
+<pre style="margin: 25px; padding: 15px; border-radius: 10px; background-color: #e8e8e8;">GRUPO;INICIALES;AULA;DIA;HORA</pre>
         <div class="format-body">
             <b>GRUPO:</b> Nombre de Curso/Grupo<br>
             <b>INICIALES:</b> Iniciales correspondientes al profesor<br>
@@ -20,11 +21,11 @@
         </div>
         <?php
         if (isset($options['edificios']) && $options['edificios'] > 1){
-          echo '<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">GRUPO;INICIALES;AULA;DIA;HORA;EDIFICIO  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
+          echo '<pre style="margin: 25px; background-color: #e8e8e8;">GRUPO;INICIALES;AULA;DIA;HORA;EDIFICIO
 2ESOA;MRG;AU101;3;1;2
 3BACHB;AAM;AU214;4;3;1</pre>';
         } else {
-          echo '<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">GRUPO;INICIALES;AULA;DIA;HORA  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
+          echo '<pre style="margin: 25px; padding: 15px; border-radius: 10px; background-color: #e8e8e8;">GRUPO;INICIALES;AULA;DIA;HORA
 2ESOA;MRG;AU101;3;1
 3BACHB;AAM;AU214;4;3</pre>';
         }
@@ -33,56 +34,51 @@
     <a href="index.php?ACTION=download&OPT=plantilla-horarios"><span style="font-size: 20px;" class="fa fa-cloud-download"></span></a></p>
     </div>
     <br>
-        <form class="form-inline" action="index.php?ACTION=horarios&OPT=" method="post"
+    <form action="index.php?ACTION=horarios&OPT=" method="post"
             name="frmCSVImport" id="frmCSVImport"
             enctype="multipart/form-data">
-            <div class="input-row">
+        <div class="row">
+            <div class="col-sm-5 mb-3">
+                <div class="input-group">
+                    <label id="fileName" class="custom-file-label" for="file">Subir CSV</label>
+                    <input type="file" name="file" id="file" accept=".csv"  class="custom-file-input" required>
+                </div>
+            </div>
+            <div class="col-sm-3 mb-3">
+                <div class="input-group">
+                  <select class="custom-select" name="Franja" title="Tipo de horario a importar">
+                    <?php foreach ($franjasHorarias as $franja => $dato) { echo "<option value='$franja'>Horarios $franja</option>";} ?>
+                  </select>
+                </div>
+            </div>
 <?php
-            if($response = $class->query("SELECT ID FROM $class->horarios"))
-            {
-                if($response->num_rows > 0)
-                {
+            if($response = $class->query("SELECT ID FROM Horarios")) {
+                if($response->num_rows > 0) {
                     $fecha = date('Y-m-d');
-                    echo '
-                    <label id="import-manual-trigger" for="file">Subir documento CSV:</label><br />
-                    <input type="file" name="file" id="file" accept=".csv" class="form-control" style="display: inline-block;" required>';
-                    echo " <select name='Franja' class='form-control' title='Tipo de horario a importar'>";
-                    foreach ($franjasHorarias as $franja => $dato) {
-                        echo "<option value='$franja'>Horarios $franja</option>";
-                    }
-                    echo "</select>";
-                    echo ' <input id="fecha_incorpora" style="display: inline-block; width: 25%;" type="text" class="form-control" name="fecha" placeholder="Fecha de incorporación de horarios" autocomplete="off" required>';
+                    echo '<div class="col-sm-3 mb-3">';
+                    echo '<div class="input-group">';
+                        echo '<div class="input-group-prepend">';
+                            echo '<label for="fecha_incorpora" class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></label>';
+                        echo '</div>';
+                          echo '<input id="fecha_incorpora" type="text" class="form-control" name="fecha" placeholder="Fecha de incorporación de horarios" aria-label="Fecha de incorporación de horarios" autocomplete="off" required>';
+                    echo '</div>';
+                echo '</div>';
                 }
-                else
-                {
-                    echo '
-                    <label id="import-manual-trigger" for="file">Subir documento CSV:</label><br />
-                    <input type="file" name="file" id="file" accept=".csv" class="form-control" required>
-                    ';
-                    echo " <select name='Franja' class='form-control' title='Tipo de horario a importar'>";
-                    foreach ($franjasHorarias as $franja => $dato) {
-                        echo "<option value='$franja'>Horarios $franja</option>";
-                    }
-                    echo "</select> ";
-                }
-            }
-            else
-            {
+            } else {
                 $ERR_MSG = $class->ERR_ASYSTECO;
             }
 ?>
-                <button type="submit" id="submit" name="import" class="btn btn-success">Importar</button>
-                <br />
+            <div class="col-sm-1 mb-3">
+                <button type="submit" id="submit" name="import" class="btn btn-success" disabled>Importar</button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 <?php
         if($num_horarios = $class->query("SELECT count(DISTINCT ID_PROFESOR) as numero, count(ID) as total FROM $class->horarios"))
         {
             $num = $num_horarios->fetch_assoc();
             echo "<h3>Horarios importados: $num[numero]</h3>";
             echo "<h3>Registros totales: $num[total]</h3>";
-            //echo "<a id='btn-todos-registros' class='btn btn-info'>Ver todos los registros</a>";
         }
         else
         {
@@ -142,8 +138,5 @@
   </div>
 </div>
 
-<script>
-<?php
- include_once($dirs['public'] . 'js/preview-import-horario.js');
-?>
-</script>
+<script src="js/import-horario.js"></script>
+<script src="js/preview-import-horario.js"></script>

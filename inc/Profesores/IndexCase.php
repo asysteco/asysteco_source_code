@@ -9,12 +9,8 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
         switch ($_GET['OPT']) {
         case 'import-form':
             $act_importProf = 'active';
-            $style = "
-                input[type=file] {
-                display: inline-block;
-                padding: 6px 12px 6px 0;
-                }
-            ";
+
+            $scripts = '<link rel="stylesheet" href="css/import-csv.css">';
             include_once($dirs['Interfaces'] . 'header.php');
             include_once($dirs['Interfaces'] . 'top-nav.php');
             include_once($dirs['Importar'] . 'import-profesorado.php');
