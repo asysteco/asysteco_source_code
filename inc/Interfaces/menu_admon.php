@@ -50,7 +50,7 @@
             <a href="index.php?ACTION=admon&OPT=backup-centro" id="backup" class="btn btn-success" target="_blank" download><span style="font-size: 20px;" class="fa fa-floppy-o"></span> Copia de seguridad</a>
             </br>
         <div class="col-12" style="margin-top: 25px;">
-            <div id="btn-response"></div>
+            <div id="btn-response" class="table-responsive"></div>
         </div>
     </div>
 </div>

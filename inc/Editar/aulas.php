@@ -2,8 +2,13 @@
     <div class='row'>
         <div class='col-12'>
             <h1>Gestión de Aulas</h1>
-            <input id="add-aula" type="text" class="form-control" placeholder="Escribe el nombre del aula nueva..."><br>
-            <a id="add-btn-aula" action="add" class="btn btn-success">Añadir Aula</a><br>
+            <div class="input-group mb-3">
+                <input id="add-aula" type="text" class="form-control" placeholder="Escribe el nombre del nuevo aula..." aria-label="Escribe el nombre del nuevo aula...">
+                <div class="input-group-append">
+                    <a id="add-btn-aula" action="add" class="btn btn-success" type="button">Añadir Aula</a>
+                </div>
+            </div>
+
             <table class="table table-striped">
                 <thead>
                     <tr style="text-align: center;">
@@ -21,7 +26,7 @@
                                 echo "<td style='vertical-align: middle;'>";
                                     echo "<input id='input_$row[ID]' type='text' class='form-control hide-it' style='width: 30%; display: inline-block; vertical-align: middle;'>";
                                     echo "<span id='txt_$row[ID]' class='show-it'>$row[Nombre]</span> ";
-                                    echo "<a id='btn_$row[ID]' data='$row[ID]' class='btn btn-success hide-it update' style='vertical-align: middle;'>Aplicar</a>";
+                                    echo "<a id='btn_$row[ID]' data='$row[ID]' class='btn btn-success hide-it update' style='vertical-align: middle;'><i class='fa fa-check' aria-hidden='true'></i></a>";
                                 echo "</td>";
                                 echo "<td style='font-size: 25px; vertical-align: middle;'><span fields='edit_$row[ID]' class='fa fa-pencil-square-o edit'></span></td>";
                                 echo "<td style='font-size: 25px; vertical-align: middle;'><span data='$row[ID]' action='remove' class='fa fa-trash-o remove'></span></td>";
