@@ -1,20 +1,23 @@
 <div class="container">
     <h1>Importar Profesores desde CSV</h1>
+    <a id="toggleInfo" href="#" class="btn btn-info"><i class="fa fa-info-circle" aria-hidden="true"></i> Formato CSV</a>
     <div id="response"
         class="<?php if(!empty($type)) { echo $type . " display-block"; } ?>">
         <?php if(!empty($message)) { echo $message; } ?>
     </div>
     <div class="outer-scontainer">
     
-    <div id="ayuda-formato" style="border-radius: 10px; padding: 10px; margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">
-        <h2>Formato Permitido</h2>
-        <p>El fichero CSV debe tener el siguiente formato para que sea aceptado correctamente:
-<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">INICIALES;NOMBRE;TUTOR</pre>
+    <div id="ayuda-formato" style="display: none; border-radius: 10px; padding: 10px; margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">
+        <h2 class="format-body">Formato Permitido</h2>
+        <p class="format-body">El fichero CSV debe tener el siguiente formato para que sea aceptado correctamente:
+<pre style="margin: 25px; border-radius: 10px; padding: 15px; background-color: #e8e8e8;">INICIALES;NOMBRE;TUTOR</pre>
+        <div class="format-body">
             <b>INICIALES:</b> Iniciales correspondientes al nombre y apellidos del profesor<br>
             <b>NOMBRE:</b> Nombre completo del profesor<br>
             <b>TUTOR:</b> Nombre del grupo tutelado, si no existe grupo, escribir No<br>
             <h4>Ejemplo de formato correcto:</h4>
-<pre style="margin: 25px; box-shadow: 4px 4px 16px 0 #808080bf;">INICIALES;NOMBRE;TUTOR  <span style="color:red;"><-- La cabecera es obligatoria y debe ser la primera línea</span>
+        </div>
+<pre style="margin: 25px; border-radius: 10px; padding: 15px; background-color: #e8e8e8;">INICIALES;NOMBRE;TUTOR
 AAM;Antonio Alarcón Muñoz;No
 CRL;Carolina Rodríguez López;3ESOA</pre>
 <p class="format-body">Si lo desea, haciendo click al siguiente botón puede descargar una plantilla del formato en CSV: 
@@ -22,17 +25,22 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
     </p>
     </div>
     <br>
-<?php
-        echo '<form class="form-horizontal" action="index.php?ACTION=profesores&OPT=" method="post"
+    <form action="index.php?ACTION=profesores&OPT=" method="post"
             name="frmCSVImport" id="frmCSVImport"
             enctype="multipart/form-data">
-            <div class="input-row">
-                <label id="import-manual-trigger">Subir documento CSV:</label><br />
-                <input type="file" name="file" id="file" accept=".csv" class="btn btn-link" required>
-                <button type="submit" id="submit" name="import" class="btn btn-success">Importar</button>
-                <br />
+        <div class="row">
+            <div class="col-sm-5 mb-3">
+                <div class="input-group">
+                    <label id="fileName" class="custom-file-label" for="file">Subir CSV</label>
+                    <input type="file" name="file" id="file" accept=".csv"  class="custom-file-input" required>
+                </div>
             </div>
-        </form>';
+            <div class="col-sm-1 mb-3">
+                <button type="submit" id="submit" name="import" class="btn btn-success" disabled>Importar</button>
+            </div>
+        </div>
+    </form>
+<?php
     
 
         if($num_profesores_act = $class->query("SELECT count(DISTINCT ID) as activos FROM $class->profesores WHERE Activo=1"))
@@ -102,8 +110,5 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
   </div>
 </div>
 
-<script>
-<?php
-    include_once($dirs['public'] . 'js/preview-import-profesores.js');
-?>
-</script>
+<script src="js/import-profesorado.js"></script>
+<script src="js/preview-import-profesores.js"></script>
