@@ -63,7 +63,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 throw new Exception('No existen datos para exportar...');
             }
             if($result->num_rows > 0) {
-                echo "<table class='table table-striped'>";
+                echo "<table id='responsiveTable' class='table table-striped'>";
                     echo "<thead class='thead-dark'>";
                         echo "<tr>";
                             echo "<th>INICIALES</th>";
@@ -82,15 +82,15 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 while ($datos = $result->fetch_assoc())
                 {
                     echo "<tr>";
-                        echo "<td>$datos[Iniciales]</td>";
-                        echo "<td>$datos[Nombre]</td>";
-                        echo "<td>$datos[Grupo]</td>";
-                        echo "<td>$datos[Aula]</td>";
-                        echo "<td>$datos[Dia]</td>";
-                        echo "<td>$datos[Diasemana]</td>";
-                        echo "<td>$datos[Hora]</td>";
+                        echo "<td data-th='INICIALES'>$datos[Iniciales]</td>";
+                        echo "<td data-th='PROFESOR'>$datos[Nombre]</td>";
+                        echo "<td data-th='CURSO'>$datos[Grupo]</td>";
+                        echo "<td data-th='AULA'>$datos[Aula]</td>";
+                        echo "<td data-th='DIA'>$datos[Dia]</td>";
+                        echo "<td data-th='DIA SEMANA'>$datos[Diasemana]</td>";
+                        echo "<td data-th='HORA'>$datos[Hora]</td>";
                     if (isset($edificios) && $edificios > 1) {
-                            echo "<td>$datos[Edificio]</td>";
+                            echo "<td data-th='EDIFICIO'>$datos[Edificio]</td>";
                     }
                     echo "</tr>";
                 }

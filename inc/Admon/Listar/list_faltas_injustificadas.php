@@ -72,7 +72,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 throw new Exception('Ha ocurrido un error...');
             }
             if ($result->num_rows > 0) {
-                echo "<table class='table table-striped'>";
+                echo "<table id='responsiveTable' class='table table-striped'>";
                     echo "<thead class='thead-dark'>";
                         echo "<tr>";
                             echo "<th>INICIALES</th>";
@@ -94,14 +94,14 @@ if (empty($errorMessage) && $response->num_rows > 0) {
 
                     $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                     echo "<tr>";
-                        echo "<td>$datos[Iniciales]</td>";
-                        echo "<td>$datos[Nombre]</td>";
-                        echo "<td>$fecha</td>";
-                        echo "<td>$horaInicio<br>$horaFin</td>";
-                        echo "<td>$datos[Dia]</td>";
-                        echo "<td>$datos[Diasemana]</td>";
-                        echo "<td>NO</td>";
-                        echo "<td>NO</td>";
+                        echo "<td data-th='INICIALES'>$datos[Iniciales]</td>";
+                        echo "<td data-th='PROFESOR'>$datos[Nombre]</td>";
+                        echo "<td data-th='FECHA'>$fecha</td>";
+                        echo "<td data-th='HORA'>$horaInicio - $horaFin</td>";
+                        echo "<td data-th='DIA'>$datos[Dia]</td>";
+                        echo "<td data-th='DIA SEMANA'>$datos[Diasemana]</td>";
+                        echo "<td data-th='ASISTENCIA'>NO</td>";
+                        echo "<td data-th='ACTIVIDAD EXTRAESCOLAR'>NO</td>";
                     echo "</tr>";
                 }
                     echo "</tbody>";

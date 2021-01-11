@@ -11,6 +11,7 @@ if($_SESSION['Perfil'] === 'Admin')
     echo "<br><h4 style='display: inline-block; margin-right: 15px;'>Buscar profesor: </h4>
       <input style='width: 25%; display: inline-block;' id='busca_prof' class='form-control' type='text' placeholder='Buscar Profesor...' autocomplete='off'>
       <label for='busca_prof'> <span style='font-size: 20px;' class='fa fa-search'></span></label><br>";
+    echo "<div class='table-responsive'>";
     echo "</br><table id='tabla_profesores' class='table table-hover'>";
     echo "<thead class='thead-dark'>";
         echo "<tr>";
@@ -85,6 +86,7 @@ if($_SESSION['Perfil'] === 'Admin')
         }
     echo "</tbody>";
     echo "</table>";
+    echo "</div>";
     echo '</div>';
     include_once($dirs['public'] . 'js/profesores.js');
    }

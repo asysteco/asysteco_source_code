@@ -31,7 +31,7 @@
                 <input id='add-fecha' class='form-control' name='dia' type='text' placeholder='Seleccione una fecha' autocomplete='off' required>
                 <br>
                 <a  id='remove-manual' href='index.php?ACTION=profesores' class='btn btn-danger float-left'>Cancelar</a>
-                <button id='add-manual' action='add' class='btn btn-success float-right'>Realizar Fichaje</button>
+                <button id='add-manual' action='add' class='btn btn-success float-right'>Fichar</button>
             </form>
         </div>
     </div>

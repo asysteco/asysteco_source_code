@@ -8,7 +8,7 @@ ORDER BY F.F_entrada DESC, P.Nombre ASC";
 
 if ($result =  $class->query($sql)) {
     if ($result->num_rows > 0) {
-        echo "<table class='table table-striped'>";
+        echo "<table id='responsiveTable' class='table table-striped'>";
             echo "<thead class='thead-dark'>";
                 echo "<tr>";
                     echo "<th>NOMBRE</th>";
@@ -23,11 +23,11 @@ if ($result =  $class->query($sql)) {
             {
                 $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                 echo "<tr>";
-                    echo "<td>$datos[Nombre]</td>";
-                    echo "<td>$datos[F_entrada]</td>";
-                    echo "<td>$datos[F_Salida]</td>";
-                    echo "<td>$datos[DIA_SEMANA]</td>";
-                    echo "<td>$fecha</td>";
+                    echo "<td data-th='NOMBRE'>$datos[Nombre]</td>";
+                    echo "<td data-th='FICHAJE DE ENTRADA'>$datos[F_entrada]</td>";
+                    echo "<td data-th='FICHAJE DE SALIDA'>$datos[F_Salida]</td>";
+                    echo "<td data-th='DIA SEMANA'>$datos[DIA_SEMANA]</td>";
+                    echo "<td data-th='FECHA'>$fecha</td>";
                 echo "</tr>";
             }
             echo "</tbody>";
