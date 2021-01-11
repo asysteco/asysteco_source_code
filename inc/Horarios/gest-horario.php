@@ -60,7 +60,7 @@ if ($rAula->num_rows > 0) {
         <div class='col-12'>
             <h1 id="profesor" data="<?=$profesor;?>">Gestionar Horario de <b><?=$nombreProfesor?></b></h1>
             <div class="add-fields">
-                <select id="add-dia" class="form-control" style="display: inline-block; width: 15%;">
+                <select id="add-dia" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">
                     <option value=''>Selec. día...</option>
                     <?php
                     foreach($totalDias as $key => $value) {
@@ -70,17 +70,17 @@ if ($rAula->num_rows > 0) {
                 </select>
                 <?php
                 if (isset($options['edificios']) && $options['edificios'] > 1) {
-                    echo '<select id="add-edificio" class="form-control" style="display: inline-block; width: 15%;">';
+                    echo '<select id="add-edificio" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">';
                         echo "<option value=''>Selec. Edificio...</option>";
                             for($i = 1; $i <= $options['edificios']; $i++) {
                                 echo "<option value='$i'> Edificio $i</option>";
                             }
                     echo '</select>';
                 } else {
-                    echo '<input id="add-edificio" type="hidden" class="form-control" style="display: inline-block; width: 15%;" value="1">';
+                    echo '<input id="add-edificio" type="hidden" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;" value="1">';
                 }
                 ?>
-                <select id="add-hora" class="form-control" style="display: inline-block; width: 15%;">
+                <select id="add-hora" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">
                     <option value=''>Selec. hora...</option>
                     <?php
                     foreach($totalHoras as $key => $value) {
@@ -88,7 +88,7 @@ if ($rAula->num_rows > 0) {
                     }
                     ?>
                 </select>
-                <select id="add-aula" class="form-control" style="display: inline-block; width: 15%;">
+                <select id="add-aula" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">
                     <option value=''>Selec. Aula...</option>
                     <?php
                     foreach($totalAulas as $key => $value) {
@@ -96,7 +96,7 @@ if ($rAula->num_rows > 0) {
                     }
                     ?>
                 </select>
-                <select id="add-curso" class="form-control" style="display: inline-block; width: 15%;">
+                <select id="add-curso" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">
                     <option value=''>Selec. Curso/Grupo...</option>
                     <?php
                     foreach($totalCursos as $key => $value) {
@@ -107,7 +107,7 @@ if ($rAula->num_rows > 0) {
                 <a action="add" class="btn btn-success act" style="margin-bottom: 5px;">Añadir Hora</a>
             </div>
             <div id="programar-horario">
-                <input type="text" id="fecha-programar-horario" class="form-control" autocomplete="off" placeholder="Selecciona una fecha..." style="display: inline-block; width: 20%;">
+                <input type="text" id="fecha-programar-horario" class="form-control" autocomplete="off" placeholder="Selecciona una fecha..." style="display: inline-block; width: 20%; min-width: 250px; max-width: 20%; margin-bottom: 5px;">
                 <a action="program" class="btn btn-success act" style="display: inline-block; margin-top: -4px;">Programar Horario</a>
             </div>
             <table id="tableHorarios" class="table table-striped">
@@ -120,7 +120,7 @@ if ($rAula->num_rows > 0) {
                             }
                         ?>
                         <th style="text-align: center; font-size: 15pt;">Aula</th>
-                        <th style="text-align: center; font-size: 15pt;">Curso/Grupo</th>
+                        <th style="text-align: center; font-size: 15pt;">Curso / Grupo</th>
                         <th style="text-align: center; font-size: 15pt;">Eliminar</th>
                     </tr>
                 </thead>
