@@ -8,6 +8,7 @@ echo '<div class="container" id="botonera">';
                 if (! empty($result)) 
                 {
                     echo "<h1>Registros de Notificaciones</h1>"; 
+                    echo "<div class='table-responsive'>";
                     echo "<table id='userTable' class='table table-striped'>
                         <thead>
                             <tr>
@@ -49,6 +50,7 @@ echo '<div class="container" id="botonera">';
                 echo "
                     </tbody>
                 </table>
+                </div>
                 ";
         echo '</div>';
     echo '</div>';

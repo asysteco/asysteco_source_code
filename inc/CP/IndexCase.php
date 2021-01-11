@@ -8,7 +8,7 @@ if (!$options['QR-reader']) {
     echo '<body>';
     echo '<div class="container-fluid" style="margin-top:50px">';
         echo "<div class='row'>";
-            echo "<div id='qreader' class='col-xs-12'>";
+            echo "<div id='qreader' class='col-12'>";
                 include($dirs['Qr'] . 'qr-webcam-admin-login.php');
             echo "</div>";
         echo "</div>";
@@ -17,7 +17,7 @@ if (!$options['QR-reader']) {
 } else {
 echo '<div class="container-fluid" style="margin-top:50px">';
     echo "<div class='row'>";
-        echo "<div id='qreader' class='col-xs-12' style='margin-top: 20vh;'>";
+        echo "<div id='qreader' class='col-12' style='margin-top: 20vh;'>";
             include($dirs['Qr'] . 'qr-reader-admin-login.php');
         echo "</div>";
     echo "</div>";
