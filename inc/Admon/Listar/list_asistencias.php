@@ -66,7 +66,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 throw new Exception('Ha ocurrido un error...');
             }
             if($result->num_rows > 0) {
-                echo "<table id='responsiveTable' class='table table-striped'>";
+                echo "<table class='table table-striped responsiveTable'>";
                     echo "<thead class='thead-dark'>";
                         echo "<tr>";
                             echo "<th>INICIALES</th>";

@@ -8,7 +8,7 @@ ORDER BY F.F_entrada DESC, P.Nombre ASC";
 
 if ($result =  $class->query($sql)) {
     if ($result->num_rows > 0) {
-        echo "<table id='responsiveTable' class='table table-striped'>";
+        echo "<table class='table table-striped responsiveTable'>";
             echo "<thead class='thead-dark'>";
                 echo "<tr>";
                     echo "<th>NOMBRE</th>";
