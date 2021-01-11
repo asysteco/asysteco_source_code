@@ -18,6 +18,6 @@ if ($_POST['ID'] != '') {
 $sql = "SELECT * FROM Profesores WHERE ID=? AND Iniciales=?";
 $id = "";
 $iniciales = "";
-$class->conex->prepare($sql);
-$bindParams = $class->conex->bind_param('is', $id, $iniciales);
+$stmt = $class->conex->prepare($sql);
+$bindParams = $stmt->bind_param('is', $id, $iniciales);
 $class->query($sql, $bindParams);
