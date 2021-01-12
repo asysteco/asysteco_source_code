@@ -11,7 +11,8 @@ if($_SESSION['Perfil'] === 'Admin')
     echo "<br><h4 style='display: inline-block; margin-right: 15px;'>Buscar profesor: </h4>
       <input style='width: 25%; display: inline-block;' id='busca_prof' class='form-control' type='text' placeholder='Buscar Profesor...' autocomplete='off'>
       <label for='busca_prof'> <span style='font-size: 20px;' class='fa fa-search'></span></label><br>";
-    echo "</br><table id='tabla_profesores' class='table table-hover'>";
+    echo "<div class='table-responsive'>";
+    echo "</br><table id='tabla_profesores' class='table table-hover table-striped responsiveTable'>";
     echo "<thead class='thead-dark'>";
         echo "<tr>";
             echo "<th>Nombre</th>";
@@ -20,7 +21,7 @@ if($_SESSION['Perfil'] === 'Admin')
             echo "<th>Sustituido</th>";
             echo "<th>Editar</th>";
             echo "<th>Asistencias</th>";
-            echo "<th>Desactivar/Activar</th>";
+            echo "<th>Desactivar / Activar</th>";
             echo "<th>Reset. Contraseña</th>";
         echo "</tr>";
     echo "</thead>";
@@ -46,16 +47,16 @@ if($_SESSION['Perfil'] === 'Admin')
             }
             
             echo "<tr id='profesor_$fila[ID]' class='row_prof'>";
-              echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Nombre]</td>";
-              echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Iniciales]</td>";
-              echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$activo</td>";
-              echo "<td class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$sustituido</td>";
+              echo "<td data-th='Nombre' class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Nombre]</td>";
+              echo "<td data-th='Iniciales' class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Iniciales]</td>";
+              echo "<td data-th='Activo' class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$activo</td>";
+              echo "<td data-th='Sustituido' class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$sustituido</td>";
 
-              echo "<td><a title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
-              echo "<td><a title='Mostrar asistencias de $fila[Nombre]' href='index.php?ACTION=asistencias&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
+              echo "<td data-th='Editar'><a title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
+              echo "<td data-th='Asistencias'><a title='Mostrar asistencias de $fila[Nombre]' href='index.php?ACTION=asistencias&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
               if($fila['Activo'] == 1)
               {
-                echo "<td>
+                echo "<td data-th='Desactivar / Activar'>
                   <a href='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
                       title='Desctivar a $fila[Nombre]'
                       onclick=\"return confirm('¿Seguro que desea realizar este cambio? Utilice solo esta opción si el profesor deja el centro por motivos de jubilación, fin de una sustitución o similares.')\">
@@ -65,7 +66,7 @@ if($_SESSION['Perfil'] === 'Admin')
               }
               else
               {
-                echo "<td>
+                echo "<td data-th='Desactivar / Activar'>
                   <a href='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
                       title='Activar a $fila[Nombre]'
                       onclick=\"return confirm('¡Cuidado! Si realiza este cambio ahora, se considerará que el profesor vuelve a trabajar en el centro.')\">
@@ -73,7 +74,7 @@ if($_SESSION['Perfil'] === 'Admin')
                   </a>
                 </td>";
               }
-              echo "<td>
+              echo "<td data-th='Reset. Contraseña'>
                   <a class='reset_icon'
                       title='Restablecer contraseña de $fila[Nombre]'
                       href='index.php?ACTION=profesores&OPT=reset-pass&ID=$fila[ID]'
@@ -85,6 +86,7 @@ if($_SESSION['Perfil'] === 'Admin')
         }
     echo "</tbody>";
     echo "</table>";
+    echo "</div>";
     echo '</div>';
     include_once($dirs['public'] . 'js/profesores.js');
    }

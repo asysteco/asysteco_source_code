@@ -251,12 +251,12 @@ include_once($dirs['public'] . 'js/animate.js');
 
 echo "<div id='flecha_div' class='flecha_div'><a href='#'><img id='flecha' class='flecha' src='resources/img/flecha.png'/></a></div>";
 
-echo '
-<div id="loading" class="col-12" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100vh; text-align: center; z-index: 99;">
-    <div class="caja" style="margin-top: 35vh; display: inline-block; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 4px 4px 16px 0 #808080bf;">
-        <div>
-            <img src="resources/img/loading.gif" alt="Cargando...">
-            <h2 id="loading-msg"></h2>
-        </div>
-    </div>
-</div>';
+echo '<div id="overlay"></div>';
+echo '<div id="loading">';
+  echo '<div id="spinnerWrapper">';
+    echo '<div class="lds-dual-ring"></div>';
+  echo '</div>';
+  echo '<div id="loadingMessage">';
+    echo '<h2 id="loading-msg"></h2>';
+  echo '</div>';
+echo '</div>';

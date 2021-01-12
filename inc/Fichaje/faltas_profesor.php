@@ -16,6 +16,7 @@ if($resp = $class->query($sql))
         echo "<div id='marcaje-response'></div>";
         echo "<div id='table-container'>";
             echo "<div id='full-table'>";
+            echo "<div class='table-responsive'>";
                 echo "<table class='table'>";
                     echo "<thead>";
                         echo "<tr>";
@@ -111,6 +112,7 @@ if($resp = $class->query($sql))
                         }
                         echo "</tbody>";
                     echo "</table>";
+                    echo "</div>";
                 echo "</div>";
             echo "</div>";
     }

@@ -426,10 +426,6 @@ class Asysteco
 
             $hf = $response->fetch_assoc();
             $horaFichaje = $hf['Hora'];
-            if ($horaFichaje === null) {
-                $this->ERR_ASYSTECO = "<span id='noqr' style='color: black; font-weight: bolder; background-color: red;'><h3>Está fuera de Horario.</h3></span>";
-                return false;
-            }
 
             $sql = "SELECT DISTINCT ID, F_Salida FROM Fichar WHERE Fecha='$fecha' AND ID_PROFESOR='$id'";
             if ($response = $this->query($sql)) {
@@ -437,6 +433,9 @@ class Asysteco
                     $fichar = "INSERT INTO Fichar (ID_PROFESOR, F_entrada, F_Salida, DIA_SEMANA, Fecha) 
                                 VALUES ($id, '$hora', '$horaSalida', '$dia[weekday]', '$fecha')";
                     $this->query($fichar);
+                    if ($horaFichaje === null) {
+                        return true;
+                    }
                     $marcajes = "UPDATE Marcajes SET Asiste = 1 WHERE Fecha='$fecha' AND ID_PROFESOR='$id' AND Hora >= '$horaFichaje'";
                     $this->query($marcajes);
 
