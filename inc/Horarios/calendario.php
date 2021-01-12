@@ -31,29 +31,30 @@ if($response = $class->query("SELECT * FROM $class->lectivos ORDER BY Fecha ASC"
         $start = unixtojd(mktime(0,0,0,$m,$dia,$Y));
         $array = cal_from_jd($start,CAL_GREGORIAN);
         $nuevodia = $array['day'];
+       
         if($array['monthname'] == 'January')
         {
-            $array['monthname'] = 'Enero';
+            $array['monthname'] = 'Enero <br/>'. $Y;
         }
         if($array['monthname'] == 'February')
         {
-            $array['monthname'] = 'Febrero';
+            $array['monthname'] = 'Febrero <br/>'. $Y;
         }
         if($array['monthname'] == 'March')
         {
-            $array['monthname'] = 'Marzo';
+            $array['monthname'] = 'Marzo <br/>'. $Y;
         }
         if($array['monthname'] == 'April')
         {
-            $array['monthname'] = 'Abril';
+            $array['monthname'] = 'Abril <br/>'. $Y;
         }
         if($array['monthname'] == 'May')
         {
-            $array['monthname'] = 'Mayo';
+            $array['monthname'] = 'Mayo <br/>'. $Y;
         }
         if($array['monthname'] == 'June')
         {
-            $array['monthname'] = 'Junio';
+            $array['monthname'] = 'Junio <br/>'. $Y;
         }
         if($array['monthname'] == 'July')
         {
@@ -65,19 +66,19 @@ if($response = $class->query("SELECT * FROM $class->lectivos ORDER BY Fecha ASC"
         }
         if($array['monthname'] == 'September')
         {
-            $array['monthname'] = 'Septiembre';
+            $array['monthname'] = 'Septiembre <br/>'. $Y;
         }
         if($array['monthname'] == 'October')
         {
-            $array['monthname'] = 'Octubre';
+            $array['monthname'] = 'Octubre <br/>'. $Y;
         }
         if($array['monthname'] == 'November')
         {
-            $array['monthname'] = 'Noviembre';
+            $array['monthname'] = 'Noviembre <br/>'. $Y;
         }
         if($array['monthname'] == 'December')
         {
-            $array['monthname'] = 'Diciembre';
+            $array['monthname'] = 'Diciembre <br/>'. $Y;
         }
         if($nuevodia < $diaanterior)
         {
