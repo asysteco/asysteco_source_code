@@ -60,7 +60,7 @@
                         echo '<div class="input-group-prepend">';
                             echo '<label for="fecha_incorpora" class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></label>';
                         echo '</div>';
-                          echo '<input id="fecha_incorpora" type="text" class="form-control" name="fecha" placeholder="Fecha de incorporación de horarios" aria-label="Fecha de incorporación de horarios" autocomplete="off" required>';
+                          echo '<input id="fecha_incorpora" type="text" class="form-control" name="fecha" placeholder="Fecha de incorporación" aria-label="Fecha de incorporación" autocomplete="off" required>';
                     echo '</div>';
                 echo '</div>';
                 }
