@@ -8,7 +8,7 @@ $errorMessage = '';
 
 // Preparamos directorio tmp, borrando fichero si existe
 $ff = "tmp/";
-$fn = "Listado_Faltas_Injustificadas.csv";
+$fn = "Listado_Faltas_Justificadas.csv";
 chdir($ff);
 if (is_file($fn)) {
     unlink($fn);
@@ -24,7 +24,8 @@ $titulo = [
     'DIA',
     'DIA SEMANA',
     'ASISTENCIA',
-    'ACTIVIDAD EXTRAESCOLAR'
+    'ACTIVIDAD EXTRAESCOLAR',
+    'JUSTIFICADA'
 ];
 
 // Escribimos los títulos para los campos
@@ -47,11 +48,11 @@ $sql = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
 FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
     INNER JOIN Diasemana D ON M.Dia=D.ID
 WHERE M.Asiste = 0
-    AND M.Justificada = 0 $whereFilter
+    AND M.Justificada = 1 $whereFilter
 ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC";
 
 if (!$response = $class->query($sql)) {
-    $errorMessage = 'No existen datos para exportar...';
+    $errorMessage = 'Ha ocurrido un error...';
 }
 
 $page_size = 15000;
@@ -66,15 +67,15 @@ if (empty($errorMessage) && $response->num_rows > 0) {
         for ($i = 0; $i <= $count; $i++) {
             $offset_var = $i * $page_size;
             $sql = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
-                FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
-                    INNER JOIN Diasemana D ON M.Dia=D.ID
-                WHERE M.Asiste = 0
-                    AND M.Justificada = 0 $whereFilter
-                ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC 
-                LIMIT $page_size OFFSET $offset_var";
+            FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
+                INNER JOIN Diasemana D ON M.Dia=D.ID
+            WHERE M.Asiste = 0
+                AND M.Justificada = 1 $whereFilter
+            ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC 
+            LIMIT $page_size OFFSET $offset_var";
 
             if (!$result = $mysql->query($sql)) {
-                throw new Exception('No existen datos para exportar...');
+                throw new Exception('Ha ocurrido un error...');
             }
 
             while ($datos = $result->fetch_assoc()) {
@@ -87,7 +88,8 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     $datos['Dia'],
                     utf8_decode($datos['Diasemana']),
                     'NO',
-                    'NO'
+                    'NO',
+                    'SI'
                 ];
 
                 // Escibimos una línea por cada $datos

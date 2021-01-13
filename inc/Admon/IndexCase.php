@@ -26,41 +26,41 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] == 'Admin') {
 
                 if (isset($action) && $action === 'export') {
                     if ($element === 'marcajes') {
-                        include_once($dirs['Exportar'] . 'export_marcajes.php');
+                        include_once($dirs['Exportar'] . 'marcajes.php');
                     } elseif ($element === 'Asistencias') {
-                        include_once($dirs['Exportar'] . 'export_asistencias.php');
+                        include_once($dirs['Exportar'] . 'asistencias.php');
                     } elseif ($element === 'Faltas') {
-                        include_once($dirs['Exportar'] . 'export_faltas.php');
+                        include_once($dirs['Exportar'] . 'faltas.php');
                     } elseif ($element === 'Horarios') {
-                        include_once($dirs['Exportar'] . 'export_horarios.php');
+                        include_once($dirs['Exportar'] . 'horarios.php');
                     } elseif ($element === 'Profesores') {
-                        include_once($dirs['Exportar'] . 'export_profesores.php');
+                        include_once($dirs['Exportar'] . 'profesores.php');
                     } elseif ($element === 'Fichajes') {
-                        include_once($dirs['Exportar'] . 'export_fichajes.php');
+                        include_once($dirs['Exportar'] . 'fichajes.php');
                     } elseif ($element === 'Faltas_Injustificadas') {
-                        include_once($dirs['Exportar'] . 'export_faltas_injustificadas.php');
+                        include_once($dirs['Exportar'] . 'faltas_injustificadas.php');
                     } elseif ($element === 'Faltas_Justificadas') {
-                        include_once($dirs['Exportar'] . 'export_faltas_justificadas.php');
+                        include_once($dirs['Exportar'] . 'faltas_justificadas.php');
                     } else {
                         $MSG = 'error-export';
                     }
                 } elseif (isset($action) && $action === 'select') {
                     if ($element === 'marcajes') {
-                        include_once($dirs['Listar'] . 'list_marcajes.php');
+                        include_once($dirs['Listar'] . 'marcajes.php');
                     } elseif ($element === 'asistencias') {
-                        include_once($dirs['Listar'] . 'list_asistencias.php');
+                        include_once($dirs['Listar'] . 'asistencias.php');
                     } elseif ($element === 'faltas') {
-                        include_once($dirs['Listar'] . 'list_faltas.php');
+                        include_once($dirs['Listar'] . 'faltas.php');
                     } elseif ($element === 'horarios') {
-                        include_once($dirs['Listar'] . 'list_horarios.php');
+                        include_once($dirs['Listar'] . 'horarios.php');
                     } elseif ($element === 'fichajeDiario') {
-                        include_once($dirs['Listar'] . 'list_fichaje_diario.php');
+                        include_once($dirs['Listar'] . 'fichaje_diario.php');
                     } elseif ($element === 'fichajeFechaFilter') {
-                        include_once($dirs['Listar'] . 'list_fichaje_fecha.php');
+                        include_once($dirs['Listar'] . 'fichaje_fecha.php');
                     } elseif ($element === 'faltasInjustificadas') {
-                        include_once($dirs['Listar'] . 'list_faltas_injustificadas.php');
+                        include_once($dirs['Listar'] . 'faltas_injustificadas.php');
                     } elseif ($element === 'faltasJustificadas') {
-                        include_once($dirs['Listar'] . 'list_faltas_justificadas.php');
+                        include_once($dirs['Listar'] . 'faltas_justificadas.php');
                     } else {
                         $MSG = 'error-export';
                     }
