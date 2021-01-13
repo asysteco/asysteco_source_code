@@ -83,6 +83,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                             echo "<th>DIA SEMANA</th>";
                             echo "<th>ASISTENCIA</th>";
                             echo "<th>ACTIVIDAD EXTRAESCOLAR</th>";
+                            echo "<th>JUSTIFICADA</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
@@ -102,6 +103,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                         echo "<td data-th='DIA SEMANA'>$datos[Diasemana]</td>";
                         echo "<td data-th='ASISTENCIA'>NO</td>";
                         echo "<td data-th='ACTIVIDAD EXTRAESCOLAR'>NO</td>";
+                        echo "<td data-th='JUSTIFICADA'>NO</td>";
                     echo "</tr>";
                 }
                     echo "</tbody>";
