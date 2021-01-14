@@ -46,6 +46,8 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
             break;
 
         case 'add-profesor':
+            $scripts = '<link rel="stylesheet" href="css/profesores-edit.css">';
+            $scripts .= '<link rel="stylesheet" href="css/login-style.css">';
             if (isset($_POST['add-profesor']) && $_POST['add-profesor'] === 'add') {
             if ($class->validRegisterProf()) {
                 $act_regProf = 'active';
@@ -85,13 +87,8 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
 
         case 'des-act':
             include_once($dirs['Profesores'] . 'des-act-profesor.php');
-            if (isset($ERR_MSG) && $ERR_MSG != '') {
-            header("Location: index.php?ACTION=profesores&ERR_MSG=" . $ERR_MSG);
-            } else {
-            header("Location: index.php?ACTION=profesores&MSG=" . $MSG);
-            }
             break;
-
+            
         case 'reset-pass':
             include_once($dirs['Login'] . 'reset_pass.php');
             if (isset($ERR_MSG)  && $ERR_MSG != '') {

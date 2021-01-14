@@ -77,6 +77,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                             echo "<th>DIA SEMANA</th>";
                             echo "<th>ASISTENCIA</th>";
                             echo "<th>ACTIVIDAD EXTRAESCOLAR</th>";
+                            echo "<th>JUSTIFICADA</th>";
                         echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
@@ -84,6 +85,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 while ($datos = $result->fetch_assoc())
                 {
                     $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
+                    $justificada = $datos['Justificada'] ? 'SI': 'NO';
                     echo "<tr>";
                         echo "<td data-th='INICIALES'>$datos[Iniciales]</td>";
                         echo "<td data-th='PROFESOR'>$datos[Nombre]</td>";
@@ -93,6 +95,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                         echo "<td data-th='DIA SEMANA'>$datos[Diasemana]</td>";
                         echo "<td data-th='ASISTENCIA'>NO</td>";
                         echo "<td data-th='ACTIVIDAD EXTRAESCOLAR'>NO</td>";
+                        echo "<td data-th='JUSTIFICADA'>$justificada</td>";
                     echo "</tr>";
                 }
                     echo "</tbody>";
@@ -111,46 +114,3 @@ if (empty($errorMessage) && $response->num_rows > 0) {
 if (!empty($errorMessage)) {
     echo $errorMessage;
 }
-
-echo "<script>";
-echo "$(document).ready(function () {
-    $('#loading').delay().fadeOut()
-});";
-echo "
-    $('#select_pag').on('change', function() {
-        element = $(this).children().attr('element');
-        action = $(this).children().attr('action');
-        page = $(this).val();
-        profesor = $(this).children().attr('profesor');
-        start = $(this).children().attr('start');
-        end = $(this).children().attr('end');
-        urlPath = 'index.php?ACTION=admon&OPT=select';
-        data = {
-            'action': action,
-            'element': element,
-            'profesor': profesor,
-            'fechainicio': start,
-            'fechafin': end,
-            'pag': page
-        };
-        
-        $.ajax({
-            url: urlPath,
-            type: 'GET',
-            data:  data,
-            beforeSend : function() {
-                $('#loading-msg').html('Cargando...');
-                $('#loading').show();
-            },
-            success: function(data) {
-                $('#btn-response').html(data);
-                $('#loading').fadeOut();
-            },
-            error: function(e) {
-                $('#error-modal').modal('show'),
-                $('#error-content-modal').html(e);
-            }          
-        });
-    });
-";
-echo "</script>";

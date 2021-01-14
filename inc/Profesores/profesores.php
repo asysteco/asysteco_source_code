@@ -57,9 +57,9 @@ if($_SESSION['Perfil'] === 'Admin')
               if($fila['Activo'] == 1)
               {
                 echo "<td data-th='Desactivar / Activar'>
-                  <a href='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
+                  <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
                       title='Desctivar a $fila[Nombre]'
-                      onclick=\"return confirm('¿Seguro que desea realizar este cambio? Utilice solo esta opción si el profesor deja el centro por motivos de jubilación, fin de una sustitución o similares.')\">
+                      class='desactivar-profesor'>
                       <i style='font-size: 25px; color: red;' class='fa fa-ban remove_icon'></i>
                   </a>
                 </td>";
@@ -67,9 +67,9 @@ if($_SESSION['Perfil'] === 'Admin')
               else
               {
                 echo "<td data-th='Desactivar / Activar'>
-                  <a href='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
+                  <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
                       title='Activar a $fila[Nombre]'
-                      onclick=\"return confirm('¡Cuidado! Si realiza este cambio ahora, se considerará que el profesor vuelve a trabajar en el centro.')\">
+                      class='activar-profesor'>
                       <i style='font-size: 25px; color: green;' class='fa fa-check add_icon'></i>
                   </a>
                 </td>";
@@ -106,5 +106,51 @@ else
 {
   $ERR_MSG = "No tiene permisos de administrador.";
 }
-include_once "js/filtro_prof.js";
+
 ?>
+
+<script src="js/filtro_prof.js"></script>
+
+<div id="modal-desactivar" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Desactivar Profesor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <i>¿Seguro que desea realizar este cambio? Utilice solo esta opción si el profesor deja el centro por motivos de jubilación, fin de una sustitución o similares.</i>
+        <br><br>
+        <input id="fecha-desactivar" class="form-control" name="fecha" type="text" placeholder="Seleccione una fecha..." autocomplete="off">
+      </div>
+      <div class="modal-buttons-footer">
+        <button type="button" class="btn btn-success act float-right" action="desactivar">Confirmar</button>
+        <button type="button" class="btn btn-danger float-left" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-activar" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Activar Profesor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <i>¡Cuidado! Si realiza este cambio ahora, se considerará que el profesor vuelve a trabajar en el centro.</i>
+      </div>
+      <div class="modal-buttons-footer">
+        <button type="button" class="btn btn-success act float-right" action="activar">Confirmar</button>
+        <button type="button" class="btn btn-danger float-left" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/desactivar-profesor.js"></script>
