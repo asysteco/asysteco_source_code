@@ -14,7 +14,7 @@ if ($action === 'activar') {
     $mysql = $class->conex;
     $mysql->autocommit(FALSE);
     $MSG = "desact";
-    if ($mysql->validFormDate($fecha)) {
+    if ($class->validFormDate($fecha)) {
         $fechaFormateada = $class->formatEuropeanDateToSQLDate($fecha);
         try {
             $sql2 = "UPDATE Profesores SET Activo=0 WHERE ID='$profesor' AND Tipo != 1 AND $fechaFormateada <= CURDATE()";
