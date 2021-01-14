@@ -1,48 +1,41 @@
 <?php
 
-if(isset($_POST['new_password']))
-{
-$_POST['act_pass'] = $class->encryptPassword($_SESSION['Iniciales'] . '12345');
-$_POST['new_pass'] = $class->encryptPassword($_POST['new_pass']);
-$_POST['new_pass_c'] = $class->encryptPassword($_POST['new_pass_c']);
-    if($response = $class->query("SELECT ID FROM $class->profesores WHERE ID='$_SESSION[ID]' AND Password = '$_POST[act_pass]'"))
-    {
-        if($response->num_rows == 1)
-        {
-            if($_POST['new_pass'] === $_POST['new_pass_c'])
-            {
-                if($class->query("UPDATE $class->profesores SET $class->profesores.Password='$_POST[new_pass]' WHERE $class->profesores.ID='$_SESSION[ID]'"))
-                {
-                    $MSG = 'Contraseña cambiada satisfatoriamente.';
-                    $cambiada = true;
-                    header("Refresh:1; url=index.php?ACTION=logout");
-                    include_once($dirs['Interfaces'] . 'errors.php');
-                }
-                else
-                {
-                    $ERR_MSG = $class->ERR_ASYSTECO;
-                }
-            }
-            else
-            {
-                $ERR_MSG = 'Las nuevas contraseñas no coinciden.';
-            }
-        }
-        else
-        {
-            $ERR_MSG = 'Esta no es tu contraseña actual.';
-        }
-        
-    }
-    else
-    {
-        $ERR_MSG = $class->ERR_ASYSTECO;
-    }
+$alertTitle = '';
+$alertMessage = '';
 
+if (isset($_POST['first_change'])) {
+    $cambiada = false;
+    $alertType = 'Error';
+
+    $sessionId = $_SESSION['ID'];
+    $sessionInitials = $_SESSION['Iniciales'];
+    $actualPass = $class->encryptPassword($sessionInitials . '12345');
+    $newPass = $class->encryptPassword($_POST['new_pass']);
+    $newPassConfirm = $class->encryptPassword($_POST['new_pass_confirm']);
+
+    $sql = "SELECT ID FROM Profesores WHERE ID='$sessionId' AND Password = '$actualPass'";
+    if ($response = $class->query($sql)) {
+        if ($response->num_rows == 1) {
+            if ($newPass === $newPassConfirm) {
+                if ($newPass !== $actualPass) {
+                    $sql = "UPDATE Profesores SET Profesores.Password='$newPass' WHERE Profesores.ID='$sessionId'";
+                    if ($class->query($sql)) {
+                        $alertType = 'Success';
+                        $alertMessage = 'Contraseña cambiada satisfatoriamente.';
+                        $cambiada = true;
+                    } else {
+                        $alertMessage = 'Error inesperado, contacte con los administradores...';
+                    }
+                } else {
+                    $alertMessage = 'La nueva contraseña debe ser distinta a la actual.';
+                }
+            } else {
+                $alertMessage = 'Las nuevas contraseñas no coinciden.';
+            }
+        } else {
+            $alertMessage = 'Contraseña actual incorrecta.';
+        }
+    } else {
+        $alertMessage = 'Error inesperado, contacte con los administradores...';
+    }
 }
-if(isset($cambiada))
-{
-    include_once($dirs['Interfaces'] . 'top-nav.php');
-    include_once($dirs['Interfaces'] . 'errors.php');
-}
-?>
