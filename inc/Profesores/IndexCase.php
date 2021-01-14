@@ -46,6 +46,8 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
             break;
 
         case 'add-profesor':
+            $scripts = '<link rel="stylesheet" href="css/profesores-edit.css">';
+            $scripts .= '<link rel="stylesheet" href="css/login-style.css">';
             if (isset($_POST['add-profesor']) && $_POST['add-profesor'] === 'add') {
             if ($class->validRegisterProf()) {
                 $act_regProf = 'active';
