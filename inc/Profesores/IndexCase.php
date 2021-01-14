@@ -117,7 +117,6 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
             break;
         }
 
-        include_once($dirs['Interfaces'] . 'errors.php');
         include_once($dirs['Interfaces'] . 'footer.php');
     } else {
         header('Location: index.php?ACTION=primer_cambio');

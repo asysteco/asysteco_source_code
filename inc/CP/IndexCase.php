@@ -15,14 +15,13 @@ if (!$options['QR-reader']) {
     echo "</div>";
     include_once($dirs['public'] . 'js/qr-webcam-admin-login.js');
 } else {
-echo '<div class="container-fluid" style="margin-top:50px">';
-    echo "<div class='row'>";
-        echo "<div id='qreader' class='col-12' style='margin-top: 20vh;'>";
-            include($dirs['Qr'] . 'qr-reader-admin-login.php');
+    echo '<div class="container-fluid" style="margin-top:50px">';
+        echo "<div class='row'>";
+            echo "<div id='qreader' class='col-12' style='margin-top: 20vh;'>";
+                include($dirs['Qr'] . 'qr-reader-admin-login.php');
+            echo "</div>";
         echo "</div>";
     echo "</div>";
-echo "</div>";
-include_once($dirs['public'] . 'js/qr-reader-admin-login.js');
+    include_once($dirs['public'] . 'js/qr-reader-admin-login.js');
 }
-include($dirs['Interfaces'] . 'errors.php');
 include($dirs['Interfaces'] . 'footer.php');
