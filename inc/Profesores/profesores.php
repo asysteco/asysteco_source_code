@@ -111,7 +111,7 @@ else
 
 <script src="js/filtro_prof.js"></script>
 
-<div id="modal-desactivar" class="modal" tabindex="-1" role="dialog">
+<div id="modal-desactivar" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -133,7 +133,7 @@ else
   </div>
 </div>
 
-<div id="modal-activar" class="modal" tabindex="-1" role="dialog">
+<div id="modal-activar" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
