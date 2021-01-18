@@ -4,6 +4,7 @@ $action = $_GET['act'];
 $valor = $_GET['Valor'];
 $profesor = $_GET['Profesor'];
 $fecha = $_GET['Fecha'];
+$changeDate = $class->formatSQLDateToEuropeanDate($fecha);
 $hora = $_GET['Hora'];
 
 $nombre = $_SESSION['Nombre'];
@@ -19,17 +20,17 @@ if(isset($action) && $action != '')
 
             if($valor == 1)
             {
-                $msg = "$nombre ha modificado el registro del Día: $fecha Horas: {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio'])} - {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin'])} como Asistido.";
+                $msg = "$nombre ha modificado el registro del Día: $changeDate Horas: {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio'])} - {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin'])} como Asistido.";
                 $MSG= 'Ok-asiste';
             }
             elseif($valor == 0)
             {
-                $msg = "$nombre ha modificado el registro del Día: $fecha Horas: {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio'])} - {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin'])} como Falta.";
+                $msg = "$nombre ha modificado el registro del Día: $changeDate Horas: {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio'])} - {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin'])} como Falta.";
                 $MSG= 'Ok-falta';
             }
             elseif($valor == 2)
             {
-                $msg = "$nombre ha modificado el registro del Día: $fecha Horas: {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio'])} - {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin'])} como Actividad Extraescolar.";
+                $msg = "$nombre ha modificado el registro del Día: $changeDate Horas: {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio'])} - {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin'])} como Actividad Extraescolar.";
                 $MSG= 'Ok-extraescolar';
             }
             else
@@ -55,12 +56,12 @@ if(isset($action) && $action != '')
         {
             if($valor == 1)
             {
-                $msg = "$nombre ha modificado el registro del Día: $fecha Hora: {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio'])} - {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin'])} como Falta Justificada.";
+                $msg = "$nombre ha modificado el registro del Día: $changeDate Hora: {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio'])} - {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin'])} como Falta Justificada.";
                 $MSG= 'Ok-justificada';
             }
             elseif($valor == 0)
             {
-                $msg = "$nombre ha modificado el registro del Día: $fecha Hora: {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio'])} - {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin'])} retirando la justificación.";
+                $msg = "$nombre ha modificado el registro del Día: $changeDate Hora: {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio'])} - {$class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin'])} retirando la justificación.";
                 $MSG= 'Ok-injustificado';
             }
             else

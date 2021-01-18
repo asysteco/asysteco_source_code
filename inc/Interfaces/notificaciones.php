@@ -1,13 +1,17 @@
+<div class="container" id="botonera">
+    <div class="row"> 
+        <div class="col-12">
 <?php
-echo '<div class="container" id="botonera">';
-    echo '<div class="row">'; 
-        echo '<div class="col-12">';
-                $response = "SELECT Notificaciones.*, Profesores.Nombre, Profesores.Iniciales FROM Notificaciones INNER JOIN Profesores ON Notificaciones.ID_PROFESOR=Profesores.ID ORDER BY Fecha DESC LIMIT 100";
-
-                $result = $class->query($response);
+                $sql = "SELECT Notificaciones.*, Profesores.Nombre, Profesores.Iniciales
+                        FROM Notificaciones
+                            INNER JOIN Profesores ON Notificaciones.ID_PROFESOR=Profesores.ID
+                        ORDER BY Fecha DESC
+                        LIMIT 100";
+                $result = $class->query($sql);
                 if (! empty($result)) 
                 {
                     echo "<h1>Registros de Notificaciones</h1>"; 
+                    echo "<div class='table-responsive'>";
                     echo "<table id='userTable' class='table table-striped'>
                         <thead>
                             <tr>
@@ -41,7 +45,7 @@ echo '<div class="container" id="botonera">';
                         ";
                         }
 
-                        if(! $class->query("UPDATE Notificaciones SET Visto=1"))
+                        if(! $class->query("UPDATE Notificaciones SET Visto = 1 WHERE Visto = 0"))
                         {
                             $ERR_MSG = $class->ERR_ASYSTECO;
                         }
@@ -49,7 +53,9 @@ echo '<div class="container" id="botonera">';
                 echo "
                     </tbody>
                 </table>
+                </div>
                 ";
-        echo '</div>';
-    echo '</div>';
-echo '</div>';
+?>
+        </div>
+    </div>
+</div>

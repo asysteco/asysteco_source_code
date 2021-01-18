@@ -17,6 +17,7 @@
   <script src="js/datepicker_common.js"></script>
   <script src="js/flecha.js"></script>
   <script src="js/toastr/toastr-settings.js"></script>
+  <script src="js/asysteco.js"></script>
   
   <?php if(isset($scripts)){ echo $scripts;} ?>
 

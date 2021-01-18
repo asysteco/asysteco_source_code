@@ -6,8 +6,8 @@ $fechaFin = $_GET['fechafin'] ?? '';
 $whereFilter = ' AND M.Fecha <= CURDATE()';
 $errorMessage = '';
 $element = $_GET['element'];
-$page_size = 200;
 $offset_var = $_GET['pag'];
+$page_size = 200;
 
 if (isset($profesor) && !empty($profesor)) {
     $whereFilter .= " AND M.ID_PROFESOR = $profesor";
@@ -25,7 +25,7 @@ if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($f
 $query = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
 FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
     INNER JOIN Diasemana D ON M.Dia=D.ID 
-WHERE M.Asiste=0 $whereFilter
+WHERE (M.Asiste=1 OR M.Asiste=2) $whereFilter
 ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC";
 
 if(! $response = $class->query($query)) {
@@ -55,18 +55,18 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 echo "</select>";
                 echo "</h3>";
             echo "</div>";
-            }            
+            }
             $sql = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
             FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
                 INNER JOIN Diasemana D ON M.Dia=D.ID 
-            WHERE M.Asiste=0 $whereFilter
+            WHERE (M.Asiste=1 OR M.Asiste=2) $whereFilter
             ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC
             LIMIT $page_size OFFSET $offset_var";
             if (!$result = $mysql->query($sql)) {
                 throw new Exception('Ha ocurrido un error...');
             }
-            if ($result->num_rows > 0) {
-                echo "<table class='table table-striped'>";
+            if($result->num_rows > 0) {
+                echo "<table class='table table-striped responsiveTable'>";
                     echo "<thead class='thead-dark'>";
                         echo "<tr>";
                             echo "<th>INICIALES</th>";
@@ -85,14 +85,21 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 {
                     $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                     echo "<tr>";
-                        echo "<td>$datos[Iniciales]</td>";
-                        echo "<td>$datos[Nombre]</td>";
-                        echo "<td>$fecha</td>";
-                        echo "<td>$datos[Hora]</td>";
-                        echo "<td>$datos[Dia]</td>";
-                        echo "<td>$datos[Diasemana]</td>";
-                        echo "<td>NO</td>";
-                        echo "<td>NO</td>";
+                        echo "<td data-th='INICIALES'>$datos[Iniciales]</td>";
+                        echo "<td data-th='PROFESOR'>$datos[Nombre]</td>";
+                        echo "<td data-th='FECHA'>$fecha</td>";
+                        echo "<td data-th='HORA'>$datos[Hora]</td>";
+                        echo "<td data-th='DIA'>$datos[Dia]</td>";
+                        echo "<td data-th='DIA SEMANA'>$datos[Diasemana]</td>";
+                        echo "<td data-th='ASISTENCIA'>SI</td>";
+                        if($datos['Asiste'] == 2)
+                        {
+                            echo "<td data-th='ACTIVIDAD EXTRAESCOLAR'>SI</td>";
+                        }
+                        else
+                        {
+                            echo "<td data-th='ACTIVIDAD EXTRAESCOLAR'>NO</td>";
+                        }
                     echo "</tr>";
                 }
                     echo "</tbody>";
@@ -104,10 +111,9 @@ if (empty($errorMessage) && $response->num_rows > 0) {
         $class->conex->rollback();
     }
     $class->conex->commit();
-} else {
+}else {
     echo "<h2 style='color: grey;'><i>No existen datos que mostrar.</i></h2>";
 }
-
 if (!empty($errorMessage)) {
     echo $errorMessage;
 }

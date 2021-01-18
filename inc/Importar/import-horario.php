@@ -15,7 +15,7 @@
             <b>INICIALES:</b> Iniciales correspondientes al profesor<br>
             <b>AULA:</b>Nombre del Aula<br>
             <b>DIA:</b> Correspondiente al día de la semana, escrito en números (1 = Lunes, etc.)<br>
-            <b>HORA:</b> Número referente a la hora impartida (<?= $recreo;?> Está considerada "Recreo", por lo tanto, son 7 horas en total)<br>
+            <b>HORA:</b> Número de referencia a la hora impartida <i>(Puede encontrar el <b>Nº de Referencia</b> en el apartado <b>"Horario del centro"</b> del desplegable <b>"<?= $_SESSION['Nombre'] ?>"</b> en el menú superior.)</i><br>
             <?php if (isset($options['edificios']) && $options['edificios'] > 1){ echo '<b>EDIFICIO:</b> Número del edificio en el que se impartirá la hora.<br>';}?>
             <h4>Ejemplo de formato correcto:</h4>
         </div>
@@ -60,7 +60,7 @@
                         echo '<div class="input-group-prepend">';
                             echo '<label for="fecha_incorpora" class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></label>';
                         echo '</div>';
-                          echo '<input id="fecha_incorpora" type="text" class="form-control" name="fecha" placeholder="Fecha de incorporación de horarios" aria-label="Fecha de incorporación de horarios" autocomplete="off" required>';
+                          echo '<input id="fecha_incorpora" type="text" class="form-control" name="fecha" placeholder="Fecha de incorporación" aria-label="Fecha de incorporación" autocomplete="off" required>';
                     echo '</div>';
                 echo '</div>';
                 }

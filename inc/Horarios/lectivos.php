@@ -1,4 +1,4 @@
-<div class="container" style="margin-top: 75px; margin-left: auto; margin-right: auto; width: 85%;">
+<div class="container" style="margin-left: auto; margin-right: auto; width: 85%;">
     <div class="row">
         <div class="col-12 col-md-4">
         <h1>Calendario escolar</h1>
@@ -13,7 +13,7 @@
 
 <?php
 
-if($response = $class->query("SELECT * FROM $class->lectivos"))
+if($response = $class->query("SELECT * FROM Lectivos"))
 {
     if($response->num_rows > 0)
     {

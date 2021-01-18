@@ -4,7 +4,7 @@ class Aulas
 {
     public function aulaValida($aula)
     {
-        if (isset($aula) && preg_match('/^[a-zA-Z0-9 -]{2,25}$/i', $aula)) {
+        if (isset($aula) && preg_match('/^[a-zA-ZäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ0-9 -]{2,25}$/i', $aula)) {
             return true;
         }
 
