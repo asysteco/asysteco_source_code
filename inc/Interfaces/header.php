@@ -18,6 +18,8 @@
   <script src="js/flecha.js"></script>
   <script src="js/toastr/toastr-settings.js"></script>
   <script src="js/asysteco.js"></script>
+  <script src="js/timepicker/timepicker.js"></script>
+  <link rel="stylesheet" href="css/timepicker/timepicker.css">
   
   <?php if(isset($scripts)){ echo $scripts;} ?>
 

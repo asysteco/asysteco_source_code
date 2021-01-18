@@ -20,14 +20,15 @@
                 }
                 ?>
                 <br><br>
-                <label>Hora Fichaje Entrada </label>
-                <input id='add-hora-entrada' type='time' name='horaentrada' min='06:00' max='22:00' style='margin-left: 2%;' required>
+                <label for="add-hora-salida">Hora Fichaje Entrada </label>
+                <input id='add-hora-entrada' type="text" name='horaentrada' class="form-control fichajeEntrada" placeholder="Hora entrada" required/>
                 <br><br>
                 <?php if ($options['ficharSalida'] === 1) { ?>
-                    <label>Hora Fichaje Salida </label>
-                    <input id='add-hora-salida' type='time' name='horasalida' min='06:00' max='22:00' style='margin-left: 3%;' required>
+                    <label for="add-hora-salida">Hora Fichaje Salida </label>
+                    <input id='add-hora-salida' type="text" name='horasalida' class="form-control fichajeSalida" placeholder="Hora salida" required/>
                     <br><br>
                 <?php } ?>
+                <label for="add-fecha">Fecha de fichaje </label>
                 <input id='add-fecha' class='form-control' name='dia' type='text' placeholder='Seleccione una fecha' autocomplete='off' required>
                 <br>
                 <a  id='remove-manual' href='index.php?ACTION=profesores' class='btn btn-danger float-left'>Cancelar</a>
