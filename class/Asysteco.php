@@ -4,6 +4,7 @@ class Asysteco
 {
     private const DEFAULT_SQL_ERROR = 'Ha ocurrido un error inesperado, pruebe más tarde o contacte con los administradores.';
 
+    private $errorLogPath; 
     public $fichar = 'Fichar';
     public $horarios = 'Horarios';
     public $profesores = 'Profesores';
@@ -21,12 +22,13 @@ class Asysteco
 
     function bdConex($host, $user, $pass, $db)
     {
+        $this->errorLogPath = dirname($_SERVER['DOCUMENT_ROOT']) . '/../error.log';
         $this->conex = new mysqli($host, $user, $pass, $db);
         if (!$this->conex->connect_errno) {
             return $this->conex;
         } else {
             error_log("\nSQL-CONEX-" . $_SESSION['LID'] . ": " . $this->conex->connect_errno .
-            " ERROR: " . $this->conex->connect_error, 3,'./../error.log');
+            " ERROR: " . $this->conex->connect_error, 3, $this->errorLogPath);
             
             if($_SESSION['LID'] === 'Testing' || (int)$_COOKIE['debug'] === 1) {
                 $this->ERR_ASYSTECO = "Fallo al conectar a MySQL: (" . $this->conex->connect_errno . ") " . $this->conex->connect_error;
@@ -49,7 +51,7 @@ class Asysteco
         } else {
             error_log("\nERR_CODE: " . $this->conex->errno .
             " ERROR-" . $_SESSION['LID'] . ": " . $this->conex->error .
-            " SQL: " . $sql, 3,'./../error.log');
+            " SQL: " . $sql, 3, $this->errorLogPath);
 
             if($_SESSION['LID'] === 'Testing' || (int)$_COOKIE['debug'] === 1) {
                 $this->ERR_ASYSTECO = "ERR_CODE: " . $this->conex->errno . "\nERROR: " . $this->conex->error . "\nSQL: " . $sql;
@@ -65,7 +67,7 @@ class Asysteco
         if (!$queryResult = $conex->query($sql)) {
             error_log("\nERR_CODE: " . $this->conex->errno .
             " ERROR-" . $_SESSION['LID'] . ": " . $this->conex->error .
-            " SQL: " . $sql, 3,'./../error.log');
+            " SQL: " . $sql, 3, $this->errorLogPath);
 
             throw new Exception($errorMessage);
         }
