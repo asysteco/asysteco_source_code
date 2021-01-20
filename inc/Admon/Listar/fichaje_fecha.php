@@ -57,9 +57,8 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             $whereFilter
             ORDER BY F.Fecha DESC, F.F_entrada ASC, P.Nombre ASC
             LIMIT $page_size OFFSET $offset_var";
-            if (!$result = $mysql->query($sql)) {
-                throw new Exception('Ha ocurrido un error...');
-            }
+            $result = $class->autocommitOffQuery($mysql, $sql, 'Ha ocurrido un error...');
+            
             if($result->num_rows > 0) {
                 echo "<table class='table table-striped responsiveTable'>";
                     echo "<thead class='thead-dark'>";
@@ -88,7 +87,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             }
         }
     } catch (Exception $e) {
-        $errorMessage = $e;
+        $errorMessage = $e->getMessage();
         $class->conex->rollback();
     }
     $class->conex->commit();
