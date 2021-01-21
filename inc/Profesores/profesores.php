@@ -51,12 +51,13 @@ if($_SESSION['Perfil'] === 'Admin')
               echo "<td data-th='Activo' data-toggle='tooltip' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$activo</td>";
               echo "<td data-th='Sustituido' data-toggle='tooltip' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$sustituido</td>";
 
-              echo "<td data-th='Editar'><a title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
-              echo "<td data-th='Asistencias'><a title='Mostrar asistencias de $fila[Nombre]' href='index.php?ACTION=asistencias&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
+              echo "<td data-th='Editar'><a data-toggle='tooltip' title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
+              echo "<td data-th='Asistencias'><a data-toggle='tooltip' title='Mostrar asistencias de $fila[Nombre]' href='index.php?ACTION=asistencias&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
               if($fila['Activo'] == 1)
               {
                 echo "<td data-th='Desactivar / Activar'>
                   <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
+                      data-toggle='tooltip'
                       title='Desactivar a $fila[Nombre]'
                       class='act'
                       action='modal-desactivar'>
@@ -68,6 +69,7 @@ if($_SESSION['Perfil'] === 'Admin')
               {
                 echo "<td data-th='Desactivar / Activar'>
                   <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
+                      data-toggle='tooltip'
                       title='Activar a $fila[Nombre]'
                       class='act'
                       action='modal-activar'>
@@ -77,6 +79,7 @@ if($_SESSION['Perfil'] === 'Admin')
               }
               echo "<td data-th='Reset. Contraseña'>
                   <a class='reset_icon'
+                      data-toggle='tooltip'
                       title='Restablecer contraseña de $fila[Nombre]'
                       href='index.php?ACTION=profesores&OPT=reset-pass&ID=$fila[ID]'
                       onclick=\"return confirm('Va a restablecer la contraseña de $fila[Nombre]  ¿Desea continuar?.')\">
