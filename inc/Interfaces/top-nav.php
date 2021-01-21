@@ -89,20 +89,20 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
 
         // Profesores Dropdown start
         echo "<li class='nav-item dropdown $act_profesores '>";
-          echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'>Profesores</a>";
+          echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'>Personal</a>";
           echo "<ul class='dropdown-menu bg-dark'>";
             echo "<a class='dropdown-item text-light $act_showProf' href='$_SERVER[PHP_SELF]?ACTION=profesores'>
               <i style='font-size: 20px; vertical-align: middle;' class='fa fa-eye'></i>
-              <span style='vertical-align: middle;'> Mostrar profesores</span>
+              <span style='vertical-align: middle;'> Mostrar Personal</span>
             </a>";
             echo "<a class='dropdown-item text-light $act_regProf' href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=add-profesor'>
               <i style='font-size: 20px; vertical-align: middle;' class='fa fa-plus'></i>
-              <span style='vertical-align: middle;'> Añadir profesores</span>
+              <span style='vertical-align: middle;'> Añadir Personal</span>
             </a>";
             echo '<div class="dropdown-divider"></div>';
             echo "<a class='dropdown-item text-light $act_importProf' href='$_SERVER[PHP_SELF]?ACTION=profesores&OPT=import-form'>
               <i style='font-size: 20px; vertical-align: middle;' class='fa fa-cloud-upload'></i>
-              <span style='vertical-align: middle;'> Importar profesores</span>
+              <span style='vertical-align: middle;'> Importar Profesores</span>
             </a>";
           echo "</ul>";
         echo "</li>";

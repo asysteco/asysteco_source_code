@@ -12,6 +12,7 @@ class Asysteco
     public $diasemana = 'Diasemana';
     public $marcajes = 'Marcajes';
     public $mensajes = 'Mensajes';
+    public $nodocente = 'NoDocente';
 
     public $conex;
     public $ERR_ASYSTECO;
@@ -824,27 +825,34 @@ class Asysteco
 
     function validRegisterProf()
     {
-        if (!$this->validFormName($_POST['Nombre'])) {
+        $nombre = $_POST['Nombre'];
+        $iniciales = $_POST['Iniciales'];
+        $docente = $_POST['docente'] == 3 ? 3 : 2;
+
+        if (!$this->validFormName($nombre)) {
             $this->ERR_ASYSTECO = "Formato de Nombre incorrecto.";
             return false;
-        } elseif (!$this->validFormIni($_POST['Iniciales'])) {
+        } 
+
+        if (!$this->validFormIni($iniciales)) {
             $this->ERR_ASYSTECO = "Formato de iniciales incorrecto.";
             return false;
-        } else {
-            if ($this->searchDuplicateField($_POST['Iniciales'], 'Iniciales', $this->profesores)) {
-                $pass = $this->encryptPassword($_POST['Iniciales'] . '12345');
-                if ($this->query("INSERT INTO $this->profesores (Nombre, Iniciales, Password, TIPO)
-                VALUES ('$_POST[Nombre]', '$_POST[Iniciales]', '$pass', '2')")) {
-                    return true;
-                } else {
-                    $this->ERR_ASYSTECO;
-                    return false;
-                }
+        }
+
+        if ($this->searchDuplicateField($iniciales, 'Iniciales', $this->profesores)) {
+            $pass = $this->encryptPassword($iniciales . '12345');
+            if ($this->query("INSERT INTO $this->profesores (Nombre, Iniciales, Password, TIPO)
+            VALUES ('$nombre', '$iniciales', '$pass', '$docente')")) {
+                return true;
             } else {
-                $this->ERR_ASYSTECO = "No se pueden duplicar las iniciales.";
+                $this->ERR_ASYSTECO;
                 return false;
             }
+        } else {
+            $this->ERR_ASYSTECO = "No se pueden duplicar las iniciales.";
+            return false;
         }
+        
     }
 
     function dateLoop($inicio, $fin)

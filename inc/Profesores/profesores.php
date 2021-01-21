@@ -7,9 +7,9 @@ if($_SESSION['Perfil'] === 'Admin')
    {
     echo '<div class="container">';
     echo "<div id='horario'></div>";
-    echo "<h1>Profesores</h1>";
-    echo "<br><h4 style='display: inline-block; margin-right: 15px;'>Buscar profesor: </h4>
-      <input style='width: 25%; display: inline-block;' id='busca_prof' class='form-control' type='text' placeholder='Buscar Profesor...' autocomplete='off'>
+    echo "<h1>Profesores/Personal</h1>";
+    echo "<br><h4 style='display: inline-block; margin-right: 15px;'>Buscar profesor/personal: </h4>
+      <input style='width: 25%; display: inline-block;' id='busca_prof' class='form-control' type='text' placeholder='Buscar Profesor/Personal...' autocomplete='off'>
       <label for='busca_prof'> <span style='font-size: 20px;' class='fa fa-search'></span></label><br>";
     echo "<div class='table-responsive'>";
     echo "</br><table id='tabla_profesores' class='table table-hover table-striped responsiveTable'>";

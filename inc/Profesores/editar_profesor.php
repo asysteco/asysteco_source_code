@@ -8,7 +8,7 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
     echo '<div class="container">';
         echo '<div class="wrapper fadeInDown">';
             echo '<div id="formContent">';
-                echo '<h1 style="margin: 15px;">Edición de Profesor</h1>';
+                echo '<h1 style="margin: 15px;">Edición de Personal</h1>';
                 echo "<form  method='POST' action='$_SERVER[REQUEST_URI]'>";
                     echo "<input type='text' class='d-none' name='ID' value='$datos[ID]'>";
                     echo "<label>Iniciales</label></br>";
