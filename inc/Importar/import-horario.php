@@ -46,7 +46,7 @@
             </div>
             <div class="col-sm-3 mb-3">
                 <div class="input-group">
-                  <select class="custom-select" name="Franja" title="Tipo de horario a importar">
+                  <select data-toggle='tooltip' class="custom-select" name="Franja" title="Tipo de horario a importar">
                     <?php foreach ($franjasHorarias as $franja => $dato) { echo "<option value='$franja'>Horarios $franja</option>";} ?>
                   </select>
                 </div>
