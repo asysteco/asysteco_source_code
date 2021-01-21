@@ -6,7 +6,6 @@ if($_SESSION['Perfil'] === 'Admin')
    if ($response->num_rows > 0)
    {
     echo '<div class="container">';
-    echo "<div id='horario'></div>";
     echo "<h1>Profesores</h1>";
     echo "<br><h4 style='display: inline-block; margin-right: 15px;'>Buscar profesor: </h4>
       <input style='width: 25%; display: inline-block;' id='busca_prof' class='form-control' type='text' placeholder='Buscar Profesor...' autocomplete='off'>
@@ -47,10 +46,10 @@ if($_SESSION['Perfil'] === 'Admin')
             }
             
             echo "<tr id='profesor_$fila[ID]' class='row_prof'>";
-              echo "<td data-th='Nombre' class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Nombre]</td>";
-              echo "<td data-th='Iniciales' class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Iniciales]</td>";
-              echo "<td data-th='Activo' class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$activo</td>";
-              echo "<td data-th='Sustituido' class='row_show' title='Haz click para ver el horario de $fila[Nombre]'>$sustituido</td>";
+              echo "<td data-th='Nombre' class='row-show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Nombre]</td>";
+              echo "<td data-th='Iniciales' class='row-show' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Iniciales]</td>";
+              echo "<td data-th='Activo' class='row-show' title='Haz click para ver el horario de $fila[Nombre]'>$activo</td>";
+              echo "<td data-th='Sustituido' class='row-show' title='Haz click para ver el horario de $fila[Nombre]'>$sustituido</td>";
 
               echo "<td data-th='Editar'><a title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
               echo "<td data-th='Asistencias'><a title='Mostrar asistencias de $fila[Nombre]' href='index.php?ACTION=asistencias&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
@@ -88,7 +87,6 @@ if($_SESSION['Perfil'] === 'Admin')
     echo "</table>";
     echo "</div>";
     echo '</div>';
-    include_once($dirs['public'] . 'js/profesores.js');
    }
    else
    {
@@ -110,6 +108,21 @@ else
 ?>
 
 <script src="js/filtro_prof.js"></script>
+<script src="js/profesores.js"></script>
+
+<div id="modal-horario" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id='horario'>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div id="modal-desactivar" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">

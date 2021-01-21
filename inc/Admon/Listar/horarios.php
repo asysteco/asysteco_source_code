@@ -59,9 +59,8 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             $whereFilter 
             ORDER BY P.Nombre ASC, H.Hora
             LIMIT $page_size OFFSET $offset_var";
-            if (!$result = $mysql->query($sql)) {
-                throw new Exception('No existen datos para exportar...');
-            }
+            $result = $class->autocommitOffQuery($mysql, $sql, 'Ha ocurrido un error...');
+            
             if($result->num_rows > 0) {
                 echo "<table class='table table-striped responsiveTable'>";
                     echo "<thead class='thead-dark'>";
@@ -99,7 +98,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             }
         }
     } catch (Exception $e) {
-        $errorMessage = $e;
+        $errorMessage = $e->getMessage();
         $class->conex->rollback();
     }
     $class->conex->commit();

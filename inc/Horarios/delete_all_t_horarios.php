@@ -20,11 +20,9 @@ if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($f
     }
 }
 try {
-    if (!$mysql->query("DELETE FROM T_horarios $whereFilter")) {
-        throw new Exception('Error-temp-horarios');
-    }
+    $class->autocommitOffQuery($mysql, "DELETE FROM T_horarios $whereFilter", 'Error-temp-horarios');
 } catch (Exception $e) {
-    echo $e;
+    echo $e->getMessage();
     $class->conex->rollback();
 }
 $class->conex->commit();
