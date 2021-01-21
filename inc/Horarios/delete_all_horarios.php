@@ -4,11 +4,9 @@ $mysql = $class->conex;
 $mysql->autocommit(FALSE);
 
 try {
-    if (!$mysql->query('DELETE FROM Horarios')) {
-        throw new Exception('Error-horarios');
-    }
+    $class->autocommitOffQuery($mysql, 'DELETE FROM Horarios', 'Error-horarios');
 } catch (Exception $e) {
-    echo $e;
+    echo $e->getMessage();
     $class->conex->rollback();
 }
 $class->conex->commit();

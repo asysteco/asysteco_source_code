@@ -2,7 +2,9 @@
 
 class Asysteco
 {
+    private const DEFAULT_SQL_ERROR = 'Ha ocurrido un error inesperado, pruebe más tarde o contacte con los administradores.';
 
+    private $errorLogPath; 
     public $fichar = 'Fichar';
     public $horarios = 'Horarios';
     public $profesores = 'Profesores';
@@ -21,10 +23,14 @@ class Asysteco
 
     function bdConex($host, $user, $pass, $db)
     {
+        $this->errorLogPath = dirname($_SERVER['DOCUMENT_ROOT']) . '/../error.log';
         $this->conex = new mysqli($host, $user, $pass, $db);
         if (!$this->conex->connect_errno) {
             return $this->conex;
         } else {
+            error_log("\nSQL-CONEX-" . $_SESSION['LID'] . ": " . $this->conex->connect_errno .
+            " ERROR: " . $this->conex->connect_error, 3, $this->errorLogPath);
+            
             if($_SESSION['LID'] === 'Testing' || (int)$_COOKIE['debug'] === 1) {
                 $this->ERR_ASYSTECO = "Fallo al conectar a MySQL: (" . $this->conex->connect_errno . ") " . $this->conex->connect_error;
             } else {
@@ -35,26 +41,39 @@ class Asysteco
         }
     }
 
-    function getConsulta($sql)
-    {
-        echo $sql;
-    }
-
     function query($sql)
     {
         if (!$this->conex) {
             return false;
         }
+
         if ($response = $this->conex->query($sql)) {
             return $response;
         } else {
+            error_log("\nERR_CODE: " . $this->conex->errno .
+            " ERROR-" . $_SESSION['LID'] . ": " . $this->conex->error .
+            " SQL: " . $sql, 3, $this->errorLogPath);
+
             if($_SESSION['LID'] === 'Testing' || (int)$_COOKIE['debug'] === 1) {
-                $this->ERR_ASYSTECO = "ERR_CODE: " . $this->conex->errno . "<br>ERROR: " . $this->conex->error . '<br>SQL: ' . $sql;
+                $this->ERR_ASYSTECO = "ERR_CODE: " . $this->conex->errno . "\nERROR: " . $this->conex->error . "\nSQL: " . $sql;
             } else {
                 $this->ERR_ASYSTECO = "Error inesperado, contacte con los administradores...";
             }
             return false;
         }
+    }
+
+    public function autocommitOffQuery($conex, string $sql, string $errorMessage = self::DEFAULT_SQL_ERROR)
+    {
+        if (!$queryResult = $conex->query($sql)) {
+            error_log("\nERR_CODE: " . $this->conex->errno .
+            " ERROR-" . $_SESSION['LID'] . ": " . $this->conex->error .
+            " SQL: " . $sql, 3, $this->errorLogPath);
+
+            throw new Exception($errorMessage);
+        }
+
+        return $queryResult;
     }
 
     function isLogged($Titulo)
@@ -526,9 +545,8 @@ class Asysteco
                                     FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID
                                     WHERE ID_PROFESOR='$profesor' AND Dia=WEEKDAY('$lectivo[Fecha]')+1";
                                 }
-                                if (!$this->conex->query($ejec)) {
-                                    throw new Exception('Error-add-marcajes');
-                                }
+
+                                $this->autocommitOffQuery($this->conex, $ejec, 'Error-add-marcajes');
                             }
                         } catch (Exception $e) {
                             $this->conex->rollback();
@@ -538,9 +556,7 @@ class Asysteco
                         $this->conex->autocommit(FALSE);
                         try {
                             $ejec = "DELETE FROM Marcajes WHERE ID_PROFESOR = '$profesor' AND Fecha >= CURDATE()";
-                            if (!$this->conex->query($ejec)) {
-                                throw new Exception('Error-add-marcajes');
-                            }
+                            $this->autocommitOffQuery($this->conex, $ejec, 'Error-add-marcajes');
                         } catch (Exception $e) {
                             $this->conex->rollback();
                         }
@@ -722,9 +738,10 @@ class Asysteco
                         if ($res = $this->conex->query("SELECT Hora, Tipo FROM Horarios WHERE ID_PROFESOR='$arg' AND Dia='$i' ORDER BY Hora ASC LIMIT 1")) {
                             if ($res->num_rows > 0) {
                                 $primera = $res->fetch_assoc();
-                                if (!$p = $this->conex->query("SELECT Inicio FROM Horas WHERE Hora='$primera[Hora]' AND Tipo='$primera[Tipo]'")->fetch_assoc()) {
-                                    throw new Exception('Error-get-first-hora');
-                                }
+                                $p = $this->autocommitOffQuery(
+                                    $this->conex,
+                                    "SELECT Inicio FROM Horas WHERE Hora='$primera[Hora]' AND Tipo='$primera[Tipo]'",
+                                    'Error-get-first-hora')->fetch_assoc();
                             } else {
                                 continue;
                             }
@@ -735,9 +752,10 @@ class Asysteco
                         if ($res = $this->conex->query("SELECT Hora, Tipo FROM Horarios WHERE ID_PROFESOR='$arg' AND Dia='$i' ORDER BY Hora DESC LIMIT 1")) {
                             if ($res->num_rows > 0) {
                                 $ultima = $res->fetch_assoc();
-                                if (!$u = $this->conex->query("SELECT Fin FROM Horas WHERE Hora='$ultima[Hora]' AND Tipo='$ultima[Tipo]'")->fetch_assoc()) {
-                                    throw new Exception('Error-get-last-hora');
-                                }
+                                $u = $this->autocommitOffQuery(
+                                    $this->conex,
+                                    "SELECT Fin FROM Horas WHERE Hora='$ultima[Hora]' AND Tipo='$ultima[Tipo]'",
+                                    'Error-get-last-hora')->fetch_assoc();
                             } else {
                                 continue;
                             }
@@ -745,9 +763,10 @@ class Asysteco
                             throw new Exception('Error-get-last-hora-tipo');
                         }
                         // Modificamos Hora_entrada y Hora_salida de cada Horario
-                        if (!$this->conex->query("UPDATE Horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$arg' AND Dia='$i'")) {
-                            throw new Exception('Error-update-horas');
-                        }
+                        $this->autocommitOffQuery(
+                            $this->conex,
+                            "UPDATE Horarios SET Hora_entrada='$p[Inicio]', Hora_salida='$u[Fin]' WHERE ID_PROFESOR='$arg' AND Dia='$i'",
+                            'Error-update-horas');
                     }
                 } catch (Exception $e) {
                     $this->conex->rollback();

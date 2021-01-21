@@ -78,9 +78,7 @@ if (!empty($action)) {
                     WHERE ID_PROFESOR = '$profesor'
                     AND ID IN (%s)", $aulasCase, $inlineAulasId);
 
-                    if (!$class->conex->query($aulasSql)) {
-                        throw new Exception('Error-update');
-                    }
+                    $class->autocommitOffQuery($class->conex, $aulasSql, 'Error-update');
                 }
 
                 if ($countCursos) {
@@ -90,14 +88,12 @@ if (!empty($action)) {
                     WHERE ID_PROFESOR = '$profesor'
                     AND ID IN (%s)", $cursosCase, $inlineCursosId);
                     
-                    if (!$class->conex->query($cursosSql)) {
-                        throw new Exception('Error-update');
-                    }
+                    $class->autocommitOffQuery($class->conex, $cursosSql, );
                 }
 
                 $MSG = 'Ok-update';
             } catch (Exception $e) {
-                $MSG = $e;
+                $MSG = $e->getMessage();
                 $class->conex->rollback();
             }
             $class->conex->commit();
