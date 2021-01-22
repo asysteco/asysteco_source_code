@@ -19,7 +19,13 @@
   <script src="js/toastr/toastr-settings.js"></script>
   <script src="js/asysteco.js"></script>
   <script src="js/timepicker/timepicker.js"></script>
+  <script src="js/popper/popper.min.js"></script>
   <link rel="stylesheet" href="css/timepicker/timepicker.css">
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
   
   <?php if(isset($scripts)){ echo $scripts;} ?>
 

@@ -10,7 +10,7 @@ if (isset($_SESSION['ID']) && !empty($_SESSION['ID'])) {
             
     $dato_encriptado = $encriptar($_SESSION['ID']);
     if (isset($options['GoogleQR']) && $options['GoogleQR'] == 1) {
-        echo '<img class="img-thumbnail" src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=' . urlencode($dato_encriptado) . '&choe=UTF-8" title="Código QR" />';
+        echo '<img data-toggle="tooltip" class="img-thumbnail" src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=' . urlencode($dato_encriptado) . '&choe=UTF-8" title="Código QR" />';
     } else {
         include_once($dirs['phpqrcode'] . 'qrlib.php');
         $codesDir = "tmp/";
