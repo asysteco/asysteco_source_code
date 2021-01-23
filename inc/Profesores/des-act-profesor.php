@@ -10,6 +10,8 @@ if ($action === 'activar') {
     if (!$class->query($sql)) {
         $MSG = "error-activar";
     }
+    $class->marcajes($profesor, 'remove');
+    $class->marcajes($profesor, 'add');
 } elseif ($action === 'desactivar') {
     $mysql = $class->conex;
     $mysql->autocommit(FALSE);

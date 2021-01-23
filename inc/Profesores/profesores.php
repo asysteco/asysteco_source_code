@@ -46,18 +46,18 @@ if($_SESSION['Perfil'] === 'Admin')
             }
             
             echo "<tr id='profesor_$fila[ID]' class='row_prof'>";
-              echo "<td data-th='Nombre' data-toggle='tooltip' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Nombre]</td>";
-              echo "<td data-th='Iniciales' data-toggle='tooltip' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Iniciales]</td>";
-              echo "<td data-th='Activo' data-toggle='tooltip' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$activo</td>";
-              echo "<td data-th='Sustituido' data-toggle='tooltip' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$sustituido</td>";
+              echo "<td data-th='Nombre' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Nombre]</td>";
+              echo "<td data-th='Iniciales' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Iniciales]</td>";
+              echo "<td data-th='Activo' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$activo</td>";
+              echo "<td data-th='Sustituido' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$sustituido</td>";
 
-              echo "<td data-th='Editar'><a data-toggle='tooltip' title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
-              echo "<td data-th='Asistencias'><a data-toggle='tooltip' profesor='$fila[ID]' title='Mostrar asistencias de $fila[Nombre]' class='act' action='modal-asistencias'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
+              echo "<td data-th='Editar'><a title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
+              echo "<td data-th='Asistencias'><a profesor='$fila[ID]' title='Mostrar asistencias de $fila[Nombre]' class='act' action='modal-asistencias'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
               if($fila['Activo'] == 1)
               {
                 echo "<td data-th='Desactivar / Activar'>
                   <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
-                      data-toggle='tooltip'
+                     
                       title='Desactivar a $fila[Nombre]'
                       class='act'
                       action='modal-desactivar'>
@@ -69,7 +69,7 @@ if($_SESSION['Perfil'] === 'Admin')
               {
                 echo "<td data-th='Desactivar / Activar'>
                   <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
-                      data-toggle='tooltip'
+                     
                       title='Activar a $fila[Nombre]'
                       class='act'
                       action='modal-activar'>
@@ -79,7 +79,7 @@ if($_SESSION['Perfil'] === 'Admin')
               }
               echo "<td data-th='Reset. Contraseña'>
                   <a class='reset_icon'
-                      data-toggle='tooltip'
+                     
                       title='Restablecer contraseña de $fila[Nombre]'
                       href='index.php?ACTION=profesores&OPT=reset-pass&ID=$fila[ID]'
                       onclick=\"return confirm('Va a restablecer la contraseña de $fila[Nombre]  ¿Desea continuar?.')\">
@@ -114,18 +114,16 @@ else
 
 <script src="js/filtro_prof.js"></script>
 <script src="js/profesores.js"></script>
+<script src="js/update_marcajes.js"></script>
 
 <div id="modal-profesores" class="modal fade" tabindex="-1" role="dialog">
   <div id='modal-size' class="modal-dialog" role="document">
     <div class="modal-content"> 
-    <div id='modal-cabecera' class="modal-header">
-    </div>
+      <div id='modal-cabecera' class="modal-header"></div>
       <div class="modal-body">
-        <div id='modal-contenido'>
-        </div>
+        <div id='modal-contenido'></div>
       </div>
-      <div id='modal-pie' class="modal-footer">
-      </div>
+      <div id='modal-pie' class="modal-footer"></div>
     </div>
   </div>
 </div>

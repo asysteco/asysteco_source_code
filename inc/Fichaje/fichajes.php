@@ -17,7 +17,7 @@ $sql = "SELECT DISTINCT $class->fichar.*
 echo "<h1>Fichajes diarios</h1>";
 if($response = $class->query($sql))
 {
-    echo "</br><table class='table table-striped'>";
+    echo "</br><table id='table-fichajes' class='table table-striped'>";
         echo "<thead>";
             echo "<tr>";
                 echo "<th style='vertical-align: middle; text-align: center;'>Hora Fichaje</th>";
