@@ -46,13 +46,13 @@ if($_SESSION['Perfil'] === 'Admin')
             }
             
             echo "<tr id='profesor_$fila[ID]' class='row_prof'>";
-              echo "<td data-th='Nombre' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Nombre]</td>";
-              echo "<td data-th='Iniciales' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$fila[Iniciales]</td>";
-              echo "<td data-th='Activo' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$activo</td>";
-              echo "<td data-th='Sustituido' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$sustituido</td>";
+              echo "<td data-th='Nombre' class='act' action='horario'>$fila[Nombre]</td>";
+              echo "<td data-th='Iniciales' class='act' action='horario'>$fila[Iniciales]</td>";
+              echo "<td data-th='Activo' class='act' action='horario'>$activo</td>";
+              echo "<td data-th='Sustituido' class='act' action='horario'>$sustituido</td>";
 
               echo "<td data-th='Editar'><a title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
-              echo "<td data-th='Asistencias'><a profesor='$fila[ID]' title='Mostrar asistencias de $fila[Nombre]' class='act' action='modal-asistencias'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
+              echo "<td data-th='Asistencias'><a profesor='$fila[ID]' class='act' action='modal-asistencias'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
               if($fila['Activo'] == 1)
               {
                 echo "<td data-th='Desactivar / Activar'>
