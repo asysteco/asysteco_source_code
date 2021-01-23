@@ -26,67 +26,52 @@ if($_SESSION['Perfil'] === 'Admin')
     echo "</thead>";
     echo "<tbody>";
         while ($fila = $response->fetch_assoc())
-        {  
+        {
+          $activo = $fila['Activo'] == 1? 'Si': 'No';
+          $sustituido = $fila['Sustituido'] == 0? 'No': 'Si';
+            
+          echo "<tr id='profesor_$fila[ID]' class='row_prof'>";
+            echo "<td data-th='Nombre' class='act' action='horario'>$fila[Nombre]</td>";
+            echo "<td data-th='Iniciales' class='act' action='horario'>$fila[Iniciales]</td>";
+            echo "<td data-th='Activo' class='act' action='horario'>$activo</td>";
+            echo "<td data-th='Sustituido' class='act' action='horario'>$sustituido</td>";
+
+            echo "<td data-th='Editar'><a title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
+            echo "<td data-th='Asistencias'><a profesor='$fila[ID]' class='act' action='modal-asistencias'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
             if($fila['Activo'] == 1)
             {
-              $activo = 'Si';
-            }
-            else
-            {
-              $activo = 'No';
-            }
-
-            if($fila['Sustituido'] == 0)
-            {
-              $sustituido = 'No';
-            }
-            else
-            {
-              $sustituido = 'Si';
-            }
-            
-            echo "<tr id='profesor_$fila[ID]' class='row_prof'>";
-              echo "<td data-th='Nombre' class='act' action='horario'>$fila[Nombre]</td>";
-              echo "<td data-th='Iniciales' class='act' action='horario'>$fila[Iniciales]</td>";
-              echo "<td data-th='Activo' class='act' action='horario'>$activo</td>";
-              echo "<td data-th='Sustituido' class='act' action='horario'>$sustituido</td>";
-
-              echo "<td data-th='Editar'><a title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
-              echo "<td data-th='Asistencias'><a profesor='$fila[ID]' class='act' action='modal-asistencias'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
-              if($fila['Activo'] == 1)
-              {
-                echo "<td data-th='Desactivar / Activar'>
-                  <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
-                     
-                      title='Desactivar a $fila[Nombre]'
-                      class='act'
-                      action='modal-desactivar'>
-                      <i style='font-size: 25px; color: red;' class='fa fa-ban remove_icon'></i>
-                  </a>
-                </td>";
-              }
-              else
-              {
-                echo "<td data-th='Desactivar / Activar'>
-                  <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
-                     
-                      title='Activar a $fila[Nombre]'
-                      class='act'
-                      action='modal-activar'>
-                      <i style='font-size: 25px; color: green;' class='fa fa-check add_icon'></i>
-                  </a>
-                </td>";
-              }
-              echo "<td data-th='Reset. Contraseña'>
-                  <a class='reset_icon'
-                     
-                      title='Restablecer contraseña de $fila[Nombre]'
-                      href='index.php?ACTION=profesores&OPT=reset-pass&ID=$fila[ID]'
-                      onclick=\"return confirm('Va a restablecer la contraseña de $fila[Nombre]  ¿Desea continuar?.')\">
-                      <i style='font-size: 25px; color: black;' class='fa fa-refresh reset_icon'></i>
-                  </a>
+              echo "<td data-th='Desactivar / Activar'>
+                <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
+                    
+                    title='Desactivar a $fila[Nombre]'
+                    class='act'
+                    action='modal-desactivar'>
+                    <i style='font-size: 25px; color: red;' class='fa fa-ban remove_icon'></i>
+                </a>
               </td>";
-            echo '</tr>';
+            }
+            else
+            {
+              echo "<td data-th='Desactivar / Activar'>
+                <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
+                    
+                    title='Activar a $fila[Nombre]'
+                    class='act'
+                    action='modal-activar'>
+                    <i style='font-size: 25px; color: green;' class='fa fa-check add_icon'></i>
+                </a>
+              </td>";
+            }
+            echo "<td data-th='Reset. Contraseña'>
+                <a class='reset_icon'
+                    
+                    title='Restablecer contraseña de $fila[Nombre]'
+                    href='index.php?ACTION=profesores&OPT=reset-pass&ID=$fila[ID]'
+                    onclick=\"return confirm('Va a restablecer la contraseña de $fila[Nombre]  ¿Desea continuar?.')\">
+                    <i style='font-size: 25px; color: black;' class='fa fa-refresh reset_icon'></i>
+                </a>
+            </td>";
+          echo '</tr>';
         }
     echo "</tbody>";
     echo "</table>";

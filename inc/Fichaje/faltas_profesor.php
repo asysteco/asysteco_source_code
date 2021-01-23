@@ -56,7 +56,7 @@ if($resp = $class->query($sql))
                             if($datos['Fecha'] != $fechaanterior)
                             {
                                 echo "<tr style='background-color: #333;'>";
-                                echo "<td colspan='100%' style='vertical-align: middle; text-align: center; font-weight: bolder; color: white;'>$dia/$m/$Y</td>";
+                                    echo "<td colspan='100%' style='vertical-align: middle; text-align: center; font-weight: bolder; color: white;'>$dia/$m/$Y</td>";
                                 echo "</tr>";
                             }
 
@@ -67,29 +67,29 @@ if($resp = $class->query($sql))
 
                             if($datos['Asiste'] == 1)
                             {
-                                echo "<td><a title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza asiste'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check add_icon'></span></a></td>";
-                                echo "<td><a title='Has clic aqui si tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,2' class='actualiza extra' ><span style='font-size: 25px; vertical-align: middle;'  class='fa fa-square-o'></span></a></td>";
+                                echo "<td><a title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza asiste marcaje'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check add_icon'></span></a></td>";
+                                echo "<td><a title='Has clic aqui si tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,2' class='actualiza extra marcaje' ><span style='font-size: 25px; vertical-align: middle;'  class='fa fa-square-o'></span></a></td>";
                                 echo "<td></td>";
                             }
                             elseif($datos['Asiste'] == 2)
                             {
-                                echo "<td><a title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza asiste'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check'></span></a></td>";
-                                echo "<td><a title='Has clic aqui si no tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,1' class='actualiza extra' ><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check-square-o'></span></a></td>";
+                                echo "<td><a title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza asiste marcaje'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check'></span></a></td>";
+                                echo "<td><a title='Has clic aqui si no tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,1' class='actualiza extra marcaje' ><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check-square-o'></span></a></td>";
                                 echo "<td></td>";
                             }
                             else
                             {
                                 if($_SESSION['Perfil'] == 'Admin')
                                 {
-                                    echo "<td><a title='Haz clic aquí si ha asistido esta hora.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,1' class='actualiza asiste'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-times'></span></a></td>";
+                                    echo "<td><a title='Haz clic aquí si ha asistido esta hora.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,1' class='actualiza asiste marcaje'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-times'></span></a></td>";
                                     echo "<td class='extrabox'></td>";
                                     if($datos['Justificada'] == 1)
                                     {
-                                        echo "<td><a title='Haz clic aquí para retirar justificación.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,0' class='actualiza justifica'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check'></span></a></td>";
+                                        echo "<td><a title='Haz clic aquí para retirar justificación.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,0' class='actualiza justifica marcaje'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check'></span></a></td>";
                                     }
                                     else
                                     {
-                                        echo "<td><a title='Haz clic aquí para justificar.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,1' class='actualiza justifica'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-times'></span></a></td>";
+                                        echo "<td><a title='Haz clic aquí para justificar.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,1' class='actualiza justifica marcaje'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-times'></span></a></td>";
                                     }
                                 }
                                 else
