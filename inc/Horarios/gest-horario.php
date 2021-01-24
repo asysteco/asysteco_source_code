@@ -54,6 +54,13 @@ if ($rAula->num_rows > 0) {
         }
     }
 }
+
+$activo = $class->conex->query("SELECT ID FROM Profesores WHERE ID = $profesor AND Nombre = '$nombreProfesor' AND Activo = 1")->num_rows;
+if (! $activo) {
+    echo '<h1 style="text-align: center;">Presonal no encontrado...</h1>';
+    echo '<div style="text-align: center;"><a href="index.php?ACTION=profesores" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver atrás</a></div>';
+    exit;
+}
 ?>
 <div class="container">
     <div class='row'>

@@ -1,7 +1,12 @@
 <?php
 if($_SESSION['Perfil'] === 'Admin')
-{ 
- if ($response = $class->query("SELECT $class->profesores.ID, $class->profesores.Nombre, $class->profesores.Iniciales, $class->profesores.Activo, $class->profesores.Sustituido FROM $class->profesores INNER JOIN $class->perfiles ON $class->profesores.TIPO=$class->perfiles.ID WHERE $class->profesores.TIPO<>1 ORDER BY Nombre ASC"))
+{
+  $sql = "SELECT p.ID, p.Nombre, p.Iniciales, p.Activo, p.Sustituido
+          FROM Profesores p
+            INNER JOIN Perfiles pf ON p.TIPO=pf.ID
+          WHERE p.TIPO<>1
+          ORDER BY p.Nombre ASC, p.Iniciales ASC";
+ if ($response = $class->query($sql))
  {
    if ($response->num_rows > 0)
    {
