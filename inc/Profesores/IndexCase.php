@@ -91,11 +91,6 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
             
         case 'reset-pass':
             include_once($dirs['Login'] . 'reset_pass.php');
-            if (isset($ERR_MSG)  && $ERR_MSG != '') {
-            header("Location: index.php?ACTION=profesores&ERR_MSG=" . $ERR_MSG);
-            } else {
-            header("Location: index.php?ACTION=profesores&MSG=" . $MSG);
-            }
             break;
 
         case 'delete-all':

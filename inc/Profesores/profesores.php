@@ -30,7 +30,7 @@ if($_SESSION['Perfil'] === 'Admin')
           $activo = $fila['Activo'] == 1? 'Si': 'No';
           $sustituido = $fila['Sustituido'] == 0? 'No': 'Si';
             
-          echo "<tr id='profesor_$fila[ID]' class='row_prof'>";
+          echo "<tr id='profesor_$fila[ID]' nombre='$fila[Nombre]' class='row_prof'>";
             echo "<td data-th='Nombre' class='act' action='horario'>$fila[Nombre]</td>";
             echo "<td data-th='Iniciales' class='act' action='horario'>$fila[Iniciales]</td>";
             echo "<td data-th='Activo' class='act' action='horario'>$activo</td>";
@@ -41,8 +41,7 @@ if($_SESSION['Perfil'] === 'Admin')
             if($fila['Activo'] == 1)
             {
               echo "<td data-th='Desactivar / Activar'>
-                <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
-                    
+                <a profesor='$fila[ID]'
                     title='Desactivar a $fila[Nombre]'
                     class='act'
                     action='modal-desactivar'>
@@ -53,8 +52,7 @@ if($_SESSION['Perfil'] === 'Admin')
             else
             {
               echo "<td data-th='Desactivar / Activar'>
-                <a enlace='index.php?ACTION=profesores&OPT=des-act&ID=$fila[ID]'
-                    
+                <a profesor='$fila[ID]'
                     title='Activar a $fila[Nombre]'
                     class='act'
                     action='modal-activar'>
@@ -63,11 +61,11 @@ if($_SESSION['Perfil'] === 'Admin')
               </td>";
             }
             echo "<td data-th='Reset. Contraseña'>
-                <a class='reset_icon'
-                    
+                <a profesor='$fila[ID]'
                     title='Restablecer contraseña de $fila[Nombre]'
-                    href='index.php?ACTION=profesores&OPT=reset-pass&ID=$fila[ID]'
-                    onclick=\"return confirm('Va a restablecer la contraseña de $fila[Nombre]  ¿Desea continuar?.')\">
+                    class='act'
+                    action='modal-reset'
+                    nombre='$fila[Nombre]'>
                     <i style='font-size: 25px; color: black;' class='fa fa-refresh reset_icon'></i>
                 </a>
             </td>";
