@@ -13,7 +13,7 @@ if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Mar
         echo "<div id='marcaje-response'></div>";
         echo "<div id='table-container'>";
             echo "<div id='full-table'>";
-                echo "<table class='table'>";
+                echo "<table id='table-asistencias' class='table'>";
                     echo "<thead>";
                         echo "<tr>";
                             echo "<th style='vertical-align: middle; text-align: center;'>Profesor</th>";

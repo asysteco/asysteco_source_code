@@ -15,7 +15,10 @@ if ($class->isLogged($Titulo)) {
                 $scripts = '<link rel="stylesheet" href="css/gest-horario.css">';
                 $extras = "
                     $(function (){
-                        $('#fecha-programar-horario').datepicker({minDate: 1});
+                        $('#fecha-programar-horario').datepicker({
+                            minDate: 1,
+                            beforeShowDay: $.datepicker.noWeekends
+                        });
                     });
                 ";
                 include_once($dirs['Interfaces'] . 'header.php');
@@ -119,7 +122,10 @@ if ($class->isLogged($Titulo)) {
                     $scripts = '<link rel="stylesheet" href="css/import-csv.css">';
                     $extras = "
                         $(function (){
-                            $('#fecha_incorpora').datepicker({minDate: 0});
+                            $('#fecha_incorpora').datepicker({
+                                minDate: 0,
+                                beforeShowDay: $.datepicker.noWeekends
+                            });
                         });
                         ";
                     include_once($dirs['Interfaces'] . 'header.php');
