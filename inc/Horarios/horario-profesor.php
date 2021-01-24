@@ -17,7 +17,7 @@ if($response = $class->query($sql))
         $dia = $class->getDate();
         $datosprof = $response->fetch_assoc();
         $franja = $datosprof['Tipo'];
-        echo "<h2>Horario: $n[Nombre]</h2>";
+        echo "<h2 style='text-align: center;'>Horario: $n[Nombre]</h2>";
         if ($n['Activo'] == 1) {
             echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success float-left'>Editar horario</a>";
         } else {

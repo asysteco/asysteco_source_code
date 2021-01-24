@@ -101,6 +101,7 @@ else
 ?>
 
 <script src="js/filtro_prof.js"></script>
+<script src="js/filtro_asistencias.js"></script>
 <script src="js/profesores.js"></script>
 <script src="js/update_marcajes.js"></script>
 
