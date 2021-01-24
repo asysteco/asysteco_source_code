@@ -15,7 +15,7 @@ if ($action === 'activar') {
 } elseif ($action === 'desactivar') {
     $mysql = $class->conex;
     $mysql->autocommit(FALSE);
-    $MSG = "desact";
+    $MSG = "desactivado";
     if ($class->validFormDate($fecha)) {
         $fechaFormateada = $class->formatEuropeanDateToSQLDate($fecha);
         try {
@@ -37,3 +37,4 @@ if ($action === 'activar') {
 }
 
 echo $MSG;
+exit;

@@ -1,25 +1,20 @@
 <?php
-if($res = $class->query("SELECT $class->profesores.Iniciales FROM $class->profesores WHERE $class->profesores.ID='$_GET[ID]'"))
-{
-    if($res->num_rows > 0)
-    {
+
+$profesor = $_GET['ID'];
+
+$sql = "SELECT p.Iniciales FROM Profesores p WHERE p.ID='$profesor'";
+if ($res = $class->query($sql)) {
+    if ($res->num_rows > 0) {
         $datos = $res->fetch_assoc();
         $passenc = $class->encryptPassword($datos['Iniciales'] . '12345');
-        if($class->query("UPDATE $class->profesores SET $class->profesores.Password = '$passenc' WHERE $class->profesores.ID='$_GET[ID]'"))
-        {
-            $MSG = 'Contraseña restablecida satisfatoriamente.';
-        }
-        else
-        {
-            $ERR_MSG = $class->ERR_ASYSTECO;
-        }
+        $sql = "UPDATE Profesores SET Profesores.Password = '$passenc' WHERE Profesores.ID='$profesor'";
+        $MSG = $class->query($sql)? 'ok-reset': 'error-reset';
+    } else {
+        $MSG = 'error-reset';
     }
-    else
-    {
-        $ERR_MSG = $class->ERR_ASYSTECO;
-    }
+} else {
+    $MSG = 'error-inesperado';
 }
-else
-{
-    $ERR_MSG = $class->ERR_ASYSTECO;
-}
+
+echo $MSG;
+exit;
