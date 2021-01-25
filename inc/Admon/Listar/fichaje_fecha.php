@@ -52,7 +52,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     echo "</h3>";
                 echo "<div>";
             }
-            $sql = "SELECT F.ID_PROFESOR, P.Nombre, F.F_entrada, F.F_Salida, F.DIA_SEMANA, F.Fecha
+            $sql = "SELECT F.ID_PROFESOR, P.Nombre, P.TIPO, F.F_entrada, F.F_Salida, F.DIA_SEMANA, F.Fecha
             FROM (Fichar F INNER JOIN Profesores P ON F.ID_PROFESOR=P.ID)
             $whereFilter
             ORDER BY F.Fecha DESC, F.F_entrada ASC, P.Nombre ASC
@@ -75,7 +75,11 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     {
                         $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                         echo "<tr>";
-                            echo "<td data-th='NOMBRE'>$datos[Nombre]</td>";
+                            if ($datos['TIPO'] == 2){
+                            echo "<td data-th='NOMBRE'><i class='fa fa-graduation-cap' aria-hidden='true' title='Profesorado'></i> $datos[Nombre]</td>";
+                            }else {
+                            echo "<td data-th='NOMBRE'><i id='azul' class='fa fa-user' aria-hidden='true' title='Personal No Docente'></i> $datos[Nombre]</td>";
+                            }
                             echo "<td data-th='FICHAJE DE ENTRADA'>$datos[F_entrada]</td>";
                             echo "<td data-th='FICHAJE DE SALIDA'>$datos[F_Salida]</td>";
                             echo "<td data-th='DIA SEMANA'>$datos[DIA_SEMANA]</td>";

@@ -22,7 +22,7 @@ if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($f
     }
 }
 
-$query = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
+$query = "SELECT M.*, P.Nombre, P.Iniciales, P.TIPO, D.Diasemana
 FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
     INNER JOIN Diasemana D ON M.Dia=D.ID 
 WHERE M.Asiste=0 $whereFilter
@@ -56,7 +56,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 echo "</h3>";
             echo "</div>";
             }            
-            $sql = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
+            $sql = "SELECT M.*, P.Nombre, P.Iniciales, P.TIPO, D.Diasemana
             FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
                 INNER JOIN Diasemana D ON M.Dia=D.ID 
             WHERE M.Asiste=0 $whereFilter
@@ -86,7 +86,11 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                     $justificada = $datos['Justificada'] ? 'SI': 'NO';
                     echo "<tr>";
-                        echo "<td data-th='INICIALES'>$datos[Iniciales]</td>";
+                        if ($datos['TIPO'] == 2){
+                        echo "<td data-th='INICIALES'><i class='fa fa-graduation-cap' aria-hidden='true' title='Profesorado'></i> $datos[Iniciales]</td>";
+                        }else {
+                        echo "<td data-th='INICIALES'><i id='azul' class='fa fa-user' aria-hidden='true' title='Personal No Docente'></i> $datos[Iniciales]</td>";
+                        }
                         echo "<td data-th='PROFESOR'>$datos[Nombre]</td>";
                         echo "<td data-th='FECHA'>$fecha</td>";
                         echo "<td data-th='HORA'>$datos[Hora]</td>";

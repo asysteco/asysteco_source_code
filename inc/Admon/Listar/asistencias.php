@@ -86,9 +86,9 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                     echo "<tr>";
                         if ($datos['TIPO'] == 2){
-                        echo "<td data-th='INICIALES'><i class='fa fa-graduation-cap' aria-hidden='true'></i> $datos[Iniciales]</td>";
+                        echo "<td data-th='INICIALES'><i class='fa fa-graduation-cap' aria-hidden='true' title='Profesorado'></i> $datos[Iniciales]</td>";
                         }else {
-                        echo "<td data-th='INICIALES'><i class='fa fa-user' aria-hidden='true'></i> $datos[Iniciales]</td>";
+                        echo "<td data-th='INICIALES'><i id='azul' class='fa fa-user' aria-hidden='true' title='Personal No Docente'></i> $datos[Iniciales]</td>";
                         }
                         echo "<td data-th='PROFESOR'>$datos[Nombre]</td>";
                         echo "<td data-th='FECHA'>$fecha</td>";

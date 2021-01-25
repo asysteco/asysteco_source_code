@@ -383,7 +383,7 @@ class Asysteco
         $sql = "SELECT DISTINCT p.Nombre, A.Nombre as Aula, C.Nombre as Grupo, h.Edificio, h.Hora, h.Tipo
         FROM Marcajes m INNER JOIN Horarios h ON m.ID_PROFESOR = h.ID_PROFESOR AND m.Hora = h.Hora AND m.Dia = h.Dia
         INNER JOIN Profesores p ON m.ID_PROFESOR = p.ID AND h.ID_PROFESOR = p.ID
-        INNER JOIN Horas hs ON h.Hora = hs.Hora AND m.Hora = hs.Hora
+        INNER JOIN Horas hs ON h.Hora = hs.Hora AND m.Hora = hs.Hora 
         INNER JOIN Aulas A ON h.Aula = A.ID
         INNER JOIN Cursos C ON h.Grupo = C.ID
         WHERE (m.Asiste = 0 OR m.Asiste = 2)
