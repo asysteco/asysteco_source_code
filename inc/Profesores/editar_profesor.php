@@ -65,11 +65,11 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
                     {
                         if($resp->num_rows > 0)
                         {
-                            echo "<a href='index.php?ACTION=profesores&OPT=sustituir&ID=$datos[ID]' class='btn btn-info'>Sustituir</a><br><br>";
+                            echo "<a profesor='$datos[ID]' class='btn btn-info act' action='modal-form-sustituir'>Sustituir</a><br><br>";
                         } 
                         else
                         {
-                            echo "<a href='index.php?ACTION=profesores&OPT=remove-sustituto&ID=$datos[ID]' id='profe_retirar' class='btn btn-warning'>Retirar Sustituto</a><br><br>";
+                            echo "<a profesor='$datos[ID]' id='profe_retirar' class='btn btn-warning act' action='modal-fin-sustitucion'>Retirar Sustituto</a><br><br>";
                         }
                     }
                 echo "</form>";
