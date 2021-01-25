@@ -15,50 +15,29 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
             echo "<input type='text' name='Nombre' value='$datos[Nombre]'></br>";
             echo "<label class='etiquetas'>Tutor</label></br>";
             echo "<input id='grupo-tutor' type='text' name='Tutor' value='$datos[Tutor]'>";
-            if($response2 = $class->query("SELECT DISTINCT ID, Nombre FROM Cursos WHERE Nombre != '' ORDER BY Nombre"))
-            {
-                echo "<select id='grupo-tutor-select' class='entrada'>";
+            if($response2 = $class->query("SELECT DISTINCT ID, Nombre FROM Cursos WHERE Nombre != '' ORDER BY Nombre")) {
+                echo "<select id='grupo-tutor-select' class='entrada' style='display: none;'>";
                     echo "<option value='No'>No</option>";
                     while($fila = $response2->fetch_assoc())
                     {
                         echo "<option value='$fila[Nombre]'>$fila[Nombre]</option>";
                     }
                 echo "</select>";
-            }
-            else
-            {
+            } else {
                 echo "<span style='color:red;'>$class->ERR_ASYSTECO</span>";
             }
             echo "</br><label class='etiquetas'>Activo</label></br>";
             echo "<input type='text' class='d-none' id='Activo' name='Activo' value='$datos[Activo]'>";
-            if($response == true)
-            {
-                if($datos['Activo'] == 1)
-                {
-                    $datos['Activo'] = 'Si';
-                }
-                else
-                {
-                    $datos['Activo'] = 'No';
-                }
-
+            if($response) {
+                $activo = $datos['Activo'] == 1? 'Si': 'No';
             }
-            echo "<h4>$datos[Activo]</h4>";
+            echo "<h4>$activo</h4>";
             echo "<label class='etiquetas'>Sustituido</label></br>";
             echo "<input type='text' class='d-none' name='Sustituido' value='$datos[Sustituido]'>";
-            if($response == true)
-            {
-                if($datos['Sustituido'] == 1)
-                {
-                    $datos['Sustituido'] = 'Si';
-                }
-                else
-                {
-                    $datos['Sustituido'] = 'No';
-                }
-
+            if($response) {
+                $sustituido = $datos['Sustituido'] == 1? 'Si': 'No';
             }
-            echo "<h4>$datos[Sustituido]</h4>";
+            echo "<h4>$sustituido</h4>";
             if($resp = $class->query("SELECT Nombre, ID FROM Profesores WHERE ID=$profesor AND Sustituido=0"))
             {
                 if($resp->num_rows > 0)
@@ -75,6 +54,3 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
 } else {
     $ERR_MSG = $class->ERR_ASYSTECO;
 }
-?>
-
-<script src="js/editar_profesor.js"></script>
