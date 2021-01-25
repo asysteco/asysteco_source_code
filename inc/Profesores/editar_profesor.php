@@ -72,12 +72,9 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
             }
         echo "</form>";
     echo '</div>';
-    include_once('js/editar_profesor.js');
-}
- 
-else
-{
+} else {
     $ERR_MSG = $class->ERR_ASYSTECO;
 }
-
 ?>
+
+<script src="js/editar_profesor.js"></script>
