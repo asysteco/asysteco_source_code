@@ -2,23 +2,20 @@
 
 $profesor = $_GET['ID'];
 
-if($response = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE ID='$profesor' AND Sustituido=1"))
-{
-    if($response->num_rows > 0)
-    {
-        if($fila = $response->fetch_assoc())
-        {
-            if($class->query("UPDATE Profesores SET Sustituido=0 WHERE ID='$profesor'"))
-            {
-                $MSG = "La sustitución de $fila[Nombre] ha terminado correctamente.";
+if ($response = $class->query("SELECT ID, Nombre FROM $class->profesores WHERE ID='$profesor' AND Sustituido=1")) {
+    if ($response->num_rows > 0) {
+        if ($fila = $response->fetch_assoc()) {
+            if ($class->query("UPDATE Profesores SET Sustituido=0 WHERE ID='$profesor'")) {
+                $MSG = "fin-sustitucion";
                 $class->marcajes($profesor, 'add');
-                header("Location: index.php?ACTION=profesores");
-            }
-            else
-            {
-                $class->ERR_ASYSTECO;
+            } else {
+                $MSG = "error-fin-sustitucion";
                 return false;
             }
         }
     }
 }
+
+echo $MSG;
+exit;
+

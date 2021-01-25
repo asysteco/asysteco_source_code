@@ -36,10 +36,6 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
             include_once($dirs['Valida'] . 'valida_edit_profesor.php');
             break;
         case 'sustituir':
-            $scripts = '<link rel="stylesheet" href="css/profesores-sustituir.css">';
-            $scripts .= '<link rel="stylesheet" href="css/login-style.css">';
-            include_once($dirs['Interfaces'] . 'header.php');
-            include_once($dirs['Interfaces'] . 'top-nav.php');
             include_once($dirs['Form'] . 'form_sustituto.php');
             break;
 
@@ -67,20 +63,10 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
 
         case 'add-sustituto':
             include_once($dirs['Profesores'] . 'agregar-sustituto.php');
-            if (isset($ERR_MSG)  && $ERR_MSG != '') {
-            header("Location: index.php?ACTION=profesores&ERR_MSG=" . $ERR_MSG);
-            } else {
-            header("Location: index.php?ACTION=profesores&MSG=" . $MSG);
-            }
             break;
 
         case 'remove-sustituto':
             include_once($dirs['Profesores'] . 'retirar-sustituto.php');
-            if (isset($ERR_MSG)  && $ERR_MSG != '') {
-            header("Location: index.php?ACTION=profesores&ERR_MSG=" . $ERR_MSG);
-            } else {
-            header("Location: index.php?ACTION=profesores&MSG=" . $MSG);
-            }
             break;
 
         case 'des-act':
