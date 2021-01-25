@@ -19,24 +19,8 @@ if (! empty($result))
     ";
     while($row = $result->fetch_assoc()) 
         {
-            
-            if($fila['Activo'] == 1)
-            {
-              $activo = 'Si';
-            }
-            else
-            {
-              $activo = 'No';
-            }
-
-            if($fila['Sustituido'] == 0)
-            {
-              $sustituido = 'No';
-            }
-            else
-            {
-              $sustituido = 'Si';
-            }
+          $activo = $fila['Activo'] == 1? 'Si': 'No';
+          $sustituido = $fila['Sustituido'] == 0? 'No': 'Si';
 
     echo "
         <tbody>

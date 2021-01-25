@@ -10,10 +10,12 @@ if ($action === 'activar') {
     if (!$class->query($sql)) {
         $MSG = "error-activar";
     }
+    $class->marcajes($profesor, 'remove');
+    $class->marcajes($profesor, 'add');
 } elseif ($action === 'desactivar') {
     $mysql = $class->conex;
     $mysql->autocommit(FALSE);
-    $MSG = "desact";
+    $MSG = "desactivado";
     if ($class->validFormDate($fecha)) {
         $fechaFormateada = $class->formatEuropeanDateToSQLDate($fecha);
         try {
@@ -35,3 +37,4 @@ if ($action === 'activar') {
 }
 
 echo $MSG;
+exit;

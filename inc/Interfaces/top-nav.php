@@ -246,17 +246,17 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
       echo '</ul>';
     }
 echo '</nav>';
+?>
+<script src="js/animate.js"></script>
 
-include_once($dirs['public'] . 'js/animate.js');
+<div id='flecha_div' class='flecha_div'><a href='#'><img id='flecha' class='flecha' src='resources/img/flecha.png'/></a></div>
 
-echo "<div id='flecha_div' class='flecha_div'><a href='#'><img id='flecha' class='flecha' src='resources/img/flecha.png'/></a></div>";
-
-echo '<div id="overlay"></div>';
-echo '<div id="loading">';
-  echo '<div id="spinnerWrapper">';
-    echo '<div class="lds-dual-ring"></div>';
-  echo '</div>';
-  echo '<div id="loadingMessage">';
-    echo '<h2 id="loading-msg"></h2>';
-  echo '</div>';
-echo '</div>';
+<div id="overlay"></div>
+<div id="loading">
+  <div id="spinnerWrapper">
+    <div class="lds-dual-ring"></div>
+  </div>
+  <div id="loadingMessage">
+    <h2 id="loading-msg"></h2>
+  </div>
+</div>

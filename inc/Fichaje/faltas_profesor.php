@@ -5,9 +5,8 @@ if($resp = $class->query($sql))
 {
     $n = $resp->fetch_assoc();
     $n = $n['Nombre'];
-    $fecha = date('Y-m-d');
     // La variable Fecha la utilizará como día límite desde que existen marcajes para mostrar los registros
-    // La siguiente línea la utilizaremos para realizar pruebas
+    $fecha = date('Y-m-d');
     
     if($response = $class->query("SELECT Marcajes.*, Diasemana FROM Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID WHERE ID_PROFESOR=" . mysqli_real_escape_string($class->conex, $_GET['ID']) . " AND Fecha <= '$fecha' ORDER BY Fecha DESC, Dia, Hora"))
     {
@@ -17,10 +16,10 @@ if($resp = $class->query($sql))
         echo "<div id='table-container'>";
             echo "<div id='full-table'>";
             echo "<div class='table-responsive'>";
-                echo "<table class='table'>";
+                echo "<table id='table-asistencias' class='table'>";
                     echo "<thead>";
                         echo "<tr>";
-                            echo "<th  class='d-none'>Fecha</th>";
+                            echo "<th class='d-none'>Fecha</th>";
                             echo "<th style='vertical-align: middle; text-align: center;'>Dia</th>";
                             echo "<th style='vertical-align: middle; text-align: center;'>Hora</th>";
                             echo "<th style='vertical-align: middle; text-align: center;'>Asistencia</th>";
@@ -57,7 +56,7 @@ if($resp = $class->query($sql))
                             if($datos['Fecha'] != $fechaanterior)
                             {
                                 echo "<tr style='background-color: #333;'>";
-                                echo "<td colspan='100%' style='vertical-align: middle; text-align: center; font-weight: bolder; color: white;'>$dia/$m/$Y</td>";
+                                    echo "<td colspan='100%' style='vertical-align: middle; text-align: center; font-weight: bolder; color: white;'>$dia/$m/$Y</td>";
                                 echo "</tr>";
                             }
 
@@ -68,34 +67,34 @@ if($resp = $class->query($sql))
 
                             if($datos['Asiste'] == 1)
                             {
-                                echo "<td><a data-toggle='tooltip' title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza asiste'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check add_icon'></span></a></td>";
-                                echo "<td><a data-toggle='tooltip' title='Has clic aqui si tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,2' class='actualiza extra' ><span style='font-size: 25px; vertical-align: middle;'  class='fa fa-square-o'></span></a></td>";
+                                echo "<td><a title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza asiste marcaje'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check add_icon'></span></a></td>";
+                                echo "<td><a title='Has clic aqui si tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,2' class='actualiza extra marcaje' ><span style='font-size: 25px; vertical-align: middle;'  class='fa fa-square-o'></span></a></td>";
                                 echo "<td></td>";
                             }
                             elseif($datos['Asiste'] == 2)
                             {
-                                echo "<td><a data-toggle='tooltip' title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza asiste'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check'></span></a></td>";
-                                echo "<td><a data-toggle='tooltip' title='Has clic aqui si no tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,1' class='actualiza extra' ><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check-square-o'></span></a></td>";
+                                echo "<td><a title='Haz clic aquí si ha faltado esta hora.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,0' class='actualiza asiste marcaje'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check'></span></a></td>";
+                                echo "<td><a title='Has clic aqui si no tiene Actividad Extraescolar.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,1' class='actualiza extra marcaje' ><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check-square-o'></span></a></td>";
                                 echo "<td></td>";
                             }
                             else
                             {
                                 if($_SESSION['Perfil'] == 'Admin')
                                 {
-                                    echo "<td><a data-toggle='tooltip' title='Haz clic aquí si ha asistido esta hora.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,1' class='actualiza asiste'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-times'></span></a></td>";
+                                    echo "<td><a title='Haz clic aquí si ha asistido esta hora.' asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Asiste,1' class='actualiza asiste marcaje'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-times'></span></a></td>";
                                     echo "<td class='extrabox'></td>";
                                     if($datos['Justificada'] == 1)
                                     {
-                                        echo "<td><a data-toggle='tooltip' title='Haz clic aquí para retirar justificación.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,0' class='actualiza justifica'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check'></span></a></td>";
+                                        echo "<td><a title='Haz clic aquí para retirar justificación.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,0' class='actualiza justifica marcaje'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-check'></span></a></td>";
                                     }
                                     else
                                     {
-                                        echo "<td><a data-toggle='tooltip' title='Haz clic aquí para justificar.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,1' class='actualiza justifica'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-times'></span></a></td>";
+                                        echo "<td><a title='Haz clic aquí para justificar.'  asiste='$datos[ID_PROFESOR],$datos[Fecha],$datos[Hora],Justificada,1' class='actualiza justifica marcaje'><span style='font-size: 25px; vertical-align: middle;' class='fa fa-times'></span></a></td>";
                                     }
                                 }
                                 else
                                 {
-                                    echo "<td><span data-toggle='tooltip' style='font-size: 25px; vertical-align: middle;' class='fa fa-times' title='Para marcar esta hora como asistida, contacte con Jefatura.'></span></td>";
+                                    echo "<td><span style='font-size: 25px; vertical-align: middle;' class='fa fa-times' title='Para marcar esta hora como asistida, contacte con Jefatura.'></span></td>";
                                     echo "<td></td>";
                                     if($datos['Justificada'] == 1)
                                     {
@@ -103,7 +102,7 @@ if($resp = $class->query($sql))
                                     }
                                     else
                                     {
-                                        echo "<td><span data-toggle='tooltip' style='font-size: 25px; vertical-align: middle;' class='fa fa-times' title='Contacte con jefatura para justificar.'></span></td>";
+                                        echo "<td><span style='font-size: 25px; vertical-align: middle;' class='fa fa-times' title='Contacte con jefatura para justificar.'></span></td>";
                                     }
                                 }
                             }
