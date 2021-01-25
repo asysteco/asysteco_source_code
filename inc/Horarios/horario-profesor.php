@@ -1,14 +1,15 @@
 <div class="container">
 <?php
 
+$profesor = $_GET['profesor'];
 
-if(! $n = $class->query("SELECT Nombre, ID FROM $class->profesores WHERE ID='$_GET[profesor]'")->fetch_assoc())
+if(! $n = $class->query("SELECT Nombre, ID, Activo FROM Profesores WHERE ID='$profesor'")->fetch_assoc())
 {
     $ERR_MSG = $class->ERR_ASYSTECO;
 }
 $sql = "SELECT DISTINCT Tipo
-FROM $class->horarios
-WHERE $class->horarios.ID_PROFESOR='$_GET[profesor]'";
+FROM Horarios h
+WHERE h.ID_PROFESOR='$profesor'";
 if($response = $class->query($sql))
 {
     if ($response->num_rows == 1)
@@ -16,8 +17,12 @@ if($response = $class->query($sql))
         $dia = $class->getDate();
         $datosprof = $response->fetch_assoc();
         $franja = $datosprof['Tipo'];
-        echo "<h2>Horario: $n[Nombre]</h2>";
-        echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success float-left'>Editar horario</a>";
+        echo "<h2 style='text-align: center;'>Horario: $n[Nombre]</h2>";
+        if ($n['Activo'] == 1) {
+            echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success float-left'>Editar horario</a>";
+        } else {
+            echo "<a class='btn btn-danger tp' class='btn btn-success float-left'><i class='tpt'>$n[Nombre] está desactivado.</i>Editar horario</a>";
+        }
         echo "<a id='eliminar-horario' href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger float-right' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
         echo "<div id='response'></div>";
         echo "</br>";
@@ -38,22 +43,20 @@ if($response = $class->query($sql))
                 foreach ($franjasHorarias[$franja] as $valor => $datos)
                 {
                     $Hora = $valor;
-                    $horaInicioSplit = preg_split('/:/', $datos['Inicio']);
-                    $horaInicioSinSegundos = $horaInicioSplit[0] . ":" . $horaInicioSplit[1];
-                    $horaFinSplit = preg_split('/:/', $datos['Fin']);
-                    $horaFinSinSegundos = $horaFinSplit[0] . ":" . $horaFinSplit[1];
+                    $horaInicioSinSegundos = $class->transformHoraMinutos($datos['Inicio']);
+                    $horaFinSinSegundos = $class->transformHoraMinutos($datos['Fin']);
                     
                     if (! $class->query("SELECT Horarios.*, Cursos.Nombre as Curso, Aulas.Nombre as Aula
                                         FROM (Horarios 
                                             INNER JOIN Cursos ON Horarios.grupo = Cursos.ID)
                                             INNER JOIN Aulas ON Horarios.Aula = Aulas.ID
-                                        WHERE ID_PROFESOR='$_GET[profesor]'
+                                        WHERE ID_PROFESOR='$profesor'
                                         AND Hora='$Hora'
                                         ORDER BY Hora ")->num_rows > 0) {
                         continue;
                     }
                     echo "<tr id='Hora_$Hora'>";
-                    echo "<td style='text-align: center; vertical-align: middle;'>$horaInicioSinSegundos <br>$horaFinSinSegundos</td>";
+                    echo "<td style='text-align: center; vertical-align: middle;'>$horaInicioSinSegundos<br>$horaFinSinSegundos</td>";
                         for($dialoop = 1; $dialoop <= 5; $dialoop++)
                         {
                             $dia['wday'] == $dialoop ? $dia['color'] = "table-success" : $dia['color'] = '';
@@ -61,7 +64,7 @@ if($response = $class->query($sql))
                             FROM (Horarios 
                                 INNER JOIN Cursos ON Horarios.grupo = Cursos.ID)
                                 INNER JOIN Aulas ON Horarios.Aula = Aulas.ID
-                            WHERE ID_PROFESOR='$_GET[profesor]'
+                            WHERE ID_PROFESOR='$profesor'
                                 AND Hora='$Hora'
                                 AND Dia='$dialoop'
                             ORDER BY Hora "))
@@ -113,9 +116,15 @@ if($response = $class->query($sql))
         echo "<h1 style='display: block; text-align: center;'>";
         echo "$n[Nombre] no tiene horario";
         echo "</h1>";
-        echo "<div style='text-align: center;'>";
-            echo "<a id='crear-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success' style='width: 100%;'>Crear horario para $n[Nombre]</a>";
-        echo "</div>";
+        if ($n['Activo'] == 1) {
+            echo "<div style='text-align: center;'>";
+                echo "<a id='crear-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success' style='width: 100%;'>Crear horario para $n[Nombre]</a>";
+            echo "</div>";
+        } else {
+            echo "<div style='text-align: center;'>";
+                echo "<a class='btn btn-danger tp' style='width: 100%;'><i class='tpt'>$n[Nombre] está desactivado</i>Crear horario para $n[Nombre]</a>";
+            echo "</div>";
+        }
     }
 }
 else
