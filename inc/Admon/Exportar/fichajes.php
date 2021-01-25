@@ -59,13 +59,12 @@ if(empty($errorMessage) && $response->num_rows > 0) {
         for($i=0; $i<=$count; $i++)
         {
             $offset_var = $i * $page_size;
-                $sql = "SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
-                FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID) $whereFilter 
-                ORDER BY Profesores.Nombre ASC 
-                LIMIT $page_size OFFSET $offset_var";
-                if (!$result = $mysql->query($sql)) {
-                    throw new Exception('No existen datos para exportar...');
-                }
+
+            $sql = "SELECT ID_PROFESOR, Nombre, F_entrada, F_Salida, DIA_SEMANA, Fecha
+            FROM (Fichar INNER JOIN Profesores ON Fichar.ID_PROFESOR=Profesores.ID) $whereFilter 
+            ORDER BY Profesores.Nombre ASC 
+            LIMIT $page_size OFFSET $offset_var";
+            $result = $class->autocommitOffQuery($mysql, $sql, 'No existen datos para exportar...');
 
             while ($datos = $result->fetch_assoc())
             {
@@ -82,27 +81,18 @@ if(empty($errorMessage) && $response->num_rows > 0) {
                 fputcsv($fp, $campos, $delimitador);
             }
         }
+
+        //cabeceras para descarga
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $fn . '";');
+        
+        ob_end_clean();
+        
+        echo $ff.$fn;
+        exit;
     } catch (Exception $e) {
-        $errorMessage = $e;
+        $errorMessage = $e->getMessage();
         $class->conex->rollback();
     }
     $class->conex->commit();
-
-    //cabeceras para descarga
-    header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename="' . $fn . '";');
-    
-    ob_end_clean();
-    
-    echo $ff.$fn;
-    exit;
-}
-
-if(empty($errorMessage)) {
-    echo "<div style='width: 100%; height: 100vh; text-align: center;'>";
-    echo "<div style='box-shadow: 4px 4px 16px 16px grey; width: 50%; margin-left: auto; margin-right: auto; border-radius: 10px;'>";
-        echo "<h1 style='color: red; margin-top: 40vh; vartical-align: middle; padding: 25px;'>" . $errorMessage . "</h1>";
-    echo "</div>";
-    echo "</div>";
-    echo "<script>setTimeout(function(){window.close()}, 1500)</script>";
 }

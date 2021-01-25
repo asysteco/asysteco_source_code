@@ -13,26 +13,27 @@ if ($class->validFormSQLDate($dia)) {
         if ($comprobacion->num_rows > 0) {
             if ($res = $class->query("SELECT ID_PROFESOR, Fecha FROM Fichar WHERE ID_PROFESOR='$id' AND Fecha='$dia'")) {
                 if ($res->num_rows == 0) {
-                    $class->conex->autocommit(FALSE);
+                    $mysql = $class->conex;
+                    $mysql->autocommit(FALSE);
                     try {
                         if (!$options['ficharSalida']) {
-                            $res = $class->conex->query("SELECT DISTINCT Hora_salida FROM Horarios WHERE ID_PROFESOR = '$id' AND Dia = WEEKDAY('$dia')+1")->fetch_object();
+                            $sql = "SELECT DISTINCT Hora_salida FROM Horarios WHERE ID_PROFESOR = '$id' AND Dia = WEEKDAY('$dia')+1";
+                            $res = $class->autocommitOffQuery($mysql, $sql, 'Error-Insert')->fetch_object();
                             $horaSalida = $res->Hora_salida ?? '00:00:00';
                         }
 
-                        if (!$class->conex->query("INSERT INTO Fichar (ID_PROFESOR, F_entrada, F_Salida, DIA_SEMANA, Fecha)
-                        VALUES ('$id', '$horaEntrada', '$horaSalida', '$diaSemana', '$dia')")) {           
-                            throw new Exception('Error-Insert');
-                        }
+                        $sql = "INSERT INTO Fichar (ID_PROFESOR, F_entrada, F_Salida, DIA_SEMANA, Fecha)
+                        VALUES ('$id', '$horaEntrada', '$horaSalida', '$diaSemana', '$dia')";
+                        $class->autocommitOffQuery($mysql, $sql, 'Error-Insert');
 
-                        if (!$class->conex->query("UPDATE Marcajes SET Asiste = 1 WHERE ID_PROFESOR = '$id' AND Dia = WEEKDAY('$dia')+1 AND Hora IN
-                            (SELECT DISTINCT Hora FROM Horas WHERE Fin >= '$horaEntrada' AND Inicio <= '$horaSalida')")) {
-                            throw new Exception('Error-Insert');
-                        }
+                        $sql = "UPDATE Marcajes SET Asiste = 1 WHERE ID_PROFESOR = '$id' AND Dia = WEEKDAY('$dia')+1 AND Hora IN
+                        (SELECT DISTINCT Hora FROM Horas WHERE Fin >= '$horaEntrada' AND Inicio <= '$horaSalida')";
+                        $class->autocommitOffQuery($mysql, $sql, 'Error-Insert');
+
                         $MSG = 'Ok-action';
                     } catch (Exception $e) {
-                        $MSG = $e;
-                        $class->conex->rollback();
+                        $MSG = $e->getMessage();
+                        $mysql->rollback();
                     }
                     $class->conex->commit();
                 } else {

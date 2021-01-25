@@ -165,10 +165,8 @@ if ($_FILES["file"]["size"] > 0) {
             } else {
                 $sqlInsert = sprintf("INSERT INTO T_horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora) VALUES %s", $sqlFecha);
             }
-            if (!$class->conex->query($sqlInsert)) {
-                echo $class->conex->error;
-                throw new Exception('Error-importar');
-            }
+            
+            $class->autocommitOffQuery($class->conex, $sqlInsert, 'Error-importar');
             if ($hoy) {
                 $class->updateHoras();
                 $class->marcajes();
@@ -177,7 +175,7 @@ if ($_FILES["file"]["size"] > 0) {
             echo "empty-import";
         }
     } catch (Exception $e) {
-        echo $e;
+        echo $e->getMessage();
         $class->conex->rollback();
     }
     $class->conex->commit();

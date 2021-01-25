@@ -1,14 +1,14 @@
 <?php
 
-$sql = "SELECT DISTINCT $class->fichar.*, $class->profesores.Nombre
-        FROM $class->fichar
-            INNER JOIN $class->profesores ON $class->profesores.ID=$class->fichar.ID_PROFESOR
-        ORDER BY $class->fichar.Fecha DESC, $class->fichar.F_entrada DESC 
+$sql = "SELECT DISTINCT f.*, p.Nombre
+        FROM Fichar f
+            INNER JOIN Profesores p ON p.ID=f.ID_PROFESOR
+        ORDER BY f.Fecha DESC, f.F_entrada DESC 
         ";
 echo "<h1>Fichajes</h1>";
 if($response = $class->query($sql))
 {
-    echo "</br><table class='table table-striped'>";
+    echo "</br><table id='table-fichajes' class='table table-striped'>";
         echo "<thead>";
             echo "<tr>";
                 echo "<th style='vertical-align: middle; text-align: center;'>Profesor</th>";
@@ -24,14 +24,11 @@ if($response = $class->query($sql))
         $fechaanterior = '';
         while ($fila = $response->fetch_assoc())
         {
-            $sep = preg_split('/-/', $fila['Fecha']);
-            $dia = $sep[2];
-            $m = $sep[1];
-            $Y = $sep[0];
+            $fecha = $class->formatSQLDateToEuropeanDate($fila['Fecha']);
             if($fila['Fecha'] != $fechaanterior)
             {
                 echo "<tr style='background-color: #333;'>";
-                echo "<td colspan='100%' style='vertical-align: middle; text-align: center; font-weight: bolder; color: white;'>$dia/$m/$Y</td>";
+                echo "<td colspan='100%' style='vertical-align: middle; text-align: center; font-weight: bolder; color: white;'>$fecha</td>";
                 echo "</tr>";
             }
             echo "<tr>";
@@ -39,7 +36,7 @@ if($response = $class->query($sql))
                 echo "<td>$fila[F_entrada]</td>";
                 echo "<td>$fila[F_Salida]</td>";
                 echo "<td>$fila[DIA_SEMANA]</td>";
-                echo "<td class='d-none'>$dia/$m/$Y</td>";
+                echo "<td class='d-none'>$fecha</td>";
             echo "</tr>";
             $fechaanterior = $fila['Fecha'];
         }

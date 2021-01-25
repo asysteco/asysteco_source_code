@@ -10,23 +10,22 @@ if ($action === 'activar') {
     if (!$class->query($sql)) {
         $MSG = "error-activar";
     }
+    $class->marcajes($profesor, 'remove');
+    $class->marcajes($profesor, 'add');
 } elseif ($action === 'desactivar') {
     $mysql = $class->conex;
     $mysql->autocommit(FALSE);
-    $MSG = "desact";
+    $MSG = "desactivado";
     if ($class->validFormDate($fecha)) {
         $fechaFormateada = $class->formatEuropeanDateToSQLDate($fecha);
         try {
             $sql2 = "UPDATE Profesores SET Activo=0 WHERE ID='$profesor' AND Tipo != 1 AND $fechaFormateada <= CURDATE()";
-            if (!$result = $mysql->query($sql2)) {
-                throw new Exception('error-desactivar');
-            }
+            $result = $class->autocommitOffQuery($mysql, $sql2, 'error-desactivar');
+
             $sql3 = "DELETE FROM Marcajes WHERE ID_PROFESOR='$profesor' AND Fecha > '$fechaFormateada'";
-            if(!$mysql->query($sql3)) {
-                throw new Exception('error-desactivar');
-            }
+            $class->autocommitOffQuery($mysql, $sql3, 'error-desactivar');
         } catch (Exception $e) {
-            $MSG = $e;
+            $MSG = $e->getMessage();
             $mysql->rollback();
         }
         $mysql->commit();
@@ -38,3 +37,4 @@ if ($action === 'activar') {
 }
 
 echo $MSG;
+exit;

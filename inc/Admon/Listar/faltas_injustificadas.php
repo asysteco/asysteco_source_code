@@ -23,7 +23,7 @@ if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($f
     }
 }
 
-$query = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana, Ho.Inicio, Ho.Fin
+$query = "SELECT M.*, P.Nombre, P.Iniciales, P.TIPO, D.Diasemana, Ho.Inicio, Ho.Fin
 FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
     INNER JOIN Diasemana D ON M.Dia=D.ID
     INNER JOIN Horas Ho ON M.Hora=Ho.Hora
@@ -60,7 +60,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 echo "</h3>";
             echo "</div>";
             }            
-            $sql = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana, Ho.Inicio, Ho.Fin
+            $sql = "SELECT M.*, P.Nombre, P.Iniciales, P.TIPO, D.Diasemana, Ho.Inicio, Ho.Fin
             FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
                 INNER JOIN Diasemana D ON M.Dia=D.ID
                 INNER JOIN Horas Ho ON M.Hora=Ho.Hora
@@ -68,9 +68,8 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     AND Justificada = 0 $whereFilter
             ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC
             LIMIT $page_size OFFSET $offset_var";
-            if (!$result = $mysql->query($sql)) {
-                throw new Exception('Ha ocurrido un error...');
-            }
+            $result = $class->autocommitOffQuery($mysql, $sql, 'Ha ocurrido un error...');
+            
             if ($result->num_rows > 0) {
                 echo "<table class='table table-striped responsiveTable'>";
                     echo "<thead class='thead-dark'>";
@@ -95,7 +94,11 @@ if (empty($errorMessage) && $response->num_rows > 0) {
 
                     $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                     echo "<tr>";
-                        echo "<td data-th='INICIALES'>$datos[Iniciales]</td>";
+                    if ($datos['TIPO'] == 2){
+                        echo "<td data-th='INICIALES'><i class='fa fa-graduation-cap' aria-hidden='true' title='Profesorado'></i> $datos[Iniciales]</td>";
+                        }else {
+                        echo "<td data-th='INICIALES'><i id='azul' class='fa fa-user' aria-hidden='true' title='Personal No Docente'></i> $datos[Iniciales]</td>";
+                        }
                         echo "<td data-th='PROFESOR'>$datos[Nombre]</td>";
                         echo "<td data-th='FECHA'>$fecha</td>";
                         echo "<td data-th='HORA'>$horaInicio - $horaFin</td>";
@@ -111,7 +114,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             }
         }
     } catch (Exception $e) {
-        $errorMessage = $e;
+        $errorMessage = $e->getMessage();
         $class->conex->rollback();
     }
     $class->conex->commit();
