@@ -11,11 +11,11 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
                 echo '<h1 style="margin: 15px;">Edición de Profesor</h1>';
                 echo "<form  method='POST' action='$_SERVER[REQUEST_URI]'>";
                     echo "<input type='text' class='d-none' name='ID' value='$datos[ID]'>";
-                    echo "<label>Iniciales</label></br>";
+                    echo "<label class='etiquetas'>Iniciales</label></br>";
                     echo "<input type='text' name='Iniciales' value='$datos[Iniciales]'></br>";
-                    echo "<label>Nombre</label></br>";
+                    echo "<label class='etiquetas'>Nombre</label></br>";
                     echo "<input type='text' name='Nombre' value='$datos[Nombre]'></br>";
-                    echo "<label>Tutor</label></br>";
+                    echo "<label class='etiquetas'>Tutor</label></br>";
                     echo "<input id='grupo-tutor' type='text' name='Tutor' value='$datos[Tutor]'>";
                     if($response2 = $class->query("SELECT DISTINCT ID, Nombre FROM Cursos WHERE Nombre != '' ORDER BY Nombre"))
                     {
@@ -31,7 +31,7 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
                     {
                         echo "<span style='color:red;'>$class->ERR_ASYSTECO</span>";
                     }
-                    echo "</br><label>Activo</label></br>";
+                    echo "</br><label class='etiquetas'>Activo</label></br>";
                     echo "<input type='text' class='d-none' id='Activo' name='Activo' value='$datos[Activo]'>";
                     if($response == true)
                     {
@@ -46,7 +46,7 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
 
                     }
                     echo "<h4>$datos[Activo]</h4>";
-                    echo "<label>Sustituido</label></br>";
+                    echo "<label class='etiquetas'>Sustituido</label></br>";
                     echo "<input type='text' class='d-none' name='Sustituido' value='$datos[Sustituido]'>";
                     if($response == true)
                     {

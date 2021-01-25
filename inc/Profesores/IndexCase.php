@@ -30,10 +30,8 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
 
         case 'edit':
             $scripts = '<link rel="stylesheet" href="css/profesores-edit.css">';
-            $scripts .= '<link rel="stylesheet" href="css/login-style.css">';
             include_once($dirs['Valida'] . 'valida_edit_profesor.php');
             include_once($dirs['Interfaces'] . 'header.php');
-            include_once($dirs['Interfaces'] . 'top-nav.php');
             include_once($dirs['Profesores'] . 'editar_profesor.php');
             break;
 

@@ -51,7 +51,7 @@ if($_SESSION['Perfil'] === 'Admin')
               echo "<td data-th='Activo' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$activo</td>";
               echo "<td data-th='Sustituido' class='act' action='horario' title='Haz click para ver el horario de $fila[Nombre]'>$sustituido</td>";
 
-              echo "<td data-th='Editar'><a title='Editar a $fila[Nombre]' href='index.php?ACTION=profesores&OPT=edit&ID=$fila[ID]'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
+              echo "<td data-th='Editar'><a profesor='$fila[ID]' title='Editar a $fila[Nombre]' class='act' action='modal-editar'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
               echo "<td data-th='Asistencias'><a profesor='$fila[ID]' title='Mostrar asistencias de $fila[Nombre]' class='act' action='modal-asistencias'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
               if($fila['Activo'] == 1)
               {
