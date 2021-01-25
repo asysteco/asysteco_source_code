@@ -9,7 +9,7 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
         echo '<div class="wrapper fadeInDown">';
             echo '<div id="formContent">';
                 echo '<h1 style="margin: 15px;">Edición de Profesor</h1>';
-                echo "<form  method='POST' action='$_SERVER[REQUEST_URI]'>";
+                echo "<form  id='formulario-edit' method='POST' action='$_SERVER[REQUEST_URI]'>";
                     echo "<input type='text' class='d-none' name='ID' value='$datos[ID]'>";
                     echo "<label class='etiquetas'>Iniciales</label></br>";
                     echo "<input type='text' name='Iniciales' value='$datos[Iniciales]'></br>";
@@ -65,16 +65,13 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
                     {
                         if($resp->num_rows > 0)
                         {
-                            echo "<a href='index.php?ACTION=profesores' style='margin-left: 30px' class='btn btn-danger float-left'>Cancelar</a>";
-                            echo "<a href='index.php?ACTION=profesores&OPT=sustituir&ID=$datos[ID]' style='margin-right: 30px' class='btn btn-info float-right'>Sustituir</a><br><br>";
+                            echo "<a href='index.php?ACTION=profesores&OPT=sustituir&ID=$datos[ID]' class='btn btn-info'>Sustituir</a><br><br>";
                         } 
                         else
                         {
-                            echo "<a href='index.php?ACTION=profesores' id='profe_cancelar' class='btn btn-danger float-left'>Cancelar</a>";
-                            echo "<a href='index.php?ACTION=profesores&OPT=remove-sustituto&ID=$datos[ID]' id='profe_retirar' style='margin-right: 30px' class='btn btn-warning float-right'>Retirar Sustituto</a><br><br>";
+                            echo "<a href='index.php?ACTION=profesores&OPT=remove-sustituto&ID=$datos[ID]' id='profe_retirar' class='btn btn-warning'>Retirar Sustituto</a><br><br>";
                         }
                     }
-                    echo "<button class='btn btn-info' name='ACTION' value='editar_profesor'>Actualizar Profesor</button></br></br>";
                 echo "</form>";
             echo '</div>';
         echo '</div>';

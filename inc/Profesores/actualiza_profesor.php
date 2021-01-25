@@ -1,19 +1,21 @@
 <?php
 
-if ($_POST['ID'] != '') {
+$profesor = $_POST['ID'];
+$nombre = $_POST['Nombre'];
+$ini = $_POST['Iniciales'];
+$tutor = $_POST['Tutor'];
+
+if ($profesor != '') {
     $sql = "UPDATE Profesores 
-    SET Profesores.Iniciales='$_POST[Iniciales]',
-    Profesores.Nombre='$_POST[Nombre]', 
-    Profesores.Tutor='" . mysqli_real_escape_string($class->conex, $_POST['Tutor']) . "' WHERE Profesores.ID=" . mysqli_real_escape_string($class->conex, $_POST['ID']);
+    SET Profesores.Iniciales='$ini',
+    Profesores.Nombre='$nombre', 
+    Profesores.Tutor='" . mysqli_real_escape_string($class->conex, $tutor) . "' WHERE Profesores.ID=" . mysqli_real_escape_string($class->conex, $profesor);
     if ($class->query($sql)) {
-        $MSG = "Datos actualizados correctamente.";
-        header("Location:index.php?ACTION=profesores");
+        $MSG = "actualizado";
     } else {
-        $ERR_MSG = $class->ERR_ASYSTECO;
+        $MSG = 'error-actualizar';
     }
 }
-
-
 
 $sql = "SELECT * FROM Profesores WHERE ID=? AND Iniciales=?";
 $id = "";
