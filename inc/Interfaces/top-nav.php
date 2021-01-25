@@ -245,6 +245,61 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
         echo "</li>";
       echo '</ul>';
     }
+
+    if($_SESSION['Perfil'] === 'Personal')
+    {
+      $d = date('d');
+      $m = date('m');
+      $Y = date('Y');
+      echo "<a class='navbar-brand' href='$_SERVER[PHP_SELF]?ACTION=horarios'>$Titulo</a>";
+      echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#top-menu"
+              aria-controls="top-menu" aria-expanded="false" aria-label="Toggle navigation">';
+        echo '<span class="navbar-toggler-icon"></span>';
+      echo '</button>';
+    echo '</div>';
+    echo '<div class="collapse navbar-collapse" id="top-menu">';
+      echo '<ul class="navbar-nav mr-auto">';
+
+          // Horario start
+          echo "<li class='nav-item $act_horario'>";
+          echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=horarios'>Inicio</a>";
+          echo "</li>";
+        // Horario end
+        
+        // Mis asistencias start
+        echo "<li class='nav-item $act_asistencia'>";
+          echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=sesion&d=$d&m=$m&Y=$Y'>Mis asistencias</a>";
+        echo "</li>";
+        echo "<li class='nav-item $act_qr'>";
+          echo '<a class="nav-link" href="index.php?ACTION=qrcoder">
+            <span class="fa fa-qrcode"></span> Mi código QR
+          </a>';
+        echo '</li>';
+      echo '</ul>';
+      // Mis asistencias end
+
+      echo '<ul class="nav navbar-nav navbar-right">';
+
+        // User Dropdown start
+        echo '<li class="nav-item dropdown">';
+          echo "<a class='nav-link dropdown-toggle' data-toggle='dropdown' href='#'>
+            <i vertical-align: middle;' class='fa fa-user-o'></i> ";
+            echo $_SESSION['Nombre'];
+          echo '</a>';
+          echo '<ul class="dropdown-menu dropdown-menu-right bg-dark">';
+            echo "<a id='cambio-pass' class='dropdown-item text-light $act_changePass' href='index.php?ACTION=cambio_pass'>
+              <i id='cambio-pass-icon' style='font-size: 20px; vertical-align: middle;' class='fa fa-refresh'></i>
+              <span style='vertical-align: middle;'> Cambio de contraseña </span>
+            </a>";
+          echo '</ul>';
+        echo '</li>';
+        // User Dropdown end
+
+        echo "<li class='nav-item'>";
+        echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=logout'><i class='fa fa-sign-out'></i> Cerrar Sesión</a>";
+        echo "</li>";
+      echo '</ul>';
+    }
 echo '</nav>';
 ?>
 <script src="js/animate.js"></script>
