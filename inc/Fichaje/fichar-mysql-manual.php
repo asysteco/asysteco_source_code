@@ -25,8 +25,8 @@ if ($class->validFormSQLDate($dia)) {
                             throw new Exception('Error-Insert');
                         }
 
-                        if (!$class->conex->query("UPDATE Marcajes SET Asiste = 1 WHERE ID_PROFESOR = '$id' AND Dia = WEEKDAY('$dia')+1 AND Hora IN
-                            (SELECT DISTINCT Hora FROM Horas WHERE Fin >= '$horaEntrada' AND Inicio <= '$horaSalida')")) {
+                        if (!$class->conex->query("UPDATE Marcajes SET Asiste = 1 WHERE ID_PROFESOR = '$id' AND Dia = WEEKDAY('$dia')+1 AND Fecha = '$dia' AND Hora IN
+                        (SELECT DISTINCT Hora FROM Horas WHERE Fin >= '$horaEntrada' AND Inicio <= '$horaSalida')")) {
                             throw new Exception('Error-Insert');
                         }
                         $MSG = 'Ok-action';
