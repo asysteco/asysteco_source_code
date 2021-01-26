@@ -104,6 +104,7 @@ else
 <script src="js/filtro_asistencias.js"></script>
 <script src="js/profesores.js"></script>
 <script src="js/update_marcajes.js"></script>
+<script src="js/editar_profesor.js"></script>
 
 <div id="modal-profesores" class="modal fade" tabindex="-1" role="dialog">
   <div id='modal-size' class="modal-dialog" role="document">
