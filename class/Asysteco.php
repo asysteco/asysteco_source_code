@@ -395,11 +395,12 @@ class Asysteco
     function FicharWeb($activeFicharSalida = 0)
     {
         if ($this->conex) {
-            if ($response = $this->query("SELECT ID, Activo FROM Profesores WHERE ID='$_GET[ID]' AND TIPO<>1")) {
+            if ($response = $this->query("SELECT ID, Activo, Sustituido FROM Profesores WHERE ID='$_GET[ID]' AND TIPO<>1")) {
                 if ($response->num_rows == 1) {
                     $datosProfesor = $response->fetch_assoc();
                     $id = $datosProfesor['ID'];
                     $activo =  $datosProfesor['Activo'];
+                    $sustituido =  $datosProfesor['Sustituido'];
                 } else {
                     $this->ERR_ASYSTECO = "<span id='noqr' style='color: white; font-weight: bolder; background-color: red;'><h3>Código QR incorrecto.</h3></span>";
                     return false;
@@ -417,6 +418,12 @@ class Asysteco
                 $msg = "Ha intentado Fichar estando desactivado.";
                 $this->notificar($id, $msg);
                 $this->ERR_ASYSTECO = "<span id='noqr' style='color: black; font-weight: bolder; background-color: red;'><h3>Su usuario está desactivado.</h3></span>";
+                return false;
+            }  
+            if ($sustituido != 0) {
+                $msg = "Ha intentado Fichar estando sustituido/a.";
+                $this->notificar($id, $msg);
+                $this->ERR_ASYSTECO = "<span id='noqr' style='color: black; font-weight: bolder; background-color: red;'><h3>Su usuario está sustituido.</h3></span>";
                 return false;
             }
 
