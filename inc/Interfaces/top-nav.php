@@ -315,3 +315,25 @@ echo '</nav>';
     <h2 id="loading-msg"></h2>
   </div>
 </div>
+
+<div id="notifications">
+  <div id="notification-pagos">
+    <div class="notification-message">
+      <b>Los pagos de la aplicación deben ser abonados en un plazo máximo de "10" días desde su emisión, 
+      si transcurrido dicho tiempo siguen sin ser abonados, entenderemos que no se desean nuestros servicios y se procederá a desactivar la aplicación.</b>
+    </div>
+    <div id="notification-accept" class="btn-accept-notification">
+      <a class="btn btn-secondary">Aceptar</a>
+    </div>
+  </div>
+
+  <div id="notification-function">
+    <div class="notification-message">
+      <b>Los pagos de la aplicación deben ser abonados en un plazo máximo de "10" días desde su emisión, 
+      si transcurrido dicho tiempo siguen sin ser abonados, entenderemos que no se desean nuestros servicios y se procederá a desactivar la aplicación.</b>
+    </div>
+    <div id="notification-function-accept" class="btn-accept-notification">
+      <a class="btn btn-secondary">Aceptar</a>
+    </div>
+  </div>
+</div>
