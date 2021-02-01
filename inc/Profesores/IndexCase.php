@@ -61,6 +61,9 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
             }
             break;
 
+        case 'register-profesor':
+            break;
+
         case 'add-sustituto':
             include_once($dirs['Profesores'] . 'agregar-sustituto.php');
             break;

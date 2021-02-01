@@ -2,7 +2,7 @@
 
 $profesor = $_GET['ID'];
 
-if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Sustituido FROM Profesores WHERE ID='$profesor'"))
+if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Sustituido, TIPO FROM Profesores WHERE ID='$profesor'"))
 {
     $datos = $response->fetch_assoc();
     echo '<div id="formContent">';
@@ -14,7 +14,7 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
             echo "<label class='etiquetas'>Nombre</label></br>";
             echo "<input type='text' name='Nombre' value='$datos[Nombre]'></br>";
             echo "<label class='etiquetas'>Tutor</label></br>";
-            echo "<input id='grupo-tutor' type='text' name='Tutor' value='$datos[Tutor]'>";
+            echo "<input id='grupo-tutor' type='text' name='Tutor' value='$datos[Tutor]'></br>";
             if($response2 = $class->query("SELECT DISTINCT ID, Nombre FROM Cursos WHERE Nombre != '' ORDER BY Nombre")) {
                 echo "<select id='grupo-tutor-select' class='entrada' style='display: none;'>";
                     echo "<option value='No'>No</option>";
@@ -26,7 +26,13 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
             } else {
                 echo "<span style='color:red;'>$class->ERR_ASYSTECO</span>";
             }
-            echo "</br><label class='etiquetas'>Activo</label></br>";
+            echo "</br><label class='docente'>Docente</label>";
+            echo "<input type='text' class='d-none' name='Docente' value='$datos[TIPO]'>";
+            if ($response) {
+                $docente = $datos['TIPO'] ==3? 'No':'Si';
+            }
+            echo "<h4>$docente</h4>";
+            echo "<label class='etiquetas'>Activo</label></br>";
             echo "<input type='text' class='d-none' id='Activo' name='Activo' value='$datos[Activo]'>";
             if($response) {
                 $activo = $datos['Activo'] == 1? 'Si': 'No';

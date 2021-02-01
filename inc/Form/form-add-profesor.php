@@ -8,7 +8,7 @@ $nombre = $_POST['Nombre'] ?? '';
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <h1>Registrar Profesor o Personal</h1>
-            <form action='index.php?ACTION=profesores&OPT=add-profesor' method='post'>
+            <form id='register-form' method='post'>
                 <input type='text' name='Iniciales' value='<?= $iniciales ?>' class='form-control' placeholder='Iniciales Profesor/Personal'>
                 </br>
                 <input type='text' name='Nombre' value='<?= $nombre ?>' class='form-control' placeholder='Nombre Profesor/Personal (Completo)'>
@@ -31,3 +31,4 @@ $nombre = $_POST['Nombre'] ?? '';
         </div>
     </div>
 </div>
+<script src="js/add_profesor.js"></script>

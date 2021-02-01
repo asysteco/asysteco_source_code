@@ -855,14 +855,15 @@ class Asysteco
         $nombre = $_POST['Nombre'];
         $iniciales = $_POST['Iniciales'];
         $docente = $_POST['docente'] == 3 ? 3 : 2;
+        $MSG = 'Ok-action';
 
         if (!$this->validFormName($nombre)) {
-            $this->ERR_ASYSTECO = "Formato de Nombre incorrecto.";
+            $MSG = 'Nombre-Incorrecto';
             return false;
         } 
 
         if (!$this->validFormIni($iniciales)) {
-            $this->ERR_ASYSTECO = "Formato de iniciales incorrecto.";
+            $MSG = 'Iniciales-Incorrecto';
             return false;
         }
 
@@ -876,10 +877,10 @@ class Asysteco
                 return false;
             }
         } else {
-            $this->ERR_ASYSTECO = "No se pueden duplicar las iniciales.";
+            $MSG = 'Duplicado';
             return false;
         }
-        
+        echo $MSG;
     }
 
     function dateLoop($inicio, $fin)
