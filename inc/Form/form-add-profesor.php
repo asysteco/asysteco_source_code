@@ -9,9 +9,9 @@ $nombre = $_POST['Nombre'] ?? '';
         <div id="formContent">
             <h1>Registrar Profesor o Personal</h1>
             <form id='register-form' method='post'>
-                <input type='text' name='Iniciales' value='<?= $iniciales ?>' class='form-control' placeholder='Iniciales Profesor/Personal'>
+                <input type='text' id='iniciales' name='Iniciales' value='<?= $iniciales ?>' class='form-control' placeholder='Iniciales Profesor/Personal'>
                 </br>
-                <input type='text' name='Nombre' value='<?= $nombre ?>' class='form-control' placeholder='Nombre Profesor/Personal (Completo)'>
+                <input type='text' id='nombre' name='Nombre' value='<?= $nombre ?>' class='form-control' placeholder='Nombre Profesor/Personal (Completo)'>
                 </br>
                 <div class="container">
                     </br>

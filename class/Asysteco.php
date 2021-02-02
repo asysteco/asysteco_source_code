@@ -855,32 +855,26 @@ class Asysteco
         $nombre = $_POST['Nombre'];
         $iniciales = $_POST['Iniciales'];
         $docente = $_POST['docente'] == 3 ? 3 : 2;
-        $MSG = 'Ok-action';
 
         if (!$this->validFormName($nombre)) {
-            $MSG = 'Nombre-Incorrecto';
-            return false;
+            return 'Nombre-Incorrecto';
         } 
 
         if (!$this->validFormIni($iniciales)) {
-            $MSG = 'Iniciales-Incorrecto';
-            return false;
+            return 'Iniciales-Incorrecto';
         }
 
         if ($this->searchDuplicateField($iniciales, 'Iniciales', $this->profesores)) {
             $pass = $this->encryptPassword($iniciales . '12345');
             if ($this->query("INSERT INTO $this->profesores (Nombre, Iniciales, Password, TIPO)
             VALUES ('$nombre', '$iniciales', '$pass', '$docente')")) {
-                return true;
+                return 'Registrado';
             } else {
-                $this->ERR_ASYSTECO;
-                return false;
+                return 'Error-query';
             }
         } else {
-            $MSG = 'Duplicado';
-            return false;
+            return 'Duplicado';
         }
-        echo $MSG;
     }
 
     function dateLoop($inicio, $fin)

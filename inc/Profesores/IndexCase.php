@@ -42,26 +42,15 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
         case 'add-profesor':
             $scripts = '<link rel="stylesheet" href="css/profesores-edit.css">';
             $scripts .= '<link rel="stylesheet" href="css/login-style.css">';
-            if (isset($_POST['add-profesor']) && $_POST['add-profesor'] === 'add') {
-                if ($class->validRegisterProf()) {
-                    $act_regProf = 'active';
-                    $MSG = "Profesor: $_POST[Nombre] con iniciales: $_POST[Iniciales] añadido correctamente";
-                    header('Refresh: 2; index.php?ACTION=profesores');
-                    include_once($dirs['Interfaces'] . 'header.php');
-                    include_once($dirs['Interfaces'] . 'top-nav.php');
-                } else {
-                    include_once($dirs['Interfaces'] . 'header.php');
-                    include_once($dirs['Interfaces'] . 'top-nav.php');
-                    include_once($dirs['Form'] . 'form-add-profesor.php');
-                }
-            } else {
+
             include_once($dirs['Interfaces'] . 'header.php');
             include_once($dirs['Interfaces'] . 'top-nav.php');
             include_once($dirs['Form'] . 'form-add-profesor.php');
-            }
             break;
 
         case 'register-profesor':
+            echo $class->validRegisterProf();
+            exit;
             break;
 
         case 'add-sustituto':
