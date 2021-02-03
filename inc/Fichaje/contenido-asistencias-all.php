@@ -1,15 +1,16 @@
 <div class="container-fluid">
     <div class='row' style='text-align: center;'>
-        <div class='col-12 col-md-1'></div>
-        <div class='col-12 col-md-4'>
+        <div class="col-12">
+            <h3>Filtrar por fecha</h3>
+            <input id='busca_asiste' class='fadeIn w-25' type='text' placeholder='Seleccionar fecha para filtrar...' autocomplete='off' style="min-width: 250px;">
+        </div>
+        <div class='col-12 col-md-6'>
 <?php
         include_once($dirs['Fichaje'] . 'fichajes_all.php');
     echo "</div>";
-    echo "<div class='col-12 col-md-1'></div>";
-    echo "<div class='col-12 col-md-5'>";
+    echo "<div class='col-12 col-md-6'>";
         include_once($dirs['Fichaje'] . 'faltas_all.php');
 ?>
-        <div class='col-12 col-md-1'></div>
         </div>
     </div>
 </div>

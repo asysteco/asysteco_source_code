@@ -13,7 +13,7 @@ if($_SESSION['Perfil'] === 'Admin')
     echo '<div class="container">';
     echo "<h1>Profesores/Personal</h1>";
     echo "<br><h4 style='display: inline-block; margin-right: 15px;'>Buscar profesor/personal: </h4>
-      <input style='width: 25%; display: inline-block;' id='busca_prof' class='form-control' type='text' placeholder='Buscar Profesor/Personal...' autocomplete='off'>
+      <input style='width: 25%; display: inline-block; min-width: 250px;' id='busca_prof' class='form-control' type='text' placeholder='Buscar Profesor/Personal...' autocomplete='off'>
       <label for='busca_prof'> <span style='font-size: 20px;' class='fa fa-search'></span></label><br>";
     echo "<div class='table-responsive'>";
     echo "</br><table id='tabla_profesores' class='table table-hover table-striped responsiveTable'>";
@@ -42,7 +42,7 @@ if($_SESSION['Perfil'] === 'Admin')
             echo "<td data-th='Sustituido' class='act' action='horario'>$sustituido</td>";
 
             echo "<td data-th='Editar'><a profesor='$fila[ID]' title='Editar a $fila[Nombre]' class='act' action='modal-editar'><i style='font-size: 25px; color: black;' class='fa fa-pencil-square-o edit_icon'></i></a></td>";
-            echo "<td data-th='Asistencias'><a profesor='$fila[ID]' class='act' action='modal-asistencias'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
+            echo "<td data-th='Asistencias'><a profesor='$fila[ID]' nombre='$fila[Nombre]' class='act' action='modal-asistencias'><i style='font-size: 25px; color: black;' class='fa fa-list-ul list_icon'></i></a></td>";
             if($fila['Activo'] == 1)
             {
               echo "<td data-th='Desactivar / Activar'>
@@ -104,6 +104,7 @@ else
 <script src="js/filtro_asistencias.js"></script>
 <script src="js/profesores.js"></script>
 <script src="js/update_marcajes.js"></script>
+<script src="js/editar_profesor.js"></script>
 
 <div id="modal-profesores" class="modal fade" tabindex="-1" role="dialog">
   <div id='modal-size' class="modal-dialog" role="document">

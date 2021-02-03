@@ -81,11 +81,10 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 while ($datos = $result->fetch_assoc())
                 {
                     echo "<tr>";
-                        if ($datos['TIPO'] == 2){
-                        echo "<td data-th='INICIALES'><i class='fa fa-graduation-cap' aria-hidden='true' title='Profesorado'></i> $datos[Iniciales]</td>";
-                        }else {
-                        echo "<td data-th='INICIALES'><i class='fa fa-user' aria-hidden='true' title='Personal No Docente'></i> $datos[Iniciales]</td>";
-                        }
+
+                    $typeIcon = $datos['TIPO'] == 2? '<i class="fa fa-graduation-cap" aria-hidden="true" title="Profesorado"></i>': '<i class="fa fa-user personal-icon-azul" aria-hidden="true" title="Personal No Docente"></i>';
+
+                        echo "<td class='text-left' data-th='INICIALES'>$typeIcon $datos[Iniciales]</td>";
                         echo "<td data-th='PROFESOR'>$datos[Nombre]</td>";
                         echo "<td data-th='CURSO'>$datos[Grupo]</td>";
                         echo "<td data-th='AULA'>$datos[Aula]</td>";

@@ -9,10 +9,8 @@ $fecha = $f['year'] . "-" . $f['mon'] . "-" . $f['mday'];
 if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID) INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID WHERE NOT EXISTS (SELECT * FROM Fichar WHERE Fichar.ID_PROFESOR=Profesores.ID AND Marcajes.Fecha=Fichar.Fecha) AND Fecha <= '$fecha' ORDER BY Fecha DESC, Nombre ASC"))
 {
         echo "<h1>Faltas</h1>";
-        echo "<input id='busca_asiste' class='fadeIn' type='text' placeholder='Seleccionar fecha ...' autocomplete='off'>";
-        echo "<div id='marcaje-response'></div>";
-        echo "<div id='table-container'>";
-            echo "<div id='full-table'>";
+        echo "<br><div id='table-container'>";
+            echo "<div id='full-table' class='table-responsive'>";
                 echo "<table id='table-asistencias' class='table'>";
                     echo "<thead>";
                         echo "<tr>";
