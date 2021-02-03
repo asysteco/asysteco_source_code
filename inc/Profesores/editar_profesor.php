@@ -26,7 +26,7 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
             } else {
                 echo "<span style='color:red;'>$class->ERR_ASYSTECO</span>";
             }
-            echo "</br><label class='docente'>Docente</label>";
+            echo "</br><label class='etiquetas'>Docente</label></br>";
             echo "<input type='text' class='d-none' name='Docente' value='$datos[TIPO]'>";
             if ($response) {
                 $docente = $datos['TIPO'] ==3? 'No':'Si';
