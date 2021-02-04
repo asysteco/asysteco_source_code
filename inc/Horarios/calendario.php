@@ -14,7 +14,7 @@ if($response = $class->query("SELECT * FROM $class->lectivos ORDER BY Fecha ASC"
         }
         else
         {
-            $festivo = "";
+            $festivo = "lectivo";
         }
         if($calendario['Fecha'] == 'Y-m-d')
         {
@@ -178,3 +178,17 @@ else
 {
     $ERR_MSG = $class->ERR_ASYSTECO;
 }
+
+?>
+
+<div id="modal-calendario" class="modal fade" tabindex="-1" role="dialog">
+  <div id='modal-size' class="modal-dialog" role="document">
+    <div class="modal-content"> 
+      <div id='modal-cabecera' class="modal-header"></div>
+      <div class="modal-body">
+        <div id='modal-contenido'></div>
+      </div>
+      <div id='modal-pie' class="modal-footer"></div>
+    </div>
+  </div>
+</div>
