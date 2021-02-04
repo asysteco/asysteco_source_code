@@ -126,7 +126,7 @@ class Asysteco
 
     function validFormName($registername)
     {
-        if (preg_match('/^[ a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.-]{6,60}$/i', $registername)) {
+        if (preg_match('/^[ a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.-]{2,60}$/i', $registername)) {
             return true;
         } else {
             $this->ERR_ASYSTECO = "Nombre no válido <br>";

@@ -14,7 +14,7 @@ if($response = $class->query("SELECT ID, Iniciales, Nombre, Tutor, Activo, Susti
             echo "<label class='etiquetas'>Nombre</label></br>";
             echo "<input type='text' name='Nombre' value='$datos[Nombre]'></br>";
             echo "<label class='etiquetas'>Tutor</label></br>";
-            echo "<input id='grupo-tutor' type='text' name='Tutor' value='$datos[Tutor]'></br>";
+            echo "<input id='grupo-tutor' type='text' name='Tutor' value='$datos[Tutor]'>";
             if($response2 = $class->query("SELECT DISTINCT ID, Nombre FROM Cursos WHERE Nombre != '' ORDER BY Nombre")) {
                 echo "<select id='grupo-tutor-select' class='entrada' style='display: none;'>";
                     echo "<option value='No'>No</option>";
