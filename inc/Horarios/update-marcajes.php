@@ -84,3 +84,4 @@ if (isset($action) && $action != '') {
 }
 
 echo $MSG;
+exit;
