@@ -47,15 +47,9 @@ if($respuesta = $class->query("SELECT * FROM Profesores"))
         echo $ff.$fn;
         exit;
     }
-    else
-    {
-        echo "<div style='width: 100%; height: 100vh; text-align: center;'>";
-        echo "<div style='box-shadow: 4px 4px 16px 16px grey; width: 50%; margin-left: auto; margin-right: auto; border-radius: 10px;'>";
-            echo "<h1 style='color: red; margin-top: 40vh; vartical-align: middle; padding: 25px;'>No existen profesores que exportar...</h1>";
-        echo "</div>";
-        echo "</div>";
-        echo "<script>setTimeout(function(){window.close()}, 1500)</script>";
-    }
+
+    echo 'No-data';
+    exit;
 }
 else
 {

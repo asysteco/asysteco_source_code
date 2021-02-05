@@ -46,8 +46,8 @@ if(isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($fe
 if(! $response = $class->query("SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
 FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
     INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-WHERE Profesores.Activo=1
-ORDER BY Profesores.Nombre ASC")) {
+WHERE Profesores.Activo=1 $whereFilter
+ORDER BY Marcajes.Fecha, Profesores.Nombre ASC")) {
     $errorMessage = 'Ha ocurrido un error inesperado...';
 }
 
@@ -126,3 +126,6 @@ if(empty($errorMessage) && $response->num_rows > 0) {
     }
     $mysql->commit();
 }
+
+echo 'No-data';
+exit;
