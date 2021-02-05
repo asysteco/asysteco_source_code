@@ -14,7 +14,7 @@ if (isset($profesor) && !empty($profesor)) {
     $whereFilter = " WHERE P.ID = $profesor";
 }
 
-$query = "SELECT P.Iniciales, P.Nombre, D.Diasemana, A.Nombre as Aula, C.Nombre as Grupo, H.Dia, H.Hora
+$query = "SELECT P.Iniciales, P.Nombre, D.Diasemana, P.TIPO, A.Nombre as Aula, C.Nombre as Grupo, H.Dia, H.Hora
 FROM Horarios H INNER JOIN Profesores P ON H.ID_PROFESOR=P.ID
 INNER JOIN Diasemana D ON H.Dia=D.ID
 INNER JOIN Aulas A ON A.ID=H.Aula
@@ -51,7 +51,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     echo "</h3>";
                 echo "<div>";
             }
-            $sql = "SELECT P.Iniciales, P.Nombre, D.Diasemana, A.Nombre as Aula, C.Nombre as Grupo, H.Dia, H.Hora
+            $sql = "SELECT P.Iniciales, P.Nombre, D.Diasemana,P.TIPO, A.Nombre as Aula, C.Nombre as Grupo, H.Dia, H.Hora
             FROM Horarios H INNER JOIN Profesores P ON H.ID_PROFESOR=P.ID
             INNER JOIN Diasemana D ON H.Dia=D.ID
             INNER JOIN Aulas A ON A.ID=H.Aula
@@ -59,9 +59,8 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             $whereFilter 
             ORDER BY P.Nombre ASC, H.Hora
             LIMIT $page_size OFFSET $offset_var";
-            if (!$result = $mysql->query($sql)) {
-                throw new Exception('No existen datos para exportar...');
-            }
+            $result = $class->autocommitOffQuery($mysql, $sql, 'Ha ocurrido un error...');
+            
             if($result->num_rows > 0) {
                 echo "<table class='table table-striped responsiveTable'>";
                     echo "<thead class='thead-dark'>";
@@ -82,13 +81,17 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                 while ($datos = $result->fetch_assoc())
                 {
                     echo "<tr>";
-                        echo "<td data-th='INICIALES'>$datos[Iniciales]</td>";
+
+                    $typeIcon = $datos['TIPO'] == 2? '<i class="fa fa-graduation-cap" aria-hidden="true" title="Profesorado"></i>': '<i class="fa fa-user personal-icon-azul" aria-hidden="true" title="Personal No Docente"></i>';
+
+                        echo "<td class='text-left' data-th='INICIALES'>$typeIcon $datos[Iniciales]</td>";
                         echo "<td data-th='PROFESOR'>$datos[Nombre]</td>";
                         echo "<td data-th='CURSO'>$datos[Grupo]</td>";
                         echo "<td data-th='AULA'>$datos[Aula]</td>";
                         echo "<td data-th='DIA'>$datos[Dia]</td>";
                         echo "<td data-th='DIA SEMANA'>$datos[Diasemana]</td>";
                         echo "<td data-th='HORA'>$datos[Hora]</td>";
+
                     if (isset($edificios) && $edificios > 1) {
                             echo "<td data-th='EDIFICIO'>$datos[Edificio]</td>";
                     }
@@ -99,7 +102,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             }
         }
     } catch (Exception $e) {
-        $errorMessage = $e;
+        $errorMessage = $e->getMessage();
         $class->conex->rollback();
     }
     $class->conex->commit();

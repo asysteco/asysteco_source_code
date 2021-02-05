@@ -2,6 +2,7 @@
 
 $ff = "tmp/";
 $pf = "Profesores.csv";
+$pe = "Personal.csv";
 $ho = "Horarios.csv";
 $ma = "Marcajes.csv";
 $fi = "Fichajes.csv";
@@ -10,7 +11,7 @@ chdir($ff);
 // PROFESORES
 
 // Escribimos los títulos para los campos
-if ($respuesta = $class->query("SELECT Iniciales, Nombre, Tutor FROM Profesores WHERE TIPO <> 1 ORDER BY Profesores.Nombre ASC")) {
+if ($respuesta = $class->query("SELECT Iniciales, Nombre, Tutor FROM Profesores WHERE TIPO = 2 ORDER BY Profesores.Nombre ASC")) {
     if ($respuesta->num_rows > 0) {
         $fp = fopen($pf, 'w');
         $delimitador = ";";
@@ -18,6 +19,36 @@ if ($respuesta = $class->query("SELECT Iniciales, Nombre, Tutor FROM Profesores 
             'INICIALES',
             'NOMBRE',
             'TUTOR'
+        ];
+
+        fputcsv($fp, $titulo, $delimitador);
+
+        while ($datos = $respuesta->fetch_assoc()) {
+            $campos = [
+                utf8_decode($datos['Iniciales']),
+                utf8_decode($datos['Nombre']),
+                utf8_decode($datos['Tutor'])
+            ];
+
+            // Escibimos una línea por cada $datos
+            fputcsv($fp, $campos, $delimitador);
+        }
+    } else {
+        $ERR_MSG = $class->ERR_ASYSTECO;
+    }
+}
+
+// PERSONAL
+
+// Escribimos los títulos para los campos
+if ($respuesta = $class->query("SELECT Iniciales, Nombre, Tutor FROM Profesores WHERE TIPO = 3 ORDER BY Profesores.Nombre ASC")) {
+    if ($respuesta->num_rows > 0) {
+        $fp = fopen($pe, 'w');
+        $delimitador = ";";
+        $titulo = [
+            'INICIALES',
+            'NOMBRE',
+            'DOCENTE'
         ];
 
         fputcsv($fp, $titulo, $delimitador);
@@ -265,6 +296,7 @@ if ($zip->open($filename, ZIPARCHIVE::CREATE) === true) {
     is_file($ho) ? $zip->addFile($ho) : '';
     is_file($ma) ? $zip->addFile($ma) : '';
     is_file($fi) ? $zip->addFile($fi) : '';
+    is_file($pe) ? $zip->addFile($pe) : '';
     $zip->close();
 
     if (is_file($filename)) {
@@ -290,3 +322,4 @@ is_file($pf) ? unlink($pf) : '';
 is_file($ho) ? unlink($ho) : '';
 is_file($ma) ? unlink($ma) : '';
 is_file($fi) ? unlink($fi) : '';
+is_file($pe) ? unlink($pe) : '';

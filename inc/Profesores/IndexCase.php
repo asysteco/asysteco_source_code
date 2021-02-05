@@ -30,59 +30,35 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
 
         case 'edit':
             $scripts = '<link rel="stylesheet" href="css/profesores-edit.css">';
-            $scripts .= '<link rel="stylesheet" href="css/login-style.css">';
-            include_once($dirs['Valida'] . 'valida_edit_profesor.php');
-            include_once($dirs['Interfaces'] . 'header.php');
-            include_once($dirs['Interfaces'] . 'top-nav.php');
             include_once($dirs['Profesores'] . 'editar_profesor.php');
             break;
-
+        case 'actualizar':
+            include_once($dirs['Valida'] . 'valida_edit_profesor.php');
+            break;
         case 'sustituir':
-            $scripts = '<link rel="stylesheet" href="css/profesores-sustituir.css">';
-            $scripts .= '<link rel="stylesheet" href="css/login-style.css">';
-            include_once($dirs['Interfaces'] . 'header.php');
-            include_once($dirs['Interfaces'] . 'top-nav.php');
             include_once($dirs['Form'] . 'form_sustituto.php');
             break;
 
         case 'add-profesor':
             $scripts = '<link rel="stylesheet" href="css/profesores-edit.css">';
             $scripts .= '<link rel="stylesheet" href="css/login-style.css">';
-            if (isset($_POST['add-profesor']) && $_POST['add-profesor'] === 'add') {
-            if ($class->validRegisterProf()) {
-                $act_regProf = 'active';
-                $MSG = "Profesor: $_POST[Nombre] con iniciales: $_POST[Iniciales] añadido correctamente";
-                header('Refresh: 2; index.php?ACTION=profesores');
-                include_once($dirs['Interfaces'] . 'header.php');
-                include_once($dirs['Interfaces'] . 'top-nav.php');
-            } else {
-                include_once($dirs['Interfaces'] . 'header.php');
-                include_once($dirs['Interfaces'] . 'top-nav.php');
-                include_once($dirs['Form'] . 'form-add-profesor.php');
-            }
-            } else {
+
             include_once($dirs['Interfaces'] . 'header.php');
             include_once($dirs['Interfaces'] . 'top-nav.php');
             include_once($dirs['Form'] . 'form-add-profesor.php');
-            }
+            break;
+
+        case 'register-profesor':
+            echo $class->validRegisterProf();
+            exit;
             break;
 
         case 'add-sustituto':
             include_once($dirs['Profesores'] . 'agregar-sustituto.php');
-            if (isset($ERR_MSG)  && $ERR_MSG != '') {
-            header("Location: index.php?ACTION=profesores&ERR_MSG=" . $ERR_MSG);
-            } else {
-            header("Location: index.php?ACTION=profesores&MSG=" . $MSG);
-            }
             break;
 
         case 'remove-sustituto':
             include_once($dirs['Profesores'] . 'retirar-sustituto.php');
-            if (isset($ERR_MSG)  && $ERR_MSG != '') {
-            header("Location: index.php?ACTION=profesores&ERR_MSG=" . $ERR_MSG);
-            } else {
-            header("Location: index.php?ACTION=profesores&MSG=" . $MSG);
-            }
             break;
 
         case 'des-act':
@@ -91,11 +67,6 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
             
         case 'reset-pass':
             include_once($dirs['Login'] . 'reset_pass.php');
-            if (isset($ERR_MSG)  && $ERR_MSG != '') {
-            header("Location: index.php?ACTION=profesores&ERR_MSG=" . $ERR_MSG);
-            } else {
-            header("Location: index.php?ACTION=profesores&MSG=" . $MSG);
-            }
             break;
 
         case 'delete-all':

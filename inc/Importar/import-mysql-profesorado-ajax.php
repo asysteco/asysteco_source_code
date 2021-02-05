@@ -63,9 +63,8 @@ if ($_FILES["file"]["size"] > 0) {
             }
 
             echo $sql;
-            if (!$class->conex->query($sql)) {
-                throw new Exception('Error-importar');
-            }
+            
+            $class->autocommitOffQuery($class->conex, $sql, 'Error-importar');
             $row++;
         }
         if ($hoy) {
@@ -73,7 +72,7 @@ if ($_FILES["file"]["size"] > 0) {
             $class->marcajes();
         }
     } catch (Exception $e) {
-        echo $e;
+        echo $e->getMessage();
         $class->conex->rollback();
     }
     $class->conex->commit();

@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="js/jquery-ui/jquery-ui.min.css">
   <link href="js/toastr/toastr.min.css" rel="stylesheet"/>
   <link rel="shortcut icon" href="resources/img/asysteco.ico" type="image/x-icon">
-  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery/jquery.min.js"></script>
   <script src="js/bootstrap-4.0.0/bootstrap.min.js"></script>
   <script src="js/jquery-ui/jquery-ui.min.js"></script>
   <script src="js/toastr/toastr.min.js"></script>
@@ -18,6 +18,8 @@
   <script src="js/flecha.js"></script>
   <script src="js/toastr/toastr-settings.js"></script>
   <script src="js/asysteco.js"></script>
+  <script src="js/timepicker/timepicker.js"></script>
+  <link rel="stylesheet" href="css/timepicker/timepicker.css">
   
   <?php if(isset($scripts)){ echo $scripts;} ?>
 
