@@ -968,4 +968,15 @@ class Asysteco
         $time = $hours . ':' . $minutes;
         return $time;
     }
+
+    public function existsFolder($folderName = 'tmp')
+    {
+        if (!is_dir($folderName)) {
+            if (!mkdir($folderName, 0755)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
