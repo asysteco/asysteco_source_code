@@ -21,6 +21,7 @@ if ($response = $class->query("SELECT ID, Nombre FROM Profesores WHERE Profesore
                 $MSG = "sustituido";
             }
             $class->marcajes($pSustituido, 'remove');
+            $class->marcajes($pSustituto, 'remove');
             $class->marcajes($pSustituto, 'add');
         } else {
             $MSG = "error-sustitucion";
