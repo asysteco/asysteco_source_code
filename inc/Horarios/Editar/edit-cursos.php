@@ -50,3 +50,4 @@ if ($action === 'add') {
 }
 
 echo $MSG;
+exit;

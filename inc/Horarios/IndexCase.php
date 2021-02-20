@@ -5,10 +5,10 @@ if ($class->isLogged($Titulo)) {
         $act_horario = 'active';
         switch ($_GET['OPT']) {
             case 'edit-horario':
-                include_once($dirs['Editar'] . 'edit-horario.php');
+                include_once($dirs['Horarios'] . 'Editar/edit-horario.php');
                 break;
             case 'edit-t_horario':
-                include_once($dirs['Editar'] . 'edit-t_horario.php');
+                include_once($dirs['Horarios'] . 'Editar/edit-t_horario.php');
                 break;
 
             case 'gest-horario':
@@ -58,7 +58,7 @@ if ($class->isLogged($Titulo)) {
                     $scripts = '<link rel="stylesheet" href="css/aulas-cursos.css">';
                     include_once($dirs['Interfaces'] . 'header.php');
                     include_once($dirs['Interfaces'] . 'top-nav.php');
-                    include_once($dirs['Editar'] . 'cursos.php');
+                    include_once($dirs['Horarios'] . 'Editar/cursos.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
@@ -68,7 +68,7 @@ if ($class->isLogged($Titulo)) {
 
             case 'edit-cursos':
                 if ($_SESSION['Perfil'] == 'Admin') {
-                    include_once($dirs['Editar'] . 'edit-cursos.php');
+                    include_once($dirs['Horarios'] . 'Editar/edit-cursos.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
@@ -83,7 +83,7 @@ if ($class->isLogged($Titulo)) {
                     $scripts = '<link rel="stylesheet" href="css/aulas-cursos.css">';
                     include_once($dirs['Interfaces'] . 'header.php');
                     include_once($dirs['Interfaces'] . 'top-nav.php');
-                    include_once($dirs['Editar'] . 'aulas.php');
+                    include_once($dirs['Horarios'] . 'Editar/aulas.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
@@ -93,7 +93,7 @@ if ($class->isLogged($Titulo)) {
 
             case 'edit-aulas':
                 if ($_SESSION['Perfil'] == 'Admin') {
-                    include_once($dirs['Editar'] . 'edit-aulas.php');
+                    include_once($dirs['Horarios'] . 'Editar/edit-aulas.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
@@ -158,16 +158,6 @@ if ($class->isLogged($Titulo)) {
                 }
                 break;
 
-            case 'edit-t':
-                if ($_SESSION['Perfil'] == 'Admin') {
-                    include_once($dirs['Editar'] . 'edit-t-horario.php');
-                } else {
-                    $MSG = "Acceso denegado.";
-                    header("Refresh:2; url=index.php");
-                    include_once($dirs['Interfaces'] . 'msg_modal.php');
-                }
-                break;
-
             case 'update':
                 if ($_SESSION['Perfil'] == 'Admin') {
                     include_once($dirs['Interfaces'] . 'actualiza.php');
@@ -181,23 +171,6 @@ if ($class->isLogged($Titulo)) {
             case 'registros':
                 if ($_SESSION['Perfil'] == 'Admin') {
                     include_once($dirs['Horarios'] . 'muestra-registros-horarios.php');
-                } else {
-                    $MSG = "Acceso denegado.";
-                    header("Refresh:2; url=index.php");
-                    include_once($dirs['Interfaces'] . 'msg_modal.php');
-                }
-                break;
-
-            case 'edit-guardias':
-                if ($_SESSION['Perfil'] == 'Admin') {
-                    if (isset($_GET['SUBOPT'])) {
-                        include_once($dirs['Horarios'] . 'update-guardias.php');
-                    } else {
-                        $scripts = '<link rel="stylesheet" href="css/horarios-edit-guardias.css">';
-                        include_once($dirs['Interfaces'] . 'header.php');
-                        include_once($dirs['Interfaces'] . 'top-nav.php');
-                        include_once($dirs['Editar'] . 'edit-guardias.php');
-                    }
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
