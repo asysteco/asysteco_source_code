@@ -17,7 +17,7 @@ if ($class->isLogged($Titulo)) {
             });";
             include_once($dirs['Interfaces'] . 'header.php');
             include_once($dirs['Interfaces'] . 'top-nav.php');
-            include_once($dirs['Fichaje'] . 'contenido-asistencias-all.php');
+            include_once($dirs['Asistencias'] . 'contenido-asistencias-all.php');
           } else {
             $MSG = "Acceso denegado.";
             header("Refresh:2; url=index.php");
@@ -35,11 +35,11 @@ if ($class->isLogged($Titulo)) {
           });";
           include_once($dirs['Interfaces'] . 'header.php');
           include_once($dirs['Interfaces'] . 'top-nav.php');
-          include_once($dirs['Fichaje'] . 'contenido-asistencias.php');
+          include_once($dirs['Asistencias'] . 'contenido-asistencias.php');
           break;
 
         default:
-          include_once($dirs['Fichaje'] . 'contenido-asistencias.php');
+          include_once($dirs['Asistencias'] . 'contenido-asistencias.php');
           break;
       }
       include_once($dirs['Interfaces'] . 'footer.php');
