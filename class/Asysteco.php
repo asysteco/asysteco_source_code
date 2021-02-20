@@ -126,7 +126,7 @@ class Asysteco
 
     function validFormName($registername)
     {
-        if (preg_match('/^[ a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.-]{6,60}$/i', $registername)) {
+        if (preg_match('/^[ a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.-]{2,60}$/i', $registername)) {
             return true;
         } else {
             $this->ERR_ASYSTECO = "Nombre no válido <br>";
@@ -857,29 +857,24 @@ class Asysteco
         $docente = $_POST['docente'] == 3 ? 3 : 2;
 
         if (!$this->validFormName($nombre)) {
-            $this->ERR_ASYSTECO = "Formato de Nombre incorrecto.";
-            return false;
+            return 'Nombre-Incorrecto';
         } 
 
         if (!$this->validFormIni($iniciales)) {
-            $this->ERR_ASYSTECO = "Formato de iniciales incorrecto.";
-            return false;
+            return 'Iniciales-Incorrecto';
         }
 
         if ($this->searchDuplicateField($iniciales, 'Iniciales', $this->profesores)) {
             $pass = $this->encryptPassword($iniciales . '12345');
             if ($this->query("INSERT INTO $this->profesores (Nombre, Iniciales, Password, TIPO)
             VALUES ('$nombre', '$iniciales', '$pass', '$docente')")) {
-                return true;
+                return 'Registrado';
             } else {
-                $this->ERR_ASYSTECO;
-                return false;
+                return 'Error-query';
             }
         } else {
-            $this->ERR_ASYSTECO = "No se pueden duplicar las iniciales.";
-            return false;
+            return 'Duplicado';
         }
-        
     }
 
     function dateLoop($inicio, $fin)
@@ -972,5 +967,16 @@ class Asysteco
 
         $time = $hours . ':' . $minutes;
         return $time;
+    }
+
+    public function existsFolder($folderName = 'tmp')
+    {
+        if (!is_dir($folderName)) {
+            if (!mkdir($folderName, 0755)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -25,6 +25,12 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] == 'Admin') {
                 $element = $_GET['element'];
 
                 if (isset($action) && $action === 'export') {
+                    if (!$class->existsFolder()) {
+                        error_log('Error: While trying to create tmp dir.');
+                        echo 'Error-mkdir';
+                        exit;
+                    }
+
                     if ($element === 'marcajes') {
                         include_once($dirs['Exportar'] . 'marcajes.php');
                     } elseif ($element === 'Asistencias') {
