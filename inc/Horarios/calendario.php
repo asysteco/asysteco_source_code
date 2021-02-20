@@ -19,10 +19,12 @@ if($response = $class->query("SELECT * FROM $class->lectivos ORDER BY Fecha ASC"
         {
             $festivo = "background-color: #dff0d8; color: black;";
             $festivo = "festivo";
+            $action = "festivo";
         }
         else
         {
             $festivo = "lectivo";
+            $action = "lectivo";
         }
         if($calendario['Fecha'] == 'Y-m-d')
         {
@@ -32,6 +34,9 @@ if($response = $class->query("SELECT * FROM $class->lectivos ORDER BY Fecha ASC"
         {
             $diahoy = "";
         }
+
+        $date = $calendario['Fecha'];
+
         $sep=explode("-", $calendario['Fecha']);
         $dia = $sep[2];
         $m = $sep[1];
@@ -112,34 +117,34 @@ if($response = $class->query("SELECT * FROM $class->lectivos ORDER BY Fecha ASC"
             echo "<tr>";
             if($array['dayname'] == 'Monday')
             {
-                echo "<td class='$festivo $diahoy'>$array[day]</td>";
+                echo "<td data-date='$date' action='$action' class='act $festivo $diahoy'>$array[day]</td>";
                 
             }
             if($array['dayname'] == 'Tuesday')
             {
-                echo "<td class='$festivo $diahoy'></td>";
-                echo "<td class='$festivo $diahoy'>$array[day]</td>";
+                echo "<td class='$diahoy'></td>";
+                echo "<td data-date='$date' action='$action' class='act $festivo $diahoy'>$array[day]</td>";
             }
             if($array['dayname'] == 'Wednesday')
             {
-                echo "<td class='$festivo $diahoy'></td>";
-                echo "<td class='$festivo $diahoy'></td>";
-                echo "<td class='$festivo $diahoy'>$array[day]</td>";
+                echo "<td class='$diahoy'></td>";
+                echo "<td class='$diahoy'></td>";
+                echo "<td data-date='$date' action='$action' class='act $festivo $diahoy'>$array[day]</td>";
             }
             if($array['dayname'] == 'Thursday')
             {
-                echo "<td class='$festivo $diahoy'></td>";
-                echo "<td class='$festivo $diahoy'></td>";
-                echo "<td class='$festivo $diahoy'></td>";
-                echo "<td class='$festivo $diahoy'>$array[day]</td>";
+                echo "<td class='$diahoy'></td>";
+                echo "<td class='$diahoy'></td>";
+                echo "<td class='$diahoy'></td>";
+                echo "<td data-date='$date' action='$action' class='act $festivo $diahoy'>$array[day]</td>";
             }
             if($array['dayname'] == 'Friday')
             {
-                echo "<td class='$festivo $diahoy'></td>";
-                echo "<td class='$festivo $diahoy'></td>";
-                echo "<td class='$festivo $diahoy'></td>";
-                echo "<td class='$festivo $diahoy'></td>";
-                echo "<td class='$festivo $diahoy'>$array[day]</td>";
+                echo "<td class='$diahoy'></td>";
+                echo "<td class='$diahoy'></td>";
+                echo "<td class='$diahoy'></td>";
+                echo "<td class='$diahoy'></td>";
+                echo "<td data-date='$date' action='$action' class='act $festivo $diahoy'>$array[day]</td>";
                 echo "</tr>";
             }
             $contador++;
@@ -158,23 +163,23 @@ if($response = $class->query("SELECT * FROM $class->lectivos ORDER BY Fecha ASC"
             }
             if($array['dayname'] == 'Monday')
             {
-                echo "<td class='$festivo $diahoy'>$array[day]</td>";   
+                echo "<td data-date='$date' action='$action' class='act $festivo $diahoy'>$array[day]</td>";   
             }
             if($array['dayname'] == 'Tuesday')
             {
-                echo "<td class='$festivo $diahoy'>$array[day]</td>";
+                echo "<td data-date='$date' action='$action' class='act $festivo $diahoy'>$array[day]</td>";
             }
             if($array['dayname'] == 'Wednesday')
             {
-                echo "<td class='$festivo $diahoy'>$array[day]</td>";
+                echo "<td data-date='$date' action='$action' class='act $festivo $diahoy'>$array[day]</td>";
             }
             if($array['dayname'] == 'Thursday')
             {
-                echo "<td class='$festivo $diahoy'>$array[day]</td>";
+                echo "<td data-date='$date' action='$action' class='act $festivo $diahoy'>$array[day]</td>";
             }
             if($array['dayname'] == 'Friday')
             {
-                echo "<td class='$festivo $diahoy'>$array[day]</td>";
+                echo "<td data-date='$date' action='$action' class='act $festivo $diahoy'>$array[day]</td>";
                 echo "</tr>";
             }
         }

@@ -527,7 +527,7 @@ class Asysteco
             if ($response->num_rows > 0) {
                 if (func_num_args() == 0) {
                     $ejec = "DELETE FROM Marcajes WHERE Fecha >= CURDATE()";
-                    $this->conex->query($ejec);
+                    $this->autocommitOffQuery($this->conex, $ejec, 'error-delete-marcajes');
 
                     $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, Fecha, Hora, Tipo, Dia, 0
                     FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID,
@@ -536,7 +536,7 @@ class Asysteco
                         AND Dia = WEEKDAY(Fecha)+1
                         AND Fecha >= CURDATE()";
                         
-                    $this->conex->query($ejec);
+                    $this->autocommitOffQuery($this->conex, $ejec, 'error-insert-marcajes');
                 } elseif (func_num_args() == 2) {
                     $args = func_get_args();
                     $profesor = $args[0];
