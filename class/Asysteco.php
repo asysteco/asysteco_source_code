@@ -23,7 +23,7 @@ class Asysteco
 
     function bdConex($host, $user, $pass, $db)
     {
-        $this->errorLogPath = dirname($_SERVER['DOCUMENT_ROOT']) . '/../error.log';
+        $this->errorLogPath = dirname($_SERVER['DOCUMENT_ROOT']) . '/logs/Control.log';
         $this->conex = new mysqli($host, $user, $pass, $db);
         if (!$this->conex->connect_errno) {
             return $this->conex;
