@@ -1,5 +1,13 @@
+
+
+<div class="container">
+    <div class='row'>
+       <div class='col-12'>
+            <h1>Calendario escolar</h1>
+
 <?php
 
+$date = date('Y');
 if($response = $class->query("SELECT * FROM $class->lectivos ORDER BY Fecha ASC"))
 {
     echo "<div id='mitablita'>";
@@ -181,14 +189,20 @@ else
 
 ?>
 
-<div id="modal-calendario" class="modal fade" tabindex="-1" role="dialog">
-  <div id='modal-size' class="modal-dialog" role="document">
-    <div class="modal-content"> 
-      <div id='modal-cabecera' class="modal-header"></div>
-      <div class="modal-body">
-        <div id='modal-contenido'></div>
-      </div>
-      <div id='modal-pie' class="modal-footer"></div>
+        </div>
     </div>
-  </div>
+</div>
+
+<script src="js/lectivos.js"></script>
+
+<div id='modal-calendario' class='modal fade' tabindex='-1' role='dialog'>
+<div id='modal-size' class='modal-dialog' role='document'>
+    <div class='modal-content'> 
+    <div id='modal-cabecera' class='modal-header'></div>
+    <div class='modal-body'>
+        <div id='modal-contenido'></div>
+    </div>
+    <div id='modal-pie' class='modal-footer'></div>
+    </div>
+</div>
 </div>
