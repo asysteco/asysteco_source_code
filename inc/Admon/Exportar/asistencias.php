@@ -44,12 +44,12 @@ if (isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($f
     }
 }
 
-if(! $response = $class->query("SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
-FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
+if(! $response = $class->query("SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana  
+FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID) 
     INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
 WHERE (Asiste=1 OR Asiste=2) $whereFilter
-ORDER BY Profesores.Nombre ASC")) {
-    $errorMessage = 'No existen datos para exportar...';
+ORDER BY Marcajes.Fecha, Profesores.Nombre ASC ")) {
+    $errorMessage = 'Ha ocurrido un error inesperado...';
 }
 
 $page_size = 15000;
@@ -71,7 +71,7 @@ if(empty($errorMessage) && $response->num_rows > 0) {
             WHERE (Asiste=1 OR Asiste=2) $whereFilter
             ORDER BY Marcajes.Fecha, Profesores.Nombre ASC 
             LIMIT $page_size OFFSET $offset_var";
-            $result = $class->autocommitOffQuery($mysql, $sql, 'No existen datos para exportar...');
+            $result = $class->autocommitOffQuery($mysql, $sql, 'Ha ocurrido un error inesperado...');
             
             while ($datos = $result->fetch_assoc())
             {
@@ -116,3 +116,6 @@ if(empty($errorMessage) && $response->num_rows > 0) {
     }        
     $class->conex->commit();
 }
+
+echo 'No-data';
+exit;
