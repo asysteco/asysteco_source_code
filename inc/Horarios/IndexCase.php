@@ -58,7 +58,7 @@ if ($class->isLogged($Titulo)) {
                     $scripts = '<link rel="stylesheet" href="css/aulas-cursos.css">';
                     include_once($dirs['Interfaces'] . 'header.php');
                     include_once($dirs['Interfaces'] . 'top-nav.php');
-                    include_once($dirs['Horarios'] . 'Editar/cursos.php');
+                    include_once($dirs['Horarios'] . 'Cursos/form.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
@@ -68,7 +68,7 @@ if ($class->isLogged($Titulo)) {
 
             case 'edit-cursos':
                 if ($_SESSION['Perfil'] == 'Admin') {
-                    include_once($dirs['Horarios'] . 'Editar/edit-cursos.php');
+                    include_once($dirs['Horarios'] . 'Cursos/Ajax/edit.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
@@ -83,7 +83,7 @@ if ($class->isLogged($Titulo)) {
                     $scripts = '<link rel="stylesheet" href="css/aulas-cursos.css">';
                     include_once($dirs['Interfaces'] . 'header.php');
                     include_once($dirs['Interfaces'] . 'top-nav.php');
-                    include_once($dirs['Horarios'] . 'Editar/aulas.php');
+                    include_once($dirs['Horarios'] . 'Aulas/form.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
@@ -93,7 +93,7 @@ if ($class->isLogged($Titulo)) {
 
             case 'edit-aulas':
                 if ($_SESSION['Perfil'] == 'Admin') {
-                    include_once($dirs['Horarios'] . 'Editar/edit-aulas.php');
+                    include_once($dirs['Horarios'] . 'Aulas/Ajax/edit.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
@@ -195,7 +195,7 @@ if ($class->isLogged($Titulo)) {
 
             case 'delete-all':
                 if ($_SESSION['Perfil'] == 'Admin') {
-                    include_once($dirs['Horarios'] . 'delete_all_horarios.php');
+                    include_once($dirs['Admon'] . 'Delete/delete_all_horarios.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
@@ -205,7 +205,7 @@ if ($class->isLogged($Titulo)) {
 
             case 'delete-all-t':
                 if ($_SESSION['Perfil'] == 'Admin') {
-                    include_once($dirs['Horarios'] . 'delete_all_t_horarios.php');
+                    include_once($dirs['Admon'] . 'Delete/delete_all_t_horarios.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");
