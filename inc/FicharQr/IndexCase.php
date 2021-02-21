@@ -2,7 +2,7 @@
 
 if ($class->isLogged($Titulo) && $_SESSION['Perfil'] == 'Admin') {
     if ($class->compruebaCambioPass()) {
-      include_once($dirs['Fichaje'] . 'fichar-asistencia.php');
+      include_once($dirs['FicharQr'] . 'Ajax/fichar-asistencia.php');
     } else {
       header('Location: index.php?ACTION=primer_cambio');
     }

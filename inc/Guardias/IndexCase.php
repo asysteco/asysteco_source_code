@@ -28,8 +28,8 @@ if ($class->isLogged($Titulo)) {
       }
 
       include_once($dirs['Interfaces'] . 'header.php');
-      include($dirs['Interfaces'] . 'home.php');
-      include($dirs['Interfaces'] . 'footer.php');
+      include_once($dirs['Guardias'] . 'interface.php');
+      include_once($dirs['Interfaces'] . 'footer.php');
     } else {
       header('Location: index.php?ACTION=primer_cambio');
     }
