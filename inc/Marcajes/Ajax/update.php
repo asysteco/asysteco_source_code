@@ -11,7 +11,7 @@ $nombre = $_SESSION['Nombre'];
 
 if (isset($action) && $action != '') {
     if ($action == 'Asiste') {
-        $sql = $valor == 0 ? "UPDATE Marcajes SET Asiste=$valor, Justificada=0 WHERE ID_PROFESOR='$profesor' AND Fecha='$fecha' AND Hora='$hora'": "UPDATE Marcajes SET Asiste=$valor WHERE ID_PROFESOR='$profesor' AND Fecha='$fecha' AND Hora='$hora'";
+        $sql = $valor == 0 ? "UPDATE Marcajes SET Asiste=$valor, Justificada=0 WHERE ID_PROFESOR='$profesor' AND Fecha='$fecha' AND Hora='$hora'" : "UPDATE Marcajes SET Asiste=$valor WHERE ID_PROFESOR='$profesor' AND Fecha='$fecha' AND Hora='$hora'";
         if ($class->query($sql)) {
             if (count($franjasHorarias) === 2) {
                 $response = $class->query("SELECT DISTINCT Tipo FROM Horarios WHERE ID_PROFESOR='$profesor'")->fetch_assoc();

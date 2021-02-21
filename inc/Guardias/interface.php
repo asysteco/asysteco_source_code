@@ -8,7 +8,7 @@ if ($_SESSION['Perfil'] === 'Admin') {
         include_once($dirs['Qr'] . 'Guardias/reader.php');
         echo "</div>";
         echo "<div class='col-12 col-md-8' style='text-align: center;'>";
-        include_once($dirs['Horarios'] . 'guardias.php');
+        include_once($dirs['Guardias'] . 'guardias.php');
         echo "</div>";
         echo "</div>";
         echo "</div>";
@@ -28,7 +28,7 @@ if ($_SESSION['Perfil'] === 'Admin') {
         include_once($dirs['Qr'] . 'Guardias/webcam.php');
         echo "</div>";
         echo "<div class='col-12 col-md-8' style='text-align: center;'>";
-        include_once($dirs['Horarios'] . 'guardias.php');
+        include_once($dirs['Guardias'] . 'guardias.php');
         echo "</div>";
         echo "</div>";
         echo "</div>";
@@ -48,7 +48,7 @@ if ($_SESSION['Perfil'] === 'Admin') {
         echo "<div class='row'>";
             echo "<div class='col-12' style='text-align: center;'>";
                 echo "<h1>Guardias disponibles</h1>";
-                include_once($dirs['Horarios'] . 'guardias.php');
+                include_once($dirs['Guardias'] . 'guardias.php');
             echo "</div>";
         echo "</div>";
     echo "</div>";
