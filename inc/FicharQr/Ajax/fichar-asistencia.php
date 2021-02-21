@@ -4,7 +4,7 @@ $encriptedVal = $_GET['criptedval'] ?? '';
 
 if (isset($encriptedVal) && !empty($encriptedVal) && $encriptedVal != 'undefined') {
   $encriptedVal = preg_replace('/\s/', '+', urldecode($encriptedVal));
-  include($dirs['Helper'] . 'mcript.php');
+  include_once($dirs['Helper'] . 'mcript.php');
   $dato_desencriptado = $desencriptar($encriptedVal);
   $profesor = $dato_desencriptado;
 

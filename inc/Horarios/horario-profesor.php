@@ -21,7 +21,7 @@ if($response = $class->query($sql))
         if ($n['Activo'] == 1) {
             echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success float-left'>Editar horario</a>";
         } else {
-            echo "<a class='btn btn-danger tp' class='btn btn-success float-left'><i class='tpt'>$n[Nombre] está desactivado.</i>Editar horario</a>";
+            echo "<a class='btn btn-danger tp' class='btn btn-success float-left'><i class='tpt'>Usuario desactivado.</i>Editar horario</a>";
         }
         echo "<a id='eliminar-horario' href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger float-right' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
         echo "<div id='response'></div>";

@@ -5,10 +5,10 @@ if ($_SESSION['Perfil'] === 'Admin') {
         echo '<div class="container-fluid">';
         echo "<div class='row'>";
         echo "<div id='qreader' class='col-12 col-md-4' style='padding-top: 35vh;'>";
-        include($dirs['Qr'] . 'qr-reader.php');
+        include_once($dirs['Qr'] . 'qr-reader.php');
         echo "</div>";
         echo "<div class='col-12 col-md-8' style='text-align: center;'>";
-        include($dirs['Horarios'] . 'guardias.php');
+        include_once($dirs['Horarios'] . 'guardias.php');
         echo "</div>";
         echo "</div>";
         echo "</div>";
@@ -25,10 +25,10 @@ if ($_SESSION['Perfil'] === 'Admin') {
         echo '<div class="container-fluid">';
         echo "<div class='row'>";
         echo "<div id='qreader' class='col-12 col-md-4' style='padding-top: 20vh;'>";
-        include($dirs['Qr'] . 'qr-webcam.php');
+        include_once($dirs['Qr'] . 'qr-webcam.php');
         echo "</div>";
         echo "<div class='col-12 col-md-8' style='text-align: center;'>";
-        include($dirs['Horarios'] . 'guardias.php');
+        include_once($dirs['Horarios'] . 'guardias.php');
         echo "</div>";
         echo "</div>";
         echo "</div>";
@@ -48,7 +48,7 @@ if ($_SESSION['Perfil'] === 'Admin') {
         echo "<div class='row'>";
             echo "<div class='col-12' style='text-align: center;'>";
                 echo "<h1>Guardias disponibles</h1>";
-                include($dirs['Horarios'] . 'guardias.php');
+                include_once($dirs['Horarios'] . 'guardias.php');
             echo "</div>";
         echo "</div>";
     echo "</div>";

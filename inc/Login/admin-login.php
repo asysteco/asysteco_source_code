@@ -2,7 +2,7 @@
 if(isset($_GET['criptedval']) && $_GET['criptedval'] != 'undefined')
 {
   $_GET['criptedval'] = preg_replace('/\s/', '+', urldecode($_GET['criptedval']));
-  include($dirs['Helper'] . 'mcript.php');
+  include_once($dirs['Helper'] . 'mcript.php');
   $dato_desencriptado = $desencriptar($_GET['criptedval']);
   $_GET['ID'] = $dato_desencriptado;
   if(isset($_GET['ID']) && $_GET['ID'] != 'undefined' && $_GET['ID'] != '')
