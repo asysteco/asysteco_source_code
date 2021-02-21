@@ -128,7 +128,7 @@ switch ($_GET['OPT']) {
                         ";
             include_once($dirs['Interfaces'] . 'header.php');
             include_once($dirs['Interfaces'] . 'top-nav.php');
-            include_once($dirs['Importar'] . 'import-horario.php');
+            include_once($dirs['Horarios'] . 'Import/form.php');
         } else {
             $MSG = "Acceso denegado.";
             header("Refresh:2; url=index.php");
@@ -138,7 +138,7 @@ switch ($_GET['OPT']) {
 
     case 'preview':
         if ($_SESSION['Perfil'] == 'Admin') {
-            require_once($dirs['Importar'] . 'preview-import-horario.php');
+            require_once($dirs['Horarios'] . 'Import/Ajax/preview.php');
         } else {
             $MSG = "Acceso denegado.";
             header("Refresh:2; url=index.php");
@@ -148,7 +148,7 @@ switch ($_GET['OPT']) {
 
     case 'import-csv':
         if ($_SESSION['Perfil'] == 'Admin') {
-            require_once($dirs['Importar'] . 'import-mysql-horario-ajax.php');
+            require_once($dirs['Horarios'] . 'Import/Ajax/import');
         } else {
             $MSG = "Acceso denegado.";
             header("Refresh:2; url=index.php");

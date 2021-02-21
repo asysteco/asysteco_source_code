@@ -102,7 +102,7 @@ if ($_FILES["file"]["size"] > 0) {
             $hora = $importHorario->hora();
             $tipo = $_POST['Franja'];
             $franja = $_POST['Franja'];
-            
+
             if (isset($column[5])) {
                 if (preg_match('/^[1-9]$/', $column[5])) {
                     $edificio = $column[5];
@@ -122,7 +122,7 @@ if ($_FILES["file"]["size"] > 0) {
                 $idCurso = $totalCursos[$grupo];
             } else {
                 $sqlCursos = "INSERT INTO Cursos (Nombre) VALUES ('$grupo')";
-                $idCurso = $class->conex->query($sqlCursos) ? $class->conex->insert_id: false;
+                $idCurso = $class->conex->query($sqlCursos) ? $class->conex->insert_id : false;
 
                 $totalCursos[$grupo] = $idCurso;
             }
@@ -131,8 +131,8 @@ if ($_FILES["file"]["size"] > 0) {
                 $idAula = $totalAulas[$aula];
             } else {
                 $sqlAulas = "INSERT INTO Aulas (Nombre) VALUES ('$aula')";
-                $idAula = $class->conex->query($sqlAulas) ? $class->conex->insert_id: false;
-                
+                $idAula = $class->conex->query($sqlAulas) ? $class->conex->insert_id : false;
+
                 $totalAulas[$aula] = $idAula;
             }
 
@@ -143,13 +143,13 @@ if ($_FILES["file"]["size"] > 0) {
                     if (isset($totalHorarios[$idProfesor][$diaHoraKey]) && $totalHorarios[$idProfesor][$diaHoraKey] === true) {
                         continue;
                     } else {
-                        $sqlHoy .= $row === 1 ? "('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso')":
-                                            ",('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso')";
+                        $sqlHoy .= $row === 1 ? "('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso')" :
+                            ",('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso')";
                         $totalHorarios[$idProfesor][$diaHoraKey] = true;
                     }
                 } else {
-                    $sqlFecha .= $row === 1 ? "('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso', '$fecha')":
-                                        ",('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso', '$fecha')";
+                    $sqlFecha .= $row === 1 ? "('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso', '$fecha')" :
+                        ",('$idProfesor', '$dia', '$hora', '$tipo', '$edificio', '$idAula', '$idCurso', '$fecha')";
                 }
 
                 $horarioNotExist = true;
@@ -165,7 +165,7 @@ if ($_FILES["file"]["size"] > 0) {
             } else {
                 $sqlInsert = sprintf("INSERT INTO T_horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo, Fecha_incorpora) VALUES %s", $sqlFecha);
             }
-            
+
             $class->autocommitOffQuery($class->conex, $sqlInsert, 'Error-importar');
             if ($hoy) {
                 $class->updateHoras();
