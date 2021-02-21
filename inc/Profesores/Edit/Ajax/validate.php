@@ -5,7 +5,7 @@ if($class->validFormIni($_POST['Iniciales'])) {
         if(! $response->num_rows > 0) {
             if($class->searchDuplicateField($_POST['Iniciales'], 'Iniciales', $class->profesores)) {
                 if($class->validFormName($_POST['Nombre'])) {
-                    include_once($dirs['Profesores'] . 'actualiza_profesor.php');
+                    include_once($dirs['Profesores'] . 'Edit/Ajax/update.php');
                 } else {
                     $MSG = 'warning-nombre';
                 }
@@ -14,7 +14,7 @@ if($class->validFormIni($_POST['Iniciales'])) {
             }
         } else {
             if($class->validFormName($_POST['Nombre'])) {
-                include_once($dirs['Profesores'] . 'actualiza_profesor.php');
+                include_once($dirs['Profesores'] . 'Edit/Ajax/update.php');
             } else {
                 $MSG = 'warning-nombre';
             }

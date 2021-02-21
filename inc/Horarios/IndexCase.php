@@ -168,16 +168,6 @@ if ($class->isLogged($Titulo)) {
                 }
                 break;
 
-            case 'registros':
-                if ($_SESSION['Perfil'] == 'Admin') {
-                    include_once($dirs['Horarios'] . 'muestra-registros-horarios.php');
-                } else {
-                    $MSG = "Acceso denegado.";
-                    header("Refresh:2; url=index.php");
-                    include_once($dirs['Interfaces'] . 'msg_modal.php');
-                }
-                break;
-
             case 'profesor':
                 if ($_SESSION['Perfil'] == 'Admin') {
                     include_once($dirs['Horarios'] . 'horario-profesor.php');

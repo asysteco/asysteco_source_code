@@ -5,7 +5,7 @@ if ($_SESSION['Perfil'] === 'Admin') {
         echo '<div class="container-fluid">';
         echo "<div class='row'>";
         echo "<div id='qreader' class='col-12 col-md-4' style='padding-top: 35vh;'>";
-        include_once($dirs['Qr'] . 'qr-reader.php');
+        include_once($dirs['Qr'] . 'Guardias/reader.php');
         echo "</div>";
         echo "<div class='col-12 col-md-8' style='text-align: center;'>";
         include_once($dirs['Horarios'] . 'guardias.php');
@@ -25,7 +25,7 @@ if ($_SESSION['Perfil'] === 'Admin') {
         echo '<div class="container-fluid">';
         echo "<div class='row'>";
         echo "<div id='qreader' class='col-12 col-md-4' style='padding-top: 20vh;'>";
-        include_once($dirs['Qr'] . 'qr-webcam.php');
+        include_once($dirs['Qr'] . 'Guardias/webcam.php');
         echo "</div>";
         echo "<div class='col-12 col-md-8' style='text-align: center;'>";
         include_once($dirs['Horarios'] . 'guardias.php');

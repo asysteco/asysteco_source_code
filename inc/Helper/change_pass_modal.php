@@ -7,12 +7,16 @@ if (empty($alertTitle) && !empty($alertMessage)) {
   if ($cambiada) {
 ?>
     <script>
-      setTimeout(function () { location.href = 'index.php?ACTION=logout' }, 1000);
+      setTimeout(function () { location.href = 'index.php' }, 1000);
     </script>
-<?php
-  }
-?>
 
+<?php } ?>
+
+<script>
+  window.onload = function() {
+    $('#advice-modal').modal('show')
+  };
+</script>
 
 <!-- Modal -->
 <div class="modal fade" id="advice-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -34,11 +38,5 @@ if (empty($alertTitle) && !empty($alertMessage)) {
     </div>
   </div>
 </div>
-<script>
-  window.onload = function() {
-    $('#advice-modal').modal('show')
-  };
-</script>
-<?php
-}
-?>
+
+<?php } ?>

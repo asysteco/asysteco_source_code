@@ -22,8 +22,7 @@
           <!-- Tabs Titles -->
 
           <!-- Icon -->
-          <div class="fadeIn first">
-            <img src="<?php
+          <?php
             $path = 'resources/img/';
             $name = 'logo-centro.';
             $ext = ['jpg', 'png', 'svg'];
@@ -35,17 +34,15 @@
               }
             }
 
-            if ($logoFile !== '') {
-              echo $logoFile; 
-            } else {
-              echo $path . "default-logo.png";
-            }
+            $logo = $logoFile !== '' ? $logoFile: $path . 'default-logo.png';
+          ?>
 
-             ?>" width='125' id="icon" alt="Icono del centro" /> <h1>Iniciar Sesión</h1>
+          <div class="fadeIn first">
+            <img src="<?= $logo ?>" width='125' id="icon" alt="Icono del centro" /> <h1>Iniciar Sesión</h1>
           </div>
 
           <!-- Login Form -->
-          <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+          <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
             <input type="text" id="login" class="fadeIn second" name="Iniciales" value="<?= isset($_POST['Iniciales']) ? $_POST['Iniciales']: ''; ?>" placeholder="Usuario (Iniciales)" required>
             <input type="password" id="password" class="fadeIn third" name="pass" placeholder="Contraseña" required>
             <input type="submit" class="fadeIn fourth" value="Iniciar">
@@ -53,8 +50,7 @@
 
           <!-- Remind Passowrd -->
           <div id="formFooter">
-            <!--a class="underlineHover" href="<?php echo $_SERVER['PHP_SELF'] . "?ACTION=registrarse"; ?>">Registrarme</a-->
-            <p>Si has olvidado la contraseña, por favor contacta con Jefatura para que puedan reiniciarla. Gracias.</p>
+            <p>Si has olvidado la contraseña, por favor contacta con Jefatura para que puedan resetearla. Gracias.</p>
           </div>
         </div>
       </div>

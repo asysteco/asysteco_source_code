@@ -3,9 +3,9 @@ include_once($dirs['Interfaces'] . 'header.php');
 ?>
 
 <script>
-window.onload = function() {
-  $('#MSG').modal('show')
-};
+  window.onload = function() {
+    $('#MSG').modal('show')
+  };
 </script>
 
 <!-- Modal -->

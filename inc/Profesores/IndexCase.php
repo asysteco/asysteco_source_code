@@ -13,30 +13,28 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
                 $scripts = '<link rel="stylesheet" href="css/import-csv.css">';
                 include_once($dirs['Interfaces'] . 'header.php');
                 include_once($dirs['Interfaces'] . 'top-nav.php');
-                include_once($dirs['Importar'] . 'import-profesorado.php');
+                include_once($dirs['Profesores'] . 'Import/form.php');
                 break;
 
             case 'preview':
-                include_once($dirs['Importar'] . 'preview-import-profesores.php');
+                include_once($dirs['Profesores'] . 'Import/Ajax/preview.php');
                 break;
 
             case 'import-csv':
-                require_once($dirs['Importar'] . 'import-mysql-profesorado-ajax.php');
-                break;
-
-            case 'registros':
-                include_once($dirs['Profesores'] . 'muestra-registros-profesores.php');
+                require_once($dirs['Profesores'] . 'Import/Ajax/import.php');
                 break;
 
             case 'edit':
                 $scripts = '<link rel="stylesheet" href="css/profesores-edit.css">';
-                include_once($dirs['Profesores'] . 'editar_profesor.php');
+                include_once($dirs['Profesores'] . 'Edit/form.php');
                 break;
+
             case 'actualizar':
-                include_once($dirs['Valida'] . 'valida_edit_profesor.php');
+                include_once($dirs['Profesores'] . 'Edit/Ajax/validate.php');
                 break;
+
             case 'sustituir':
-                include_once($dirs['Form'] . 'form_sustituto.php');
+                include_once($dirs['Profesores'] . 'Sustituto/form.php');
                 break;
 
             case 'add-profesor':
@@ -45,7 +43,7 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
 
                 include_once($dirs['Interfaces'] . 'header.php');
                 include_once($dirs['Interfaces'] . 'top-nav.php');
-                include_once($dirs['Form'] . 'form-add-profesor.php');
+                include_once($dirs['Profesores'] . 'Add/form.php');
                 break;
 
             case 'register-profesor':
@@ -54,24 +52,24 @@ if ($class->isLogged($Titulo) && $_SESSION['Perfil'] === 'Admin') {
                 break;
 
             case 'add-sustituto':
-                include_once($dirs['Profesores'] . 'agregar-sustituto.php');
+                include_once($dirs['Profesores'] . 'Sustituto/Ajax/add.php');
                 break;
 
             case 'remove-sustituto':
-                include_once($dirs['Profesores'] . 'retirar-sustituto.php');
+                include_once($dirs['Profesores'] . 'Sustituto/Ajax/remove.php');
                 break;
 
             case 'des-act':
-                include_once($dirs['Profesores'] . 'des-act-profesor.php');
+                include_once($dirs['Profesores'] . 'Ajax/deactivate-activate.php');
                 break;
 
             case 'reset-pass':
-                include_once($dirs['Login'] . 'reset_pass.php');
+                include_once($dirs['Profesores'] . 'Ajax/reset_pass.php');
                 break;
 
             case 'delete-all':
                 if ($_SESSION['Perfil'] == 'Admin') {
-                    include_once($dirs['Profesores'] . 'delete_all_profesores.php');
+                    include_once($dirs['Admon'] . 'delete_all_profesores.php');
                 } else {
                     $MSG = "Acceso denegado.";
                     header("Refresh:2; url=index.php");

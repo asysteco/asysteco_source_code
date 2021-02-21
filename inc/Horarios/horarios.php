@@ -98,11 +98,11 @@ if($response = $class->query($sql))
     }
     elseif($response->num_row > 1)
     {
-        echo "<h1 style='vertical-align: middle; text-align: center;'>Formato no válido, revise su horario...</h1>";
+        echo "<h1 class='no-horario'>Formato no válido, revise su horario...</h1>";
     }
     else
     {
-        echo "<h1 style='vertical-align: middle; text-align: center;'>Todavía no dispone de horario...</h1>";
+        echo "<h1 class='no-horario'>Todavía no dispone de horario...</h1>";
     }
 }
 else

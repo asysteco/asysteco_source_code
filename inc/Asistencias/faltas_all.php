@@ -45,7 +45,7 @@ if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Mar
                     }
                     else
                     {
-                        echo "<td colspan='100%'>No existen registros de faltas.</td>";
+                        echo "<td colspan='100%' style='text-align: center;'>No existen registros de faltas.</td>";
                     }
                     echo "</tbody>";
                 echo "</table>";
