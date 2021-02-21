@@ -83,6 +83,7 @@ if($response = $class->query($sql))
         ob_end_clean();
             
         echo $ff.$fn;
+        exit;
     }
 
     echo 'No-data';
