@@ -100,7 +100,7 @@ class ImportProfesor
 
     public function nombreValido($nombre)
     {
-        if (isset($nombre) && preg_match('/^[ a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.-]{6,60}$/i', $nombre)) {
+        if (isset($nombre) && preg_match('/^[ a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.-]{2,60}$/i', $nombre)) {
             return true;
         }
 

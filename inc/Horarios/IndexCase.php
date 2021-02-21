@@ -148,7 +148,7 @@ switch ($_GET['OPT']) {
 
     case 'import-csv':
         if ($_SESSION['Perfil'] == 'Admin') {
-            require_once($dirs['Horarios'] . 'Import/Ajax/import');
+            require_once($dirs['Horarios'] . 'Import/Ajax/import.php');
         } else {
             $MSG = "Acceso denegado.";
             header("Refresh:2; url=index.php");
