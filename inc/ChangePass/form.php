@@ -8,7 +8,7 @@
     </div>
 
     <!-- Login Form -->
-    <form class="login-form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
+    <form id="change-pass" class="login-form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
       <input type="password" name="act_pass" class="fadeIn second" placeholder="Contraseña Actual" required>
       <input minlength="8" type="password" name="new_pass" class="fadeIn third" placeholder="Nueva Contraseña" required>
       <input minlength="8" type="password" name="new_pass_confirm" class="fadeIn third" placeholder="Confirmar Nueva Contraseña" required>
@@ -17,3 +17,5 @@
     </form>
   </div>
 </div>
+
+<script src="js/ChangePass/changePass.js"></script>

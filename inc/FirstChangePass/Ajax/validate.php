@@ -1,9 +1,7 @@
 <?php
 
-$alertTitle = '';
-$alertMessage = '';
-
 $cambiada = false;
+$alertMessage = 'Error inesperado, contacte con los administradores...';
 
 $sessionId = $_SESSION['ID'];
 $sessionInitials = $_SESSION['Iniciales'];

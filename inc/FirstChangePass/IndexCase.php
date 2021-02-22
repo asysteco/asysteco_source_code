@@ -4,7 +4,7 @@ $newPass = $_POST['new_pass'];
 $newPassConfirm = $_POST['new_pass_confirm'];
 
 if (!empty($newPass) && !empty($newPassConfirm)) {
-    include_once($dirs['FirstChangePass'] . 'validate.php');
+    include_once($dirs['FirstChangePass'] . 'Ajax/validate.php');
     exit;
 }
 
