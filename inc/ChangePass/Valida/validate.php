@@ -23,6 +23,7 @@ if (isset($changePass)) {
                         $alertType = 'Success';
                         $alertMessage = 'Contraseña cambiada satisfatoriamente.';
                         $cambiada = true;
+                        unset($_SESSION['changedPass']);
                     } else {
                         $alertMessage = 'Error inesperado, contacte con los administradores...';
                     }
