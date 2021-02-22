@@ -92,24 +92,28 @@ class Asysteco
         }
     }
 
-    function compruebaCambioPass()
+    function compruebaCambioPass(): bool
     {
-        $pass = $this->encryptPassword($_SESSION['Iniciales'] . '12345');
-        if ($_SESSION['changedPass'] === 1) {
+        $iniciales = $_SESSION['Iniciales'];
+        $profesor = $_SESSION['ID'];
+        $changedPass = $_SESSION['changedPass'] ?? 0;
+        $pass = $this->encryptPassword($iniciales . '12345');
+
+        if ($changedPass === 1) {
             return true;
-        } else {
-            if ($response = $this->query("SELECT ID FROM $this->profesores WHERE Password='$pass' AND ID='$_SESSION[ID]'")) {
-                if ($response->num_rows == 0) {
-                    $_SESSION['changedPass'] = 1;
-                    return true;
-                } else {
-                    $this->ERR_ASYSTECO = "Debes cambiar la contraseña.";
-                    return false;
-                }
+        }
+
+        if ($response = $this->query("SELECT ID FROM Profesores WHERE Password = '$pass' AND ID = '$profesor'")) {
+            if ($response->num_rows == 0) {
+                $changedPass = 1;
+                return true;
             } else {
+                $this->ERR_ASYSTECO = "Debes cambiar la contraseña.";
                 return false;
             }
         }
+        
+        return false;
     }
 
     function Logout()
