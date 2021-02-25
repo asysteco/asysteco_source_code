@@ -23,7 +23,7 @@ class Asysteco
 
     function bdConex($host, $user, $pass, $db)
     {
-        $this->errorLogPath = dirname($_SERVER['DOCUMENT_ROOT']) . '/../error.log';
+        $this->errorLogPath = dirname($_SERVER['DOCUMENT_ROOT']) . '/logs/Control.log';
         $this->conex = new mysqli($host, $user, $pass, $db);
         if (!$this->conex->connect_errno) {
             return $this->conex;
@@ -92,24 +92,28 @@ class Asysteco
         }
     }
 
-    function compruebaCambioPass()
+    function compruebaCambioPass(): bool
     {
-        $pass = $this->encryptPassword($_SESSION['Iniciales'] . '12345');
-        if ($_SESSION['changedPass'] === 1) {
+        $iniciales = $_SESSION['Iniciales'];
+        $profesor = $_SESSION['ID'];
+        $changedPass = $_SESSION['changedPass'] ?? 0;
+        $pass = $this->encryptPassword($iniciales . '12345');
+
+        if ($changedPass === 1) {
             return true;
-        } else {
-            if ($response = $this->query("SELECT ID FROM $this->profesores WHERE Password='$pass' AND ID='$_SESSION[ID]'")) {
-                if ($response->num_rows == 0) {
-                    $_SESSION['changedPass'] = 1;
-                    return true;
-                } else {
-                    $this->ERR_ASYSTECO = "Debes cambiar la contraseña.";
-                    return false;
-                }
+        }
+
+        if ($response = $this->query("SELECT ID FROM Profesores WHERE Password = '$pass' AND ID = '$profesor'")) {
+            if ($response->num_rows == 0) {
+                $changedPass = 1;
+                return true;
             } else {
+                $this->ERR_ASYSTECO = "Debes cambiar la contraseña.";
                 return false;
             }
         }
+        
+        return false;
     }
 
     function Logout()
@@ -126,7 +130,7 @@ class Asysteco
 
     function validFormName($registername)
     {
-        if (preg_match('/^[ a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.-]{6,60}$/i', $registername)) {
+        if (preg_match('/^[ a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.-]{2,60}$/i', $registername)) {
             return true;
         } else {
             $this->ERR_ASYSTECO = "Nombre no válido <br>";
@@ -413,10 +417,15 @@ class Asysteco
         return true;
     }
 
-    function FicharWeb($activeFicharSalida = 0)
+    function FicharWeb($profesor = null, $activeFicharSalida = 0)
     {
+        if (empty($profesor) || !preg_match('/^([2-9][0-9]*)$/', $profesor)) {
+            $this->ERR_ASYSTECO = "<span id='noqr' style='color: white; font-weight: bolder; background-color: red;'><h3>No existe el código.</h3></span>";
+            return false;
+        }
+
         if ($this->conex) {
-            if ($response = $this->query("SELECT ID, Activo, Sustituido FROM Profesores WHERE ID='$_GET[ID]' AND TIPO<>1")) {
+            if ($response = $this->query("SELECT ID, Activo, Sustituido FROM Profesores WHERE ID='$profesor' AND TIPO<>1")) {
                 if ($response->num_rows == 1) {
                     $datosProfesor = $response->fetch_assoc();
                     $id = $datosProfesor['ID'];
@@ -522,7 +531,7 @@ class Asysteco
             if ($response->num_rows > 0) {
                 if (func_num_args() == 0) {
                     $ejec = "DELETE FROM Marcajes WHERE Fecha >= CURDATE()";
-                    $this->conex->query($ejec);
+                    $this->autocommitOffQuery($this->conex, $ejec, 'error-delete-marcajes');
 
                     $ejec = "INSERT INTO Marcajes (ID_PROFESOR, Fecha, Hora, Tipo, Dia, Asiste) SELECT DISTINCT ID_PROFESOR, Fecha, Hora, Tipo, Dia, 0
                     FROM Horarios INNER JOIN Diasemana ON Horarios.Dia=Diasemana.ID,
@@ -531,7 +540,7 @@ class Asysteco
                         AND Dia = WEEKDAY(Fecha)+1
                         AND Fecha >= CURDATE()";
                         
-                    $this->conex->query($ejec);
+                    $this->autocommitOffQuery($this->conex, $ejec, 'error-insert-marcajes');
                 } elseif (func_num_args() == 2) {
                     $args = func_get_args();
                     $profesor = $args[0];
@@ -857,29 +866,24 @@ class Asysteco
         $docente = $_POST['docente'] == 3 ? 3 : 2;
 
         if (!$this->validFormName($nombre)) {
-            $this->ERR_ASYSTECO = "Formato de Nombre incorrecto.";
-            return false;
+            return 'Nombre-Incorrecto';
         } 
 
         if (!$this->validFormIni($iniciales)) {
-            $this->ERR_ASYSTECO = "Formato de iniciales incorrecto.";
-            return false;
+            return 'Iniciales-Incorrecto';
         }
 
         if ($this->searchDuplicateField($iniciales, 'Iniciales', $this->profesores)) {
             $pass = $this->encryptPassword($iniciales . '12345');
             if ($this->query("INSERT INTO $this->profesores (Nombre, Iniciales, Password, TIPO)
             VALUES ('$nombre', '$iniciales', '$pass', '$docente')")) {
-                return true;
+                return 'Registrado';
             } else {
-                $this->ERR_ASYSTECO;
-                return false;
+                return 'Error-query';
             }
         } else {
-            $this->ERR_ASYSTECO = "No se pueden duplicar las iniciales.";
-            return false;
+            return 'Duplicado';
         }
-        
     }
 
     function dateLoop($inicio, $fin)
@@ -972,5 +976,16 @@ class Asysteco
 
         $time = $hours . ':' . $minutes;
         return $time;
+    }
+
+    public function existsFolder($folderName = 'tmp')
+    {
+        if (!is_dir($folderName)) {
+            if (!mkdir($folderName, 0755)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

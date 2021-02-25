@@ -3,13 +3,13 @@
 require_once($dirs['CP'] . 'cp-header.php');
 
 if (!$options['QR-reader']) {
-    require_once($dirs['Qr'] . 'qr-reader-headers.php');
+    require_once($dirs['Qr'] . 'webcam-headers.php');
     echo '</head>';
     echo '<body>';
     echo '<div class="container-fluid" style="margin-top:50px">';
         echo "<div class='row'>";
             echo "<div id='qreader' class='col-12'>";
-                include($dirs['Qr'] . 'qr-webcam-admin-login.php');
+                include_once($dirs['Qr'] . 'Admin/webcam-form.php');
             echo "</div>";
         echo "</div>";
     echo "</div>";
@@ -18,10 +18,10 @@ if (!$options['QR-reader']) {
     echo '<div class="container-fluid" style="margin-top:50px">';
         echo "<div class='row'>";
             echo "<div id='qreader' class='col-12' style='margin-top: 20vh;'>";
-                include($dirs['Qr'] . 'qr-reader-admin-login.php');
+                include_once($dirs['Qr'] . 'Admin/reader-form.php');
             echo "</div>";
         echo "</div>";
     echo "</div>";
     include_once($dirs['public'] . 'js/qr-reader-admin-login.js');
 }
-include($dirs['Interfaces'] . 'footer.php');
+include_once($dirs['Interfaces'] . 'footer.php');

@@ -109,3 +109,6 @@ if(empty($errorMessage) && $response->num_rows > 0) {
     }
     $class->conex->commit();
 }
+
+echo 'No-data';
+exit;

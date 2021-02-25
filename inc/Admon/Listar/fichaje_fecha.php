@@ -75,11 +75,10 @@ if (empty($errorMessage) && $response->num_rows > 0) {
                     {
                         $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                         echo "<tr>";
-                            if ($datos['TIPO'] == 2){
-                            echo "<td data-th='NOMBRE'><i class='fa fa-graduation-cap' aria-hidden='true' title='Profesorado'></i> $datos[Nombre]</td>";
-                            }else {
-                            echo "<td data-th='NOMBRE'><i id='azul' class='fa fa-user' aria-hidden='true' title='Personal No Docente'></i> $datos[Nombre]</td>";
-                            }
+
+                        $typeIcon = $datos['TIPO'] == 2? '<i class="fa fa-graduation-cap" aria-hidden="true" title="Profesorado"></i>': '<i class="fa fa-user personal-icon-azul" aria-hidden="true" title="Personal No Docente"></i>';
+
+                            echo "<td class='text-left' data-th='INICIALES'>$typeIcon $datos[Iniciales]</td>";
                             echo "<td data-th='FICHAJE DE ENTRADA'>$datos[F_entrada]</td>";
                             echo "<td data-th='FICHAJE DE SALIDA'>$datos[F_Salida]</td>";
                             echo "<td data-th='DIA SEMANA'>$datos[DIA_SEMANA]</td>";
