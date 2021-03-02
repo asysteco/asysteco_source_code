@@ -1,11 +1,9 @@
 <?php
 
-$f = $class->getDate();
-$fecha = $f['year'] . "-" . $f['mon'] . "-" . $f['mday'];
+$fecha = date('Y-m-d');
 // La variable Fecha la utilizará como día límite desde que existen marcajes para mostrar los registros
 // La siguiente línea la utilizaremos para realizar pruebas
 
-// $fecha = '2020-10-22';
 if($response = $class->query("SELECT DISTINCT Nombre, Diasemana, Fecha FROM (Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID) INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID WHERE NOT EXISTS (SELECT * FROM Fichar WHERE Fichar.ID_PROFESOR=Profesores.ID AND Marcajes.Fecha=Fichar.Fecha) AND Fecha <= '$fecha' ORDER BY Fecha DESC, Nombre ASC"))
 {
         echo "<h1>Faltas</h1>";
