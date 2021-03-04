@@ -1,14 +1,23 @@
 <?php
 
-$sql = "SELECT Nombre FROM $class->profesores WHERE ID=" . mysqli_real_escape_string($class->conex, $_GET['ID']);
+if (isset($_GET['ID']) && $_SESSION['Perfil'] === 'Admin') {
+    $profesor = $_GET['ID'];
+} else {
+    $profesor = $_SESSION['ID'];
+}
+$sql = "SELECT Nombre
+FROM $class->profesores
+WHERE ID=" . mysqli_real_escape_string($class->conex, $profesor);
 if($resp = $class->query($sql))
 {
     $n = $resp->fetch_assoc();
     $n = $n['Nombre'];
-    // La variable Fecha la utilizará como día límite desde que existen marcajes para mostrar los registros
-    $fecha = date('Y-m-d');
     
-    if($response = $class->query("SELECT Marcajes.*, Diasemana FROM Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID WHERE ID_PROFESOR=" . mysqli_real_escape_string($class->conex, $_GET['ID']) . " AND Fecha <= '$fecha' ORDER BY Fecha DESC, Dia, Hora"))
+    $sql = "SELECT Marcajes.*, Diasemana
+    FROM Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
+    WHERE ID_PROFESOR=" . mysqli_real_escape_string($class->conex, $profesor) . "
+        AND Fecha <= CURDATE() ORDER BY Fecha DESC, Dia, Hora";
+    if($response = $class->query($sql))
     {
         echo "<h1>Asistencias</h1>";
         echo "<br><div id='table-container'>";

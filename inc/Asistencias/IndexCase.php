@@ -22,7 +22,6 @@ switch ($opt) {
     break;
 
   case 'sesion':
-    $_GET['ID'] = $_SESSION['ID'];
     $scripts .= '<script src="js/filtro_asistencias.js"></script>';
     $scripts .= '<script src="js/update_marcajes.js"></script>';
     $extras = "$(function (){ $('#busca_asiste').datepicker({
