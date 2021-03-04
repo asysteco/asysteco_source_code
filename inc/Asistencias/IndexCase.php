@@ -34,6 +34,9 @@ switch ($opt) {
     break;
 
   default:
+    if ($_SESSION['Perfil'] !== 'Admin') {
+        header("location: index.php");
+    }
     include_once($dirs['Asistencias'] . 'contenido-asistencias.php');
     break;
 }
