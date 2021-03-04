@@ -7,6 +7,8 @@ if ($_SESSION['Perfil'] !== 'Admin') {
 $act_usuario = 'active';
 $act_admon  = 'active';
 
+$opt =  $_GET['OPT'] ?? '';
+
 $scripts = "<link rel='stylesheet' href='css/admon.css'>";
 $extras = "        
     $(function (){
@@ -14,10 +16,7 @@ $extras = "
     });
 ";
 
-if (!isset($_GET['OPT'])) {
-    $_GET['OPT'] = '';
-}
-switch ($_GET['OPT']) {
+switch ($opt) {
     case 'backup-centro':
         include_once($dirs['Exportar'] . 'backup-centro.php');
         break;

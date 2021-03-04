@@ -183,9 +183,6 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
     
     if($_SESSION['Perfil'] === 'Profesor')
     {
-      $d = date('d');
-      $m = date('m');
-      $Y = date('Y');
       echo "<a class='navbar-brand' href='$_SERVER[PHP_SELF]?ACTION=horarios'>$Titulo</a>";
       echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#top-menu"
               aria-controls="top-menu" aria-expanded="false" aria-label="Toggle navigation">';
@@ -209,7 +206,7 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
         
         // Mis asistencias start
         echo "<li class='nav-item $act_asistencia'>";
-          echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=sesion&d=$d&m=$m&Y=$Y'>Mis asistencias</a>";
+          echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=sesion'>Mis asistencias</a>";
         echo "</li>";
         echo "<li class='nav-item $act_qr'>";
           echo '<a class="nav-link" href="index.php?ACTION=qrcoder">
@@ -248,9 +245,6 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
 
     if($_SESSION['Perfil'] === 'Personal')
     {
-      $d = date('d');
-      $m = date('m');
-      $Y = date('Y');
       echo "<a class='navbar-brand' href='$_SERVER[PHP_SELF]?ACTION=horarios'>$Titulo</a>";
       echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#top-menu"
               aria-controls="top-menu" aria-expanded="false" aria-label="Toggle navigation">';
@@ -268,7 +262,7 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">';
         
         // Mis asistencias start
         echo "<li class='nav-item $act_asistencia'>";
-          echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=sesion&d=$d&m=$m&Y=$Y'>Mis asistencias</a>";
+          echo "<a class='nav-link' href='$_SERVER[PHP_SELF]?ACTION=asistencias&OPT=sesion'>Mis asistencias</a>";
         echo "</li>";
         echo "<li class='nav-item $act_qr'>";
           echo '<a class="nav-link" href="index.php?ACTION=qrcoder">

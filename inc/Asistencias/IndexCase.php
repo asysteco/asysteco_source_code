@@ -22,7 +22,6 @@ switch ($opt) {
     break;
 
   case 'sesion':
-    $_GET['ID'] = $_SESSION['ID'];
     $scripts .= '<script src="js/filtro_asistencias.js"></script>';
     $scripts .= '<script src="js/update_marcajes.js"></script>';
     $extras = "$(function (){ $('#busca_asiste').datepicker({
@@ -35,6 +34,9 @@ switch ($opt) {
     break;
 
   default:
+    if ($_SESSION['Perfil'] !== 'Admin') {
+        header("location: index.php");
+    }
     include_once($dirs['Asistencias'] . 'contenido-asistencias.php');
     break;
 }

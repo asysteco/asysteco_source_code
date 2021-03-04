@@ -1,11 +1,9 @@
 <?php
 
-switch ($_GET['OPT']) {
-  case 'update':
-    include_once($dirs['Marcajes'] . 'Ajax/update.php');
-    break;
+$opt = $_GET['OPT'] ?? '';
 
-  default:
-    header('Location: index.php');
-    break;
+if ($opt === 'update') {
+  include_once($dirs['Marcajes'] . 'Ajax/update.php');
+} else {
+  header('Location: index.php');
 }

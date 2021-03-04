@@ -55,8 +55,9 @@
         </div>
       </div>
 <?php 
-if(isset($ERR_LOGIN_FORM))
+if(isset($ERR_LOGIN_FORM) || isset($class->ERR_ASYSTECO))
 {
+  $errorMessage = $ERR_LOGIN_FORM ?? $class->ERR_ASYSTECO;
   echo "
   <script>
   window.onload = function() {
@@ -76,7 +77,7 @@ if(isset($ERR_LOGIN_FORM))
         </div>
         <div class="modal-body">
           <p style="color: red;">
-            ' . $ERR_LOGIN_FORM . '
+            ' . $errorMessage . '
           </p>
         </div>
       </div>

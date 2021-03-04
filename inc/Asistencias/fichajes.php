@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_GET['ID'])) {
+if (isset($_GET['ID']) && $_SESSION['Perfil'] === 'Admin') {
     $profesor = $_GET['ID'];
 } else {
     $profesor = $_SESSION['ID'];
