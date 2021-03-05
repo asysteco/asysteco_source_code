@@ -4,7 +4,7 @@ if (isset($_POST['Iniciales']) || isset($_POST['pass'])) {
     require_once($dirs['Login'] . 'valida.php');
 }
 
-$perfil = $_SESSION['Perfil'];
+$perfil = $_SESSION['Perfil'] ?? '';
 
 if ($perfil === 'Admin') {
     $act_home = 'active';

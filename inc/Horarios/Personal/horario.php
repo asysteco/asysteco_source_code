@@ -7,8 +7,7 @@ FROM Horarios H
 WHERE H.ID_PROFESOR='$_SESSION[ID]'";
 if($response = $class->query($sql))
 {
-    if ($response->num_rows == 1)
-    {
+    if ($response->num_rows == 1) {
         $dia = $class->getDate();
         $datosprof = $response->fetch_assoc();
         $franja = $datosprof['Tipo'];
@@ -95,13 +94,9 @@ if($response = $class->query($sql))
                 echo "</tbody>";
             echo "</table>";
         echo "</div>";
-    }
-    elseif($response->num_row > 1)
-    {
+    } elseif($response->num_rows > 1) {
         echo "<h1 class='no-horario'>Formato no válido, revise su horario...</h1>";
-    }
-    else
-    {
+    } else {
         echo "<h1 class='no-horario'>Todavía no dispone de horario...</h1>";
     }
 }

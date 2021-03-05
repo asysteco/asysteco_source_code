@@ -39,6 +39,8 @@ switch ($opt) {
         break;
 
     case 'add-profesor':
+        $act_addProf = 'active';
+        
         $scripts = '<link rel="stylesheet" href="css/profesores-edit.css">';
         $scripts .= '<link rel="stylesheet" href="css/login-style.css">';
 

@@ -1,6 +1,6 @@
 <?php
 
-$changePass = $_POST['new_password'];
+$changePass = $_POST['new_password'] ?? '';
 $alertTitle = '';
 $alertMessage = '';
 

@@ -1,8 +1,8 @@
 <?php
 
-$actPass = $_POST['act_pass'];
-$newPass = $_POST['new_pass'];
-$newPassConfirm = $_POST['new_pass_confirm'];
+$actPass = $_POST['act_pass'] ?? '';
+$newPass = $_POST['new_pass'] ?? '';
+$newPassConfirm = $_POST['new_pass_confirm'] ?? '';
 
 if (!empty($actPass) && !empty($newPass) && !empty($newPassConfirm)) {
     include_once($dirs['ChangePass'] . 'Ajax/validate.php');
