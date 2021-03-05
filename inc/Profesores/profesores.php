@@ -1,6 +1,6 @@
 <?php
 if ($_SESSION['Perfil'] === 'Admin') {
-  $sql = "SELECT p.ID, p.Nombre, p.Iniciales, p.Activo, p.Sustituido
+  $sql = "SELECT p.ID, p.Nombre, p.Iniciales, p.Activo, p.Sustituido, p.TIPO
           FROM Profesores p
             INNER JOIN Perfiles pf ON p.TIPO=pf.ID
           WHERE p.TIPO<>1
@@ -30,10 +30,11 @@ if ($_SESSION['Perfil'] === 'Admin') {
       while ($fila = $response->fetch_assoc()) {
         $activo = $fila['Activo'] == 1 ? 'Si' : 'No';
         $sustituido = $fila['Sustituido'] == 0 ? 'No' : 'Si';
+        $typeIcon = $fila['TIPO'] == 2? '<i class="fa fa-graduation-cap" title="Profesorado"></i>': '<i class="fa fa-user personal-icon-azul" title="Personal No Docente"></i>';
 
         echo "<tr id='profesor_$fila[ID]' nombre='$fila[Nombre]' class='row_prof'>";
         echo "<td data-th='Nombre' class='act' action='horario'>$fila[Nombre]</td>";
-        echo "<td data-th='Iniciales' class='act' action='horario'>$fila[Iniciales]</td>";
+        echo "<td data-th='Iniciales' class='act' action='horario'>$typeIcon $fila[Iniciales]</td>";
         echo "<td data-th='Activo' class='act' action='horario'>$activo</td>";
         echo "<td data-th='Sustituido' class='act' action='horario'>$sustituido</td>";
 
