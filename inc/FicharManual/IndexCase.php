@@ -9,6 +9,8 @@ if ($_SESSION['Perfil'] !== 'Admin') {
 if ($opt === 'ajax') {
   include_once($dirs['FicharManual'] . 'Ajax/FicharManual.php');
 } else {
+  $act_fichar_manual = 'active';
+  
   $extras = "
     $(function (){
       $('#add-fecha').datepicker({
