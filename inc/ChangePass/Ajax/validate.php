@@ -2,7 +2,7 @@
 
 $changePass = $_POST['new_password'] ?? '';
 $alertTitle = '';
-$alertMessage = '';
+$alertMessage = 'Error inesperado, contacte con los administradores...';
 
 $cambiada = false;
 
