@@ -20,7 +20,7 @@ WHERE h.ID_PROFESOR='$profesor'";
             } else {
                 echo "<a class='btn btn-danger tp' class='btn btn-success float-left'><i class='tpt'>Usuario desactivado.</i>Editar horario</a>";
             }
-            echo "<a id='eliminar-horario' href='index.php?ACTION=horarios&OPT=remove&profesor=$n[ID]' class='btn btn-danger float-right' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
+            echo "<a id='eliminar-horario' class='act btn btn-danger float-right' action='remove-horario' onclick=\"return confirm('¿Seguro que desea eliminar el horario de este profesor?')\">Limpiar horario</a>";
             echo "<div id='response'></div>";
             echo "</br>";
             echo "<div class='table-responsive'>";
