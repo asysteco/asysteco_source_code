@@ -5,7 +5,7 @@ $alertMessage = 'Error inesperado, contacte con los administradores...';
 
 $deleted = false;
 
-if ($class->query("DELETE FROM $class->horarios WHERE ID_PROFESOR='$profesor'")) {
+if ($class->query("DELETE FROM Horarios WHERE ID_PROFESOR='$profesor'")) {
     $class->marcajes($profesor, 'remove');
     $alertMessage = 'Horario eliminado correctamente.';
     $deleted = true;
