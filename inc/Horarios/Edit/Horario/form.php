@@ -1,7 +1,18 @@
 <?php
 
-$nombreProfesor = $_GET['nProfesor'];
-$profesor = $_GET['profesor'];
+$nombreProfesor = $_POST['nProfesor'] ?? '';
+$profesor = $_POST['profesor'] ?? '';
+$hasHorario = false;
+
+$response = $class->query(
+"SELECT h.*, ds.Diasemana, hs.Inicio, hs.Fin, a.Nombre as nAula, c.Nombre as nCurso
+FROM (((Horarios h
+    INNER JOIN Diasemana ds ON h.Dia = ds.ID)
+    INNER JOIN Horas hs ON h.Hora = hs.Hora)
+    INNER JOIN Cursos c ON h.Grupo = c.ID)
+    INNER JOIN Aulas a ON h.Aula = a.ID
+WHERE ID_PROFESOR = '$profesor' ORDER BY Dia, h.Hora");
+
 
 $totalDias = [];
 $rDiasemana = $class->conex->query("SELECT ID, Diasemana FROM Diasemana ORDER BY ID");
@@ -133,14 +144,7 @@ if (! $activo) {
                 </thead>
                 <tbody>
             <?php        
-                if ($response = $class->query(
-                    "SELECT h.*, ds.Diasemana, hs.Inicio, hs.Fin, a.Nombre as nAula, c.Nombre as nCurso
-                    FROM (((Horarios h
-                        INNER JOIN Diasemana ds ON h.Dia = ds.ID)
-                        INNER JOIN Horas hs ON h.Hora = hs.Hora)
-                        INNER JOIN Cursos c ON h.Grupo = c.ID)
-                        INNER JOIN Aulas a ON h.Aula = a.ID
-                    WHERE ID_PROFESOR = '$profesor' ORDER BY Dia, h.Hora")) {
+                if ($response) {
                     if ($response->num_rows > 0) {
                         $ultimodia = '';
                         while($row = $response->fetch_object()){

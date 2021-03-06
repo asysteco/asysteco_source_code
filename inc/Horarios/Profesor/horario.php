@@ -16,7 +16,11 @@ WHERE h.ID_PROFESOR='$profesor'";
             $franja = $datosprof['Tipo'];
             echo "<h2 style='text-align: center;'>Horario: $n[Nombre]</h2>";
             if ($n['Activo'] == 1) {
-                echo "<a id='editar-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success float-left'>Editar horario</a>";
+                echo "<form action='index.php?ACTION=horarios&OPT=gest-horario' method='POST'>";
+                echo "<input type='hidden' name='profesor' value='$n[ID]' />";
+                echo "<input type='hidden' name='nProfesor' value='$n[Nombre]' />";
+                echo "<button type='submit' id='editar-horario' class='btn btn-success float-left'>Editar horario</button>";
+                echo "</form>";
             } else {
                 echo "<a class='btn btn-danger tp' class='btn btn-success float-left'><i class='tpt'>Usuario desactivado.</i>Editar horario</a>";
             }
@@ -101,11 +105,15 @@ WHERE h.ID_PROFESOR='$profesor'";
             echo "</h1>";
             if ($n['Activo'] == 1) {
                 echo "<div style='text-align: center;'>";
-                echo "<a id='crear-horario' href='index.php?ACTION=horarios&OPT=gest-horario&profesor=$n[ID]&nProfesor=$n[Nombre]' class='btn btn-success' style='width: 100%;'>Crear horario para $n[Nombre]</a>";
+                echo "<form action='index.php?ACTION=horarios&OPT=gest-horario' method='POST'>";
+                echo "<input type='hidden' name='profesor' value='$n[ID]' />";
+                echo "<input type='hidden' name='nProfesor' value='$n[Nombre]' />";
+                echo "<button type='submit' id='editar-horario' class='btn btn-success'>Crear horario</button>";
+                echo "</form>";
                 echo "</div>";
             } else {
                 echo "<div style='text-align: center;'>";
-                echo "<a class='btn btn-danger tp' style='width: 100%;'><i class='tpt'>$n[Nombre] está desactivado</i>Crear horario para $n[Nombre]</a>";
+                echo "<a class='btn btn-danger tp' style='width: 100%;'><i class='tpt'>$n[Nombre] está desactivado</i>Crear horario</a>";
                 echo "</div>";
             }
         }
