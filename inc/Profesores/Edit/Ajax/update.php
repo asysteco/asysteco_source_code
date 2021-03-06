@@ -4,6 +4,9 @@ $profesor = $_POST['ID'];
 $nombre = $_POST['Nombre'];
 $ini = $_POST['Iniciales'];
 $tutor = $_POST['Tutor'];
+$alertMessage = 'Error inesperado, contacte con los administradores...';
+
+$status = false;
 
 if ($profesor != '') {
     $sql = "UPDATE Profesores 
@@ -11,9 +14,8 @@ if ($profesor != '') {
     Profesores.Nombre='$nombre', 
     Profesores.Tutor='" . mysqli_real_escape_string($class->conex, $tutor) . "' WHERE Profesores.ID=" . mysqli_real_escape_string($class->conex, $profesor);
     if ($class->query($sql)) {
-        $MSG = "actualizado";
-    } else {
-        $MSG = 'error-actualizar';
+        $alertMessage = "Datos actualizados correctamente.";
+        $status = true;
     }
 }
 

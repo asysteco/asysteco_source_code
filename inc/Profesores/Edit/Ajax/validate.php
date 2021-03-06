@@ -1,30 +1,42 @@
 <?php
 
-if($class->validFormIni($_POST['Iniciales'])) {
-    if($response = $class->query("SELECT ID FROM $class->profesores WHERE Iniciales = '$_POST[Iniciales]' AND ID = '$_POST[ID]'")) {
+$iniciales = $_POST['Iniciales'];
+$id = $_POST['ID'];
+$nombre = $_POST['Nombre'];
+$alertMessage = 'Error inesperado, contacte con los administradores...';
+
+$status = false;
+$reload = false;
+
+if($class->validFormIni($iniciales)) {
+    if($response = $class->query("SELECT ID FROM Profesores WHERE Iniciales = '$iniciales' AND ID = '$id'")) {
         if(! $response->num_rows > 0) {
-            if($class->searchDuplicateField($_POST['Iniciales'], 'Iniciales', $class->profesores)) {
-                if($class->validFormName($_POST['Nombre'])) {
+            if($class->searchDuplicateField($iniciales, 'Iniciales', 'Profesores')) {
+                if($class->validFormName($nombre)) {
                     include_once($dirs['Profesores'] . 'Edit/Ajax/update.php');
+                    $reload = true;
                 } else {
-                    $MSG = 'warning-nombre';
+                    $alertMessage = 'Nombre no válido.';
                 }
             } else {
-                $MSG = "warning-iniciales";
+                $alertMessage = "Iniciales duplicadas.";
             }
         } else {
-            if($class->validFormName($_POST['Nombre'])) {
+            if($class->validFormName($nombre)) {
                 include_once($dirs['Profesores'] . 'Edit/Ajax/update.php');
+                $reload = true;
             } else {
-                $MSG = 'warning-nombre';
+                $alertMessage = 'Nombre no válido.';
             }
         }
-    } else {
-        $MSG = 'error-query';
     }
-} else {
-    $MSG = 'warning-iniciales';
 }
 
-echo $MSG;
+$result = [
+    'success' => $status,
+    'msg' => $alertMessage,
+    'reload' => $reload
+];
+
+echo json_encode($result);
 exit;
