@@ -1,10 +1,23 @@
 <?php
 
-$profesor = $_GET['profesor'];
+$profesor = $_POST['profesor'];
+$alertMessage = 'Error inesperado, contacte con los administradores...';
 
-if ($class->query("DELETE FROM $class->horarios WHERE ID_PROFESOR='$profesor'")) {
+$deleted = false;
+
+if ($class->query("DELETE FROM Horarios WHERE ID_PROFESOR='$profesor'")) {
     $class->marcajes($profesor, 'remove');
-    header("Location: index.php?ACTION=profesores");
+    $alertMessage = 'Horario eliminado correctamente.';
+    $deleted = true;
 } else {
-    $ERR_MSG = $class->ERR_ASYSTECO;
+    $alertMessage = 'Ha ocurrido un error inesperado.';
 }
+
+$result = [
+    'success' => $deleted,
+    'msg' => $alertMessage,
+    'reload' => false
+];
+
+echo json_encode($result);
+exit;
