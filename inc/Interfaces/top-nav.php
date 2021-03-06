@@ -92,3 +92,7 @@ if ($response = $class->query($novisto)) {
       <h2 id="loading-msg"></h2>
     </div>
   </div>
+
+  <script>
+    console.log("Webhook Ok");
+  </script>
