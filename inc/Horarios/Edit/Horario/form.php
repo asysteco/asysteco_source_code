@@ -3,6 +3,13 @@
 $nombreProfesor = $_POST['nProfesor'] ?? '';
 $profesor = $_POST['profesor'] ?? '';
 $hasHorario = false;
+$whereTipo = '';
+
+if (empty($profesor) || empty($nombreProfesor)) {
+    echo '<h1 style="text-align: center;">Presonal no encontrado...</h1>';
+    echo '<div style="text-align: center;"><a href="index.php?ACTION=profesores" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver atrás</a></div>';
+    exit;
+}
 
 $response = $class->query(
 "SELECT h.*, ds.Diasemana, hs.Inicio, hs.Fin, a.Nombre as nAula, c.Nombre as nCurso
@@ -13,6 +20,22 @@ FROM (((Horarios h
     INNER JOIN Aulas a ON h.Aula = a.ID
 WHERE ID_PROFESOR = '$profesor' ORDER BY Dia, h.Hora");
 
+$rHasHorario = $class->query("SELECT ID, Tipo FROM Horarios WHERE ID_PROFESOR = '$profesor'");
+if ($rHasHorario && $rHasHorario->num_rows > 0) {
+    $hasHorarioData = $rHasHorario->fetch_object();
+    $whereTipo = "WHERE Tipo = '$hasHorarioData->Tipo'";
+    $hasHorario = true;
+}
+
+$tipoHorarios = [];
+if (!$hasHorario) {
+    $rTipo = $class->conex->query("SELECT DISTINCT Tipo FROM Horas");
+    if ($rTipo) {
+        while ($tiposData = $rTipo->fetch_object()) {
+            $tipoHorarios[] = $tiposData->Tipo;
+        }
+    }
+}
 
 $totalDias = [];
 $rDiasemana = $class->conex->query("SELECT ID, Diasemana FROM Diasemana ORDER BY ID");
@@ -28,7 +51,7 @@ if ($rDiasemana->num_rows > 0) {
 }
 
 $totalHoras = [];
-$rHoras = $class->conex->query("SELECT Hora, Inicio, Fin FROM Horas ORDER BY Hora");
+$rHoras = $class->conex->query("SELECT Hora, Inicio, Fin FROM Horas $whereTipo ORDER BY Hora");
 if ($rHoras->num_rows > 0) {
     $nombresHoras = $rHoras->fetch_all();
     foreach ($nombresHoras as $key => $value) {
@@ -66,18 +89,23 @@ if ($rAula->num_rows > 0) {
     }
 }
 
-$activo = $class->conex->query("SELECT ID FROM Profesores WHERE ID = $profesor AND Nombre = '$nombreProfesor' AND Activo = 1")->num_rows;
-if (! $activo) {
-    echo '<h1 style="text-align: center;">Presonal no encontrado...</h1>';
-    echo '<div style="text-align: center;"><a href="index.php?ACTION=profesores" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver atrás</a></div>';
-    exit;
-}
 ?>
 <div class="container">
     <div class='row'>
         <div class='col-12'>
             <h1 id="profesor" data="<?=$profesor;?>">Gestionar Horario de <b><?=$nombreProfesor?></b></h1>
             <div class="add-fields">
+                <?php
+                if (!empty($tipoHorarios)) {
+                    echo '<select id="add-tipo" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">';
+                            foreach($tipoHorarios as $tipo) {
+                                echo "<option value='$tipo'>$tipo</option>";
+                            }
+                    echo '</select>';
+                } else {
+                    echo '<input id="add-tipo" type="hidden" class="form-control" value="Mañana">';
+                }
+                ?>
                 <select id="add-dia" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">
                     <option value=''>Selec. día...</option>
                     <?php
@@ -95,7 +123,7 @@ if (! $activo) {
                             }
                     echo '</select>';
                 } else {
-                    echo '<input id="add-edificio" type="hidden" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;" value="1">';
+                    echo '<input id="add-edificio" type="hidden" class="form-control" value="1">';
                 }
                 ?>
                 <select id="add-hora" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">

@@ -9,7 +9,7 @@ switch ($opt) {
             header("Location: index.php");
         }
 
-        include_once($dirs['Horarios'] . 'Editar/Horario/Ajax/edit.php');
+        include_once($dirs['Horarios'] . 'Edit/Horario/Ajax/edit.php');
         break;
     case 'edit-t_horario':
         if ($_SESSION['Perfil'] !== 'Admin') {

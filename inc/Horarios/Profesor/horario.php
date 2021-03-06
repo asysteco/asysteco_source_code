@@ -108,7 +108,7 @@ WHERE h.ID_PROFESOR='$profesor'";
                 echo "<form action='index.php?ACTION=horarios&OPT=gest-horario' method='POST'>";
                 echo "<input type='hidden' name='profesor' value='$n[ID]' />";
                 echo "<input type='hidden' name='nProfesor' value='$n[Nombre]' />";
-                echo "<button type='submit' id='editar-horario' class='btn btn-success'>Crear horario</button>";
+                echo "<button type='submit' style='width: 100%;' id='editar-horario' class='btn btn-success'>Crear horario</button>";
                 echo "</form>";
                 echo "</div>";
             } else {

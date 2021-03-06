@@ -3,6 +3,7 @@
 $action = $_POST['action'] ?? '';
 $rowId = $_POST['rowId'] ?? '';
 $profesor = $_POST['profesor'] ?? '';
+$tipo = $_POST['tipo'] ?? '';
 $dia = $_POST['dia'] ?? '';
 $edificio = $_POST['edificio'] ?? '';
 $hora = $_POST['hora'] ?? '';
@@ -33,7 +34,7 @@ if (!empty($action)) {
         if (!empty($profesor) && !empty($dia) && !empty($hora) && !empty($aula) && !empty($curso)) {
             if ($resp = isAvailable($class->conex, $profesor, $dia, $hora, $aula, $curso)) {
                 $sql = "INSERT INTO Horarios (ID_PROFESOR, Dia, Hora, Tipo, Edificio, Aula, Grupo)
-                        VALUES ('$profesor', '$dia', '$hora', 'Mañana', '$edificio', '$aula', '$curso')";
+                        VALUES ('$profesor', '$dia', '$hora', '$tipo', '$edificio', '$aula', '$curso')";
                 $query = $class->conex->query($sql);
                 $class->marcajes($profesor, 'remove');
                 $class->marcajes($profesor, 'add');
