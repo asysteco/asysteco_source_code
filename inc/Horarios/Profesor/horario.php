@@ -1,7 +1,7 @@
 <div class="container">
     <?php
 
-    $profesor = $_GET['profesor'];
+    $profesor = $_POST['profesor'];
 
     if (!$n = $class->query("SELECT Nombre, ID, Activo FROM Profesores WHERE ID='$profesor'")->fetch_assoc()) {
         $ERR_MSG = $class->ERR_ASYSTECO;
