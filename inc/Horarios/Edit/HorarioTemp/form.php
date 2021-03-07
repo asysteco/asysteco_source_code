@@ -11,27 +11,24 @@ if ($programDate !== '') {
 
     $response = $class->query(
         "SELECT h.*, ds.Diasemana, hs.Inicio, hs.Fin, a.Nombre as nAula, c.Nombre as nCurso
-        FROM (((T_horarios h
-            INNER JOIN Diasemana ds ON h.Dia = ds.ID)
-            INNER JOIN Horas hs ON h.Hora = hs.Hora)
-            INNER JOIN Cursos c ON h.Grupo = c.ID)
+        FROM T_horarios h
+            INNER JOIN Diasemana ds ON h.Dia = ds.ID
+            INNER JOIN Horas hs ON h.Hora = hs.Hora AND h.Tipo = hs.Tipo
+            INNER JOIN Cursos c ON h.Grupo = c.ID
             INNER JOIN Aulas a ON h.Aula = a.ID
         WHERE ID_PROFESOR = '$profesor'
             AND Fecha_incorpora = '$mysqlProgramDate'
         ORDER BY Dia, h.Hora");
 
+    $defaultTipo = '';
+    $hasHorario = false;
     $rHasHorario = $class->query("SELECT ID, Tipo FROM T_horarios WHERE ID_PROFESOR = '$profesor'");
     if ($rHasHorario && $rHasHorario->num_rows > 0) {
         $hasHorarioData = $rHasHorario->fetch_object();
-        $whereTipo = "WHERE Tipo = '$hasHorarioData->Tipo'";
         $hasHorario = true;
-    }
-
-    $tipoHorarios = [];
-    $rTipo = $class->conex->query("SELECT DISTINCT Tipo FROM Horas");
-    if ($rTipo) {
-        while ($tiposData = $rTipo->fetch_object()) {
-            $tipoHorarios[] = $tiposData->Tipo;
+        
+        if (empty($defaultTipo)) {
+            $defaultTipo = $hasHorarioData->Tipo;
         }
     }
 
@@ -49,14 +46,9 @@ if ($programDate !== '') {
     }
     
     $totalHoras = [];
-    $defaultTipo = '';
     $rHoras = $class->conex->query("SELECT Hora, Inicio, Fin, Tipo FROM Horas ORDER BY Hora");
     if ($rHoras->num_rows > 0) {
         while ($nombresHoras = $rHoras->fetch_object()) {
-            if (empty($defaultTipo)) {
-                $defaultTipo = $nombresHoras->Tipo;
-            }
-
             $horaInicio = $class->transformHoraMinutos($nombresHoras->Inicio);
             $horaFin = $class->transformHoraMinutos($nombresHoras->Fin);
             $totalHoras[$nombresHoras->Tipo][$nombresHoras->Hora] = $horaInicio . ' - ' . $horaFin;
@@ -97,12 +89,17 @@ if ($programDate !== '') {
                 <h4 id="program-date" data="<?=$mysqlProgramDate?>" data-real="<?=$programDate?>">*<i> Al "Programar este horario", entrará en vigor el día <?=$programDate?></i></h4>
                 <div class="add-fields">
                     <?php
-                    if (!empty($tipoHorarios) && $totalTipos > 1) {
+                    if (!$hasHorario && $totalTipos > 1) {
                         echo '<select id="add-tipo" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">';
                         foreach($totalHoras as $tipo => $horas) {
+                            if (empty($defaultTipo)) {
+                                $defaultTipo = $tipo;
+                            }
                             echo "<option value='$tipo'>$tipo</option>";
                         }
                         echo '</select>';
+                    } elseif ($hasHorario) {
+                        echo "<input id='add-tipo' type='hidden' class='form-control' value='$defaultTipo'>";
                     } else {
                         echo '<input id="add-tipo" type="hidden" class="form-control" value="Mañana">';
                     }
@@ -117,7 +114,7 @@ if ($programDate !== '') {
                     <?php
                     if (isset($options['edificios']) && $options['edificios'] > 1) {
                         echo '<select id="add-edificio" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">';
-                            echo "<option value=''>Selec. Edificio...</option>";
+                            echo "<option value=''>Selec. Edificio</option>";
                                 for($i = 1; $i <= $options['edificios']; $i++) {
                                     echo "<option value='$i'> Edificio $i</option>";
                                 }
@@ -125,8 +122,7 @@ if ($programDate !== '') {
                     } else {
                         echo '<input id="add-edificio" type="hidden" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;" value="1">';
                     }
-                    ?>
-                    <?php
+
                     foreach($totalHoras as $tipo => $horas) {
                         $selected = $defaultTipo === $tipo ? 'inline-block' : 'none';
                         echo "<select id='add-hora-$tipo' class='form-control select-hora' style='display: $selected; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;'>";
@@ -137,7 +133,7 @@ if ($programDate !== '') {
                     }
                     ?>
                     <select id="add-aula" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">
-                        <option value=''>Selecciona un Aula...</option>
+                        <option value=''>Selec. Aula</option>
                         <?php
                         foreach($totalAulas as $key => $value) {
                             echo "<option value='$value'>$key</option>";
@@ -145,7 +141,7 @@ if ($programDate !== '') {
                         ?>
                     </select>
                     <select id="add-curso" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">
-                        <option value=''>Selecciona un Curso/Grupo...</option>
+                        <option value=''>Selec. Curso/Grupo</option>
                         <?php
                         foreach($totalCursos as $key => $value) {
                             echo "<option value='$value'>$key</option>";
@@ -175,7 +171,7 @@ if ($programDate !== '') {
                             echo '<a id="cancel-program" action="cancel-program" class="btn btn-danger act">Cancelar programación</a>';
                             echo '<a id="apply-program" action="apply-program" class="btn btn-success act">Programar este horario</a>';
                             $ultimodia = '';
-                            while($row = $response->fetch_object()){
+                            while($row = $response->fetch_object()) {
                                 if ($ultimodia !== $row->Diasemana) {
                                     echo "<tr style='text-align: center; background-color: black; color: white; font-size: 15pt;'>";
                                     echo "<td colspan='100%'>".$row->Diasemana."</td>";

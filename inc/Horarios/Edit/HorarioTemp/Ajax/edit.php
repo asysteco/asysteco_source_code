@@ -132,6 +132,8 @@ if ($action === 'add') {
         $alertMessage = 'Error al cancelar la programación.';
         $reload = true;
     }
+} else {
+    $alertMessage = 'Acción no válida.';
 }
 
 $result = [

@@ -2,8 +2,6 @@
 
 $nombreProfesor = $_POST['nProfesor'] ?? '';
 $profesor = $_POST['profesor'] ?? '';
-$hasHorario = false;
-$whereTipo = '';
 
 if (empty($profesor) || empty($nombreProfesor)) {
     echo '<h1 style="text-align: center;">Presonal no encontrado...</h1>';
@@ -13,27 +11,22 @@ if (empty($profesor) || empty($nombreProfesor)) {
 
 $response = $class->query(
 "SELECT h.*, ds.Diasemana, hs.Inicio, hs.Fin, a.Nombre as nAula, c.Nombre as nCurso
-FROM (((Horarios h
-    INNER JOIN Diasemana ds ON h.Dia = ds.ID)
-    INNER JOIN Horas hs ON h.Hora = hs.Hora)
-    INNER JOIN Cursos c ON h.Grupo = c.ID)
+FROM Horarios h
+    INNER JOIN Diasemana ds ON h.Dia = ds.ID
+    INNER JOIN Horas hs ON h.Hora = hs.Hora AND h.Tipo = hs.Tipo
+    INNER JOIN Cursos c ON h.Grupo = c.ID
     INNER JOIN Aulas a ON h.Aula = a.ID
 WHERE ID_PROFESOR = '$profesor' ORDER BY Dia, h.Hora");
 
+$defaultTipo = '';
+$hasHorario = false;
 $rHasHorario = $class->query("SELECT ID, Tipo FROM Horarios WHERE ID_PROFESOR = '$profesor'");
 if ($rHasHorario && $rHasHorario->num_rows > 0) {
     $hasHorarioData = $rHasHorario->fetch_object();
-    $whereTipo = "WHERE Tipo = '$hasHorarioData->Tipo'";
     $hasHorario = true;
-}
-
-$tipoHorarios = [];
-if (!$hasHorario) {
-    $rTipo = $class->conex->query("SELECT DISTINCT Tipo FROM Horas");
-    if ($rTipo) {
-        while ($tiposData = $rTipo->fetch_object()) {
-            $tipoHorarios[] = $tiposData->Tipo;
-        }
+    
+    if (empty($defaultTipo)) {
+        $defaultTipo = $hasHorarioData->Tipo;
     }
 }
 
@@ -51,17 +44,15 @@ if ($rDiasemana->num_rows > 0) {
 }
 
 $totalHoras = [];
-$rHoras = $class->conex->query("SELECT Hora, Inicio, Fin FROM Horas $whereTipo ORDER BY Hora");
+$rHoras = $class->conex->query("SELECT Hora, Inicio, Fin, Tipo FROM Horas ORDER BY Hora");
 if ($rHoras->num_rows > 0) {
-    $nombresHoras = $rHoras->fetch_all();
-    foreach ($nombresHoras as $key => $value) {
-        if (isset($value[0]) && isset($value[1])) {
-            $nombre = $value[1] . ' - ' . $value[2];
-            $id = $value[0];
-            $totalHoras[$nombre] = $id;
-        }
+    while ($nombresHoras = $rHoras->fetch_object()) {
+        $horaInicio = $class->transformHoraMinutos($nombresHoras->Inicio);
+        $horaFin = $class->transformHoraMinutos($nombresHoras->Fin);
+        $totalHoras[$nombresHoras->Tipo][$nombresHoras->Hora] = $horaInicio . ' - ' . $horaFin;
     }
 }
+$totalTipos = count($totalHoras);
 
 $totalCursos = [];
 $rCurso = $class->conex->query("SELECT ID, Nombre FROM Cursos ORDER BY Nombre");
@@ -96,18 +87,22 @@ if ($rAula->num_rows > 0) {
             <h1 id="profesor" data="<?=$profesor;?>">Gestionar Horario de <b><?=$nombreProfesor?></b></h1>
             <div class="add-fields">
                 <?php
-                if (!empty($tipoHorarios)) {
+                if (!$hasHorario && $totalTipos > 1) {
                     echo '<select id="add-tipo" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">';
-                            foreach($tipoHorarios as $tipo) {
-                                echo "<option value='$tipo'>$tipo</option>";
-                            }
+                    foreach($totalHoras as $tipo => $horas) {
+                        if (empty($defaultTipo)) {
+                            $defaultTipo = $tipo;
+                        }
+                        echo "<option value='$tipo'>$tipo</option>";
+                    }
                     echo '</select>';
+                } elseif ($hasHorario) {
+                    echo "<input id='add-tipo' type='hidden' class='form-control' value='$defaultTipo'>";
                 } else {
                     echo '<input id="add-tipo" type="hidden" class="form-control" value="Mañana">';
                 }
                 ?>
                 <select id="add-dia" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">
-                    <option value=''>Selec. día...</option>
                     <?php
                     foreach($totalDias as $key => $value) {
                         echo "<option value='$value'>$key</option>";
@@ -117,7 +112,7 @@ if ($rAula->num_rows > 0) {
                 <?php
                 if (isset($options['edificios']) && $options['edificios'] > 1) {
                     echo '<select id="add-edificio" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">';
-                        echo "<option value=''>Selec. Edificio...</option>";
+                        echo "<option value=''>Selec. Edificio</option>";
                             for($i = 1; $i <= $options['edificios']; $i++) {
                                 echo "<option value='$i'> Edificio $i</option>";
                             }
@@ -125,17 +120,18 @@ if ($rAula->num_rows > 0) {
                 } else {
                     echo '<input id="add-edificio" type="hidden" class="form-control" value="1">';
                 }
-                ?>
-                <select id="add-hora" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">
-                    <option value=''>Selec. hora...</option>
-                    <?php
-                    foreach($totalHoras as $key => $value) {
-                        echo "<option value='$value'>$key</option>";
+
+                foreach($totalHoras as $tipo => $horas) {
+                    $selected = $defaultTipo === $tipo ? 'inline-block' : 'none';
+                    echo "<select id='add-hora-$tipo' class='form-control select-hora' style='display: $selected; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;'>";
+                    foreach($horas as $hora => $franja) {
+                        echo "<option value='$hora'>$franja</option>";
                     }
-                    ?>
-                </select>
+                    echo '</select> ';
+                }
+                ?>
                 <select id="add-aula" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">
-                    <option value=''>Selec. Aula...</option>
+                    <option value=''>Selec. Aula</option>
                     <?php
                     foreach($totalAulas as $key => $value) {
                         echo "<option value='$value'>$key</option>";
@@ -143,7 +139,7 @@ if ($rAula->num_rows > 0) {
                     ?>
                 </select>
                 <select id="add-curso" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">
-                    <option value=''>Selec. Curso/Grupo...</option>
+                    <option value=''>Selec. Curso/Grupo</option>
                     <?php
                     foreach($totalCursos as $key => $value) {
                         echo "<option value='$value'>$key</option>";
@@ -155,6 +151,7 @@ if ($rAula->num_rows > 0) {
             <div id="programar-horario">
                 <form action="<?= $_SERVER['REQUEST_URI'] ?>" method="POST">
                     <input type="hidden" name="profesor" value="<?= $profesor ?>" />
+                    <input type="hidden" name="nProfesor" value="<?= $nombreProfesor ?>" />
                     <input type="text" id="fecha-programar-horario" name="programDate" class="form-control" autocomplete="off" placeholder="Selecciona una fecha..." style="display: inline-block; width: 20%; min-width: 250px; max-width: 20%; margin-bottom: 5px;" required>
                     <button type="submit" action="program" class="btn btn-success act" style="display: inline-block; margin-top: -4px;">Programar Horario</button>
                 </form>
@@ -225,7 +222,7 @@ if ($rAula->num_rows > 0) {
         </div>
     </div>
 </div>
-<a id="cancel-btn" action="cancel" class="btn btn-danger act">Cancelar cambios</a>
-<a id="update-btn" action="update" class="btn btn-success act">Aplicar cambios</a>
+<a id="cancel-btn" action="cancel" class="btn btn-danger act" style="display: none;">Cancelar cambios</a>
+<a id="update-btn" action="update" class="btn btn-success act" style="display: none;">Aplicar cambios</a>
 
 <script src="js/edit-horario.js"></script>

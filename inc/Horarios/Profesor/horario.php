@@ -7,8 +7,8 @@
         $ERR_MSG = $class->ERR_ASYSTECO;
     }
     $sql = "SELECT DISTINCT Tipo
-FROM Horarios h
-WHERE h.ID_PROFESOR='$profesor'";
+    FROM Horarios h
+    WHERE h.ID_PROFESOR='$profesor'";
     if ($response = $class->query($sql)) {
         if ($response->num_rows == 1) {
             $dia = $class->getDate();
