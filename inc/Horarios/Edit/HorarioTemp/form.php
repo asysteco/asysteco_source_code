@@ -52,6 +52,10 @@ if ($programDate !== '') {
             $horaInicio = $class->transformHoraMinutos($nombresHoras->Inicio);
             $horaFin = $class->transformHoraMinutos($nombresHoras->Fin);
             $totalHoras[$nombresHoras->Tipo][$nombresHoras->Hora] = $horaInicio . ' - ' . $horaFin;
+            
+            if (empty($defaultTipo)) {
+                $defaultTipo = $nombresHoras->Tipo;
+            }
         }
     }
     $totalTipos = count($totalHoras);

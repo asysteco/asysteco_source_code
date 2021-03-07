@@ -50,6 +50,10 @@ if ($rHoras->num_rows > 0) {
         $horaInicio = $class->transformHoraMinutos($nombresHoras->Inicio);
         $horaFin = $class->transformHoraMinutos($nombresHoras->Fin);
         $totalHoras[$nombresHoras->Tipo][$nombresHoras->Hora] = $horaInicio . ' - ' . $horaFin;
+
+        if (empty($defaultTipo)) {
+            $defaultTipo = $nombresHoras->Tipo;
+        }
     }
 }
 $totalTipos = count($totalHoras);
@@ -90,9 +94,6 @@ if ($rAula->num_rows > 0) {
                 if (!$hasHorario && $totalTipos > 1) {
                     echo '<select id="add-tipo" class="form-control" style="display: inline-block; width: 15%; min-width: 150px; max-width: 15%; margin-bottom: 5px;">';
                     foreach($totalHoras as $tipo => $horas) {
-                        if (empty($defaultTipo)) {
-                            $defaultTipo = $tipo;
-                        }
                         echo "<option value='$tipo'>$tipo</option>";
                     }
                     echo '</select>';
