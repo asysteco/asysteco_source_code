@@ -23,7 +23,7 @@ switch ($opt) {
         if ($_SESSION['Perfil'] !== 'Admin') {
             header("Location: index.php");
         }
-        
+
         $scripts = '<link rel="stylesheet" href="css/gest-horario.css">';
         $extras = "
                     $(function (){
@@ -35,7 +35,7 @@ switch ($opt) {
                 ";
         include_once($dirs['Interfaces'] . 'header.php');
         include_once($dirs['Interfaces'] . 'top-nav.php');
-        if (isset($_GET['programDate']) && $class->validFormDate($_GET['programDate'])) {
+        if (isset($_POST['programDate']) && $class->validFormDate($_POST['programDate'])) {
             include_once($dirs['Horarios'] . 'Edit/HorarioTemp/form.php');
         } else {
             include_once($dirs['Horarios'] . 'Edit/Horario/form.php');

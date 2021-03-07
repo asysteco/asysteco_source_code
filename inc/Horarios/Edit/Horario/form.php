@@ -153,8 +153,11 @@ if ($rAula->num_rows > 0) {
                 <a action="add" class="btn btn-success act" style="margin-bottom: 5px;">Añadir Hora</a>
             </div>
             <div id="programar-horario">
-                <input type="text" id="fecha-programar-horario" class="form-control" autocomplete="off" placeholder="Selecciona una fecha..." style="display: inline-block; width: 20%; min-width: 250px; max-width: 20%; margin-bottom: 5px;">
-                <a action="program" class="btn btn-success act" style="display: inline-block; margin-top: -4px;">Programar Horario</a>
+                <form action="<?= $_SERVER['REQUEST_URI'] ?>" method="POST">
+                    <input type="hidden" name="profesor" value="<?= $profesor ?>" />
+                    <input type="text" id="fecha-programar-horario" name="programDate" class="form-control" autocomplete="off" placeholder="Selecciona una fecha..." style="display: inline-block; width: 20%; min-width: 250px; max-width: 20%; margin-bottom: 5px;" required>
+                    <button type="submit" action="program" class="btn btn-success act" style="display: inline-block; margin-top: -4px;">Programar Horario</button>
+                </form>
             </div>
             <table id="tableHorarios" class="table table-striped">
                 <thead>
