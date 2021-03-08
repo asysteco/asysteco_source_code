@@ -46,8 +46,8 @@ if(isset($fechaInicio) && !empty($fechaInicio) && isset($fechaFin) && !empty($fe
 if(! $response = $class->query("SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
 FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
     INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
-WHERE Profesores.Activo=1
-ORDER BY Profesores.Nombre ASC")) {
+WHERE Profesores.Activo=1 $whereFilter
+ORDER BY Marcajes.Fecha, Profesores.Nombre ASC")) {
     $errorMessage = 'Ha ocurrido un error inesperado...';
 }
 
@@ -63,15 +63,14 @@ if(empty($errorMessage) && $response->num_rows > 0) {
         for($i=0; $i<=$count; $i++) 
         {
             $offset_var = $i * $page_size;
+
             $sql = "SELECT Marcajes.*, Nombre, Iniciales, Diasemana.Diasemana
             FROM (Marcajes INNER JOIN Profesores ON Marcajes.ID_PROFESOR=Profesores.ID)
                 INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID
             WHERE Profesores.Activo=1 $whereFilter
             ORDER BY Marcajes.Fecha, Profesores.Nombre ASC 
             LIMIT $page_size OFFSET $offset_var";
-            if (!$result = $mysql->query($sql)) {
-                throw new Exception('Ha ocurrido un error inesperado...');
-            }
+            $result = $class->autocommitOffQuery($mysql, $sql, 'Ha ocurrido un error inesperado...');
 
             while ($datos = $result->fetch_assoc())
             {
@@ -112,27 +111,21 @@ if(empty($errorMessage) && $response->num_rows > 0) {
         
             }
         }
+
+        //cabeceras para descarga
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $fn . '";');
+        
+        ob_end_clean();
+        
+        echo $ff.$fn;
+        exit;
     } catch (Exception $e) {
-        $errorMessage = $e;
+        $errorMessage = $e->getMessage();
         $mysql->rollback();
     }
     $mysql->commit();
-
-    //cabeceras para descarga
-    header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename="' . $fn . '";');
-    
-    ob_end_clean();
-    
-    echo $ff.$fn;
-    exit;
 }
 
-if(empty($errorMessage)) {
-    echo "<div style='width: 100%; height: 100vh; text-align: center;'>";
-    echo "<div style='box-shadow: 4px 4px 16px 16px grey; width: 50%; margin-left: auto; margin-right: auto; border-radius: 10px;'>";
-        echo "<h1 style='color: red; margin-top: 40vh; vartical-align: middle; padding: 25px;'>No existen datos a exportar...</h1>";
-    echo "</div>";
-    echo "</div>";
-    echo "<script>setTimeout(function(){window.close()}, 1500)</script>";
-}
+echo 'No-data';
+exit;

@@ -1,7 +1,7 @@
 <?php
 
 $fechahoy = date('Y-m-d');
-$sql = "SELECT F.ID_PROFESOR, P.Nombre, F.F_entrada, F.F_Salida, F.DIA_SEMANA, F.Fecha
+$sql = "SELECT F.ID_PROFESOR, P.Nombre, P.TIPO, F.F_entrada, F.F_Salida, F.DIA_SEMANA, F.Fecha
 FROM (Fichar F INNER JOIN Profesores P ON F.ID_PROFESOR=P.ID)
 WHERE F.Fecha = '$fechahoy'
 ORDER BY F.F_entrada DESC, P.Nombre ASC";
@@ -23,7 +23,10 @@ if ($result =  $class->query($sql)) {
             {
                 $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
                 echo "<tr>";
-                    echo "<td data-th='NOMBRE'>$datos[Nombre]</td>";
+
+                $typeIcon = $datos['TIPO'] == 2? '<i class="fa fa-graduation-cap" aria-hidden="true" title="Profesorado"></i>': '<i class="fa fa-user personal-icon-azul" aria-hidden="true" title="Personal No Docente"></i>';
+                
+                    echo "<td class='text-left' data-th='NOMBRE'>$typeIcon $datos[Nombre]</td>";
                     echo "<td data-th='FICHAJE DE ENTRADA'>$datos[F_entrada]</td>";
                     echo "<td data-th='FICHAJE DE SALIDA'>$datos[F_Salida]</td>";
                     echo "<td data-th='DIA SEMANA'>$datos[DIA_SEMANA]</td>";

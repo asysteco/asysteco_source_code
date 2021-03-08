@@ -66,6 +66,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
     try {
         for ($i = 0; $i <= $count; $i++) {
             $offset_var = $i * $page_size;
+            
             $sql = "SELECT M.*, P.Nombre, P.Iniciales, D.Diasemana
             FROM (Marcajes M INNER JOIN Profesores P ON M.ID_PROFESOR=P.ID)
                 INNER JOIN Diasemana D ON M.Dia=D.ID
@@ -74,9 +75,7 @@ if (empty($errorMessage) && $response->num_rows > 0) {
             ORDER BY M.Fecha DESC, P.Nombre ASC, M.Hora ASC 
             LIMIT $page_size OFFSET $offset_var";
 
-            if (!$result = $mysql->query($sql)) {
-                throw new Exception('Ha ocurrido un error...');
-            }
+            $result = $class->autocommitOffQuery($mysql, $sql, 'Ha ocurrido un error...');
 
             while ($datos = $result->fetch_assoc()) {
                 $fecha = $class->formatSQLDateToEuropeanDate($datos['Fecha']);
@@ -105,17 +104,11 @@ if (empty($errorMessage) && $response->num_rows > 0) {
         echo $ff . $fn;
         exit;
     } catch (Exception $e) {
-        $errorMessage = $e;
+        $errorMessage = $e->getMessage();
         $class->conex->rollback();
     }
     $class->conex->commit();
 }
 
-if (!empty($errorMessage)) {
-    echo "<div style='width: 100%; height: 100vh; text-align: center;'>";
-    echo "<div style='box-shadow: 4px 4px 16px 16px grey; width: 50%; margin-left: auto; margin-right: auto; border-radius: 10px;'>";
-    echo "<h1 style='color: red; margin-top: 40vh; vartical-align: middle; padding: 25px;'>" . $errorMessage . "</h1>";
-    echo "</div>";
-    echo "</div>";
-    echo "<script>setTimeout(function(){window.close()}, 1500)</script>";
-}
+echo 'No-data';
+exit;
