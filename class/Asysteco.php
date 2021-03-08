@@ -206,28 +206,23 @@ class Asysteco
     {
         if ($this->conex) {
             $password = $this->encryptPassword($password);
-            if ($response = $this->query("SELECT ID FROM $this->profesores WHERE Iniciales='$username' AND Password='$password' AND Activo='1'")) {
-                if ($response->num_rows == 1) {
-                    if ($response = $this->query("SELECT $this->profesores.ID, $this->profesores.Nombre, $this->profesores.Iniciales, $this->perfiles.Tipo 
-                                                    FROM $this->profesores INNER JOIN $this->perfiles ON $this->profesores.TIPO=$this->perfiles.ID 
-                                                    WHERE Iniciales='$username' AND Password='$password'")) {
-                        $fila = $response->fetch_assoc();
-
-                        $_SESSION['logged'] = true;
-                        $_SESSION['LID'] = $Titulo;
-                        $_SESSION['Iniciales'] = $fila['Iniciales'];
-                        $_SESSION['ID'] = $fila['ID'];
-                        $_SESSION['Nombre'] = $fila['Nombre'];
-                        $_SESSION['Perfil'] = $fila['Tipo'];
-                        $_SESSION['changedPass'] = 0;
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
+            if ($response = $this->query("SELECT $this->profesores.ID, $this->profesores.Nombre, $this->profesores.Iniciales, $this->perfiles.Tipo 
+                                            FROM $this->profesores INNER JOIN $this->perfiles ON $this->profesores.TIPO=$this->perfiles.ID 
+                                            WHERE Iniciales='$username' AND Password='$password' AND Activo = 1 AND Sustituido = 0")) {
+                $fila = $response->fetch_assoc();
+                
+                if ($response->num_rows != 1) {
                     $this->ERR_ASYSTECO = "Usuario o contraseña no válidos.";
                     return false;
                 }
+                $_SESSION['logged'] = true;
+                $_SESSION['LID'] = $Titulo;
+                $_SESSION['Iniciales'] = $fila['Iniciales'];
+                $_SESSION['ID'] = $fila['ID'];
+                $_SESSION['Nombre'] = $fila['Nombre'];
+                $_SESSION['Perfil'] = $fila['Tipo'];
+                $_SESSION['changedPass'] = 0;
+                return true;
             } else {
                 return false;
             }
