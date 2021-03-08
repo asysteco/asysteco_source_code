@@ -15,10 +15,9 @@ if ($_SESSION['Perfil'] === 'Admin') {
             </div>
         </div>
 
-        <?php
-        if ($options['autoscroll']) {
-            include_once($dirs['public'] . 'js/scroller-interaction.js');
-        }
+        <?php if ($options['autoscroll']) { ?>
+            <script src="js/scroller-interaction.js"></script>
+        <?php }
     } else {
         ?>
         <div class="container-fluid">
@@ -31,10 +30,10 @@ if ($_SESSION['Perfil'] === 'Admin') {
                 </div>
             </div>
         </div>
-    <?php
-        if ($options['autoscroll']) {
-            include_once($dirs['public'] . 'js/scroller-interaction.js');
-        }
+
+        <?php if ($options['autoscroll']) { ?>
+            <script src="js/scroller-interaction.js"></script>
+        <?php } 
     }
 } else {
     include_once($dirs['Interfaces'] . 'top-nav.php');
