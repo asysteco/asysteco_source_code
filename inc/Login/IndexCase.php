@@ -7,9 +7,27 @@ if (isset($_POST['Iniciales']) || isset($_POST['pass'])) {
 $perfil = $_SESSION['Perfil'] ?? '';
 
 if ($perfil === 'Admin') {
-    header('Location: index.php?ACTION=profesores');
+    if (!$class->isLogged($Titulo)) {
+        include_once($dirs['Login'] . 'form.php');
+      return;
+    }
+  
+    if (!$class->compruebaCambioPass()) {
+      require_once($dirs['FirstChangePass'] . 'IndexCase.php');
+      return;
+    }
+    require_once($dirs['Profesores'] . 'IndexCase.php');
 } elseif ($perfil === 'Profesor' || $perfil === 'Personal') {
-    header('Location: index.php?ACTION=qrcoder');
+    if (!$class->isLogged($Titulo)) {
+        include_once($dirs['Login'] . 'form.php');
+      return;
+    }
+  
+    if (!$class->compruebaCambioPass()) {
+      require_once($dirs['FirstChangePass'] . 'IndexCase.php');
+      return;
+    }
+    require_once($dirs['Qr'] . 'IndexCase.php');
 } else {
     include_once($dirs['Login'] . 'form.php');
 }
