@@ -8,7 +8,7 @@ $perfil = $_SESSION['Perfil'] ?? '';
 
 if ($perfil === 'Admin') {
     if (!$class->isLogged($Titulo)) {
-      require_once($dirs['Login'] . 'IndexCase.php');
+        include_once($dirs['Login'] . 'form.php');
       return;
     }
   
@@ -19,7 +19,7 @@ if ($perfil === 'Admin') {
     require_once($dirs['Profesores'] . 'IndexCase.php');
 } elseif ($perfil === 'Profesor' || $perfil === 'Personal') {
     if (!$class->isLogged($Titulo)) {
-      require_once($dirs['Login'] . 'IndexCase.php');
+        include_once($dirs['Login'] . 'form.php');
       return;
     }
   
