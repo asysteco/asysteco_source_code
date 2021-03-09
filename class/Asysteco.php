@@ -414,7 +414,7 @@ class Asysteco
 
     function FicharWeb($profesor = null, $activeFicharSalida = 0)
     {
-        if (empty($profesor) || !preg_match('/^([2-9][0-9]*)$/', $profesor)) {
+        if (empty($profesor) || $profesor == 1 || !preg_match('/^[0-9]+$/', $profesor)) {
             $this->ERR_ASYSTECO = "<span id='noqr' style='color: white; font-weight: bolder; background-color: red;'><h3>No existe el código.</h3></span>";
             return false;
         }
