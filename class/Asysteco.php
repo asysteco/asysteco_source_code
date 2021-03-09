@@ -80,7 +80,7 @@ class Asysteco
     {
         if (isset($_SESSION['logged']) &&
             $_SESSION['logged'] === true &&
-            $_SESSION['LID'] === $Titulo &&
+            $_SESSION['LID'] === "$Titulo" &&
             isset($_SESSION['Nombre']) &&
             isset($_SESSION['Iniciales']) &&
             !empty($_SESSION['Nombre']) &&
@@ -109,6 +109,7 @@ class Asysteco
                 return true;
             } else {
                 $this->ERR_ASYSTECO = "Debes cambiar la contraseña.";
+                return false;
             }
         }
         
@@ -117,7 +118,6 @@ class Asysteco
 
     function Logout()
     {
-        $home = $_SESSION['LID'];
         $_SESSION['logged'] = false;
         unset($_SESSION['LID']);
         unset($_SESSION['Nombre']);
@@ -125,7 +125,7 @@ class Asysteco
         unset($_SESSION['changedPass']);
         session_destroy();
         session_abort();
-        header("Refresh: 1; https://asysteco.com/$home/index.php");
+        header("Refresh: 1; https://asysteco.com/Bezmiliana/index.php");
     }
 
     function validFormName($registername)
@@ -198,64 +198,63 @@ class Asysteco
 
     function encryptPassword($pass)
     {
-        return sha1($pass);
+        $pass = sha1($pass);
+        return $pass;
     }
 
     function Login($username, $password, $Titulo)
     {
-        $password = $this->encryptPassword($password);
-        $sql = "SELECT p.ID, p.Nombre, p.Iniciales, pf.Tipo 
-        FROM Profesores p 
-            INNER JOIN Perfiles pf ON p.TIPO=pf.ID 
-        WHERE Iniciales='$username'
-            AND Password='$password'
-            AND Activo = 1
-            AND Sustituido = 0";
-        if ($this->conex && $response = $this->query($sql)) {
-            if ($response->num_rows != 1) {
-                $this->ERR_ASYSTECO = "Usuario o contraseña no válidos.";
-                return false;
-            }
-
-            $fila = $response->fetch_assoc();
-            $_SESSION['logged'] = true;
-            $_SESSION['LID'] = $Titulo;
-            $_SESSION['Iniciales'] = $fila['Iniciales'];
-            $_SESSION['ID'] = $fila['ID'];
-            $_SESSION['Nombre'] = $fila['Nombre'];
-            $_SESSION['Perfil'] = $fila['Tipo'];
-            $_SESSION['changedPass'] = 0;
-            return true;
-        }
-        
-        return false;
-    }
-
-    function LoginAdminQR($id, $Titulo)
-    {
-        $sql = "SELECT Profesores.ID, Nombre, Iniciales, Perfiles.Tipo
-        FROM Profesores
-            INNER JOIN Perfiles ON Profesores.Tipo=Perfiles.ID
-        WHERE Profesores.ID='$id'
-            AND Activo = 1
-                AND Profesores.Tipo = 1";
-        if ($this->conex && $response = $this->query($sql)) {
-            if ($response->num_rows == 1) {
+        if ($this->conex) {
+            $password = $this->encryptPassword($password);
+            if ($response = $this->query("SELECT $this->profesores.ID, $this->profesores.Nombre, $this->profesores.Iniciales, $this->perfiles.Tipo 
+                                            FROM $this->profesores INNER JOIN $this->perfiles ON $this->profesores.TIPO=$this->perfiles.ID 
+                                            WHERE Iniciales='$username' AND Password='$password' AND Activo = 1 AND Sustituido = 0")) {
                 $fila = $response->fetch_assoc();
-
+                
+                if ($response->num_rows != 1) {
+                    $this->ERR_ASYSTECO = "Usuario o contraseña no válidos.";
+                    return false;
+                }
                 $_SESSION['logged'] = true;
                 $_SESSION['LID'] = $Titulo;
                 $_SESSION['Iniciales'] = $fila['Iniciales'];
                 $_SESSION['ID'] = $fila['ID'];
                 $_SESSION['Nombre'] = $fila['Nombre'];
                 $_SESSION['Perfil'] = $fila['Tipo'];
+                $_SESSION['changedPass'] = 0;
                 return true;
             } else {
-                $this->ERR_ASYSTECO = "Código QR incorrecto, solo un administrador puede activar el lector.";
+                return false;
             }
+        } else {
+            return false;
         }
+    }
 
-        return false;
+    function LoginAdminQR($id, $Titulo)
+    {
+        if ($this->conex) {
+            if ($response = $this->query("SELECT Profesores.ID, Nombre, Iniciales, Perfiles.Tipo FROM Profesores INNER JOIN Perfiles ON Profesores.Tipo=Perfiles.ID WHERE Profesores.ID='$id' AND Activo = 1 AND Profesores.Tipo = 1")) {
+                if ($response->num_rows == 1) {
+                    $fila = $response->fetch_assoc();
+
+                    $_SESSION['logged'] = true;
+                    $_SESSION['LID'] = $Titulo;
+                    $_SESSION['Iniciales'] = $fila['Iniciales'];
+                    $_SESSION['ID'] = $fila['ID'];
+                    $_SESSION['Nombre'] = $fila['Nombre'];
+                    $_SESSION['Perfil'] = $fila['Tipo'];
+                    return true;
+                } else {
+                    $this->ERR_ASYSTECO = "Código QR incorrecto, solo un administrador puede activar el lector.";
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     function getDate($timestamp = null)
