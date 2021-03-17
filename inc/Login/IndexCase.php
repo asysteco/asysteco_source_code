@@ -7,18 +7,27 @@ if (isset($_POST['Iniciales']) || isset($_POST['pass'])) {
 $perfil = $_SESSION['Perfil'] ?? '';
 
 if ($perfil === 'Admin') {
-    $act_home = 'active';
-    $scripts = '<link rel="stylesheet" href="css/profesores.css">';
-    include_once($dirs['Interfaces'] . 'header.php');
-    include_once($dirs['Interfaces'] . 'top-nav.php');
-    include_once($dirs['Profesores'] . 'profesores.php');
-    include_once($dirs['Interfaces'] . 'footer.php');
+    if (!$class->isLogged($Titulo)) {
+        include_once($dirs['Login'] . 'form.php');
+      return;
+    }
+  
+    if (!$class->compruebaCambioPass()) {
+      require_once($dirs['FirstChangePass'] . 'IndexCase.php');
+      return;
+    }
+    require_once($dirs['Profesores'] . 'IndexCase.php');
 } elseif ($perfil === 'Profesor' || $perfil === 'Personal') {
-    $act_qr = 'active';
-    include_once($dirs['Interfaces'] . 'header.php');
-    include_once($dirs['Interfaces'] . 'top-nav.php');
-    include_once($dirs['Qr'] . 'generate_code.php');
-    include_once($dirs['Interfaces'] . 'footer.php');
+    if (!$class->isLogged($Titulo)) {
+        include_once($dirs['Login'] . 'form.php');
+      return;
+    }
+  
+    if (!$class->compruebaCambioPass()) {
+      require_once($dirs['FirstChangePass'] . 'IndexCase.php');
+      return;
+    }
+    require_once($dirs['Qr'] . 'IndexCase.php');
 } else {
     include_once($dirs['Login'] . 'form.php');
 }
