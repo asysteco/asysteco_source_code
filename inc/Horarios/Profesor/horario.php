@@ -41,7 +41,7 @@
             echo "</thead>";
             echo "<tbody>";
 
-            foreach ($franjasHorarias[$franja] as $valor => $datos) {
+            foreach ($horarioCentro[$franja] as $valor => $datos) {
                 $Hora = $valor;
                 $horaInicioSinSegundos = $class->transformHoraMinutos($datos['Inicio']);
                 $horaFinSinSegundos = $class->transformHoraMinutos($datos['Fin']);
