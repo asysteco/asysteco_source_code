@@ -157,6 +157,14 @@ switch ($opt) {
         include_once($dirs['Horarios'] . 'Profesor/remove.php');
         break;
 
+    case 'clonar':
+        if ($_SESSION['Perfil'] !== 'Admin') {
+            header("Location: index.php");
+        }
+
+        include_once($dirs['Horarios'] . 'Profesor/form_clonar_horario.php');
+        break;
+
     case 'delete-all':
         if ($_SESSION['Perfil'] !== 'Admin') {
             header("Location: index.php");

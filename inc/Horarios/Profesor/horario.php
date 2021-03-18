@@ -95,6 +95,7 @@
             }
             echo "</tbody>";
             echo "</table>";
+            echo "<a class='act btn btn-warning' action='modal-form-clonar' profesor='$n[ID]'>Clonar horario</a>";
             echo "</div>";
             include_once('js/update_horario.js');
         } elseif ($response->num_rows > 1) {
@@ -121,4 +122,16 @@
         $ERR_MSG = $class->ERR_ASYSTECO;
     }
     ?>
+</div>
+
+<div id="modal-profesores" class="modal fade" tabindex="-1" role="dialog">
+  <div id='modal-size' class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div id='modal-cabecera' class="modal-header"></div>
+      <div class="modal-body">
+        <div id='modal-contenido'></div>
+      </div>
+      <div id='modal-pie' class="modal-footer"></div>
+    </div>
+  </div>
 </div>
