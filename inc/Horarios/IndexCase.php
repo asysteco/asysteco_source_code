@@ -129,6 +129,9 @@ switch ($opt) {
         break;
 
     case 'preview':
+        if ($_SESSION['Perfil'] !== 'Admin') {
+            header("Location: index.php");
+        }
 
         require_once($dirs['Horarios'] . 'Import/Ajax/preview.php');
         break;

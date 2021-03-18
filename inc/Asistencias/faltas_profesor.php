@@ -47,7 +47,7 @@ if($resp = $class->query($sql))
                                 $fechaSQL = $datos['Fecha'];
                                 $diasemana = $datos['Diasemana'];
                                 $fechaFormateada = $class->formatSQLDateToEuropeanDate($fechaSQL);
-                                $horaInicioHorario = $franjasHorarias[$tipoKey][$horaKey]['Inicio'];
+                                $horaInicioHorario = $horarioCentro[$tipoKey][$horaKey]['Inicio'];
                                 $horaSinSegundos = $class->transformHoraMinutos($horaInicioHorario);
 
                                 if($datos['Asiste'] == 1)

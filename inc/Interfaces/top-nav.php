@@ -92,3 +92,32 @@ if ($response = $class->query($novisto)) {
       <h2 id="loading-msg"></h2>
     </div>
   </div>
+
+<div id="info-horario-modal" aria-labelledby="info-horario" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 class="modal-title" id="info-horario">Información de horarios</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-subtitle">
+              <h6 class="modal-title" style="color: grey; text-align: center;"><i>*Estos son los datos de horas disponibles para crear y/o editar un horario.</i></h6>
+              <h6 class="modal-title" style="color: grey; text-align: center;"><i>El Nº Referencia se utilizará como identificador de horas en los ficheros CSV a importar.</i></h6>
+          </div>
+          <div class="modal-body">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-12">
+                          <div id="info-horario-body"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+      </div>
+  </div>
+</div>

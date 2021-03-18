@@ -23,8 +23,8 @@
                 for ($i = 0; $i < $j; $i++) {
                     $tipoKey = $datos[$i][5];
                     $horaKey = $datos[$i][4];
-                    $horaInicioHorario = $franjasHorarias[$tipoKey][$horaKey]['Inicio'];
-                    $horaFinHorario = $franjasHorarias[$tipoKey][$horaKey]['Fin'];
+                    $horaInicioHorario = $horarioCentro[$tipoKey][$horaKey]['Inicio'];
+                    $horaFinHorario = $horarioCentro[$tipoKey][$horaKey]['Fin'];
                     $horaInicioSplit = preg_split('/:/', $horaInicioHorario);
                     $horaInicioSinSegundos = $horaInicioSplit[0] . ":" . $horaInicioSplit[1];
                     $horaFinSplit = preg_split('/:/', $horaFinHorario);
