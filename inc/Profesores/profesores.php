@@ -53,7 +53,7 @@ if ($_SESSION['Perfil'] === 'Admin') {
                   <td data-th='Sustituido'><?= $sustituido ?></td>
 
                   <td data-th='Horario'>
-                    <a profesor='<?= $profesorId ?>' title='Editar a <?= $nombreProfesor ?>' class='act' action='horario'>
+                    <a profesor='<?= $profesorId ?>' nombre='<?= $nombreProfesor ?>' title='Editar a <?= $nombreProfesor ?>' class='act' action='horario'>
                       <i style='font-size: 25px; color: black;' class='fa fa-calendar calendar_icon'></i>
                     </a>
                   </td>

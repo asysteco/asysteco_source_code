@@ -123,15 +123,3 @@
     }
     ?>
 </div>
-
-<div id="modal-profesores" class="modal fade" tabindex="-1" role="dialog">
-  <div id='modal-size' class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div id='modal-cabecera' class="modal-header"></div>
-      <div class="modal-body">
-        <div id='modal-contenido'></div>
-      </div>
-      <div id='modal-pie' class="modal-footer"></div>
-    </div>
-  </div>
-</div>

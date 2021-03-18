@@ -146,7 +146,7 @@ switch ($opt) {
             header("Location: index.php");
         }
 
-        include_once($dirs['Horarios'] . 'Profesor/horario.php');
+        require_once($dirs['Horarios'] . 'Profesor/horario.php');
         break;
 
     case 'remove':
@@ -154,7 +154,7 @@ switch ($opt) {
             header("Location: index.php");
         }
 
-        include_once($dirs['Horarios'] . 'Profesor/remove.php');
+        require_once($dirs['Horarios'] . 'Profesor/remove.php');
         break;
 
     case 'clonar':
@@ -162,7 +162,13 @@ switch ($opt) {
             header("Location: index.php");
         }
 
-        include_once($dirs['Horarios'] . 'Profesor/form_clonar_horario.php');
+        $subOpt = $_POST['subOpt'] ?? '';
+        
+        if ($subOpt === 'Ajax') {
+            require_once($dirs['Horarios'] . 'Clonar/Ajax/clonar.php');
+        } else {
+            require_once($dirs['Horarios'] . 'Clonar/form.php');
+        }
         break;
 
     case 'delete-all':
@@ -170,7 +176,7 @@ switch ($opt) {
             header("Location: index.php");
         }
 
-        include_once($dirs['Admon'] . 'Delete/delete_all_horarios.php');
+        require_once($dirs['Admon'] . 'Delete/delete_all_horarios.php');
         break;
 
     case 'delete-all-t':
@@ -178,7 +184,7 @@ switch ($opt) {
             header("Location: index.php");
         }
 
-        include_once($dirs['Admon'] . 'Delete/delete_all_t_horarios.php');
+        require_once($dirs['Admon'] . 'Delete/delete_all_t_horarios.php');
         break;
 
     case 'info':
@@ -186,7 +192,7 @@ switch ($opt) {
             header("Location: index.php");
         }
 
-        include_once($dirs['Horarios'] . 'Info/horario-centro.php');
+        require_once($dirs['Horarios'] . 'Info/horario-centro.php');
         break;
 
     default:
@@ -194,10 +200,10 @@ switch ($opt) {
             header("Location: index.php");
         }
 
-        include_once($dirs['Interfaces'] . 'header.php');
-        include_once($dirs['Interfaces'] . 'top-nav.php');
-        include_once($dirs['Horarios'] . 'Personal/horario.php');
+        require_once($dirs['Interfaces'] . 'header.php');
+        require_once($dirs['Interfaces'] . 'top-nav.php');
+        require_once($dirs['Horarios'] . 'Personal/horario.php');
         break;
 }
 
-include_once($dirs['Interfaces'] . 'footer.php');
+require_once($dirs['Interfaces'] . 'footer.php');
