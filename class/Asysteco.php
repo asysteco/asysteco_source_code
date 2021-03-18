@@ -984,4 +984,22 @@ class Asysteco
 
         return true;
     }
+
+    public function getFranjasHorarias(): array
+    {
+        $franjas = [];
+
+        $sql = "SELECT * FROM Horas ORDER BY Tipo, Hora";
+        $query = $this->conex->query($sql);
+
+        while ($row = $query->fetch_object()) {
+            $franjas[$row->Tipo][$row->Hora] = [
+                'Info' => $row->Info ?? '',
+                'Inicio' => $row->Inicio,
+                'Fin' => $row->Fin
+            ];
+        }
+
+        return $franjas;
+    }
 }

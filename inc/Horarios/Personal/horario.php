@@ -27,7 +27,7 @@ if($response = $class->query($sql))
                 echo "</thead>";
                 echo "<tbody>";
                 
-                foreach ($franjasHorarias[$franja] as $valor => $datos)
+                foreach ($horarioCentro[$franja] as $valor => $datos)
                 {
                     $Hora = $valor;
                     $horaInicioSplit = preg_split('/:/', $datos['Inicio']);
