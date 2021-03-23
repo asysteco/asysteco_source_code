@@ -9,7 +9,6 @@ if (!empty($action) && !empty($date)) {
     $mysql->autocommit(FALSE);
     try {
         $sql = "UPDATE Lectivos SET Festivo = '$action' WHERE Fecha = '$date'";
-        $class->query($sql);
         $class->autocommitOffQuery($mysql, $sql, 'Ha ocurrido un error inesperado...');
         $class->marcajes();
     } catch (Exception $e) {

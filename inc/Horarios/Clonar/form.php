@@ -17,7 +17,7 @@ $profesor = $_POST['profesor'] ?? '';
                     FROM Profesores WHERE TIPO <> 1 AND Activo = 1 AND Sustituido = 0 AND ID <> $profesor ORDER BY Nombre";
                     if($response = $class->query($sql)) {
                     ?>
-                        <select id='select_clonado' name='ID_CLONADO'>
+                        <select id='select_sustituto' name='ID_CLONADO'>
                             <?php
                             while($fila = $response->fetch_assoc()) {
                             echo "<option value='$fila[ID]'>$fila[Nombre]</option>";
