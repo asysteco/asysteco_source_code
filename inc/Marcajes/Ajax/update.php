@@ -13,11 +13,11 @@ if (isset($action) && $action != '') {
     if ($action == 'Asiste') {
         $sql = $valor == 0 ? "UPDATE Marcajes SET Asiste=$valor, Justificada=0 WHERE ID_PROFESOR='$profesor' AND Fecha='$fecha' AND Hora='$hora'" : "UPDATE Marcajes SET Asiste=$valor WHERE ID_PROFESOR='$profesor' AND Fecha='$fecha' AND Hora='$hora'";
         if ($class->query($sql)) {
-            if (count($franjasHorarias) === 2) {
+            if (count($horarioCentro) === 2) {
                 $response = $class->query("SELECT DISTINCT Tipo FROM Horarios WHERE ID_PROFESOR='$profesor'")->fetch_assoc();
                 $franja = $response['Tipo'];
-                $horaInicio = $class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio']);
-                $horaFin = $class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin']);
+                $horaInicio = $class->transformHoraMinutos($horarioCentro[$franja][$hora]['Inicio']);
+                $horaFin = $class->transformHoraMinutos($horarioCentro[$franja][$hora]['Fin']);
             } else {
                 $response = $class->query("SELECT DISTINCT Inicio, Fin FROM Horas WHERE Hora = '$hora'")->fetch_assoc();
                 $horaInicio = $class->transformHoraMinutos($response['Inicio']);
@@ -44,11 +44,11 @@ if (isset($action) && $action != '') {
             $MSG = 'Error-action';
         }
     } elseif ($action == 'Justificada') {
-        if (count($franjasHorarias) === 2) {
+        if (count($horarioCentro) === 2) {
             $response = $class->query("SELECT DISTINCT Tipo FROM Horarios WHERE ID_PROFESOR='$profesor'")->fetch_assoc();
             $franja = $response['Tipo'];
-            $horaInicio = $class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio']);
-            $horaFin = $class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin']);
+            $horaInicio = $class->transformHoraMinutos($horarioCentro[$franja][$hora]['Inicio']);
+            $horaFin = $class->transformHoraMinutos($horarioCentro[$franja][$hora]['Fin']);
         } else {
             $response = $class->query("SELECT DISTINCT Inicio, Fin FROM Horas WHERE Hora = '$hora'")->fetch_assoc();
             $horaInicio = $class->transformHoraMinutos($response['Inicio']);

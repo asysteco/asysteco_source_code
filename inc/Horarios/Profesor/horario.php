@@ -41,7 +41,7 @@
             echo "</thead>";
             echo "<tbody>";
 
-            foreach ($franjasHorarias[$franja] as $valor => $datos) {
+            foreach ($horarioCentro[$franja] as $valor => $datos) {
                 $Hora = $valor;
                 $horaInicioSinSegundos = $class->transformHoraMinutos($datos['Inicio']);
                 $horaFinSinSegundos = $class->transformHoraMinutos($datos['Fin']);
@@ -95,6 +95,7 @@
             }
             echo "</tbody>";
             echo "</table>";
+            echo "<a class='act btn btn-warning' action='modal-form-clonar' profesor='$n[ID]'>Clonar horario</a>";
             echo "</div>";
             include_once('js/update_horario.js');
         } elseif ($response->num_rows > 1) {

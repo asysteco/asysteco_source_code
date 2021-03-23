@@ -110,5 +110,24 @@ CRL;Carolina Rodríguez López;3ESOA</pre>
   </div>
 </div>
 
+<div id="info-formato-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="info-formato-body"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="js/import-profesorado.js"></script>
 <script src="js/preview-import-profesores.js"></script>
