@@ -81,7 +81,7 @@ if (isset($action) && $action != '') {
     }
 } else {
 
-    $MSG = 'Error-parameter';;
+    $MSG = 'Error-parameter';
 }
 
 echo $MSG;
