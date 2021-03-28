@@ -1,88 +1,85 @@
 <?php
 
-$action = $_GET['act'];
-$valor = $_GET['Valor'];
-$profesor = $_GET['Profesor'];
-$fecha = $_GET['Fecha'];
-$changeDate = $class->formatSQLDateToEuropeanDate($fecha);
-$hora = $_GET['Hora'];
+$profesor = $_POST['profesor'] ?? '';
+$date = $_POST['date'] ?? '';
+$hour = $_POST['hour'] ?? '';
+$inicio = $_POST['inicio'] ?? '';
+$fin = $_POST['fin'] ?? '';
+$type = $_POST['type'] ?? '';
+$action = $_POST['action'] ?? '';
+$value = $_POST['value'] ?? '';
+$changeDate = !empty($date) ? $class->formatSQLDateToEuropeanDate($date) : '';
 
 $nombre = $_SESSION['Nombre'];
 
-if (isset($action) && $action != '') {
-    if ($action == 'Asiste') {
-        $sql = $valor == 0 ? "UPDATE Marcajes SET Asiste=$valor, Justificada=0 WHERE ID_PROFESOR='$profesor' AND Fecha='$fecha' AND Hora='$hora'" : "UPDATE Marcajes SET Asiste=$valor WHERE ID_PROFESOR='$profesor' AND Fecha='$fecha' AND Hora='$hora'";
-        if ($class->query($sql)) {
-            if (count($franjasHorarias) === 2) {
-                $response = $class->query("SELECT DISTINCT Tipo FROM Horarios WHERE ID_PROFESOR='$profesor'")->fetch_assoc();
-                $franja = $response['Tipo'];
-                $horaInicio = $class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio']);
-                $horaFin = $class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin']);
-            } else {
-                $response = $class->query("SELECT DISTINCT Inicio, Fin FROM Horas WHERE Hora = '$hora'")->fetch_assoc();
-                $horaInicio = $class->transformHoraMinutos($response['Inicio']);
-                $horaFin = $class->transformHoraMinutos($response['Fin']);
-            }
+$success = false;
+$alertMessage = 'Error inesperado...';
 
-            if ($valor == 1) {
-                $msg = "$nombre ha modificado el registro del Día: $changeDate Horas: $horaInicio - $horaFin como Asistido.";
-                $MSG = 'Ok-asiste';
-            } elseif ($valor == 0) {
-                $msg = "$nombre ha modificado el registro del Día: $changeDate Horas: $horaInicio - $horaFin como Falta.";
-                $MSG = 'Ok-falta';
-            } elseif ($valor == 2) {
-                $msg = "$nombre ha modificado el registro del Día: $changeDate Horas: $horaInicio - $horaFin como Actividad Extraescolar.";
-                $MSG = 'Ok-extraescolar';
-            } else {
-                $msg = "$nombre ha enviado un valor incorrecto.";
-            }
+if ($action == 'Asiste') {
+    $sql = "UPDATE Marcajes SET Asiste = $value WHERE ID_PROFESOR = '$profesor' AND Fecha = '$date' AND Hora = '$hour'";
 
-            if (!$class->notificar($_GET['Profesor'], $msg)) {
-                echo $class->ERR_ASYSTECO;
-            }
-        } else {
-            $MSG = 'Error-action';
-        }
-    } elseif ($action == 'Justificada') {
-        if (count($franjasHorarias) === 2) {
-            $response = $class->query("SELECT DISTINCT Tipo FROM Horarios WHERE ID_PROFESOR='$profesor'")->fetch_assoc();
-            $franja = $response['Tipo'];
-            $horaInicio = $class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Inicio']);
-            $horaFin = $class->transformHoraMinutos($franjasHorarias[$franja][$hora]['Fin']);
-        } else {
-            $response = $class->query("SELECT DISTINCT Inicio, Fin FROM Horas WHERE Hora = '$hora'")->fetch_assoc();
-            $horaInicio = $class->transformHoraMinutos($response['Inicio']);
-            $horaFin = $class->transformHoraMinutos($response['Fin']);
-        }
-
-        if ($class->query("UPDATE Marcajes SET Justificada=$valor WHERE ID_PROFESOR='$profesor' AND Fecha='$fecha' AND Hora='$hora'")) {
-            if ($valor == 1) {
-                $msg = "$nombre ha modificado el registro del Día: $changeDate Hora: $horaInicio - $horaFin como Falta Justificada.";
-                $MSG = 'Ok-justificada';
-            } elseif ($valor == 0) {
-                $msg = "$nombre ha modificado el registro del Día: $changeDate Hora: $horaInicio - $horaFin retirando la justificación.";
-                $MSG = 'Ok-injustificada';
-            } else {
-                $msg = "$nombre ha enviado un valor incorrecto.";
-            }
-
-            if (!$class->notificar($profesor, $msg)) {
-                echo $class->ERR_ASYSTECO;
-            }
-        } else {
-            $MSG = 'Error-action';
-        }
-    } elseif ($action == 'getrow') {
-        $response = $class->query("SELECT Marcajes.*, Diasemana 
-        FROM Marcajes INNER JOIN Diasemana ON Marcajes.Dia=Diasemana.ID 
-        WHERE ID_PROFESOR='$profesor' AND Fecha='$fecha' AND Hora='$hora'");
-    } else {
-        $MSG = 'Error-Invalid-action';
+    if (!$value) {
+        $sql = "UPDATE Marcajes SET Asiste = $value, Justificada = 0 WHERE ID_PROFESOR = '$profesor' AND Fecha = '$date' AND Hora = '$hour'";
     }
-} else {
 
-    $MSG = 'Error-parameter';;
+    $class->conex->autocommit(FALSE);
+    try {
+        $class->autocommitOffQuery($class->conex, $sql, 'Error al actualizar horas.');
+
+        if ($value == 1) {
+            $msg = "$nombre ha modificado el registro del Día: $changeDate Horas: $inicio - $fin como Asistido.";
+            $alertMessage = 'Ok-asiste';
+        } elseif ($value == 0) {
+            $msg = "$nombre ha modificado el registro del Día: $changeDate Horas: $inicio - $fin como Falta.";
+            $alertMessage = 'Ok-falta';
+        } elseif ($value == 2) {
+            $msg = "$nombre ha modificado el registro del Día: $changeDate Horas: $inicio - $fin como Actividad Extraescolar.";
+            $alertMessage = 'Ok-extraescolar';
+        } else {
+            throw new Exception("$nombre ha enviado un valor incorrecto.");
+        }
+
+        $class->notificar($profesor, $msg);
+
+        $success = true;
+        $alertMessage = 'Petición realizada correctamente.';
+    } catch(Exception $e) {
+        $alertMessage = $e->getMessage();
+        $class->conex->rollback();
+    }
+    $class->conex->commit();
+} elseif ($action == 'Justificada') {
+    $sql = "UPDATE Marcajes SET Justificada = $value WHERE ID_PROFESOR = '$profesor' AND Fecha = '$date' AND Hora = '$hour'";
+    $class->conex->autocommit(FALSE);
+    try {
+        $class->autocommitOffQuery($class->conex, $sql, 'Error al actualizar horas.');
+
+        if ($value == 1) {
+            $msg = "$nombre ha modificado el registro del Día: $changeDate Hora: $inicio - $fin como Falta Justificada.";
+            $alertMessage = 'Marcado como falta justificada.';
+        } elseif ($value == 0) {
+            $msg = "$nombre ha modificado el registro del Día: $changeDate Hora: $inicio - $fin retirando la justificación.";
+            $alertMessage = 'Marcado como falta injustificada.';
+        } else {
+            throw new Exception("$nombre ha enviado un valor incorrecto.");
+        }
+
+        $class->notificar($profesor, $msg);
+
+        $success = true;
+    } catch(Exception $e) {
+        $alertMessage = $e->getMessage();
+        $class->conex->rollback();
+    }
+    $class->conex->commit();
+} else {
+    $alertMessage = 'Acción no válida';
 }
 
-echo $MSG;
+$result = [
+    'success' => $success,
+    'msg' => $alertMessage
+];
+
+echo json_encode($result);
 exit;
